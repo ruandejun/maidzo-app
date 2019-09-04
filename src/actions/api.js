@@ -24,9 +24,9 @@ const fetchApi = async(method, path, params={}, token) => {
     options['body'] = JSON.stringify(params)
   }
 
-  console.log(Global.apiUrl + `${finalPath}`)
+  // console.log(Global.apiUrl + `${finalPath}`)
   return await fetch (Global.apiUrl + `${finalPath}`, options).then(res => {
-    console.log(res)
+    // console.log(res)
     return res.json()
   }).then(response => {
     if(response.status == 'fail' && response.data == 'Unauthenticated.'){
@@ -55,19 +55,26 @@ const fetchUnlengthApi = async(method, path, params={}, token) => {
 
   if (method.toUpperCase() === 'GET') {
     finalPath += '?' + Object.entries(params).map((v) => {
-      if (Array.isArray(v[1])){
-      return `${v[0]}=${v[1].join(',')}`
-    } else {
-      return `${v[0]}=${v[1]}`
-    }
-  }).join('&')
+        if (Array.isArray(v[1])){
+        return `${v[0]}=${v[1].join(',')}`
+      } else {
+        return `${v[0]}=${v[1]}`
+      }
+    }).join('&')
   } else {
-    var formData = new FormData();
-    for (var k in params) {
-      formData.append(k, params[k]);
-    }
-    options['body'] = formData
+    options['body'] = Object.keys(params).map(function (keyName) {
+      return encodeURIComponent(keyName) + '=' + encodeURIComponent(params[keyName])
+    }).join('&')
+
+    // var formData = new FormData();
+    // for (var k in params) {
+    //   formData.append(k, params[k]);
+    // }
+    // options['body'] = formData
   }
+
+  // console.log(Global.apiUrl + `${finalPath}`)
+  // console.log(options)
 
   return await fetch (Global.apiUrl + `${finalPath}`, options).then(res => {
     return res.json()

@@ -26,7 +26,7 @@ export function* getCart() {
 export function* deleteCartItem({pk, value, name}) {
   let response = yield call(fetchUnlengthApi, 'post', 'page/update_cart_item/', {pk, value, name});
 
-  console.log(response)
+  // console.log(response)
   if (response && response.success) {
 
     let cresponse = yield call(fetchApi, 'get', 'page/cart/show/');
@@ -49,7 +49,7 @@ export function* deleteCartItem({pk, value, name}) {
 export function* updateCartItem({pk, value, name}) {
   let response = yield call(fetchUnlengthApi, 'post', 'page/update_cart_item/', {pk, value, name});
 
-  console.log(response)
+  // console.log(response)
   if (response && response.success) {
 
     let cresponse = yield call(fetchApi, 'get', 'page/cart/show/');
@@ -70,10 +70,10 @@ export function* updateCartItem({pk, value, name}) {
 }
 
 export function* addItemToCart({payload}) {
-  console.log(JSON.stringify(payload))
+  // console.log(JSON.stringify(payload))
   let response = yield call(fetchApi, 'post', 'api/shop_module/cart/', payload);
 
-  console.log(response)
+  // console.log(response)
   if (response && response.id) {
 
     yield put({

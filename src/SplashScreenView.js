@@ -41,7 +41,7 @@ class SplashScreenView extends React.Component {
 
     async autoLogin() {
 
-        console.log(this.props.user)
+        // console.log(this.props.user)
 
         try {
             if (this.props.user) {

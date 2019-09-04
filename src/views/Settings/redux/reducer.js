@@ -8,7 +8,7 @@ const initState = {
 };
 
 export default function appReducer(state = initState, action) {
-    console.log(action)
+    // console.log(action)
     switch (action.type) {
         case actions.GET_SETTING_INFORMATION_SUCCESS:
             return {...state, 

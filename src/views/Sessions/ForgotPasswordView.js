@@ -35,7 +35,7 @@ class ForgotPasswordView extends React.Component {
 
         fetchApiLogin('post', 'api/user/auth/resetPasswordViaEmail/', {email: this.state.email})
         .then((data) => {
-            console.log(data)
+            // console.log(data)
             if(data.success){
                 CustomAlert(null, 'Đã gửi email để lấy lại mật khẩu. Vui lòng kiểm tra email của bạn!')
             } else {

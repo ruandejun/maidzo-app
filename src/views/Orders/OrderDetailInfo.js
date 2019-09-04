@@ -64,7 +64,7 @@ class OrderDetailInfo extends React.Component {
         this.setState({isFetching: true}, () => {
             fetchApi('get', `page/order/${order_id}/items/`)
             .then((data) => {
-                console.log(data)
+                // console.log(data)
 
                 this.setState({isFetching: false, orderDetail: data})
             })

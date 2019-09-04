@@ -55,7 +55,7 @@ class OrderDetailItems extends React.Component {
         this.setState({isFetching: true, loadingMore: false, canLoadMore: true}, () => {
             fetchApi('get', `page/order/${order_id}/get_items_by_offer/`, {offset: 0, limit: LIMIT})
             .then((data) => {
-                console.log(data)
+                // console.log(data)
 
                 this.setState({isFetching: false, items: data, canLoadMore: data.length == LIMIT})
             })
@@ -80,7 +80,7 @@ class OrderDetailItems extends React.Component {
         this.setState({loadingMore: true}, () => {
             fetchApi('get', `page/order/${order_id}/get_items_by_offer/`, {offset: this.state.items.length, limit: this.state.items.length + LIMIT})
             .then((data) => {
-                console.log(data)
+                // console.log(data)
                 let items = this.state.items
                 data.map((item) => {
                     items.push(item)

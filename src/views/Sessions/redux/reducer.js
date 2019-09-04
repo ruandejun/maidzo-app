@@ -8,7 +8,7 @@ const initState = {
 };
 
 export default function appReducer(state = initState, action) {
-    console.log(action)
+    // console.log(action)
     switch (action.type) {
         case actions.UPDATE_PROFILE:
             return {...state, updating: true}

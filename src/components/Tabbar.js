@@ -122,7 +122,7 @@ class Tabbar extends React.PureComponent {
 
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state)
+  // console.log(state)
   return {
     cartCount: state.cart.count,
     orderCount: state.order.count,

@@ -7,7 +7,7 @@ import actions from './action'
 
 export function* createOrderFromCart({full_name, street, district, city, phone_number, ship_method, order_note, facebook, item_submit}) {
   let response = yield call(fetchUnlengthApi, 'post', 'page/build_order_from_cart/', {full_name, street, district, city, phone_number, ship_method, order_note, facebook, item_submit});
-  console.log(response)
+  // console.log(response)
   if (response) {
 
     yield put({
@@ -26,7 +26,7 @@ export function* createOrderFromCart({full_name, street, district, city, phone_n
 export function* getOrder({order = 'asc', offset = 0, limit = 50}) {
   
   let response = yield call(fetchApi, 'get', 'page/get_data_orders/data.json', {order, offset, limit});
-  console.log(response)
+  // console.log(response)
   if (response) {
 
     yield put({
@@ -40,7 +40,7 @@ export function* getOrder({order = 'asc', offset = 0, limit = 50}) {
 export function* getDetailInfo({id}) {
   
   let response = yield call(fetchApi, 'get', `page/order/${id}/items/`);
-  console.log(response)
+  // console.log(response)
   if (response) {
 
     yield put({
@@ -53,7 +53,7 @@ export function* getDetailInfo({id}) {
 export function* getDetailItems({id, offset = 0, limit = 20}) {
   
   let response = yield call(fetchApi, 'get', `page/order/${id}/get_items_by_offer/?offset=${offset}&limit=${limit}`);
-  console.log(response)
+  // console.log(response)
   if (response) {
 
     yield put({

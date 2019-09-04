@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
 import { connect } from 'react-redux';
 import Global, { Media, calculateDistance, decode, getStatusBarHeight } from 'src/Global';
 import {getWalletBalance} from 'Wallets/redux/action'
+import {getCart} from 'Carts/redux/action'
 import Header from 'components/Header'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
@@ -43,6 +44,7 @@ class HomeView extends React.Component {
 
     componentDidMount(){
         this.props.getWalletBalance()
+        this.props.getCart()
     }
 
     onpenWeb(){
@@ -118,7 +120,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getWalletBalance: () => dispatch(getWalletBalance())
+        getWalletBalance: () => dispatch(getWalletBalance()),
+        getCart: () => dispatch(getCart())
     };
 };
 
