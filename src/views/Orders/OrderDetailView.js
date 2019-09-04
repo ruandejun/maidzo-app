@@ -24,33 +24,14 @@ import Global, { Media, calculateDistance, decode, getStatusBarHeight } from 'sr
 import Header from 'components/Header'
 import {getDetailInfo, getDetailItems} from './redux/action'
 import OrderDetailItem from './component/OrderDetailItem'
+import {fetchApi} from 'actions/api'
+import ScrollableTabView from 'react-native-scrollable-tab-view'
+import OrderDetailItems from './OrderDetailItems'
+import OrderDetailInfo from './OrderDetailInfo'
 
 class OrderDetailView extends React.Component {
 
-    componentDidMount(){
-        this.onRefresh(0)
-    }
-
-    onRefresh(){
-        const order_id = this.props.navigation.getParam('order_id')
-
-        if(!order_id){
-            return
-        }
-
-        this.props.getDetailInfo(order_id)
-        this.props.getDetailItems(order_id)
-    }
-
-    renderItem({item, index}){
-        return(
-            <OrderDetailItem {...item}/>
-        )
-    }
-
     render() {
-
-        const {isFetching, detailItems} = this.props
         const order_id = this.props.navigation.getParam('order_id')
 
         return (
@@ -60,14 +41,10 @@ class OrderDetailView extends React.Component {
                     leftAction={() => this.props.navigation.goBack()}
                 />
 
-                <FlatList 
-                    renderItem={this.renderItem.bind(this)}
-                    data={detailItems}
-                    refreshing={false}
-                    onRefresh={this.onRefresh.bind(this)}
-                    style={{flex : 1}}
-                    showsVerticalScrollIndicator={false}
-                />
+                <ScrollableTabView>
+                    <OrderDetailInfo tabLabel="Thông tin" order_id={order_id}/>
+                    <OrderDetailItems tabLabel="Sản phẩm" order_id={order_id}/>
+                </ScrollableTabView>
             </View>
         )
     }

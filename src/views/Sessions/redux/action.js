@@ -7,6 +7,10 @@ const actions = {
   SIGN_UP_FAIL: 'SIGN_UP_FAIL',
   LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
   UNMOUNT_ERROR: 'UNMOUNT_ERROR',
+  UPDATE_PROFILE: 'UPDATE_PROFILE',
+  UPDATE_PROFILE_SUCCESS: 'UPDATE_PROFILE_SUCCESS',
+  LOGOUT: 'LOGOUT',
+  LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
 }
 
 export const unmountError = () => {
@@ -32,6 +36,19 @@ export const register = (username, email, facebook, phone, password, verifypassw
   return {
     type: actions.SIGN_UP,
     username, email, facebook, phone, password, verifypassword
+  }
+}
+
+export const updateProfile = (pk, value, name) => {
+  return {
+    type: actions.UPDATE_PROFILE,
+    pk, value, name
+  }
+}
+
+export const logout = () => {
+  return {
+    type: actions.LOGOUT
   }
 }
 

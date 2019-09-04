@@ -201,6 +201,10 @@ class LoginView extends React.Component{
                     }
 
                     {!isRegister &&
+                        <Text style={{fontSize: 14, color: '#333333', marginTop : 10, fontFamily: Global.FontName, textDecorationLine:'underline'}} onPress={() => this.props.navigation.navigate('ForgotPasswordView')}>Quên mật khẩu?</Text>
+                    }
+
+                    {!isRegister &&
                         <TouchableOpacity onPress={this.onLogin.bind(this)} style={styles.buttonContainer}>
                             <Text style={styles.buttonText}>Đăng nhập</Text>
                         </TouchableOpacity>

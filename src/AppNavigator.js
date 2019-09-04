@@ -14,8 +14,16 @@ import SplashScreenView from './SplashScreenView'
 import LoginView from 'Sessions/LoginView'
 import ForgotPasswordView from 'Sessions/ForgotPasswordView'
 
+import SettingView from 'Setting/SettingView'
+import AboutView from 'Setting/AboutView'
+import PrivacyView from 'Setting/PrivacyView'
+import SupportView from 'Setting/SupportView'
+import UpdateProfileView from 'Setting/UpdateProfileView'
+
+import WalletBalanceView from 'Wallets/WalletBalanceView'
+
 import HomeView from 'Home/HomeView'
-import HomeWebview from 'Home/HomeWebview'
+import TaobaoWebView from 'Home/TaobaoWebView'
 
 import CartView from 'Carts/CartView'
 import CartConfirmView from 'Carts/CartConfirmView'
@@ -29,7 +37,6 @@ import NotificationView from 'Notifications/NotificationView'
 const DashboardView = createBottomTabNavigator({
     HomeView: { screen: HomeView },
     OrderListView: { screen: OrderListView },
-    CartView: { screen: CartView },
     NotificationView: { screen: NotificationView }
 }, {
         tabBarComponent: Tabbar,
@@ -67,12 +74,40 @@ const AppNavigator = createAppContainer(
             screen: CartInfoView,
             navigationOptions: { header: null }
         },
-        HomeWebview: {
-            screen: HomeWebview,
+        TaobaoWebView: {
+            screen: TaobaoWebView,
             navigationOptions: { header: null }
         },
         OrderDetailView: {
             screen: OrderDetailView,
+            navigationOptions: { header: null }
+        },
+        SettingView: {
+            screen: SettingView,
+            navigationOptions: { header: null }
+        },
+        AboutView: {
+            screen: AboutView,
+            navigationOptions: { header: null }
+        },
+        PrivacyView: {
+            screen: PrivacyView,
+            navigationOptions: { header: null }
+        },
+        SupportView: {
+            screen: SupportView,
+            navigationOptions: { header: null }
+        },
+        WalletBalanceView: {
+            screen: WalletBalanceView,
+            navigationOptions: { header: null }
+        },
+        UpdateProfileView: {
+            screen: UpdateProfileView,
+            navigationOptions: { header: null }
+        },
+        CartView: {
+            screen: CartView,
             navigationOptions: { header: null }
         },
     }, {

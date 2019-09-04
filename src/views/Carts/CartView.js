@@ -19,7 +19,7 @@ import {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f6f6f6'
+        backgroundColor: '#f6f6f6', paddingBottom: getBottomSpace()
     },
     footerContainer: {
         width: '100%', backgroundColor: 'white'
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         fontSize: 14, color: 'white', fontFamily: Global.FontName
     },
     orderContainer: {
-        height: 50, marginBottom : 20, marginTop : 10, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center'
+        height: 50, marginBottom : 0, marginTop : 10, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center'
     },
     orderText: {
         fontSize: 14, color: 'white', fontWeight: '500', fontFamily: Global.FontName
@@ -48,7 +48,8 @@ import { connect } from 'react-redux';
 import Global, { Media, convertMoney, } from 'src/Global';
 import Header from 'components/Header'
 import CartItem from './component/CartItem'
-import {getCart} from './redux/action'
+import {getCart, deleteCartItem, updateCartItem} from './redux/action'
+import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 class CartView extends React.Component {
 
@@ -62,8 +63,20 @@ class CartView extends React.Component {
 
     renderItem({item, index}){
         return(
-            <CartItem {...item}/>
+            <CartItem {...item} 
+                onDelete={this.onDelete.bind(this, item)}
+                onUpdateQuantity={(quantity) => this.onUpdateItem(item.id, quantity, 'quantity')}
+                onUpdateNote={(text) => this.onUpdateItem(item.id, text, 'note')}
+            />
         )
+    }
+
+    onDelete(item){
+        this.props.deleteCartItem(item.id)
+    }
+
+    onUpdateItem(pk, value, name){
+        this.props.updateCartItem(pk, value, name)
     }
 
     footerView(){
@@ -134,7 +147,10 @@ class CartView extends React.Component {
 
         return (
             <View style={styles.container}>
-                <Header title='Giỏ hàng'/>
+                <Header title='Giỏ hàng'
+                    rightIcon='times'
+                    rightAction={() => this.props.navigation.goBack()}
+                />
                 <FlatList 
                     renderItem={this.renderItem.bind(this)}
                     data={cartItems}
@@ -172,6 +188,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = dispatch => {
     return {
         getCart: () => {dispatch(getCart())},
+        deleteCartItem: (id) => {dispatch(deleteCartItem(id))},
+        updateCartItem: (pk, value, name) => {dispatch(updateCartItem(pk, value, name))},
     };
 };
 

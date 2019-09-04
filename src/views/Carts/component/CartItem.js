@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     },
 })
 
-import Global, { Media, convertMoney } from 'src/Global'
+import Global, { imageUrl, convertMoney } from 'src/Global'
 import { ActionSheet } from 'teaset'
 import moment from 'moment'
 import Icon from 'react-native-vector-icons/FontAwesome5'
@@ -75,6 +75,39 @@ class CartItem extends React.PureComponent {
         }
     }
 
+    onDelete(){
+        CustomAlert('Chắc chắn xoá sản phẩm khỏi giỏ hàng?', null, [
+            {text: 'Xoá', onPress: () => {
+                if(this.props.onDelete){
+                    this.props.onDelete()
+                }
+            }},
+            {text: 'Quay lại'}
+        ])
+    }
+
+
+    updateTimeout = null
+
+    onUpdateQuantity(value){
+        if(this.updateTimeout){
+            clearTimeout(this.updateTimeout)
+            this.updateTimeout = null
+        }
+
+        this.updateTimeout = setTimeout(() => {
+            if(this.props.onUpdateQuantity){
+                this.props.onUpdateQuantity(value)
+            }
+        }, 1000);
+    }
+
+    onUpdateNote(){
+        if(this.props.onUpdateNote){
+            this.props.onUpdateNote(this.state.note)
+        }
+    }
+
     render() {
 
         const { vendor, name, id, image_url, price, price_vnd, option_selected_tag,
@@ -87,10 +120,10 @@ class CartItem extends React.PureComponent {
                 <View style={styles.headerContainer}>
                     <Text style={styles.idText}>{id}</Text>
                     <Text style={styles.nameText}>{name}</Text>
-                    <Text style={styles.deleteText}>Xoá</Text>
+                    <Text onPress={this.onDelete.bind(this)} style={styles.deleteText}>Xoá</Text>
                 </View>
                 <View style={styles.contentContainer}>
-                    <Image source={{ uri: image_url }} style={styles.itemImage} />
+                    <Image source={{ uri: imageUrl(image_url) }} style={styles.itemImage} />
                     <View style={styles.descriptionContainer}>
                         <Text style={[styles.descriptionText, { color: '#1B5795' }]}>{`${vendor}`}</Text>
                         <Text style={styles.descriptionText}>{`${currency} ${price} / ${convertMoney(price_vnd)} vnđ`}</Text>
@@ -99,7 +132,7 @@ class CartItem extends React.PureComponent {
                             min={1}
                             step={1}
                             style={{ borderWidth: 0, marginTop: 8 }}
-                            onChange={(value) => { }}
+                            onChange={this.onUpdateQuantity.bind(this)}
                             valueStyle={{ fontSize: 15, color: '#8a6d3b', fontFamily: Global.FontName }}
                             subButton={
                                 <View style={{ backgroundColor: '#rgba(238, 169, 91, 0.1)', borderColor: '#8a6d3b', borderWidth: 1, borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
@@ -124,6 +157,8 @@ class CartItem extends React.PureComponent {
                     placeholder='Ghi chú'
                     placeholderTextColor='#aaaaaa'
                     multiline
+                    onChangeText={(text) => this.setState({note: text})}
+                    onEndEditing={this.onUpdateNote.bind(this)}
                 />
 
                 <View style={styles.priceContainer}>

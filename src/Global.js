@@ -39,6 +39,14 @@ import {
     return isIphoneX() ? 34 : 0;
   }
 
+  export function imageUrl(image_url){
+    if(image_url.indexOf('https:') == -1){
+      return 'https:' + image_url
+    }
+
+    return image_url
+  }
+
   export const convertMoney = (money) => {
     if(!money) return money
     return Math.round(money).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")

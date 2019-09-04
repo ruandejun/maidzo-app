@@ -43,10 +43,10 @@ const styles = StyleSheet.create({
     marginTop : 5
   },
   notiBagde: {
-    width : 20, height : 20,
+    minWidth : 20, height : 20,
     borderRadius : 10, backgroundColor: 'red', alignItems: 'center', justifyContent: 'center',
     position: 'absolute',
-    top: 5, right: 10
+    top: 5, right: 10, padding: 2
   },
   bagdeText: {
     fontSize : 10,
@@ -94,7 +94,7 @@ class Tabbar extends React.PureComponent {
             </View>
         </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback onPress={this.openTab.bind(this, 2)}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('CartView')}>
           <View style={[styles.buttonContainer]}>
             <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: currentIndex == 2 ? '#FDCC0D' : 'white'}]} source={Media.CartTab} />
             <Text style={[styles.buttonText, {color: currentIndex == 2 ? '#FDCC0D' : 'white'}]}>Giỏ hàng</Text>
@@ -107,7 +107,7 @@ class Tabbar extends React.PureComponent {
           </View>
         </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback onPress={this.openTab.bind(this, 3)}>
+        <TouchableWithoutFeedback onPress={this.openTab.bind(this, 2)}>
             <View style={[styles.buttonContainer]}>
                 <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: currentIndex == 3 ? '#FDCC0D' : 'white'}]} source={Media.NotificationTab} />
                 <Text style={[styles.buttonText, {color: currentIndex == 3 ? '#FDCC0D' : 'white'}]}>Thông báo</Text>

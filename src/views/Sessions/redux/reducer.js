@@ -3,12 +3,17 @@ import actions from './action'
 const initState = {
     user: null,
     isFetching: false,
-    isLogin: false
+    isLogin: false,
+    updating: false
 };
 
 export default function appReducer(state = initState, action) {
     console.log(action)
     switch (action.type) {
+        case actions.UPDATE_PROFILE:
+            return {...state, updating: true}
+        case actions.UPDATE_PROFILE_SUCCESS:
+            return {...state, updating: false}
         case actions.LOGIN:
         case actions.SIGN_UP:
             return {...state,  isFetching: true, isLogin : false}

@@ -8,5 +8,10 @@ export default Media = {
     OrderTab: require('../resources/images/order_tab.png'),
     NotificationTab: require('../resources/images/notification_tab.png'),
 
+    TaobaoIcon: require('../resources/images/taobao_icon.png'),
+
     LoadingIcon: require('../resources/images/loading_icon.gif'),
+
+    VietcombankIcon: require('../resources/images/vietcombank.jpg'),
+    TechcombankIcon: require('../resources/images/techcombank.jpg'),
 }

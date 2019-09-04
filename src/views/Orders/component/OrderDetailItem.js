@@ -42,10 +42,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     noteText: {
-        padding: 8, width: '100%', height: 60,
-        textAlign: 'left', fontSize: 14, color: '#333333', fontFamily: Global.FontName,
-        borderWidth: 1, borderRadius: 5, borderColor: '#CCCCCC',
-        textAlignVertical: 'top', marginBottom : 8
+        padding: 8, width: '100%',
+        textAlign: 'left', fontSize: 14, color: 'black', fontFamily: Global.FontName, marginBottom : 8
     },
     priceContainer: {
         width: '100%', flexDirection: 'row', height: 30,
@@ -57,7 +55,7 @@ const styles = StyleSheet.create({
     },
 })
 
-import Global, { Media, convertMoney } from 'src/Global'
+import Global, { Media, convertMoney, imageUrl } from 'src/Global'
 import { ActionSheet } from 'teaset'
 import moment from 'moment'
 import Icon from 'react-native-vector-icons/FontAwesome5'
@@ -70,61 +68,31 @@ class OrderDetailItem extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this.state = {
-            note: props.note ? props.note : '',
-        }
     }
 
     render() {
 
         const { vendor, name, id, image_url, price, price_vnd, option_selected_tag,
             short_description, currency, total_vnd, total_service_cost_vnd, quantity,
-            shipping_vnd } = this.props
-        const { note } = this.state
+            shipping_vnd, note } = this.props
 
         return (
             <View style={styles.container} >
                 <View style={styles.headerContainer}>
                     <Text style={styles.idText}>{id}</Text>
                     <Text style={styles.nameText}>{name}</Text>
-                    <Text style={styles.deleteText}>Xoá</Text>
                 </View>
                 <View style={styles.contentContainer}>
-                    <Image source={{ uri: image_url }} style={styles.itemImage} />
+                    <Image source={{ uri: imageUrl(image_url) }} style={styles.itemImage} />
                     <View style={styles.descriptionContainer}>
                         <Text style={[styles.descriptionText, { color: '#1B5795' }]}>{`${vendor}`}</Text>
                         <Text style={styles.descriptionText}>{`${currency} ${price} / ${convertMoney(price_vnd)} vnđ`}</Text>
-                        <Stepper
-                            value={quantity}
-                            min={1}
-                            step={1}
-                            style={{ borderWidth: 0, marginTop: 8 }}
-                            onChange={(value) => { }}
-                            valueStyle={{ fontSize: 15, color: '#8a6d3b', fontFamily: Global.FontName }}
-                            subButton={
-                                <View style={{ backgroundColor: '#rgba(238, 169, 91, 0.1)', borderColor: '#8a6d3b', borderWidth: 1, borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 15, color: '#8a6d3b', fontFamily: Global.FontName }}>－</Text>
-                                </View>
-                            }
-                            addButton={
-                                <View style={{ backgroundColor: '#rgba(238, 169, 91, 0.1)', borderColor: '#8a6d3b', borderWidth: 1, borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 15, color: '#8a6d3b', fontFamily: Global.FontName }}>＋</Text>
-                                </View>
-                            }
-                            showSeparator={false}
-                        />
+                        <Text style={styles.descriptionText}>{`Số lượng: ${quantity}`}</Text>
                         <Text style={styles.descriptionText}>{`${option_selected_tag}`}</Text>
                     </View>
                 </View>
 
-                <TextInput
-                    value={note}
-                    style={styles.noteText}
-                    underlineColorAndroid='#00000000'
-                    placeholder='Ghi chú'
-                    placeholderTextColor='#aaaaaa'
-                    multiline
-                />
+                {!!note && note.length > 0 && <Text style={styles.noteText}>{`Ghi chú: ${note}`}</Text>}
 
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Thành tiền</Text>

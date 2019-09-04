@@ -14,6 +14,12 @@ export function* createOrderFromCart({full_name, street, district, city, phone_n
       type: actions.CREATE_ORDER_SUCCESS,
       data: response
     });
+
+    NavigationService.reset('DashboardView')
+
+    if(response.order_number){
+      NavigationService.navigate('OrderDetailView', {order_id: response.order_number})
+    }
   }
 }
 

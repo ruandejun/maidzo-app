@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     },
 })
 
-import Global, { Media, convertMoney } from 'src/Global'
+import Global, { imageUrl, convertMoney } from 'src/Global'
 import { ActionSheet } from 'teaset'
 import moment from 'moment'
 import Icon from 'react-native-vector-icons/FontAwesome5'
@@ -72,7 +72,7 @@ class OrderListItem extends React.PureComponent {
                     <Text style={styles.statusText}>{status_processing}</Text>
                 </View>
                 <View style={styles.contentContainer}>
-                    <Image source={{ uri: first_image_url }} style={styles.itemImage} />
+                    <Image source={{ uri: imageUrl(first_image_url) }} style={styles.itemImage} />
                     <View style={styles.descriptionContainer}>
                         <Text style={[styles.descriptionText, ]}>{'Người đặt: '}
                             <Text style={{ color: '#1B5795', fontWeight: '500' }}>{`${username}`}</Text>

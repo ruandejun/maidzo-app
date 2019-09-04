@@ -24,6 +24,7 @@ const fetchApi = async(method, path, params={}, token) => {
     options['body'] = JSON.stringify(params)
   }
 
+  console.log(Global.apiUrl + `${finalPath}`)
   return await fetch (Global.apiUrl + `${finalPath}`, options).then(res => {
     console.log(res)
     return res.json()

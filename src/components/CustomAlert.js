@@ -32,19 +32,24 @@ export default CustomAlert = (title, message, buttons) => {
         overlayOpacity={0.8}
          ref={v => this.overlayView = v}
        >
-           <View style={{borderRadius : 14, minHeight : 100, width : 270, backgroundColor : Global.MainColor, justifyContent : 'center', alignItems : 'center'}}>
+           <View style={{borderRadius : 10, minHeight : 100, width : 270, backgroundColor : 'white', justifyContent : 'center', alignItems : 'center'}}>
                <View style={{padding : 16, alignItems : 'center', justifyContent : 'center'}}>
-                   {!!title && <Text style={{width : 238, textAlign : 'center', color : 'white', fontSize : 17, fontFamily : Global.FontBold}}>{title}</Text>}
-                   {!!message && <Text style={{marginTop : !!title ? 8 : 0, width : 238, textAlign : 'center', color : '#f2f2f2', fontSize : 17, fontFamily : Global.FontRegular}}>{message}</Text>}
+                   {!!title && <Text style={{width : 238, textAlign : 'center', color : 'black', fontSize : 17, fontFamily : Global.FontBold}}>{title}</Text>}
+                   {!!message && <Text style={{marginTop : !!title ? 8 : 0, width : 238, textAlign : 'center', color : '#333333', fontSize : 14, fontFamily : Global.FontRegular}}>{message}</Text>}
                </View>
-               <View style={{flexDirection : 'row', height : newButtons.length > 0 ? 44 : 0, alignItems : 'center', justifyContent : 'center'}}>
-                   {newButtons.map((item, index) => {
+               <View style={{flexDirection : 'row', height : 44, alignItems : 'center', justifyContent : 'center', borderTopColor: '#aaaaaa', borderTopWidth: 0.5, }}>
+                   {newButtons && newButtons.length > 0 && newButtons.map((item, index) => {
                        return(
                            <TouchableOpacity onPress={() => {this.overlayView && this.overlayView.close(); if(item.onPress) item.onPress()}} style={{flex : 1, alignItems : 'center', justifyContent : 'center', borderRightColor : '#aaaaaa', borderRightWidth : (index < newButtons.length - 1) ? StyleSheet.hairlineWidth : 0}}>
-                               <Text style={[{color : item.color ? item.color : '#f2f2f2', fontSize : 17, fontFamily : Global.FontRegular, textAlign : 'center'}]}>{item.text}</Text>
+                               <Text style={[{color : item.color ? item.color : Global.MainColor, fontSize : 17, fontFamily : Global.FontRegular, textAlign : 'center'}]}>{item.text}</Text>
                            </TouchableOpacity>
                        )
                    })}
+                   {(! newButtons || newButtons.length == 0) && 
+                    <TouchableOpacity onPress={() => {this.overlayView && this.overlayView.close(); }} style={{flex : 1, alignItems : 'center', justifyContent : 'center'}}>
+                        <Text style={[{color : Global.MainColor, fontSize : 17, fontFamily : Global.FontRegular, textAlign : 'center'}]}>{'Ok'}</Text>
+                    </TouchableOpacity>
+                    }
                </View>
            </View>
          

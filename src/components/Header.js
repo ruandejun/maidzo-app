@@ -23,7 +23,7 @@ import {isIphoneX} from 'src/Global'
 export const headerStyles = StyleSheet.create({
 
  container : {
-   backgroundColor: 'white',
+   backgroundColor: '#F6F6F6',
    flexDirection : 'row',
    justifyContent: 'center',
    paddingTop: Platform.OS === 'ios' ? (isIphoneX() ? 50 : 20) : 0,
@@ -98,12 +98,11 @@ export const headerStyles = StyleSheet.create({
  },
  headerTitle : {
    fontSize : 18,
-   fontWeight : '700',
    fontFamily : Global.FontName,
    alignItems : 'center',
    textAlign : 'center',
    textAlignVertical : 'center',
-   color : Global.MainColor,
+   color : '#7F7F7F',
    position : 'absolute',
    left : 60, width : Global.ScreenWidth - 120,
    bottom : 8
@@ -201,14 +200,14 @@ export default class Header extends React.Component{
 
  render(){
 
-   const {leftIcon, autoFocus, leftText, leftAction, imageTitle, title, rightIcon, rightText, rightAction, right2Icon, right2Action, searchPlaceholder, searchText, onFocusSearch, headerChangeText, searchBar, refRight, cartCountText} = this.props;
+   const {leftIcon, autoFocus, rightCount, leftText, leftAction, imageTitle, title, rightIcon, rightText, rightAction, right2Icon, right2Action, searchPlaceholder, searchText, onFocusSearch, headerChangeText, searchBar, refRight, cartCountText} = this.props;
  
    return(
      <View style={headerStyles.container}>
        <StatusBar translucent barStyle='dark-content' backgroundColor='#00000000'/>
        {leftIcon &&
          <TouchableOpacity style={headerStyles.iconLeft} onPress={() => {if(leftAction) leftAction()}}>
-           <Icon name={leftIcon} size={18} color={'#333333'}/>
+           <Icon name={leftIcon} size={22} color={Global.MainColor}/>
          </TouchableOpacity>
        }
        {leftText &&
@@ -244,7 +243,13 @@ export default class Header extends React.Component{
        }
        {rightIcon &&
          <TouchableOpacity style={headerStyles.iconRight} ref={refRight} onPress={() => {if(rightAction) rightAction()}}>
-           <Icon name={rightIcon} size={18} color={'#333333'}/>
+           <Icon name={rightIcon} size={23} color={Global.MainColor}/>
+
+           {rightCount > 0 && 
+              <View style={{position: 'absolute', top: 0, right: 0, backgroundColor: 'green', minWidth: 16, height: 16, borderRadius: 8, alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={{fontSize: 9, fontFamily: Global.FontName, color: 'white'}}>{rightCount}</Text>
+              </View>
+            }
          </TouchableOpacity>
        }
        {rightText &&

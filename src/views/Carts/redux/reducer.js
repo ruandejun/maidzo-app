@@ -16,7 +16,7 @@ export default function appReducer(state = initState, action) {
         case actions.GET_CART_SUCCESS:
             return Object.assign({}, state, { 
                 items : action.data,
-                count: action.acount,
+                count: action.count,
                 user: action.user,
                 isFetching: false
             })
