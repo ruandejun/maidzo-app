@@ -48,9 +48,9 @@ class TaobaoWebView extends React.Component {
         try {
             console.log(event)
 
-            this.currentUrl = event.mainDocumentURL
+            this.currentUrl = event.mainDocumentURL ? event.mainDocumentURL : event.url
 
-            if(event.mainDocumentURL.indexOf('http') != 0){
+            if(this.currentUrl.indexOf('http') != 0){
                 return false
             }
             
