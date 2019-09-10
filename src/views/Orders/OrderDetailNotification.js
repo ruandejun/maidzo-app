@@ -119,7 +119,7 @@ class OrderDetailNotification extends React.Component {
 
         return(
             <View style={{width: '100%', height: 30, alignItems: 'center', justifyContent: 'center'}}>
-                <ActivityIndicator size='small' color='#aaaaaa'/>
+                <Image source={Media.LoadingIcon} style={{width : 30, height : 30}} resizeMode='contain'/>
             </View>
         )
     }

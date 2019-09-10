@@ -112,12 +112,31 @@ export function* addItemToCart({payload}) {
   }
 }
 
+export function* addManualItem({payload}) {
+  // console.log(JSON.stringify(payload))
+  let response = yield call(fetchUnlengthApi, 'post', 'page/add_item_to_cart/', payload);
 
+  console.log(response)
+  if (response && response.success) {
+
+    yield put({
+      type: actions.ADD_CART_ITEM_SUCCESS,
+      data: response
+    });
+
+    CustomAlert('Thêm sản phẩm vào giỏ hàng thành công')
+    
+    yield put({type: actions.GET_CART})
+  } else {
+    CustomAlert('Sản phẩm này không thêm được vào giỏ hàng, vui lòng chọn sản phẩm khác.')
+  }
+}
 
 export default function* rootSaga() {
   yield [
     yield takeEvery(actions.GET_CART, getCart),
     yield takeEvery(actions.ADD_CART_ITEM, addItemToCart),
+    yield takeEvery(actions.ADD_CART_MANUAL, addManualItem),
     yield takeEvery(actions.DELETE_CART_ITEM, deleteCartItem),
     yield takeEvery(actions.UPDATE_CART_ITEM, updateCartItem),
     yield takeEvery(actions.UPDATE_CART_ITEM_SERVICE, updateCartItemService),

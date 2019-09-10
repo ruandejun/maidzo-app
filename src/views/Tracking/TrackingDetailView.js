@@ -43,7 +43,7 @@ class TrackingDetailView extends React.Component {
     onRefresh(){
         const tracking_id = this.props.navigation.getParam('tracking_id')
 
-        console.log(tracking_id)
+        // console.log(tracking_id)
 
         if(!tracking_id){
             return

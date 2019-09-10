@@ -96,11 +96,17 @@ class OrderDetailItem extends React.PureComponent {
         }
     }
 
+    onTracking(){
+        if(this.props.onTracking){
+            this.props.onTracking()
+        }
+    }
+
     render() {
 
         const { vendor, name, id, image_url, price, price_vnd, option_selected_tag,
             status, currency, total_vnd, total_service_cost_vnd, quantity,
-            shipping_vnd, note, sum_arrived_quantity, rocket, packing, insurance, bargain, rocket_ship } = this.props
+            shipping_vnd, note, sum_arrived_quantity, rocket, packing, insurance, bargain, rocket_ship, count_shipmentpackage } = this.props
 
         return (
             <View style={styles.container} >
@@ -170,10 +176,18 @@ class OrderDetailItem extends React.PureComponent {
                     <Text style={styles.priceText}>Tổng</Text>
                     <Text style={styles.priceText}>{convertMoney(total_vnd) + 'đ'}</Text>
                 </View>
+                
+                <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
+                    {count_shipmentpackage > 0 &&
+                        <TouchableOpacity onPress={this.onTracking.bind(this)} style={{width: 100, height: 35, margin: 10, backgroundColor: 'blue', borderRadius: 5, alignItems: 'center', justifyContent: 'center'}}>
+                            <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Kiện hàng</Text>
+                        </TouchableOpacity>
+                    }
 
-                <TouchableOpacity onPress={this.onReport.bind(this)} style={{width: 100, height: 35, marginTop: 10, alignSelf: 'center', backgroundColor: 'red', borderRadius: 5, alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Khiếu nại</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={this.onReport.bind(this)} style={{width: 100, height: 35, margin: 10, backgroundColor: 'red', borderRadius: 5, alignItems: 'center', justifyContent: 'center'}}>
+                        <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Khiếu nại</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }

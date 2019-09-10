@@ -39,7 +39,7 @@ class SubmitReportView extends React.Component {
         if(order_number){
             this.setState({title: 'Tôi cần khiếu nại đơn hàng ' + order_number})
         }
-        
+
         if(item_id){
             this.setState({title: 'Tôi cần khiếu nại sản phẩm ' + item_id})
         }
@@ -75,11 +75,11 @@ class SubmitReportView extends React.Component {
             requestBody.order_number = order_number
         }
 
-        console.log(requestBody)
+        // console.log(requestBody)
 
         fetchUnlengthApi('post', 'page/create_ticket/', requestBody)
         .then((data) => {
-            console.log(data)
+            // console.log(data)
             if(data.success){
                 CustomAlert(null, 'Khiếu nại của bạn đã gửi thành công.', [
                     {text: 'Quay lại', onPress: () => this.props.navigation.goBack()}

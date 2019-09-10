@@ -21,6 +21,7 @@ import SupportView from 'Setting/SupportView'
 import UpdateProfileView from 'Setting/UpdateProfileView'
 
 import TrackingDetailView from 'Trackings/TrackingDetailView'
+import ItemTrackingView from 'Trackings/ItemTrackingView'
 
 import SubmitReportView from 'Reports/SubmitReportView'
 import ReportListView from 'Reports/ReportListView'
@@ -30,6 +31,8 @@ import WalletBalanceView from 'Wallets/WalletBalanceView'
 import DepositListView from 'Wallets/DepositListView'
 import RefundListView from 'Wallets/RefundListView'
 import PayListView from 'Wallets/PayListView'
+import PayOrderView from 'Wallets/PayOrderView'
+import RefundOrderView from 'Wallets/RefundOrderView'
 
 import HomeView from 'Home/HomeView'
 import TaobaoWebView from 'Home/TaobaoWebView'
@@ -38,6 +41,7 @@ import HomeSearchView from 'Home/HomeSearchView'
 import CartView from 'Carts/CartView'
 import CartConfirmView from 'Carts/CartConfirmView'
 import CartInfoView from 'Carts/CartInfoView'
+import ManualCartView from 'Carts/ManualCartView'
 
 import OrderListView from 'Orders/OrderListView'
 import OrderDetailView from 'Orders/OrderDetailView'
@@ -151,7 +155,23 @@ const AppNavigator = createAppContainer(
         HomeSearchView: {
             screen: HomeSearchView,
             navigationOptions: { header: null }
-        }
+        },
+        PayOrderView: {
+            screen: PayOrderView,
+            navigationOptions: { header: null }
+        },
+        RefundOrderView: {
+            screen: RefundOrderView,
+            navigationOptions: { header: null }
+        },
+        ItemTrackingView: {
+            screen: ItemTrackingView,
+            navigationOptions: { header: null }
+        },
+        ManualCartView: {
+            screen: ManualCartView,
+            navigationOptions: { header: null }
+        },
     }, {
 
             mode: 'modal',

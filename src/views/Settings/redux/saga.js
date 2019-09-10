@@ -8,7 +8,7 @@ import CustomAlert from 'components/CustomAlert'
 
 export function* getSettings() {
     let response = yield call(fetchApi, 'get', 'page/get_balance/');
-    console.log(response)
+    // console.log(response)
     if (response) {
 
         yield put({

@@ -85,7 +85,6 @@ function getProductDetailForCart() {
           product.price = parseFloat(document.getElementsByClassName('price')[0].innerText)
         }
       }
-      window.ReactNativeWebView.postMessage(JSON.stringify({price: document.getElementsByClassName('modal-sku-title-price')[0].innerText}))
       product.quantity = parseInt(document.getElementsByClassName('sku-number-edit')[0].value);
       product.shop_name = document.getElementsByClassName('shop-title-text')[0].innerText;
 

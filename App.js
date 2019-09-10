@@ -40,7 +40,7 @@ const Splash = () => {
        <StatusBar hidden/>
        <Image resizeMode='contain' source={Media.LogoIcon} style={styles.logoIcon} />
 
-        <ActivityIndicator size='small' color={Global.MainColor} style={{ marginTop: 10 }} />
+       <Image source={Media.LoadingIcon} style={{width : 30, height : 30}} resizeMode='contain'/>
      </View>
   )
 }

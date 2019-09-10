@@ -74,11 +74,6 @@ class OrderDetailTransaction extends React.Component {
             </View>
         )
     }
-
-    openItem(link){
-        this.props.navigation.navigate('TaobaoWebView', {url: link})
-    }
-
     render() {
 
         const {isFetching, items} = this.state

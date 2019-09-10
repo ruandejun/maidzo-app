@@ -29,6 +29,7 @@ import { addItemToCart } from 'Carts/redux/action'
 import CustomAlert from '../../components/CustomAlert';
 import { jsCheckReadyToAddCart, jsGetProductDetailForCart, jsHideTaobaoThing, jsShowOptionsPopup } from './script/taobao'
 import {jsHide1688Thing, js1688ShowOptionsPopup, jsCheck1688ReadyToAddCart, jsGet1688ProductDetailForCart} from './script/alibaba'
+import {jsGetChemistDetailForCart} from './script/chemist'
 
 class TaobaoWebView extends React.Component {
 
@@ -95,7 +96,9 @@ class TaobaoWebView extends React.Component {
             this.setState({url: this.currentUrl.replace('https://ju.taobao.com/m/jusp/alone/detailwap/mtp.htm?item_id=', 'https://detail.m.tmall.com/item.htm?id=')})
             return
         }
-        if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') == -1 && this.currentUrl.indexOf('m.1688.com/offer') == -1) {
+        if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') == -1 && this.currentUrl.indexOf('m.1688.com/offer') == -1 && 
+            this.currentUrl.indexOf('https://www.chemistwarehouse.com.au/buy/') == -1 && this.currentUrl.indexOf('https://dis.as.criteo.com/dis/dis.aspx' == -1)
+        ) {
             CustomAlert(null, 'Đây không phải trang chi tiết sản phẩm')
             return
         }
@@ -104,6 +107,8 @@ class TaobaoWebView extends React.Component {
             this.webview.injectJavaScript(jsCheckReadyToAddCart)
         } else if(this.currentUrl.indexOf('m.1688.com/offer') != -1){
             this.webview.injectJavaScript(jsCheck1688ReadyToAddCart)
+        } else if(this.currentUrl.indexOf('https://www.chemistwarehouse.com.au/buy/') != -1 || this.currentUrl.indexOf('https://dis.as.criteo.com/dis/dis.aspx') != -1){
+            this.webview.injectJavaScript(jsGetChemistDetailForCart)
         }
     }
 
@@ -115,7 +120,7 @@ class TaobaoWebView extends React.Component {
         try {
             if (event.nativeEvent.data) {
                 let response = JSON.parse(event.nativeEvent.data)
-                // console.log(response)
+                console.log(response)
                 if (response) {
                     if (response.type == 'checkReadyToAddCart') {
                         if (response.value) {
@@ -169,6 +174,29 @@ class TaobaoWebView extends React.Component {
         }
     }
 
+    reloadWeb(){
+        if(this.webview){
+            this.webview.reload()
+        }
+    }
+
+    onChangeText(text){
+        
+        
+        let searchKeyword = text
+
+        try {
+            const results = text.match(/(https?:\/\/[^\s]+)/g)
+            if(results && results.length > 0){
+                searchKeyword = results[0]
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+        this.setState({searchKeyword: searchKeyword})
+    }
+
     render() {
 
         const {url} = this.state
@@ -183,16 +211,16 @@ class TaobaoWebView extends React.Component {
                     </TouchableOpacity>
 
                     <View style={[headerStyles.searchContainer]}>
-                        <Image source={Media.SearchIcon} style={headerStyles.searchIcon} />
+                        <Icon name='search' size={15} color='#7f7f7f'/>
                         <TextInput
                             style={[headerStyles.searchInput,]}
                             underlineColorAndroid='#00000000'
                             placeholder={'Nhập link sản phẩm cần tìm kiếm'}
                             placeholderTextColor='#7f7f7f'
-                            value={this.props.searchKeyword}
+                            value={this.state.searchKeyword}
                             clearButtonMode='always'
                             clearTextOnFocus={true}
-                            onChangeText={(text) => this.setState({searchKeyword: text})}
+                            onChangeText={this.onChangeText.bind(this)}
                             onSubmitEditing={this.onEndSubmit.bind(this)}
                             onEndEditing={this.onEndSubmit.bind(this)}
                         />
@@ -222,16 +250,20 @@ class TaobaoWebView extends React.Component {
                     />
                     {this.state.loading &&
                         <View style={[StyleSheet.absoluteFill, { backgroundColor: '#00000077', alignItems: 'center', justifyContent: 'center' }]}>
-                            <ActivityIndicator size='small' color={Global.MainColor} />
+                            <Image source={Media.LoadingIcon} style={{width : 30, height : 30}} resizeMode='contain'/>
                         </View>
                     }
                 </View>
                 <View style={{ width: Global.ScreenWidth, backgroundColor: Global.MainColor, flexDirection: 'row'}}>
-                        <TouchableOpacity onPress={this.goBack.bind(this)} style={{ width: '30%', backgroundColor: '#aaaaaa', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
+                        <TouchableOpacity onPress={this.goBack.bind(this)} style={{ width: '25%', backgroundColor: '#aaaaaa', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
                             <Icon name='chevron-left' color='white' size={20} style={{ marginRight: 10 }} />
-                            <Text style={{ fontSize: 16, marginTop : 5, color: 'white', fontFamily: Global.FontName, fontWeight: '500' }}>Trang trước</Text>
+                            <Text style={{ fontSize: 13, marginTop : 5, color: 'white', fontFamily: Global.FontName, fontWeight: '500' }}>Trang trước</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={this.addToCart.bind(this)} style={{ width: '70%', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
+                        <TouchableOpacity onPress={this.reloadWeb.bind(this)} style={{ width: '25%', backgroundColor: '#aaaaaa', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
+                            <Icon name='redo' color='white' size={20} style={{ marginRight: 10 }} />
+                            <Text style={{ fontSize: 13, marginTop : 5, color: 'white', fontFamily: Global.FontName, fontWeight: '500' }}>Tải lại</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={this.addToCart.bind(this)} style={{ width: '50%', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
                             <Icon name='cart-plus' color='white' size={20} style={{ marginRight: 10 }} />
                             <Text style={{ fontSize: 16, marginTop : 5, color: 'white', fontFamily: Global.FontName, fontWeight: '500' }}>Thêm vào giỏ hàng</Text>
                         </TouchableOpacity>

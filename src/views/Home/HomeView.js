@@ -40,6 +40,7 @@ import {getSettings} from 'Setting/redux/action'
 import {getCart} from 'Carts/redux/action'
 import Header from 'components/Header'
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import { ScrollView } from 'react-native-gesture-handler';
 
 class HomeView extends React.Component {
 
@@ -103,22 +104,33 @@ class HomeView extends React.Component {
                         <Icon name='store' size={15} color='#333333'/>
                         <Text style={{marginLeft: 8, fontSize: 15, color: '#333333', fontFamily: Global.FontName,}}>Đặt mua sản phẩm</Text>
                     </View>
-                    <View style={{flexDirection: 'row', marginTop : 8}}>
-                        <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://1688.com')} style={{padding: 10, alignItems: 'center', justifyContent: 'center'}}>
-                            <Image source={Media.AlibabaIcon} style={{width: 60, height: 60}}/>
-                            <Text style={{fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop : 4}}>1688.com</Text>
-                        </TouchableOpacity>
+                    <ScrollView horizontal style={{width: '100%', marginTop : 8}} showsHorizontalScrollIndicator={false}>
+                        <View style={{flexDirection: 'row', }}>
+                            <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://1688.com')} style={{padding: 10, alignItems: 'center', justifyContent: 'center'}}>
+                                <Image source={Media.AlibabaIcon} style={{width: 60, height: 60}}/>
+                                <Text style={{fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop : 4}}>1688.com</Text>
+                            </TouchableOpacity>
 
-                        <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://m.intl.taobao.com')} style={{padding: 10, alignItems: 'center', justifyContent: 'center'}}>
-                            <Image source={Media.TaobaoIcon} style={{width: 60, height: 60}}/>
-                            <Text style={{fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop : 4}}>taobao.com</Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://m.intl.taobao.com')} style={{padding: 10, alignItems: 'center', justifyContent: 'center'}}>
+                                <Image source={Media.TaobaoIcon} style={{width: 60, height: 60}}/>
+                                <Text style={{fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop : 4}}>taobao.com</Text>
+                            </TouchableOpacity>
 
-                        <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.tmall.com')} style={{padding: 10, marginLeft: 8, alignItems: 'center', justifyContent: 'center'}}>
-                            <Image source={Media.TmallIcon} style={{width: 60, height: 60}}/>
-                            <Text style={{fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop : 4}}>tmall.com</Text>
-                        </TouchableOpacity>
-                    </View>
+                            <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.tmall.com')} style={{padding: 10, marginLeft: 8, alignItems: 'center', justifyContent: 'center'}}>
+                                <Image source={Media.TmallIcon} style={{width: 60, height: 60}}/>
+                                <Text style={{fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop : 4}}>tmall.com</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.chemistwarehouse.com.au')} style={{padding: 10, marginLeft: 8, alignItems: 'center', justifyContent: 'center'}}>
+                                <Image source={Media.ChemistIcon} style={{width: 60, height: 60}}/>
+                                <Text style={{fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop : 4}}>chemistwarehouse</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('ManualCartView')} style={{width: '100%', padding: 10, marginTop: 15, borderRadius: 5, alignItems: 'center', justifyContent: 'center', backgroundColor: Global.MainColor}}>
+                    <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Thêm sản phẩm ngoài</Text>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{width: '100%', backgroundColor: 'white', marginTop : 10, marginBottom: 10, padding: 16, paddingTop: 0, paddingBottom: 0}}>

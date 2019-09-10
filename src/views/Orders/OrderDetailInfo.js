@@ -64,7 +64,7 @@ class OrderDetailInfo extends React.Component {
         this.setState({isFetching: true}, () => {
             fetchApi('get', `page/order/${order_id}/get_order_informaiton/`)
             .then((data) => {
-                // console.log(data)
+                console.log(data)
 
                 this.setState({isFetching: false, orderDetail: data})
             })
@@ -115,10 +115,6 @@ class OrderDetailInfo extends React.Component {
                                 <Text style={{color: 'black', fontSize: 14}}>{convertMoney(orderDetail.sum_item_shipping) + ' đ'}</Text>
                             </Text>
 
-                            <Text style={styles.infoText}>{`Vận chuyển Việt Nam: `}
-                                <Text style={{color: 'black', fontSize: 14}}>{convertMoney(orderDetail.sum_shipment_cost) + ' đ/ ' + orderDetail.sum_shipment_weight + ' kg' }</Text>
-                            </Text>
-
                             <Text style={styles.infoText}>{`Phí dịch vụ: `}
                                 <Text style={{color: 'black', fontSize: 14}}>{convertMoney(orderDetail.sum_item_total_service_cost) + ' đ'}</Text>
                             </Text>
@@ -135,9 +131,27 @@ class OrderDetailInfo extends React.Component {
 
                     {orderDetail &&
                         <View style={styles.itemContainer}>
+                            <Text style={[styles.itemTitle, {color: '#1B5795'}]}>Thông tin vận chuyển về Việt Nam</Text>
+                            <View style={{width: '100%', height: 1, backgroundColor: '#CECECE', marginTop : 8, marginBottom : 8}}/>
+                            <Text style={styles.infoText}>{`Tổng số cân: `}
+                                <Text style={{color: 'black', fontSize: 14}}>{orderDetail.sum_shipment_weight + ' kg'}</Text>
+                            </Text>
+
+                            <Text style={styles.infoText}>{`Tổng số kiến: `}
+                                <Text style={{color: 'black', fontSize: 14}}>{orderDetail.count_shipment}</Text>
+                            </Text>
+
+                            <Text style={styles.infoText}>{`Tổng phí cân: `}
+                                <Text style={{color: 'black', fontSize: 14}}>{convertMoney(orderDetail.sum_shipment_cost) + ' đ'}</Text>
+                            </Text>
+                        </View>
+                    }
+
+                    {orderDetail &&
+                        <View style={styles.itemContainer}>
                             <Text style={[styles.itemTitle, {color: '#1B5795'}]}>Thông tin nhận hàng</Text>
                             <View style={{width: '100%', height: 1, backgroundColor: '#CECECE', marginTop : 8, marginBottom : 8}}/>
-                            <Text style={styles.infoText}>{``}
+                            <Text style={styles.infoText}>{`Tên`}
                                 <Text style={{color: 'black', fontSize: 14}}>{orderDetail.receiver_name}</Text>
                             </Text>
 
@@ -145,7 +159,7 @@ class OrderDetailInfo extends React.Component {
                                 <Text style={{color: 'black', fontSize: 14}}>{orderDetail.receiver_phone}</Text>
                             </Text>
 
-                            <Text style={styles.infoText}>{`Tài khoảng: `}
+                            <Text style={styles.infoText}>{`Tài khoản: `}
                                 <Text style={{color: 'black', fontSize: 14}}>{orderDetail.username}</Text>
                             </Text>
 
@@ -180,9 +194,23 @@ class OrderDetailInfo extends React.Component {
                                 <Text style={{color: 'red', fontSize: 14}}>{convertMoney(orderDetail.need_to_pay) + ' đ'}</Text>
                             </Text>
 
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('WalletBalanceView')} style={{width: 100, height: 35, marginTop: 10, alignSelf: 'center', backgroundColor: 'green', borderRadius: 5, alignItems: 'center', justifyContent: 'center'}}>
-                                <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Nạp tiền</Text>
-                            </TouchableOpacity>
+                            <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
+                                {orderDetail && orderDetail.payment_left > 0 && 
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('PayOrderView', {order_id: orderDetail.id, amount: orderDetail.payment_left})} style={{width: 100, height: 35, margin: 10, backgroundColor: 'blue', borderRadius: 5, alignItems: 'center', justifyContent: 'center'}}>
+                                        <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Thanh toán</Text>
+                                    </TouchableOpacity>
+                                }
+
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('WalletBalanceView')} style={{width: 100, height: 35, margin: 10, backgroundColor: 'green', borderRadius: 5, alignItems: 'center', justifyContent: 'center'}}>
+                                    <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Nạp tiền</Text>
+                                </TouchableOpacity>
+
+                                {orderDetail && orderDetail.need_to_pay <= 0 && 
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('RefundOrderView', {order_id: orderDetail.id, need_to_pay: orderDetail.need_to_pay})} style={{width: 100, height: 35, margin: 10, backgroundColor: 'orange', borderRadius: 5, alignItems: 'center', justifyContent: 'center'}}>
+                                        <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Hoàn tiền</Text>
+                                    </TouchableOpacity>
+                                }
+                            </View>
                         </View>
                     }
                 </ScrollView>

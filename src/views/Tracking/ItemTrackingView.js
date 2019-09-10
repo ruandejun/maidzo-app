@@ -15,20 +15,19 @@ import {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f6f6f6', paddingBottom: getBottomSpace()
+        backgroundColor: '#f6f6f6'
     },
 })
 
 import { connect } from 'react-redux';
 import Global, { Media, calculateDistance, decode, getStatusBarHeight } from 'src/Global';
 import Header from 'components/Header'
+import OrderTrackingItem from 'Orders/component/OrderTrackingItem'
 import {fetchApi} from 'actions/api'
-import PayItem from './component/PayItem'
-import { getBottomSpace } from 'react-native-iphone-x-helper';
 
-const LIMIT = 20
+const LIMIT = 10
 
-class PayListView extends React.Component {
+class ItemTrackingView extends React.Component {
 
     constructor(props){
         super(props)
@@ -46,14 +45,14 @@ class PayListView extends React.Component {
     }
 
     onRefresh(){
-        const {user} = this.props
+        const item_id = this.props.navigation.getParam('item_id')
 
-        if(!user){
+        if(!item_id){
             return
         }
 
         this.setState({isFetching: true, loadingMore: false, canLoadMore: true}, () => {
-            fetchApi('get', `page/get_data_pay_by_username/${this.props.user.username}/data.json/`, {order: 'asc', offset: 0, limit: LIMIT})
+            fetchApi('get', `page/get_data_tracking_number_by_item/${item_id}/data.json/`, {order: 'asc', offset: 0, limit: LIMIT})
             .then((data) => {
                 // console.log(data)
 
@@ -67,9 +66,9 @@ class PayListView extends React.Component {
     }
 
     onEndReached(){
-        const {user} = this.props
+        const item_id = this.props.navigation.getParam('item_id')
 
-        if(!user){
+        if(!item_id){
             return
         }
 
@@ -78,19 +77,15 @@ class PayListView extends React.Component {
         }
 
         this.setState({loadingMore: true}, () => {
-            fetchApi('get', `page/get_data_pay_by_username/${this.props.user.username}/data.json/`, {order: 'asc', offset: this.state.items.length, limit: LIMIT})
+            fetchApi('get', `page/get_data_tracking_number_by_order/${item_id}/data.json/`, {order: 'asc', offset: this.state.items.length, limit: this.state.items.length + LIMIT})
             .then((data) => {
                 // console.log(data)
-                if(data){
-                    let items = this.state.items
-                    data.rows.map((item) => {
-                        items.push(item)
-                    })
-    
-                    this.setState({loadingMore: false, items: items, canLoadMore: items.length < data.total})
-                } else {
-                    this.setState({loadingMore: false})
-                }
+                let items = this.state.items
+                data.rows.map((item) => {
+                    items.push(item)
+                })
+
+                this.setState({loadingMore: false, items: items, canLoadMore: items.length < data.total})
             })
             .catch((error) => {
                 console.log(error)
@@ -101,12 +96,16 @@ class PayListView extends React.Component {
 
     renderItem({item, index}){
         return(
-            <PayItem {...item} onOpenOrder={this.onOpenOrder.bind(this, item.order)}/>
+            <OrderTrackingItem {...item} onDetail={this.openItem.bind(this, item.id)} onReport={this.onReport.bind(this, item.id)}/>
         )
     }
 
-    onOpenOrder(order_id){
-        this.props.navigation.navigate('OrderDetailView', {order_id: order_id})
+    onReport(shipment_package){
+        this.props.navigation.navigate('SubmitReportView', {shipment_package: shipment_package})
+    }
+
+    openItem(item_id){
+        this.props.navigation.navigate('TrackingDetailView', {tracking_id: item_id})
     }
 
     renderFooter(){
@@ -124,11 +123,12 @@ class PayListView extends React.Component {
     render() {
 
         const {isFetching, items} = this.state
+        const item_id = this.props.navigation.getParam('item_id')
 
         return (
             <View style={styles.container}>
                 <Header
-                    title='Giao dịch thanh toán'
+                    title={'Kiện hàng sp - ' + item_id}
                     leftIcon='chevron-left'
                     leftAction={() => this.props.navigation.goBack()}
                 />
@@ -141,6 +141,7 @@ class PayListView extends React.Component {
                     showsVerticalScrollIndicator={false}
                     onEndReached={this.onEndReached.bind(this)}
                     ListFooterComponent={this.renderFooter.bind(this)}
+                    ListEmptyComponent={() => <Text style={{width: '100%', fontSize: 13, textAlign: 'center', padding: 16, fontFamily: Global.FontName, color: '#aaaaaa'}}>Chưa có thông tin vận chuyển</Text>}
                 />
             </View>
         )
@@ -149,7 +150,7 @@ class PayListView extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        user: state.auth.user,
+        isFetching: state.order.detailFetching
     };
 };
 
@@ -158,4 +159,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PayListView);
+export default connect(mapStateToProps, mapDispatchToProps)(ItemTrackingView);

@@ -3,6 +3,7 @@ const actions = {
   GET_CART_SUCCESS: 'GET_CART_SUCCESS',
   CREATE_ORDER_SUCCESS: 'CREATE_ORDER_SUCCESS',
   ADD_CART_ITEM: 'ADD_CART_ITEM',
+  ADD_CART_MANUAL: 'ADD_CART_MANUAL',
   ADD_CART_ITEM_SUCCESS: 'ADD_CART_ITEM_SUCCESS',
   DELETE_CART_ITEM: 'DELETE_CART_ITEM',
   UPDATE_CART_ITEM: 'UPDATE_CART_ITEM',
@@ -38,7 +39,7 @@ export const getCart = () => {
   }
 }
 
-export const addItemToCart = (name, short_description, vendor, quantity, price, options_selected, detail_url, link_origin, currency, image_url, price_origin) => {
+export const addItemToCart = (name, short_description, vendor, quantity, price, options_selected, detail_url, link_origin, currency, image_url, price_origin, note = '') => {
   return {
     type: actions.ADD_CART_ITEM,
     payload: {
@@ -55,7 +56,18 @@ export const addItemToCart = (name, short_description, vendor, quantity, price, 
       price_origin,
       is_translate: false,
       shipping: 0,
-      http_referer: 'https://Maidzo.vn.com/'
+      http_referer: 'https://Maidzo.vn.com/',
+      note: note
+    }
+  }
+}
+
+export const addManualItem = (add_item_username, link_add_item, name_add_item, link_image, add_item_quantity, add_item_price, add_item_currency, add_item_color,
+                              add_item_size, add_item_note) => {
+  return {
+    type: actions.ADD_CART_MANUAL,
+    payload: {
+      add_item_username, link_add_item, name_add_item, link_image, add_item_quantity, add_item_price, add_item_currency, add_item_color, add_item_size, add_item_note
     }
   }
 }

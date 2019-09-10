@@ -55,7 +55,7 @@ class ReportListView extends React.Component {
         this.setState({isFetching: true, loadingMore: false, canLoadMore: true}, () => {
             fetchApi('get', `page/get_data_tickets/`, {order: 'asc', offset: 0, limit: LIMIT})
             .then((data) => {
-                console.log(data)
+                // console.log(data)
 
                 this.setState({isFetching: false, items: data.rows, canLoadMore: data.rows.length < data.total})
             })
@@ -80,7 +80,7 @@ class ReportListView extends React.Component {
         this.setState({loadingMore: true}, () => {
             fetchApi('get', `page/get_data_tickets/`, {order: 'asc', offset: this.state.items.length, limit: LIMIT})
             .then((data) => {
-                console.log(data)
+                // console.log(data)
                 if(data){
                     let items = this.state.items
                     data.rows.map((item) => {
@@ -116,7 +116,7 @@ class ReportListView extends React.Component {
 
         return(
             <View style={{width: '100%', height: 30, alignItems: 'center', justifyContent: 'center'}}>
-                <ActivityIndicator size='small' color='#aaaaaa'/>
+                <Image source={Media.LoadingIcon} style={{width : 30, height : 30}} resizeMode='contain'/>
             </View>
         )
     }

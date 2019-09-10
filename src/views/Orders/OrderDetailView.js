@@ -15,7 +15,8 @@ import {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f6f6f6'
+        backgroundColor: '#f6f6f6',
+        paddingBottom: getBottomSpace()
     },
 })
 
@@ -31,6 +32,7 @@ import OrderDetailInfo from './OrderDetailInfo'
 import OrderDetailNotification from './OrderDetailNotification'
 import OrderDetailTracking from './OrderDetailTracking'
 import OrderDetailTransaction from './OrderDetailTransaction'
+import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 class OrderDetailView extends React.Component {
 
