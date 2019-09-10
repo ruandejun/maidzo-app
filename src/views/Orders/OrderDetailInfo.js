@@ -151,7 +151,7 @@ class OrderDetailInfo extends React.Component {
                         <View style={styles.itemContainer}>
                             <Text style={[styles.itemTitle, {color: '#1B5795'}]}>Thông tin nhận hàng</Text>
                             <View style={{width: '100%', height: 1, backgroundColor: '#CECECE', marginTop : 8, marginBottom : 8}}/>
-                            <Text style={styles.infoText}>{`Tên`}
+                            <Text style={styles.infoText}>{`Tên: `}
                                 <Text style={{color: 'black', fontSize: 14}}>{orderDetail.receiver_name}</Text>
                             </Text>
 
