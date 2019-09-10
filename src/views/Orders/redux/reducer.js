@@ -6,14 +6,32 @@ const initState = {
     isFetching: false,
     detail: null,
     detailItems: [],
-    detailFetching: false
+    detailFetching: false,
+    canLoadMore: true,
+    loadingMore: false
 };
 
 export default function appReducer(state = initState, action) {
     switch (action.type) {
+        case actions.GET_MORE_ORDER:
+            return Object.assign({}, state, {
+                loadingMore: true
+            })
+        case actions.GET_MORE_ORDER_SUCCESS:
+            let items = state.items
+            action.data.map((item) => {
+                items.push(item)
+            })
+            return Object.assign({}, state, {
+                items: items,
+                loadingMore: false,
+                canLoadMore: items.length < action.total
+            })
         case actions.GET_ORDER:
             return Object.assign({}, state, {
-                isFetching: true
+                isFetching: true,
+                canLoadMore: true,
+                loadingMore: false,
             })
         case actions.GET_DETAIL_ITEMS:
             return Object.assign({}, state, {
@@ -23,17 +41,18 @@ export default function appReducer(state = initState, action) {
             return Object.assign({}, state, {
                 items: action.data,
                 count: action.total,
-                isFetching: false
+                isFetching: false,
+                canLoadMore: action.data.length < action.total
             })
         case actions.GET_DETAIL_SUCCESS:
             return Object.assign({}, state, {
                 detail: action.data
             })
         case actions.GET_DETAIL_ITEMS_SUCCESS:
-                return Object.assign({}, state, {
-                    detailItems: action.data,
-                    detailFetching: false
-                })
+            return Object.assign({}, state, {
+                detailItems: action.data,
+                detailFetching: false
+            })
         default:
             return state
     }

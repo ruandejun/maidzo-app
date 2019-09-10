@@ -8,6 +8,8 @@ const actions = {
   GET_DETAIL_SUCCESS: 'GET_DETAIL_SUCCESS',
   GET_DETAIL_ITEMS: 'GET_DETAIL_ITEMS',
   GET_DETAIL_ITEMS_SUCCESS: 'GET_DETAIL_ITEMS_SUCCESS',
+  GET_MORE_ORDER: 'GET_MORE_ORDER',
+  GET_MORE_ORDER_SUCCESS: 'GET_MORE_ORDER_SUCCESS',
   }
 
   export const createOrderFromCart = (full_name, street, district, city, phone_number, ship_method, order_note, facebook, item_submit) => {
@@ -20,6 +22,13 @@ const actions = {
   export const getOrder = (order, offset, limit) => {
     return {
       type: actions.GET_ORDER,
+      order, offset, limit
+    }
+  }
+
+  export const getMoreOrder = (order, offset, limit) => {
+    return {
+      type: actions.GET_MORE_ORDER,
       order, offset, limit
     }
   }

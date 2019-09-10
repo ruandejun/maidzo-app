@@ -36,19 +36,27 @@ const styles = StyleSheet.create({
 import { connect } from 'react-redux';
 import Global, { Media, calculateDistance, decode, getStatusBarHeight } from 'src/Global';
 import {getWalletBalance} from 'Wallets/redux/action'
+import {getSettings} from 'Setting/redux/action'
 import {getCart} from 'Carts/redux/action'
 import Header from 'components/Header'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
 class HomeView extends React.Component {
 
+    state = {
+        keyword: ''
+    }
+
     componentDidMount(){
-        this.props.getWalletBalance()
+        if(this.props.user){
+            this.props.getWalletBalance(this.props.user.username)
+        }
+        this.props.getSettings()
         this.props.getCart()
     }
 
-    onpenWeb(){
-        this.props.navigation.navigate('TaobaoWebView', {url: 'https://taobao.com'})
+    onpenWeb(url){
+        this.props.navigation.navigate('TaobaoWebView', {url: url})
     }
 
     openSetting(){
@@ -63,6 +71,18 @@ class HomeView extends React.Component {
         this.props.navigation.navigate('SupportView')
     }
 
+    openReports(){
+        this.props.navigation.navigate('ReportListView')
+    }
+
+    onSearch(){
+        if(this.state.keyword.length == 0){
+            return
+        }
+
+        this.props.navigation.navigate('HomeSearchView', {keyword: this.state.keyword})
+    }
+
     render() {
 
         const {user} = this.props
@@ -70,7 +90,12 @@ class HomeView extends React.Component {
         return (
             <View style={styles.container}>
                 <Header
-                    title='Trang chủ'
+                    searchBar
+                    searchText={this.state.keyword}
+                    searchContainer={{left: 16, width: Global.ScreenWidth - 32}}
+                    headerChangeText={(text) => this.setState({keyword: text})}
+                    searchPlaceholder='Nhập từ khoá để tìm kiếm sản phẩm'
+                    onEndSubmit={this.onSearch.bind(this)}
                 />
 
                 <View style={{width: '100%', backgroundColor: 'white', marginTop : 10, marginBottom: 10, padding: 16}}>
@@ -79,9 +104,19 @@ class HomeView extends React.Component {
                         <Text style={{marginLeft: 8, fontSize: 15, color: '#333333', fontFamily: Global.FontName,}}>Đặt mua sản phẩm</Text>
                     </View>
                     <View style={{flexDirection: 'row', marginTop : 8}}>
-                        <TouchableOpacity onPress={this.onpenWeb.bind(this)} style={{padding: 10, alignItems: 'center', justifyContent: 'center'}}>
+                        <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://1688.com')} style={{padding: 10, alignItems: 'center', justifyContent: 'center'}}>
+                            <Image source={Media.AlibabaIcon} style={{width: 60, height: 60}}/>
+                            <Text style={{fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop : 4}}>1688.com</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://m.intl.taobao.com')} style={{padding: 10, alignItems: 'center', justifyContent: 'center'}}>
                             <Image source={Media.TaobaoIcon} style={{width: 60, height: 60}}/>
                             <Text style={{fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop : 4}}>taobao.com</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.tmall.com')} style={{padding: 10, marginLeft: 8, alignItems: 'center', justifyContent: 'center'}}>
+                            <Image source={Media.TmallIcon} style={{width: 60, height: 60}}/>
+                            <Text style={{fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop : 4}}>tmall.com</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -90,6 +125,13 @@ class HomeView extends React.Component {
                     <TouchableOpacity onPress={this.openWallet.bind(this)} style={styles.itemContainer}>
                         <Icon name='wallet' size={15} color='#DF5539'/>
                         <Text style={styles.itemText}>Ví Maidzo</Text>
+                        <Icon name='chevron-right' size={14} color='#333333'/>
+                        <View style={styles.separator}/>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={this.openReports.bind(this)} style={styles.itemContainer}>
+                        <Icon name='ticket-alt' size={15} color='#DF5539'/>
+                        <Text style={styles.itemText}>Danh sách khiếu nại</Text>
                         <Icon name='chevron-right' size={14} color='#333333'/>
                         <View style={styles.separator}/>
                     </TouchableOpacity>
@@ -120,7 +162,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getWalletBalance: () => dispatch(getWalletBalance()),
+        getWalletBalance: (username) => dispatch(getWalletBalance(username)),
+        getSettings:() => dispatch(getSettings()),
         getCart: () => dispatch(getCart())
     };
 };

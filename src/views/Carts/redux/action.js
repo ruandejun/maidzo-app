@@ -5,7 +5,8 @@ const actions = {
   ADD_CART_ITEM: 'ADD_CART_ITEM',
   ADD_CART_ITEM_SUCCESS: 'ADD_CART_ITEM_SUCCESS',
   DELETE_CART_ITEM: 'DELETE_CART_ITEM',
-  UPDATE_CART_ITEM: 'UPDATE_CART_ITEM'
+  UPDATE_CART_ITEM: 'UPDATE_CART_ITEM',
+  UPDATE_CART_ITEM_SERVICE: 'UPDATE_CART_ITEM_SERVICE'
 }
 
 export const deleteCartItem = (id) => {
@@ -21,6 +22,13 @@ export const updateCartItem = (pk, value, name) => {
   return {
     type: actions.UPDATE_CART_ITEM,
     pk, value, name
+  }
+}
+
+export const updateCartItemService = (item_list, value, name) => {
+  return {
+    type: actions.UPDATE_CART_ITEM_SERVICE,
+    item_list, value, name
   }
 }
 

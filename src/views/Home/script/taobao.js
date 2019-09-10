@@ -76,7 +76,16 @@ function getProductDetailForCart() {
 
       product.detailUrl = window.location.href;
       product.title = document.getElementsByClassName('title')[0].innerText;
-      product.price = parseFloat(document.getElementsByClassName('modal-sku-title-price')[0].innerText);
+      var price = parseFloat(document.getElementsByClassName('modal-sku-title-price')[0].innerText);
+      if(price){
+        product.price = price;
+      } else {
+        var temp = document.getElementsByClassName('ju-prices-wrapper')[0];
+        if(temp){
+          product.price = parseFloat(document.getElementsByClassName('price')[0].innerText)
+        }
+      }
+      window.ReactNativeWebView.postMessage(JSON.stringify({price: document.getElementsByClassName('modal-sku-title-price')[0].innerText}))
       product.quantity = parseInt(document.getElementsByClassName('sku-number-edit')[0].value);
       product.shop_name = document.getElementsByClassName('shop-title-text')[0].innerText;
 

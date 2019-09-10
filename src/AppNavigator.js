@@ -20,10 +20,20 @@ import PrivacyView from 'Setting/PrivacyView'
 import SupportView from 'Setting/SupportView'
 import UpdateProfileView from 'Setting/UpdateProfileView'
 
+import TrackingDetailView from 'Trackings/TrackingDetailView'
+
+import SubmitReportView from 'Reports/SubmitReportView'
+import ReportListView from 'Reports/ReportListView'
+import ReportDetailView from 'Reports/ReportDetailView'
+
 import WalletBalanceView from 'Wallets/WalletBalanceView'
+import DepositListView from 'Wallets/DepositListView'
+import RefundListView from 'Wallets/RefundListView'
+import PayListView from 'Wallets/PayListView'
 
 import HomeView from 'Home/HomeView'
 import TaobaoWebView from 'Home/TaobaoWebView'
+import HomeSearchView from 'Home/HomeSearchView'
 
 import CartView from 'Carts/CartView'
 import CartConfirmView from 'Carts/CartConfirmView'
@@ -110,6 +120,38 @@ const AppNavigator = createAppContainer(
             screen: CartView,
             navigationOptions: { header: null }
         },
+        DepositListView: {
+            screen: DepositListView,
+            navigationOptions: { header: null }
+        },
+        PayListView: {
+            screen: PayListView,
+            navigationOptions: { header: null }
+        },
+        RefundListView: {
+            screen: RefundListView,
+            navigationOptions: { header: null }
+        },
+        TrackingDetailView: {
+            screen: TrackingDetailView,
+            navigationOptions: { header: null }
+        },
+        SubmitReportView: {
+            screen: SubmitReportView,
+            navigationOptions: { header: null }
+        },
+        ReportListView: {
+            screen: ReportListView,
+            navigationOptions: { header: null }
+        },
+        ReportDetailView: {
+            screen: ReportDetailView,
+            navigationOptions: { header: null }
+        },
+        HomeSearchView: {
+            screen: HomeSearchView,
+            navigationOptions: { header: null }
+        }
     }, {
 
             mode: 'modal',

@@ -48,7 +48,7 @@ import { connect } from 'react-redux';
 import Global, { Media, convertMoney, } from 'src/Global';
 import Header from 'components/Header'
 import CartItem from './component/CartItem'
-import {getCart, deleteCartItem, updateCartItem} from './redux/action'
+import {getCart, deleteCartItem, updateCartItem, updateCartItemService} from './redux/action'
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 class CartView extends React.Component {
@@ -67,6 +67,7 @@ class CartView extends React.Component {
                 onDelete={this.onDelete.bind(this, item)}
                 onUpdateQuantity={(quantity) => this.onUpdateItem(item.id, quantity, 'quantity')}
                 onUpdateNote={(text) => this.onUpdateItem(item.id, text, 'note')}
+                onUpdateService={({value, name}) => this.onUpdateService(item.id, value, name)}
             />
         )
     }
@@ -77,6 +78,10 @@ class CartView extends React.Component {
 
     onUpdateItem(pk, value, name){
         this.props.updateCartItem(pk, value, name)
+    }
+
+    onUpdateService(item_list, value, name){
+        this.props.updateCartItemService(JSON.stringify([item_list]), value, name)
     }
 
     footerView(){
@@ -190,6 +195,7 @@ const mapDispatchToProps = dispatch => {
         getCart: () => {dispatch(getCart())},
         deleteCartItem: (id) => {dispatch(deleteCartItem(id))},
         updateCartItem: (pk, value, name) => {dispatch(updateCartItem(pk, value, name))},
+        updateCartItemService: (item_list, value, name) => {dispatch(updateCartItemService(item_list, value, name))},
     };
 };
 

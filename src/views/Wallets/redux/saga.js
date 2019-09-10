@@ -6,26 +6,15 @@ import NavigationService from 'actions/NavigationService'
 import actions from './action'
 import CustomAlert from 'components/CustomAlert'
 
-export function* getWalletBalance() {
-    let response = yield call(fetchApi, 'get', 'page/get_balance/');
+export function* getWalletBalance({username}) {
+    let response = yield call(fetchApi, 'get', `page/get_transaction_details/${username}/`);
+    console.log(response)
     if (response) {
 
         yield put({
-            type: actions.GET_SETTING_INFORMATION_SUCCESS,
-            company_information: response.company_information,
-            payment_information: response.payment_information,
-            huongdan: (response.template_category && response.template_category.huongdan) ? response.template_category.huongdan : [],
-            chinhsach: (response.template_category && response.template_category.chinhsach) ? response.template_category.chinhsach : [],
-        })
-
-        yield put({
-            type: actions.GET_NOTIFICATION_SUCCESS,
-            tintuc: (response.template_category && response.template_category.tintuc) ? response.template_category.tintuc : []
-        })
-
-        yield put({
             type: actions.GET_WALLET_BALANCE_SUCCESS,
-            balance: response.balance
+            balance: (response.account_holder && response.account_holder.current_balance) ? response.account_holder.current_balance : 0,
+            detail: response
         })
     }
 }

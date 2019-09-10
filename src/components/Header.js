@@ -41,9 +41,11 @@ export const headerStyles = StyleSheet.create({
  iconLeft : {
    left : 8,
    position : 'absolute',
-   bottom : 0,
+   bottom : 8,
    width : 30,
    height : 30,
+   justifyContent: 'center',
+   alignItems: 'center'
  },
  leftText : {
    left : 10,
@@ -108,7 +110,7 @@ export const headerStyles = StyleSheet.create({
    bottom : 8
  },
  searchContainer : {
-   borderRadius : 3,
+   borderRadius : 20,
    backgroundColor : '#e5e5e5',
    alignItems : 'center',
    justifyContent : 'center',
@@ -117,7 +119,7 @@ export const headerStyles = StyleSheet.create({
    left : 50, width : Global.ScreenWidth - 100,
    bottom : 8,
    overflow : 'hidden',
-   padding : 3,
+   padding : 3, paddingLeft: 10, paddingRight: 10
  },
  searchIcon : {
    tintColor : '#7f7f7f',
@@ -129,7 +131,6 @@ export const headerStyles = StyleSheet.create({
    paddingBottom : 0,
    flex : 1,
    marginLeft : 8,
-   marginRight : 8,
    color : Global.MainColor,
    height : 25
  },
@@ -158,6 +159,9 @@ export default class Header extends React.Component{
   }
 
   onEndSubmit(event){
+    if(this.props.onEndSubmit){
+      this.props.onEndSubmit()
+    }
     // console.log(event)
     // AsyncStorage.getItem('recent_search_keywords', (error, result) => {
     //   if(result){
@@ -200,7 +204,7 @@ export default class Header extends React.Component{
 
  render(){
 
-   const {leftIcon, autoFocus, rightCount, leftText, leftAction, imageTitle, title, rightIcon, rightText, rightAction, right2Icon, right2Action, searchPlaceholder, searchText, onFocusSearch, headerChangeText, searchBar, refRight, cartCountText} = this.props;
+   const {leftIcon, searchContainer, autoFocus, rightCount, leftText, leftAction, imageTitle, title, rightIcon, rightText, rightAction, right2Icon, right2Action, searchPlaceholder, searchText, onFocusSearch, headerChangeText, searchBar, refRight, cartCountText} = this.props;
  
    return(
      <View style={headerStyles.container}>
@@ -220,19 +224,22 @@ export default class Header extends React.Component{
          <Text numberOfLines={1} style={headerStyles.headerTitle}>{title}</Text>
        }
        {searchBar && 
-         <View style={[headerStyles.searchContainer, !rightIcon && !rightText ? {width : Global.ScreenWidth - 60} : {}]}>
-           <Image source={Media.SearchIcon} style={headerStyles.searchIcon}/>
+         <View style={[headerStyles.searchContainer, searchContainer]}>
+           <Icon name='search' size={15} color='#7f7f7f'/>
            <TextInput 
              style={[headerStyles.searchInput, ]}
              underlineColorAndroid='#00000000'
              placeholder={searchPlaceholder}
              placeholderTextColor='#7f7f7f'
              value={searchText}
+             returnKeyType='search'
              autoFocus={(autoFocus && autoFocus == true) ? true : false}
              onChangeText={(text) => {if(headerChangeText) headerChangeText(text)}}
              onFocus={() => {if(onFocusSearch) onFocusSearch()}}
              onSubmitEditing={this.onEndSubmit.bind(this)}
              onEndEditing={this.onEndSubmit.bind(this)}
+             clearTextOnFocus={true}
+             clearButtonMode='always'
            />
          </View>
        }
@@ -256,23 +263,6 @@ export default class Header extends React.Component{
          <Text style={headerStyles.rightText} onPress={() => {if(rightAction) rightAction()}}>{rightText}</Text>
        }
        <View style={headerStyles.headerSeparator}/>
-       {false && this.state.openRecent && this.state.recents.length > 0 && searchText.length == 0 &&
-        <FlatList 
-          data={this.state.recents}
-          renderItem={({item, index}) => {
-            return(
-              <TouchableOpacity style={{flexDirection : 'row', height : 40, }} onPress={this.onSelectRecent.bind(this, item)}>
-                <Text style={{fontSize : 14, color : '#333333', fontFamily : Global.FontName,}}>{item.key}</Text>
-              </TouchableOpacity>
-            )
-          }}
-          ListHeaderComponent={() => {
-            return(
-              <Text style={{height : 40, fontWeight : '500', color : '#666666', fontFamily : Global.FontName}}>Recent Search</Text>
-            )
-          }}
-        />
-      }
      </View>
    )
  }

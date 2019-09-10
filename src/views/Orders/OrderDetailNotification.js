@@ -17,6 +17,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#f6f6f6'
     },
+    itemContainer: {
+        width: '95%', alignSelf: 'center', borderRadius: 8, backgroundColor: 'white', padding: 16, marginTop : 8
+    }
 })
 
 import { connect } from 'react-redux';
@@ -28,7 +31,7 @@ import {fetchApi} from 'actions/api'
 
 const LIMIT = 10
 
-class OrderDetailItems extends React.Component {
+class OrderDetailNotification extends React.Component {
 
     constructor(props){
         super(props)
@@ -53,11 +56,11 @@ class OrderDetailItems extends React.Component {
         }
 
         this.setState({isFetching: true, loadingMore: false, canLoadMore: true}, () => {
-            fetchApi('get', `page/order/${order_id}/get_items_by_offer/`, {offset: 0, limit: LIMIT})
+            fetchApi('get', `page/get_notifications_by_order/${order_id}/`, {order: 'asc', offset: 0, limit: LIMIT})
             .then((data) => {
                 // console.log(data)
 
-                this.setState({isFetching: false, items: data, canLoadMore: data.length == LIMIT})
+                this.setState({isFetching: false, items: data.rows, canLoadMore: data.rows.length < data.total})
             })
             .catch((error) => {
                 console.log(error)
@@ -78,15 +81,15 @@ class OrderDetailItems extends React.Component {
         }
 
         this.setState({loadingMore: true}, () => {
-            fetchApi('get', `page/order/${order_id}/get_items_by_offer/`, {offset: this.state.items.length, limit: this.state.items.length + LIMIT})
+            fetchApi('get', `page/get_notifications_by_order/${order_id}/`, {order: 'asc', offset: this.state.items.length, limit: this.state.items.length + LIMIT})
             .then((data) => {
                 // console.log(data)
                 let items = this.state.items
-                data.map((item) => {
+                data.rows.map((item) => {
                     items.push(item)
                 })
 
-                this.setState({loadingMore: false, items: items, canLoadMore: data.length == LIMIT})
+                this.setState({loadingMore: false, items: items, canLoadMore: items.length < data.total})
             })
             .catch((error) => {
                 console.log(error)
@@ -97,14 +100,12 @@ class OrderDetailItems extends React.Component {
 
     renderItem({item, index}){
         return(
-            <OrderDetailItem {...item} openItem={this.openItem.bind(this, item.item_url)}
-                                        onReport={this.onReport.bind(this, item.id)}/>
+            <View style={styles.itemContainer}>
+                <Text style={{fontSize: 16, color: 'black', fontWeight: '500', fontFamily: Global.FontName, width: '100%'}}>{item.title}</Text>
+                <Text style={{fontSize: 14, marginTop : 10, color: 'black', fontFamily: Global.FontName, width: '100%'}}>{item.body}</Text>
+                <Text style={{fontSize: 13, color: '#aaaaaa', fontFamily: Global.FontName, width: '100%', textAlign: 'right'}}>{item.created}</Text>
+            </View>
         )
-    }
-
-    onReport(item_id){
-        const {order_id} = this.props
-        this.props.navigation.navigate('SubmitReportView', {item_id: item_id, order_number: order_id})
     }
 
     openItem(link){
@@ -138,6 +139,7 @@ class OrderDetailItems extends React.Component {
                     showsVerticalScrollIndicator={false}
                     onEndReached={this.onEndReached.bind(this)}
                     ListFooterComponent={this.renderFooter.bind(this)}
+                    ListEmptyComponent={() => <Text style={{width: '100%', fontSize: 13, textAlign: 'center', padding: 16, fontFamily: Global.FontName, color: '#aaaaaa'}}>Chưa có thông báo</Text>}
                 />
             </View>
         )
@@ -146,9 +148,7 @@ class OrderDetailItems extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        isFetching: state.order.detailFetching,
-        orderDetail: state.order.detail,
-        detailItems: state.order.detailItems,
+        isFetching: state.order.detailFetching
     };
 };
 
@@ -157,4 +157,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderDetailItems);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderDetailNotification);

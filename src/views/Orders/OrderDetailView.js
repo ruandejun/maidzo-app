@@ -25,9 +25,12 @@ import Header from 'components/Header'
 import {getDetailInfo, getDetailItems} from './redux/action'
 import OrderDetailItem from './component/OrderDetailItem'
 import {fetchApi} from 'actions/api'
-import ScrollableTabView from 'react-native-scrollable-tab-view'
+import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
 import OrderDetailItems from './OrderDetailItems'
 import OrderDetailInfo from './OrderDetailInfo'
+import OrderDetailNotification from './OrderDetailNotification'
+import OrderDetailTracking from './OrderDetailTracking'
+import OrderDetailTransaction from './OrderDetailTransaction'
 
 class OrderDetailView extends React.Component {
 
@@ -41,9 +44,14 @@ class OrderDetailView extends React.Component {
                     leftAction={() => this.props.navigation.goBack()}
                 />
 
-                <ScrollableTabView>
-                    <OrderDetailInfo tabLabel="Thông tin" order_id={order_id}/>
-                    <OrderDetailItems tabLabel="Sản phẩm" order_id={order_id}/>
+                <ScrollableTabView tabBarUnderlineStyle={{backgroundColor: Global.MainColor}} tabBarActiveTextColor={Global.MainColor} 
+                    renderTabBar={() => <ScrollableTabBar />}
+                >
+                    <OrderDetailInfo tabLabel="Thông tin" order_id={order_id} navigation={this.props.navigation}/>
+                    <OrderDetailItems tabLabel="Sản phẩm" order_id={order_id} navigation={this.props.navigation}/>
+                    <OrderDetailTransaction tabLabel="Thanh toán" order_id={order_id}/>
+                    <OrderDetailTracking tabLabel="Vận chuyển" order_id={order_id} navigation={this.props.navigation}/>
+                    <OrderDetailNotification tabLabel="Thông báo" order_id={order_id}/>
                 </ScrollableTabView>
             </View>
         )

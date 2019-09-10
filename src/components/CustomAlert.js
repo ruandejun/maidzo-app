@@ -25,12 +25,15 @@ export default CustomAlert = (title, message, buttons) => {
        newButtons = buttons;
    }
 
+   if(Global.overlayPopView){
+    Global.overlayPopView.close()
+   }
 
    let overlayView = (
        <Overlay.View
         style={{alignItems: 'center', justifyContent: 'center'}}
         overlayOpacity={0.8}
-         ref={v => this.overlayView = v}
+         ref={v => Global.overlayPopView = v}
        >
            <View style={{borderRadius : 10, minHeight : 100, width : 270, backgroundColor : 'white', justifyContent : 'center', alignItems : 'center'}}>
                <View style={{padding : 16, alignItems : 'center', justifyContent : 'center'}}>
@@ -40,13 +43,13 @@ export default CustomAlert = (title, message, buttons) => {
                <View style={{flexDirection : 'row', height : 44, alignItems : 'center', justifyContent : 'center', borderTopColor: '#aaaaaa', borderTopWidth: 0.5, }}>
                    {newButtons && newButtons.length > 0 && newButtons.map((item, index) => {
                        return(
-                           <TouchableOpacity onPress={() => {this.overlayView && this.overlayView.close(); if(item.onPress) item.onPress()}} style={{flex : 1, alignItems : 'center', justifyContent : 'center', borderRightColor : '#aaaaaa', borderRightWidth : (index < newButtons.length - 1) ? StyleSheet.hairlineWidth : 0}}>
+                           <TouchableOpacity onPress={() => {Global.overlayPopView && Global.overlayPopView.close(); if(item.onPress) item.onPress()}} style={{flex : 1, alignItems : 'center', justifyContent : 'center', borderRightColor : '#aaaaaa', borderRightWidth : (index < newButtons.length - 1) ? StyleSheet.hairlineWidth : 0}}>
                                <Text style={[{color : item.color ? item.color : Global.MainColor, fontSize : 17, fontFamily : Global.FontRegular, textAlign : 'center'}]}>{item.text}</Text>
                            </TouchableOpacity>
                        )
                    })}
                    {(! newButtons || newButtons.length == 0) && 
-                    <TouchableOpacity onPress={() => {this.overlayView && this.overlayView.close(); }} style={{flex : 1, alignItems : 'center', justifyContent : 'center'}}>
+                    <TouchableOpacity onPress={() => {Global.overlayPopView && Global.overlayPopView.close(); }} style={{flex : 1, alignItems : 'center', justifyContent : 'center'}}>
                         <Text style={[{color : Global.MainColor, fontSize : 17, fontFamily : Global.FontRegular, textAlign : 'center'}]}>{'Ok'}</Text>
                     </TouchableOpacity>
                     }

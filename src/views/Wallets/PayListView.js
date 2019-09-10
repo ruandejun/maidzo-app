@@ -15,20 +15,20 @@ import {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f6f6f6'
+        backgroundColor: '#f6f6f6', paddingBottom: getBottomSpace()
     },
 })
 
 import { connect } from 'react-redux';
 import Global, { Media, calculateDistance, decode, getStatusBarHeight } from 'src/Global';
 import Header from 'components/Header'
-import {getDetailInfo, getDetailItems} from './redux/action'
-import OrderDetailItem from './component/OrderDetailItem'
 import {fetchApi} from 'actions/api'
+import PayItem from './component/PayItem'
+import { getBottomSpace } from 'react-native-iphone-x-helper';
 
-const LIMIT = 10
+const LIMIT = 20
 
-class OrderDetailItems extends React.Component {
+class PayListView extends React.Component {
 
     constructor(props){
         super(props)
@@ -46,18 +46,18 @@ class OrderDetailItems extends React.Component {
     }
 
     onRefresh(){
-        const {order_id} = this.props
+        const {user} = this.props
 
-        if(!order_id){
+        if(!user){
             return
         }
 
         this.setState({isFetching: true, loadingMore: false, canLoadMore: true}, () => {
-            fetchApi('get', `page/order/${order_id}/get_items_by_offer/`, {offset: 0, limit: LIMIT})
+            fetchApi('get', `page/get_data_pay_by_username/${this.props.user.username}/data.json/`, {order: 'asc', offset: 0, limit: LIMIT})
             .then((data) => {
                 // console.log(data)
 
-                this.setState({isFetching: false, items: data, canLoadMore: data.length == LIMIT})
+                this.setState({isFetching: false, items: data.rows, canLoadMore: data.rows.length < data.total})
             })
             .catch((error) => {
                 console.log(error)
@@ -67,9 +67,9 @@ class OrderDetailItems extends React.Component {
     }
 
     onEndReached(){
-        const {order_id} = this.props
+        const {user} = this.props
 
-        if(!order_id){
+        if(!user){
             return
         }
 
@@ -78,15 +78,19 @@ class OrderDetailItems extends React.Component {
         }
 
         this.setState({loadingMore: true}, () => {
-            fetchApi('get', `page/order/${order_id}/get_items_by_offer/`, {offset: this.state.items.length, limit: this.state.items.length + LIMIT})
+            fetchApi('get', `page/get_data_pay_by_username/${this.props.user.username}/data.json/`, {order: 'asc', offset: this.state.items.length, limit: LIMIT})
             .then((data) => {
                 // console.log(data)
-                let items = this.state.items
-                data.map((item) => {
-                    items.push(item)
-                })
-
-                this.setState({loadingMore: false, items: items, canLoadMore: data.length == LIMIT})
+                if(data){
+                    let items = this.state.items
+                    data.rows.map((item) => {
+                        items.push(item)
+                    })
+    
+                    this.setState({loadingMore: false, items: items, canLoadMore: items.length < data.total})
+                } else {
+                    this.setState({loadingMore: false})
+                }
             })
             .catch((error) => {
                 console.log(error)
@@ -97,18 +101,12 @@ class OrderDetailItems extends React.Component {
 
     renderItem({item, index}){
         return(
-            <OrderDetailItem {...item} openItem={this.openItem.bind(this, item.item_url)}
-                                        onReport={this.onReport.bind(this, item.id)}/>
+            <PayItem {...item} onOpenOrder={this.onOpenOrder.bind(this, item.order)}/>
         )
     }
 
-    onReport(item_id){
-        const {order_id} = this.props
-        this.props.navigation.navigate('SubmitReportView', {item_id: item_id, order_number: order_id})
-    }
-
-    openItem(link){
-        this.props.navigation.navigate('TaobaoWebView', {url: link})
+    onOpenOrder(order_id){
+        this.props.navigation.navigate('OrderDetailView', {order_id: order_id})
     }
 
     renderFooter(){
@@ -129,6 +127,11 @@ class OrderDetailItems extends React.Component {
 
         return (
             <View style={styles.container}>
+                <Header
+                    title='Giao dịch thanh toán'
+                    leftIcon='chevron-left'
+                    leftAction={() => this.props.navigation.goBack()}
+                />
                 <FlatList 
                     renderItem={this.renderItem.bind(this)}
                     data={items}
@@ -146,9 +149,7 @@ class OrderDetailItems extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        isFetching: state.order.detailFetching,
-        orderDetail: state.order.detail,
-        detailItems: state.order.detailItems,
+        user: state.auth.user,
     };
 };
 
@@ -157,4 +158,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderDetailItems);
+export default connect(mapStateToProps, mapDispatchToProps)(PayListView);

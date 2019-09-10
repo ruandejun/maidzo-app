@@ -9,6 +9,8 @@ export default Media = {
     NotificationTab: require('../resources/images/notification_tab.png'),
 
     TaobaoIcon: require('../resources/images/taobao_icon.png'),
+    TmallIcon: require('../resources/images/tmall_icon.png'),
+    AlibabaIcon: require('../resources/images/1688_icon.png'),
 
     LoadingIcon: require('../resources/images/loading_icon.gif'),
 

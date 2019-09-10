@@ -69,6 +69,29 @@ export function* updateCartItem({pk, value, name}) {
   
 }
 
+export function* updateCartItemService({item_list, value, name}) {
+  let response = yield call(fetchUnlengthApi, 'post', 'page/update_cart_item_list_service/', {item_list, value, name});
+
+  // console.log(response)
+  if (response && response.success) {
+
+    let cresponse = yield call(fetchApi, 'get', 'page/cart/show/');
+    if (cresponse && cresponse.results) {
+
+      yield put({
+        type: actions.GET_CART_SUCCESS,
+        data: cresponse.results,
+        count: cresponse.count
+      });
+    }
+  }
+
+  if(response.msg){
+    CustomAlert(response.msg)
+  }
+  
+}
+
 export function* addItemToCart({payload}) {
   // console.log(JSON.stringify(payload))
   let response = yield call(fetchApi, 'post', 'api/shop_module/cart/', payload);
@@ -97,6 +120,7 @@ export default function* rootSaga() {
     yield takeEvery(actions.ADD_CART_ITEM, addItemToCart),
     yield takeEvery(actions.DELETE_CART_ITEM, deleteCartItem),
     yield takeEvery(actions.UPDATE_CART_ITEM, updateCartItem),
+    yield takeEvery(actions.UPDATE_CART_ITEM_SERVICE, updateCartItemService),
   ]
 }
 

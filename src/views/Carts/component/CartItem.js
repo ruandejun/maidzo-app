@@ -63,7 +63,7 @@ import moment from 'moment'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import FastImage from 'react-native-fast-image'
-import { Stepper } from 'teaset'
+import { Stepper, Checkbox } from 'teaset'
 
 class CartItem extends React.PureComponent {
 
@@ -108,11 +108,17 @@ class CartItem extends React.PureComponent {
         }
     }
 
+    onUpdateService(value, name){
+        if(this.props.onUpdateService){
+            this.props.onUpdateService({value, name})
+        }
+    }
+
     render() {
 
         const { vendor, name, id, image_url, price, price_vnd, option_selected_tag,
-            short_description, currency, total_vnd, total_service_cost_vnd, quantity,
-            shipping_vnd } = this.props
+            rocket, currency, total_vnd, total_service_cost_vnd, quantity,
+            shipping_vnd, rocket_ship, insurance, bargain, packing} = this.props
         const { note } = this.state
 
         return (
@@ -160,6 +166,64 @@ class CartItem extends React.PureComponent {
                     onChangeText={(text) => this.setState({note: text})}
                     onEndEditing={this.onUpdateNote.bind(this)}
                 />
+
+                <View style={{marginTop : 8, marginBottom : 8, borderRadius: 5, backgroundColor: '#f6f6f6', padding: 5}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <Checkbox
+                            title='Mua hoả tốc'
+                            size='md'
+                            checked={rocket}
+                            onChange={value => this.onUpdateService(value, 'rocket')}
+                            checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
+                            uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                        />
+
+                        <Checkbox
+                            title='Ship hoả tốc'
+                            size='md'
+                            checked={rocket_ship}
+                            onChange={value => this.onUpdateService(value, 'rocket_ship')}
+                            checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
+                            uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                        />
+                    </View>
+                    <View style={{flexDirection: 'row', marginTop: 8, alignItems: 'center', justifyContent: 'space-between'}}>
+                        <Checkbox
+                            title='Mặc cả'
+                            size='md'
+                            checked={bargain}
+                            onChange={value => this.onUpdateService(value, 'bargain')}
+                            checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
+                            uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                        />
+
+                        <Checkbox
+                            title='Bảo hiểm'
+                            size='md'
+                            checked={insurance}
+                            onChange={value => this.onUpdateService(value, 'insurance')}
+                            checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
+                            uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                        />
+                    </View>
+                    <View style={{flexDirection: 'row', marginTop: 8, alignItems: 'center', justifyContent: 'space-between'}}>
+                        <Checkbox
+                            title='Đóng gỗ'
+                            size='md'
+                            checked={packing}
+                            onChange={value => this.onUpdateService(value, 'packing')}
+                            checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
+                            uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                        />
+
+                        <Checkbox
+                            title='Phí mua hàng*'
+                            size='md'
+                            checked={true}
+                            checkedIcon={<Icon name='check-square' size={14} color={'#777777'}/>}
+                        />
+                    </View>
+                </View>
 
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Thành tiền</Text>

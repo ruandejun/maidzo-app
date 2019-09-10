@@ -29,14 +29,6 @@ const fetchApi = async(method, path, params={}, token) => {
     // console.log(res)
     return res.json()
   }).then(response => {
-    if(response.status == 'fail' && response.data == 'Unauthenticated.'){
-      Global.userToken = null
-      AsyncStorage.removeItem('@USER_TOKEN')
-
-      NavigationService.reset('LoginView')
-      return
-    }
-
     return response
   }).catch(err => {
     console.info("__err__", err)
@@ -79,14 +71,6 @@ const fetchUnlengthApi = async(method, path, params={}, token) => {
   return await fetch (Global.apiUrl + `${finalPath}`, options).then(res => {
     return res.json()
   }).then(response => {
-    if(response.status == 'fail' && response.data == 'Unauthenticated.'){
-      Global.userToken = null
-      AsyncStorage.removeItem('@USER_TOKEN')
-
-      NavigationService.reset('LoginView')
-      return
-    }
-
     return response
   }).catch(err => {
     console.info("__err__", err)

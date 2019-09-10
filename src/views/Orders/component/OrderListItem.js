@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         width: 80, height: 80, margin: 10
     },
     descriptionText: {
-        fontSize: 14, color: 'black', fontFamily: Global.FontName, width: '100%', marginTop : 5
+        fontSize: 14, color: 'black', fontFamily: Global.FontName, width: '100%', marginTop: 5
     },
 })
 
@@ -55,38 +55,51 @@ class OrderListItem extends React.PureComponent {
         super(props);
     }
 
-    onPress(){
-        if(this.props.onPress){
+    onPress() {
+        if (this.props.onPress) {
             this.props.onPress(0)
         }
     }
 
     render() {
 
-        const { first_image_url, id, full_name, username, status_processing, sum_payment_transaction, total_item_cost, need_to_pay, created_tag } = this.props
+        const { first_image_url, id, status_value, username, status_processing, sum_payment_transaction, total_item_cost, need_to_pay, created_tag } = this.props
+
+        let statusColor = '#777777'
+        switch (status_value.toLowerCase()) {
+            case 'prepaid':
+                statusColor = '#f0ad4e'
+                break;
+            case 'checked':
+                statusColor = '#5cb85c'
+                break;
+            case 'ordered':
+                statusColor = '#5bc0de'
+                break;
+        }
 
         return (
             <TouchableOpacity onPress={this.onPress.bind(this)} style={styles.container} >
                 <View style={styles.headerContainer}>
                     <Text style={styles.idText}>{id}</Text>
-                    <Text style={styles.statusText}>{status_processing}</Text>
+                    <Text style={[styles.statusText, { backgroundColor: statusColor }]}>{status_processing}</Text>
                 </View>
                 <View style={styles.contentContainer}>
                     <Image source={{ uri: imageUrl(first_image_url) }} style={styles.itemImage} />
                     <View style={styles.descriptionContainer}>
-                        <Text style={[styles.descriptionText, ]}>{'Người đặt: '}
+                        <Text style={[styles.descriptionText,]}>{'Người đặt: '}
                             <Text style={{ color: '#1B5795', fontWeight: '500' }}>{`${username}`}</Text>
                         </Text>
-                        <Text style={[styles.descriptionText, ]}>{'Tổng số tiền: '}
-                            <Text style={{fontWeight: '500'}}>{`${convertMoney(total_item_cost)} đ`}</Text>
+                        <Text style={[styles.descriptionText,]}>{'Tổng số tiền: '}
+                            <Text style={{ fontWeight: '500' }}>{`${convertMoney(total_item_cost)} đ`}</Text>
                         </Text>
-                        <Text style={[styles.descriptionText, ]}>{'Đã đặt cọc: '}
-                            <Text style={{fontWeight: '500'}}>{`${convertMoney(sum_payment_transaction)} đ`}</Text>
+                        <Text style={[styles.descriptionText,]}>{'Đã đặt cọc: '}
+                            <Text style={{ fontWeight: '500' }}>{`${convertMoney(sum_payment_transaction)} đ`}</Text>
                         </Text>
-                        <Text style={[styles.descriptionText, ]}>{'Cọc thêm: '}
+                        <Text style={[styles.descriptionText,]}>{'Cọc thêm: '}
                             <Text style={{ color: Global.MainColor, fontWeight: '500' }}>{`${convertMoney(need_to_pay)} đ`}</Text>
                         </Text>
-                        <Text style={[styles.descriptionText, ]}>{'Ngày tạo: '}
+                        <Text style={[styles.descriptionText,]}>{'Ngày tạo: '}
                             <Text style={{ fontWeight: '500' }}>{`${created_tag}`}</Text>
                         </Text>
                     </View>

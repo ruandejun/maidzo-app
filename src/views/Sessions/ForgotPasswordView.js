@@ -52,7 +52,7 @@ class ForgotPasswordView extends React.Component {
         return (
             <View style={styles.container}>
                 <Header
-                    title='Thiết lập tài khoản'
+                    title='Quên mật khẩu'
                     leftIcon='chevron-left'
                     leftAction={() => this.props.navigation.goBack()}
                 />

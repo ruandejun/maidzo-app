@@ -5,9 +5,10 @@ const actions = {
     GET_NOTIFICATION_SUCCESS: 'GET_NOTIFICATION_SUCCESS'
   }
   
-  export const getWalletBalance = () => {
+  export const getWalletBalance = (username) => {
     return {
-      type: actions.GET_WALLET_BALANCE
+      type: actions.GET_WALLET_BALANCE,
+      username
     }
   }
   

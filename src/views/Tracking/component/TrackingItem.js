@@ -67,11 +67,10 @@ import moment from 'moment'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import FastImage from 'react-native-fast-image'
-import { Stepper, Checkbox } from 'teaset'
+import { Stepper, Checkbox} from 'teaset'
 import CustomAlert from 'components/CustomAlert'
-import { FlatList } from 'react-native-gesture-handler';
 
-class OrderDetailItem extends React.PureComponent {
+class TrackingItem extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -85,35 +84,28 @@ class OrderDetailItem extends React.PureComponent {
     }
 
     openQuantityDetail(){
-        const {quantity, sum_arrived_quantity, paid_quantity } = this.props
+        const {quantity, sum_arrived_quantity, paid_quantity, } = this.props
 
         CustomAlert(null, `Số lượng đã nhận: ${sum_arrived_quantity}\nSố lượng đã thanh toán: ${paid_quantity}\nTổng số lượng đã đặt: ${quantity}`)
-    }
-
-    onReport(){
-        if(this.props.onReport){
-            this.props.onReport()
-        }
     }
 
     render() {
 
         const { vendor, name, id, image_url, price, price_vnd, option_selected_tag,
-            status, currency, total_vnd, total_service_cost_vnd, quantity,
-            shipping_vnd, note, sum_arrived_quantity, rocket, packing, insurance, bargain, rocket_ship } = this.props
+            status, currency, total_vnd, item_status, quantity,
+            shipping_vnd, note, sum_arrived_quantity, order, rocket, rocket_ship, packing, bargain, insurance } = this.props
 
         return (
             <View style={styles.container} >
                 <View style={styles.headerContainer}>
                     <Text style={styles.idText}>{id}</Text>
-                    <Text style={styles.statusText}>{status}</Text>
+                    <Text style={styles.statusText}>{item_status}</Text>
                 </View>
                 <Text onPress={this.openItem.bind(this)} style={styles.nameText}>{name}</Text>
                 <View style={styles.contentContainer}>
                     <Image source={{ uri: imageUrl(image_url) }} style={styles.itemImage} />
                     <View style={styles.descriptionContainer}>
-                        {!!vendor && vendor.length > 0 && <Text style={[styles.descriptionText, { color: '#1B5795' }]}>{`${vendor}`}</Text>}
-                        <Text style={styles.descriptionText}>{`${currency} ${price} / ${convertMoney(price_vnd)} vnđ`}</Text>
+                        <Text onPress={this.openItem.bind(this)} style={[styles.descriptionText]} numberOfLines={1}>{'Đơn hàng: ' + order}</Text>
                         <Text onPress={this.openQuantityDetail.bind(this)} style={styles.descriptionText}>{`Số lượng: ${sum_arrived_quantity}/${quantity} `}
                             <Text style={{color: Global.MainColor}}>?</Text>
                         </Text>
@@ -128,52 +120,45 @@ class OrderDetailItem extends React.PureComponent {
 
                 {(rocket || packing || insurance || bargain || rocket_ship) &&
                     <View style={{marginTop : 8, marginBottom : 8, borderRadius: 5, backgroundColor: '#f6f6f6', padding: 5}}>
-                        <FlatList 
-                            data={[
-                                {id: '1', value: rocket, title: 'Mua hoả tốc'},
-                                {id: '2', value: rocket_ship, title: 'Ship hoả tốc'},
-                                {id: '3', value: bargain, title: 'Mặc cả'},
-                                {id: '4', value: insurance, title: 'Bảo hiểm'},
-                                {id: '5', value: packing, title: 'Đóng gỗ'}
-                            ]}
-                            numColumns={2}
-                            style={{flex: 1}}
-                            renderItem={({item, index}) => {
-                                return (
-                                    <Checkbox
-                                        title={item.title}
-                                        size='md'
-                                        checked={item.value}
-                                        checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
-                                        uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
-                                        style={{width: Global.ScreenWidth * 0.5 - 20}}
-                                    />
-                                )
-                            }}
-                        />
+                            {rocket && <Checkbox
+                                title='Mua hoả tốc'
+                                size='md'
+                                checked={rocket}
+                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
+                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                            />}
+
+                            {rocket_ship && <Checkbox
+                                title='Ship hoả tốc'
+                                size='md'
+                                checked={rocket_ship}
+                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
+                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                            />}
+                            {bargain && <Checkbox
+                                title='Mặc cả'
+                                size='md'
+                                checked={bargain}
+                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
+                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                            />}
+
+                            {insurance && <Checkbox
+                                title='Bảo hiểm'
+                                size='md'
+                                checked={insurance}
+                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
+                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                            />}
+                            {packing && <Checkbox
+                                title='Đóng gỗ'
+                                size='md'
+                                checked={packing}
+                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
+                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                            />}
                     </View>
                 }
-
-                <View style={styles.priceContainer}>
-                    <Text style={styles.priceText}>Thành tiền</Text>
-                    <Text style={styles.priceText}>{convertMoney(parseInt(price_vnd) * quantity) + 'đ'}</Text>
-                </View>
-                <View style={styles.priceContainer}>
-                    <Text style={styles.priceText}>Phí ship nội địa</Text>
-                    <Text style={styles.priceText}>{convertMoney(shipping_vnd) + 'đ'}</Text>
-                </View>
-                <View style={styles.priceContainer}>
-                    <Text style={styles.priceText}>Phí dịch vụ</Text>
-                    <Text style={styles.priceText}>{convertMoney(total_service_cost_vnd) + 'đ'}</Text>
-                </View>
-                <View style={styles.priceContainer}>
-                    <Text style={styles.priceText}>Tổng</Text>
-                    <Text style={styles.priceText}>{convertMoney(total_vnd) + 'đ'}</Text>
-                </View>
-
-                <TouchableOpacity onPress={this.onReport.bind(this)} style={{width: 100, height: 35, marginTop: 10, alignSelf: 'center', backgroundColor: 'red', borderRadius: 5, alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Khiếu nại</Text>
-                </TouchableOpacity>
             </View>
         )
     }
@@ -190,4 +175,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderDetailItem);
+export default connect(mapStateToProps, mapDispatchToProps)(TrackingItem);

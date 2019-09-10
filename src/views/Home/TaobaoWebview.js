@@ -8,8 +8,9 @@ import {
     ActivityIndicator,
     AppState,
     TouchableOpacity,
-    TouchableWithoutFeedback,
-    FlatList
+    TextInput,
+    FlatList,
+    StatusBar
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -21,40 +22,42 @@ const styles = StyleSheet.create({
 
 import { connect } from 'react-redux';
 import Global, { Media, getBottomSpace, decode, getStatusBarHeight } from 'src/Global';
-import Header from 'components/Header'
+import Header, {headerStyles} from 'components/Header'
 import Webview from 'react-native-webview'
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import {addItemToCart} from 'Carts/redux/action'
+import { addItemToCart } from 'Carts/redux/action'
 import CustomAlert from '../../components/CustomAlert';
-import {jsCheckReadyToAddCart, jsGetProductDetailForCart, jsHideTaobaoThing, jsShowOptionsPopup} from './script/taobao'
+import { jsCheckReadyToAddCart, jsGetProductDetailForCart, jsHideTaobaoThing, jsShowOptionsPopup } from './script/taobao'
+import {jsHide1688Thing, js1688ShowOptionsPopup, jsCheck1688ReadyToAddCart, jsGet1688ProductDetailForCart} from './script/alibaba'
 
 class TaobaoWebView extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
 
         this.state = {
             loading: false,
-            canGoBack: false,
+            searchKeyword: '',
+            url: props.navigation.getParam('url')
         }
     }
 
     loadingTimer = null
     currentUrl = null
 
-    componentDidMount(){
+    componentDidMount() {
     }
 
-    onstartRequest(event){
+    onstartRequest(event) {
         try {
-            console.log(event)
+            // console.log(event)
 
             this.currentUrl = event.mainDocumentURL ? event.mainDocumentURL : event.url
 
-            if(this.currentUrl.indexOf('http') != 0){
+            if (this.currentUrl.indexOf('http') != 0) {
                 return false
             }
-            
+
             // if(this.loadingTimer){
             //     clearTimeout(this.loadingTimer)
             //     this.loadingTimer = null
@@ -78,101 +81,161 @@ class TaobaoWebView extends React.Component {
         return true
     }
 
-    handleWebViewNavigationStateChange(newState){
-        if(newState && !newState.loading){
+    handleWebViewNavigationStateChange(newState) {
+        if (newState && !newState.loading) {
             this.webview.injectJavaScript(jsHideTaobaoThing)
+            this.webview.injectJavaScript(jsHide1688Thing)
         }
-        this.setState({loading: newState && newState.loading, canGoBack: newState && newState.canGoBack})
+        this.setState({ loading: newState && newState.loading })
     }
 
-    async addToCart(){
-        if(this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') == -1){
+    async addToCart() {
+        // console.log(this.currentUrl)
+        if(this.currentUrl.indexOf('https://ju.taobao.com/m/jusp/alone/detailwap/mtp.htm?item_id=') == 0){
+            this.setState({url: this.currentUrl.replace('https://ju.taobao.com/m/jusp/alone/detailwap/mtp.htm?item_id=', 'https://detail.m.tmall.com/item.htm?id=')})
+            return
+        }
+        if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') == -1 && this.currentUrl.indexOf('m.1688.com/offer') == -1) {
             CustomAlert(null, 'Đây không phải trang chi tiết sản phẩm')
             return
         }
 
-        await this.webview.injectJavaScript(jsCheckReadyToAddCart)
-    }
-
-    onBack(){
-        if(this.state.canGoBack){
-            this.webview && this.webview.goBack()
-        } else {
-            this.props.navigation.goBack()
+        if(this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1){
+            this.webview.injectJavaScript(jsCheckReadyToAddCart)
+        } else if(this.currentUrl.indexOf('m.1688.com/offer') != -1){
+            this.webview.injectJavaScript(jsCheck1688ReadyToAddCart)
         }
     }
 
-    async onMessage(event){
+    onBack() {
+        this.props.navigation.goBack()
+    }
+
+    async onMessage(event) {
         try {
-            if(event.nativeEvent.data){
+            if (event.nativeEvent.data) {
                 let response = JSON.parse(event.nativeEvent.data)
                 // console.log(response)
-                if(response){
-                    if(response.type == 'checkReadyToAddCart'){
-                        if(response.value){
-                            this.webview.injectJavaScript(jsGetProductDetailForCart)
+                if (response) {
+                    if (response.type == 'checkReadyToAddCart') {
+                        if (response.value) {
+                            if(this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1){
+                                this.webview.injectJavaScript(jsGetProductDetailForCart)
+                            } else if(this.currentUrl.indexOf('m.1688.com/offer') != -1){
+                                this.webview.injectJavaScript(jsGet1688ProductDetailForCart)
+                            }
                         } else {
-                            this.webview.injectJavaScript(jsShowOptionsPopup)
+                            if(this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1){
+                                this.webview.injectJavaScript(jsShowOptionsPopup)
+                            } else if(this.currentUrl.indexOf('m.1688.com/offer') != -1){
+                                this.webview.injectJavaScript(js1688ShowOptionsPopup)
+                            }
                         }
                     }
-                    if(response.type == 'getProductDetailForCart'){
+                    if (response.type == 'getProductDetailForCart') {
                         const cart = response.value
                         let options = {}
                         cart.options.map((item) => {
                             options[item.propertyTitle] = item.propertyValue
                         })
-                        this.props.addItemToCart(cart.title, cart.title, cart.shop_name, cart.quantity, 
-                            cart.price, JSON.stringify(options), cart.detailUrl, cart.detailUrl, cart.currency, 
+
+                        // console.log(cart)
+                        this.props.addItemToCart(cart.title, cart.title, cart.shop_name, cart.quantity,
+                            cart.price, JSON.stringify(options), cart.detailUrl, cart.detailUrl, cart.currency,
                             cart.parentImage, cart.price)
                     }
                 }
             }
         } catch (error) {
-            
+
         }
     }
 
-    openCart(){
+    openCart() {
         this.props.navigation.navigate('CartView')
+    }
+
+    onEndSubmit() {
+        if(this.state.searchKeyword.indexOf('https://') != 0){
+            return
+        }
+
+        this.setState({url: this.state.searchKeyword})
+    }
+
+    goBack(){
+        if(this.webview){
+            this.webview.goBack()
+        }
     }
 
     render() {
 
-        const url = this.props.navigation.getParam('url')
-        const {cartCount} = this.props
+        const {url} = this.state
+        const { cartCount } = this.props
 
         return (
             <View style={styles.container}>
-                <Header
-                    leftIcon='chevron-left'
-                    leftAction={this.onBack.bind(this)}
-                    rightIcon='shopping-cart'
-                    rightCount={cartCount}
-                    rightAction={this.openCart.bind(this)}
-                />
-                <View style={{flex: 1}}>
-                    <Webview 
+                <View style={headerStyles.container}>
+                    <StatusBar translucent barStyle='dark-content' backgroundColor='#00000000' />
+                    <TouchableOpacity style={headerStyles.iconLeft} onPress={this.onBack.bind(this)}>
+                        <Icon name={'times'} size={22} color={Global.MainColor} />
+                    </TouchableOpacity>
+
+                    <View style={[headerStyles.searchContainer]}>
+                        <Image source={Media.SearchIcon} style={headerStyles.searchIcon} />
+                        <TextInput
+                            style={[headerStyles.searchInput,]}
+                            underlineColorAndroid='#00000000'
+                            placeholder={'Nhập link sản phẩm cần tìm kiếm'}
+                            placeholderTextColor='#7f7f7f'
+                            value={this.props.searchKeyword}
+                            clearButtonMode='always'
+                            clearTextOnFocus={true}
+                            onChangeText={(text) => this.setState({searchKeyword: text})}
+                            onSubmitEditing={this.onEndSubmit.bind(this)}
+                            onEndEditing={this.onEndSubmit.bind(this)}
+                        />
+                    </View>
+
+
+                    <TouchableOpacity style={headerStyles.iconRight} onPress={this.openCart.bind(this)}>
+                        <Icon name={'shopping-cart'} size={23} color={Global.MainColor} />
+
+                        {cartCount > 0 &&
+                            <View style={{ position: 'absolute', top: 0, right: 0, backgroundColor: 'green', minWidth: 16, height: 16, borderRadius: 8, alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ fontSize: 9, fontFamily: Global.FontName, color: 'white' }}>{cartCount}</Text>
+                            </View>
+                        }
+                    </TouchableOpacity>
+                    <View style={headerStyles.headerSeparator} />
+                </View>
+                <View style={{ flex: 1 }}>
+                    <Webview
                         ref={ref => (this.webview = ref)}
                         onNavigationStateChange={this.handleWebViewNavigationStateChange.bind(this)}
-                        style={{flex: 1}} source={{uri: url}}
+                        style={{ flex: 1 }} source={{ uri: url }}
                         onShouldStartLoadWithRequest={this.onstartRequest.bind(this)}
                         onMessage={this.onMessage.bind(this)}
                         javaScriptEnabled={true}
                         originWhitelist={['*']}
                     />
-                    <View style={{width: Global.ScreenWidth, backgroundColor: Global.MainColor}}>
-                        <TouchableOpacity onPress={this.addToCart.bind(this)} style={{flexDirection: 'row', width: '100%', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace()}}>
-                            <Icon name='cart-plus' color='white' size={20} style={{marginRight: 10}}/>
-                            <Text style={{fontSize: 18, color: 'white', fontFamily: Global.FontName, fontWeight: '500'}}>Thêm vào giỏ hàng</Text>
-                        </TouchableOpacity>
-                    </View>
-
                     {this.state.loading &&
-                        <View style={[StyleSheet.absoluteFill, {backgroundColor: '#00000077', alignItems: 'center', justifyContent: 'center'}]}>
-                            <ActivityIndicator size='small' color={Global.MainColor}/>
+                        <View style={[StyleSheet.absoluteFill, { backgroundColor: '#00000077', alignItems: 'center', justifyContent: 'center' }]}>
+                            <ActivityIndicator size='small' color={Global.MainColor} />
                         </View>
                     }
                 </View>
+                <View style={{ width: Global.ScreenWidth, backgroundColor: Global.MainColor, flexDirection: 'row'}}>
+                        <TouchableOpacity onPress={this.goBack.bind(this)} style={{ width: '30%', backgroundColor: '#aaaaaa', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
+                            <Icon name='chevron-left' color='white' size={20} style={{ marginRight: 10 }} />
+                            <Text style={{ fontSize: 16, marginTop : 5, color: 'white', fontFamily: Global.FontName, fontWeight: '500' }}>Trang trước</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={this.addToCart.bind(this)} style={{ width: '70%', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
+                            <Icon name='cart-plus' color='white' size={20} style={{ marginRight: 10 }} />
+                            <Text style={{ fontSize: 16, marginTop : 5, color: 'white', fontFamily: Global.FontName, fontWeight: '500' }}>Thêm vào giỏ hàng</Text>
+                        </TouchableOpacity>
+                    </View>
             </View>
         )
     }

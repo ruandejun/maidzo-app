@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 import { connect } from 'react-redux';
 import Global, { Media, calculateDistance, decode, getStatusBarHeight } from 'src/Global';
 import Header from 'components/Header'
-import {getOrder} from './redux/action'
+import {getOrder, getMoreOrder} from './redux/action'
 import OrderListItem from './component/OrderListItem'
 
 class OrderListView extends React.Component {
@@ -44,6 +44,26 @@ class OrderListView extends React.Component {
         return(
             <OrderListItem {...item} onPress={this.onDetail.bind(this, item)}/>
         )
+    }
+
+    renderFooter(){
+        if(!this.props.loadingMore){
+            return null
+        }
+
+        return(
+            <View style={{width: '100%', height: 30, alignItems: 'center', justifyContent: 'center'}}>
+                <ActivityIndicator size='small' color={Global.MainColor}/>
+            </View>
+        )
+    }
+
+    onEndReached(){
+        if(this.props.isFetching || !this.props.canLoadMore || this.props.loadingMore){
+            return
+        }
+
+        this.props.getMoreOrder('asc', this.props.orderItems.length, 10)
     }
 
     onDetail(item){
@@ -66,6 +86,7 @@ class OrderListView extends React.Component {
                     onRefresh={this.onRefresh.bind(this)}
                     style={{flex : 1}}
                     showsVerticalScrollIndicator={false}
+                    onEndReached={this.onEndReached.bind(this)}
                 />
             </View>
         )
@@ -75,13 +96,16 @@ class OrderListView extends React.Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         isFetching: state.order.isFetching,
-        orderItems: state.order.items
+        orderItems: state.order.items,
+        canLoadMore: state.order.canLoadMore,
+        loadingMore: state.order.loadingMore,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getOrder: (order, offset, limit) => dispatch(getOrder(order, offset, limit))
+        getOrder: (order, offset, limit) => dispatch(getOrder(order, offset, limit)),
+        getMoreOrder: (order, offset, limit) => dispatch(getMoreOrder(order, offset, limit))
     };
 };
 

@@ -27,12 +27,12 @@ const styles = StyleSheet.create({
 import { connect } from 'react-redux';
 import Global, { Media, calculateDistance, decode, getStatusBarHeight } from 'src/Global';
 import Header from 'components/Header'
-import {getWalletBalance} from 'Wallets/redux/action'
+import {getSettings} from 'Setting/redux/action'
 
 class NotificationView extends React.Component {
 
     onRefresh(){
-        this.props.getWalletBalance()
+        this.props.getSettings()
     }
 
     renderItem({item, index}){
@@ -74,7 +74,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getWalletBalance: () => dispatch(getWalletBalance())
+        getSettings: () => dispatch(getSettings())
     };
 };
 

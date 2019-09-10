@@ -23,7 +23,7 @@ export function* createOrderFromCart({full_name, street, district, city, phone_n
   }
 }
 
-export function* getOrder({order = 'asc', offset = 0, limit = 50}) {
+export function* getOrder({order = 'asc', offset = 0, limit = 10}) {
   
   let response = yield call(fetchApi, 'get', 'page/get_data_orders/data.json', {order, offset, limit});
   // console.log(response)
@@ -31,6 +31,20 @@ export function* getOrder({order = 'asc', offset = 0, limit = 50}) {
 
     yield put({
       type: actions.GET_ORDER_SUCCESS,
+      data: response.rows,
+      total: response.total
+    });
+  }
+}
+
+export function* getMoreOrder({order = 'asc', offset = 0, limit = 10}) {
+  
+  let response = yield call(fetchApi, 'get', 'page/get_data_orders/data.json', {order, offset, limit});
+  // console.log(response)
+  if (response) {
+
+    yield put({
+      type: actions.GET_MORE_ORDER_SUCCESS,
       data: response.rows,
       total: response.total
     });
@@ -67,6 +81,7 @@ export default function* rootSaga() {
   yield [
     yield takeEvery(actions.CREATE_ORDER, createOrderFromCart),
     yield takeEvery(actions.GET_ORDER, getOrder),
+    yield takeEvery(actions.GET_MORE_ORDER, getMoreOrder),
     yield takeEvery(actions.GET_DETAIL, getDetailInfo),
     yield takeEvery(actions.GET_DETAIL_ITEMS, getDetailItems),
   ]
