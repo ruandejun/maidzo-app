@@ -20,6 +20,10 @@ export function* createOrderFromCart({full_name, street, district, city, phone_n
     if(response.order_number){
       NavigationService.navigate('OrderDetailView', {order_id: response.order_number})
     }
+
+    yield put({
+      type: actions.GET_ORDER
+    });
   }
 }
 

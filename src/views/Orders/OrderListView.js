@@ -60,6 +60,7 @@ class OrderListView extends React.Component {
     }
 
     componentDidMount(){
+        this.props.getOrder('asc', 0, 1)
         this.onRefresh()
     }
 
