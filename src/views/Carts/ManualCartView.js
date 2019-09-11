@@ -32,12 +32,12 @@ const currencies = ['VND', 'CNY', 'AUD']
 class ManualCartView extends React.Component {
 
     state = {
-        detailUrl: 'https://item.taobao.com/item.htm?spm=a21wu.241046-global.4691948847.21.41cab6cbwbyCMN&scm=1007.15423.84311.100200300000005&id=570538933651&pvid=5a40a2a6-6490-45b4-b60a-188b9419991f',
+        detailUrl: '',
         price: '0',
         currency: currencies[0],
-        title: '胖妹妹大码女装夏装新款2019夏天短裤洋气遮肚减龄微胖女孩穿搭潮 ',
-        quantity: 3,
-        parentImage: 'https://gd4.alicdn.com/imgextra/i3/2472412785/TB2pRQFgRsmBKNjSZFFXXcT9VXa_!!2472412785.jpg',
+        title: '',
+        quantity: 0,
+        parentImage: '',
         color: '',
         size: '',
         note: ''
@@ -88,6 +88,7 @@ class ManualCartView extends React.Component {
                                 onChangeText={(text) => this.setState({ detailUrl: text })}
                                 underlineColorAndroid='#00000000'
                                 style={styles.inputText}
+                                clearButtonMode='always'
                             />
                         </View>
                     </View>
@@ -103,6 +104,7 @@ class ManualCartView extends React.Component {
                                 onChangeText={(text) => this.setState({ title: text })}
                                 underlineColorAndroid='#00000000'
                                 style={styles.inputText}
+                                clearButtonMode='always'
                             />
                         </View>
                     </View>
@@ -118,6 +120,7 @@ class ManualCartView extends React.Component {
                                 onChangeText={(text) => this.setState({ parentImage: text })}
                                 underlineColorAndroid='#00000000'
                                 style={styles.inputText}
+                                clearButtonMode='always'
                             />
                         </View>
                     </View>
@@ -183,6 +186,7 @@ class ManualCartView extends React.Component {
                                 onChangeText={(text) => this.setState({ full_name: option })}
                                 underlineColorAndroid='#00000000'
                                 style={[styles.inputText, ]}
+                                clearButtonMode='always'
                             />
                         </View>
                         <View style={{ flexDirection: 'row', width: '100%', borderBottomColor: '#CECECE', borderBottomWidth: 0.5, marginTop: 8}}>
@@ -193,6 +197,7 @@ class ManualCartView extends React.Component {
                                 onChangeText={(text) => this.setState({ full_name: option })}
                                 underlineColorAndroid='#00000000'
                                 style={[styles.inputText, ]}
+                                clearButtonMode='always'
                             />
                         </View>
                     </View>
@@ -208,6 +213,7 @@ class ManualCartView extends React.Component {
                                 underlineColorAndroid='#00000000'
                                 multiline
                                 style={[styles.inputText, {height: 80}]}
+                                clearButtonMode='always'
                             />
                         </View>
                     </View>
@@ -252,7 +258,7 @@ const styles = StyleSheet.create({
         padding: 5,
         fontFamily: Global.FontName,
         color: 'black',
-        fontSize: 15
+        fontSize: 15, width: '100%'
     },
     buttonContainer: {
         height: 50,

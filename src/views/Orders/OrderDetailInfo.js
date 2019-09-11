@@ -196,7 +196,7 @@ class OrderDetailInfo extends React.Component {
 
                             <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
                                 {orderDetail && orderDetail.payment_left > 0 && 
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('PayOrderView', {order_id: orderDetail.id, amount: orderDetail.payment_left})} style={{width: 100, height: 35, margin: 10, backgroundColor: 'blue', borderRadius: 5, alignItems: 'center', justifyContent: 'center'}}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('PayOrderView', {order_id: orderDetail.id, payment_left: orderDetail.payment_left, need_to_pay: orderDetail.need_to_pay})} style={{width: 100, height: 35, margin: 10, backgroundColor: 'blue', borderRadius: 5, alignItems: 'center', justifyContent: 'center'}}>
                                         <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Thanh toán</Text>
                                     </TouchableOpacity>
                                 }

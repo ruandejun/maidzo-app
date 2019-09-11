@@ -49,9 +49,9 @@ class CartInfoView extends React.Component {
             phone_number: user && user.phone_number ? user.phone_number : '',
             facebook: user && user.facebook ? user.facebook : '',
             order_note: user && user.order_note ? user.order_note : '',
-            district: user && user.district ? user.district : 'Hoang mai',
-            city: user && user.city ? user.city : 'Ha noi',
-            street: user && user.street ? user.street : 'Giap nhi',
+            district: user && user.district ? user.district : '',
+            city: user && user.city ? user.city : '',
+            street: user && user.street ? user.street : '',
             ship_method: 0
         }
     }

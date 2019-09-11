@@ -60,7 +60,8 @@ class PayOrderView extends React.Component {
     render() {
 
         const order_id = this.props.navigation.getParam('order_id')
-        const amount = this.props.navigation.getParam('amount')
+        const need_to_pay = this.props.navigation.getParam('need_to_pay')
+        const payment_left = this.props.navigation.getParam('payment_left')
 
         const {pay_mode} = this.state
 
@@ -72,18 +73,19 @@ class PayOrderView extends React.Component {
                     leftAction={() => this.props.navigation.goBack()}
                 />
                 <View style={{padding: 10, width: '100%'}}>
-                    <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName}}>{'Số tiền cần thanh toán: ' + convertMoney(amount) + ' đ'}</Text>
+                    <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName}}>{'Cần cọc thêm: ' + convertMoney(need_to_pay) + ' đ'}</Text>
+                    <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName}}>{'Tổng còn thiếu: ' + convertMoney(payment_left) + ' đ'}</Text>
                     <Text style={{fontSize: 14, fontWeight: '500', color: 'black', marginTop: 5, fontFamily: Global.FontName}}>{'Số tiền thanh toán: ' + convertMoney(this.state.amount_pay) + ' đ'}</Text>
                 </View>
                 
                 <View style={{width: '100%', padding: 10, flexDirection: 'row'}}>
                     <Checkbox
-                                        title={'70%'}
+                                        title={'Cần cọc thêm'}
                                         size='md'
                                         checked={pay_mode == 1}
                                         onChange={(value) => {
                                             if(value){
-                                                this.setState({pay_mode : 1, amount_pay : (Math.ceil(parseFloat(amount) * 0.7)).toString()})
+                                                this.setState({pay_mode : 1, amount_pay : need_to_pay})
                                             } else {
                                                 this.setState({pay_mode : 0})
                                             }
@@ -93,12 +95,12 @@ class PayOrderView extends React.Component {
                                         style={{width: Global.ScreenWidth * 0.5 - 20}}
                                     />
                                     <Checkbox
-                                        title={'100%'}
+                                        title={'Tổng còn thiếu'}
                                         size='md'
                                         checked={pay_mode == 2}
                                         onChange={(value) => {
                                             if(value){
-                                                this.setState({pay_mode : 2, amount_pay : amount})
+                                                this.setState({pay_mode : 2, amount_pay : payment_left})
                                             } else {
                                                 this.setState({pay_mode : 0})
                                             }
