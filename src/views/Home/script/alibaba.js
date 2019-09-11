@@ -76,9 +76,9 @@ function getProductDetailForCart() {
         product.price = parseFloat(specialPrice.getElementsByClassName('price-num')[0].innerText.replace('￥', ''));
       }
 
-      var prdImages = document.querySelectorAll('.detail-image-slides .swipe-content img');
+      var prdImages = document.querySelectorAll('.selector-current-image .image-container img');
       product.image = prdImages[0].src;
-      product.parentImage = document.getElementsByClassName('J_ImageFirstRender')[0].getAttribute('src');;
+      product.parentImage = document.getElementsByClassName('J_SkuPreviewImage')[0].getAttribute('src');
 
       var selectedOptions = [];
       var element = document.getElementsByClassName('sku-1st-prop-box')[0];

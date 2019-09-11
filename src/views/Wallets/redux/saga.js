@@ -8,7 +8,7 @@ import CustomAlert from 'components/CustomAlert'
 
 export function* getWalletBalance({username}) {
     let response = yield call(fetchApi, 'get', `page/get_transaction_details/${username}/`);
-    console.log(response)
+    // console.log(response)
     if (response) {
 
         yield put({

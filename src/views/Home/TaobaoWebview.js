@@ -120,7 +120,7 @@ class TaobaoWebView extends React.Component {
         try {
             if (event.nativeEvent.data) {
                 let response = JSON.parse(event.nativeEvent.data)
-                console.log(response)
+                // console.log(response)
                 if (response) {
                     if (response.type == 'checkReadyToAddCart') {
                         if (response.value) {
@@ -147,7 +147,7 @@ class TaobaoWebView extends React.Component {
                         // console.log(cart)
                         this.props.addItemToCart(cart.title, cart.title, cart.shop_name, cart.quantity,
                             cart.price, JSON.stringify(options), cart.detailUrl, cart.detailUrl, cart.currency,
-                            cart.parentImage, cart.price)
+                            cart.image, cart.price)
                     }
                 }
             }
