@@ -36,7 +36,7 @@ export function* login({username, password}) {
 
 export function* register({username, email, facebook, phone, password, verifypassword}) {
   let response = yield call(fetchApiLogin, 'post', 'api/user/auth/signup/', {username, email, facebook, phone, password, verifypassword});
-
+  console.log(response)
     if (response.token) {
     Global.userToken = response.token
     yield AsyncStorage.setItem('@USER_TOKEN', Global.userToken)
@@ -51,9 +51,20 @@ export function* register({username, email, facebook, phone, password, verifypas
 
       NavigationService.reset('DashboardView')
     }
+  } else if(response.success) {
+    
+    yield put({
+      type: actions.SIGN_UP_SUCCESS
+    });
+    CustomAlert('Thành công', 'Đăng ký tài khoản thành công. Đăng nhập lại với tài khoản của bạn')
+    NavigationService.reset('LoginView', {username: username})
   } else {
     if(response && response.non_field_errors){
       CustomAlert(response.non_field_errors[0])
+    } else if(response.error && response.error.username){
+      CustomAlert(response.error.username[0])
+    } else if(response.error && response.error.email){
+      CustomAlert(response.error.email[0])
     }
         yield put({
             type: actions.SIGN_UP_FAIL,

@@ -18,7 +18,9 @@ export default function appReducer(state = initState, action) {
         case actions.SIGN_UP:
             return {...state,  isFetching: true, isLogin : false}
         case actions.LOGIN_SUCCESSFULLY:
-        return {...state,  user: action.data, isFetching : false, isLogin : true};
+            return {...state,  user: action.data, isFetching : false, isLogin : true};
+        case actions.SIGN_UP_SUCCESS:
+            return {...state,  isFetching : false, isLogin : false};
         case actions.LOGIN_FAIL:
         case actions.SIGN_UP_FAIL:
             return {...state,  isFetching: false, isLogin : false}

@@ -72,6 +72,13 @@ class LoginView extends React.Component{
        isRegister: false
    }
 
+   componentDidMount(){
+       const username = this.props.navigation.getParam('username')
+       if(username){
+           this.setState({username: username})
+       }
+   }
+
    onForgotPassword(){
     this.props.navigation.navigate('ForgotPasswordView')
    }
@@ -112,7 +119,7 @@ class LoginView extends React.Component{
             return
         }
 
-        this.props.register(username, email, facebook, phone, password, verifypassword)
+        this.props.register(username, email, facebook, phone, password, verifyPassword)
     }
 
    render(){
@@ -169,8 +176,8 @@ class LoginView extends React.Component{
                     {isRegister &&
                         <View style={styles.inputContainer}>
                             <TextInput 
-                                value={phone}
-                                onChangeText={(text) => this.setState({phone: text})}
+                                value={facebook}
+                                onChangeText={(text) => this.setState({facebook: text})}
                                 underlineColorAndroid='#00000000'
                                 placeholder='Facebook'
                                 placeholderTextColor='#CECECE'

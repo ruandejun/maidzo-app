@@ -11,6 +11,7 @@ const actions = {
   UPDATE_PROFILE_SUCCESS: 'UPDATE_PROFILE_SUCCESS',
   LOGOUT: 'LOGOUT',
   LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
+  SIGN_UP_SUCCESS: 'SIGN_UP_SUCCESS',
 }
 
 export const unmountError = () => {
