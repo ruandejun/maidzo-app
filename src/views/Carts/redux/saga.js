@@ -46,6 +46,29 @@ export function* deleteCartItem({pk, value, name}) {
   
 }
 
+export function* deleteSelected({pk, value, name}) {
+  let response = yield call(fetchUnlengthApi, 'post', 'page/update_cart_item/', {pk, value, name});
+
+  // console.log(response)
+  if (response && response.success) {
+
+    let cresponse = yield call(fetchApi, 'get', 'page/cart/show/');
+    if (cresponse && cresponse.results) {
+
+      yield put({
+        type: actions.GET_CART_SUCCESS,
+        data: cresponse.results,
+        count: cresponse.count
+      });
+    }
+  }
+
+  if(response.msg){
+    CustomAlert(response.msg)
+  }
+  
+}
+
 export function* updateCartItem({pk, value, name}) {
   let response = yield call(fetchUnlengthApi, 'post', 'page/update_cart_item/', {pk, value, name});
 
@@ -138,6 +161,7 @@ export default function* rootSaga() {
     yield takeEvery(actions.ADD_CART_ITEM, addItemToCart),
     yield takeEvery(actions.ADD_CART_MANUAL, addManualItem),
     yield takeEvery(actions.DELETE_CART_ITEM, deleteCartItem),
+    yield takeEvery(actions.DELETE_SELECTED_ITEM, deleteSelected),
     yield takeEvery(actions.UPDATE_CART_ITEM, updateCartItem),
     yield takeEvery(actions.UPDATE_CART_ITEM_SERVICE, updateCartItemService),
   ]

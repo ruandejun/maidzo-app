@@ -63,7 +63,9 @@ class CartInfoView extends React.Component {
             return
         }
 
-        this.props.navigation.navigate('CartConfirmView', {cart_info: this.state})
+        const selectedItems = this.props.navigation.getParam('selectedItems')
+
+        this.props.navigation.navigate('CartConfirmView', {cart_info: this.state, selectedItems : selectedItems})
     }
 
     render() {

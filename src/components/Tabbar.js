@@ -12,25 +12,25 @@ import {
   Image,
   TextInput,
   Keyboard,
-  Platform
+  SafeAreaView
 } from 'react-native';
 
-import {isIphoneX, getBottomSpace} from 'src/Global';
+import {isIphoneX} from 'src/Global';
+import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 const styles = StyleSheet.create({
   container: {
     width: Global.ScreenWidth,
-    height: isIphoneX() ? 94 : 60,
+    height: 60,
     backgroundColor: '#1B5795',
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    paddingBottom : getBottomSpace()
   },
   buttonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: (isIphoneX() ? 93 : 59) - getBottomSpace(),
+    height: 60,
     flex : 1,
   },
   buttonIcon: {
@@ -72,8 +72,8 @@ class Tabbar extends React.PureComponent {
     const currentIndex = navigation.state.index;
 
     return (
-      <View style={styles.container}>
-
+      <SafeAreaView style={{backgroundColor: '#1B5795'}}>
+        <View style={styles.container}>
         <TouchableWithoutFeedback onPress={this.openTab.bind(this, 0)}>
             <View style={[styles.buttonContainer]}>
                 <Image resizeMode='contain' style={styles.buttonIcon} source={Media.HomeTab} />
@@ -113,8 +113,10 @@ class Tabbar extends React.PureComponent {
                 <Text style={[styles.buttonText, {color: currentIndex == 2 ? '#FDCC0D' : 'white'}]}>Thông báo</Text>
             </View>
         </TouchableWithoutFeedback>
+        </View>
+        
 
-      </View>
+      </SafeAreaView>
     )
   }
 }

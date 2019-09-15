@@ -50,7 +50,7 @@ class CartConfirmView extends React.Component {
 
     renderItem({item, index}){
         return(
-            <CartItem {...item}/>
+            <CartItem {...item} disable_selected={true}/>
         )
     }
 
@@ -102,6 +102,7 @@ class CartConfirmView extends React.Component {
 
     onNext(){
         const cart_info = this.props.navigation.getParam('cart_info')
+        const selectedItems = this.props.navigation.getParam('selectedItems')
 
         if(!cart_info){
             return null
@@ -110,8 +111,8 @@ class CartConfirmView extends React.Component {
         const {full_name, street, district, city, phone_number, ship_method, order_note, facebook} = cart_info
         let item_submit = []
 
-        this.props.cartItems.map((item) => {
-            item_submit.push(item.id)
+        selectedItems.map((item) => {
+            item_submit.push(item)
         })
 
         this.props.createOrderFromCart(full_name, street, district, city, phone_number, ship_method, order_note, facebook, JSON.stringify(item_submit))
@@ -130,7 +131,7 @@ class CartConfirmView extends React.Component {
             <View style={{padding: 16}}>
                 <Text style={{fontSize: 11, color: '#777777', fontFamily: Global.FontName}}>Thông tin người nhận hàng</Text>
                 <Text  style={{fontSize: 16, color: 'black', marginTop: 8, fontFamily: Global.FontName}}>{`${full_name}`}</Text>
-                <Text  style={{fontSize: 14, color: '333333', marginTop: 5, fontFamily: Global.FontName}}>{`${phone_number}`}</Text>
+                <Text  style={{fontSize: 14, color: '#333333', marginTop: 5, fontFamily: Global.FontName}}>{`${phone_number}`}</Text>
                 <Text  style={{fontSize: 13, color: '#333333', marginTop: 5, fontFamily: Global.FontName}}>{`${street}, ${district}, ${city}`}</Text>
             </View>
         )
@@ -139,11 +140,16 @@ class CartConfirmView extends React.Component {
     render() {
 
         const {cartItems, isFetching} = this.props
+        const selectedItems = this.props.navigation.getParam('selectedItems')
 
         let total = 0
+        let finalItems = []
 
         cartItems.map((item) => {
-            total += Math.round(parseInt(item.total_vnd))
+            if(selectedItems.indexOf(item.id) > -1){
+                total += Math.round(parseInt(item.total_vnd))
+                finalItems.push(item)
+            }
         })
 
         return (
@@ -156,7 +162,7 @@ class CartConfirmView extends React.Component {
                 />
                 <FlatList 
                     renderItem={this.renderItem.bind(this)}
-                    data={cartItems}
+                    data={finalItems}
                     style={{flex : 1}}
                     showsVerticalScrollIndicator={false}
                     ListHeaderComponent={this.renderHeader.bind(this)}

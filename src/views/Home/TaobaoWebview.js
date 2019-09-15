@@ -51,7 +51,7 @@ class TaobaoWebView extends React.Component {
 
     onstartRequest(event) {
         try {
-            console.log(event)
+            // console.log(event)
 
             this.currentUrl = event.mainDocumentURL ? event.mainDocumentURL : event.url
 

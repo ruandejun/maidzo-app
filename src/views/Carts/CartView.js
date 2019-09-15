@@ -19,7 +19,7 @@ import {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f6f6f6', paddingBottom: getBottomSpace()
+        backgroundColor: '#f2f2f2', paddingBottom: getBottomSpace()
     },
     footerContainer: {
         width: '100%', backgroundColor: 'white'
@@ -30,14 +30,14 @@ const styles = StyleSheet.create({
         borderColor: '#aaaaaa', backgroundColor: '#3578E5', padding: 8
     },
     finalContainer: {
-        width: '100%', flexDirection: 'row', padding: 8,
+        flex: 1, flexDirection: 'row', padding: 8,
         alignItems: 'center', justifyContent: 'space-between'
     },
     priceText: {
         fontSize: 14, color: 'white', fontFamily: Global.FontName
     },
     orderContainer: {
-        height: 50, marginBottom : 0, marginTop : 10, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center'
+        height: 30, borderRadius: 5, paddingLeft: 8, paddingRight: 8, marginBottom : 0, marginLeft: 10, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center'
     },
     orderText: {
         fontSize: 14, color: 'white', fontWeight: '500', fontFamily: Global.FontName
@@ -48,10 +48,17 @@ import { connect } from 'react-redux';
 import Global, { Media, convertMoney, } from 'src/Global';
 import Header from 'components/Header'
 import CartItem from './component/CartItem'
-import {getCart, deleteCartItem, updateCartItem, updateCartItemService} from './redux/action'
+import {getCart, deleteCartItem, updateCartItem, updateCartItemService, deleteSelected} from './redux/action'
 import { getBottomSpace } from 'react-native-iphone-x-helper';
+import {Checkbox} from 'teaset';
+import Icon from 'react-native-vector-icons/FontAwesome5'
+import CustomAlert from 'components/CustomAlert'
 
 class CartView extends React.Component {
+
+    state = {
+        selectedItems: []
+    }
 
     onRefresh(){
         this.props.getCart()
@@ -59,21 +66,70 @@ class CartView extends React.Component {
 
     componentDidMount(){
         this.onRefresh()
+        if((this.props.cartItems)){
+            let selectedItems = []
+            this.props.cartItems.map((item) => {
+                selectedItems.push(item.id)
+            })
+            this.setState({selectedItems: selectedItems})
+        }
+    }
+
+    componentDidUpdate(prevProps){
+        if((!prevProps.cartItems && this.props.cartItems) || (prevProps.cartItems && this.props.cartItems && prevProps.cartItems.length != this.props.cartItems.length)){
+            let selectedItems = []
+            this.props.cartItems.map((item) => {
+                selectedItems.push(item.id)
+            })
+            this.setState({selectedItems: selectedItems})
+        }
     }
 
     renderItem({item, index}){
+        const {selectedItems} = this.state
+
         return(
             <CartItem {...item} 
                 onDelete={this.onDelete.bind(this, item)}
                 onUpdateQuantity={(quantity) => this.onUpdateItem(item.id, quantity, 'quantity')}
                 onUpdateNote={(text) => this.onUpdateItem(item.id, text, 'note')}
                 onUpdateService={({value, name}) => this.onUpdateService(item.id, value, name)}
+                is_selected={selectedItems.indexOf(item.id) > -1}
+                onSelected={(selected) => this.onSelected(item.id, selected)}
             />
         )
     }
 
+    onSelected(id, selected){
+        const index = this.state.selectedItems.indexOf(id)
+        let selectedItems = this.state.selectedItems
+
+        if(index > -1){
+            selectedItems.splice(index, 1)
+        } else {
+            selectedItems.push(id)
+        }
+
+        this.setState({selectedItems: selectedItems})
+    }
+
     onDelete(item){
         this.props.deleteCartItem(item.id)
+    }
+
+    deleteSelected(){
+        const {selectedItems} = this.state
+        if(selectedItems.length == 0){
+            CustomAlert(null, 'Chưa chọn sản phẩm nào')
+            return
+        }
+
+        CustomAlert(null, `Bạn có chắc chắn muốn xoá ${selectedItems.length} sản phẩm?`, [
+            {text: 'Xoá', onPress: () => {
+                this.props.deleteSelected(JSON.stringify(selectedItems))
+            }},
+            {text: 'Huỷ'}
+        ])
     }
 
     onUpdateItem(pk, value, name){
@@ -84,54 +140,8 @@ class CartView extends React.Component {
         this.props.updateCartItemService(JSON.stringify([item_list]), value, name)
     }
 
-    footerView(){
-
-        const {cartItems} = this.props
-
-        if(cartItems.length == 0){
-            return null
-        }
-
-        let item_fee = 0
-        let shipping_vnd = 0
-        let service_fee = 0
-        let total = 0
-
-        cartItems.map((item) => {
-            shipping_vnd += parseInt(item.shipping_vnd)
-            item_fee += (parseInt(item.price_vnd) * item.quantity)
-            service_fee += parseInt(item.total_service_cost_vnd)
-            total += parseInt(item.total_vnd)
-        })
-
-        return(
-            <View style={styles.footerContainer}>
-                <View style={styles.priceContainer}>
-                    <Text style={styles.priceText}>Thành tiền</Text>
-                    <Text style={styles.priceText}>{convertMoney(item_fee) + 'đ'}</Text>
-                </View>
-                <View style={styles.priceContainer}>
-                    <Text style={styles.priceText}>Phí ship nội địa</Text>
-                    <Text style={styles.priceText}>{convertMoney(shipping_vnd) + 'đ'}</Text>
-                </View>
-                <View style={styles.priceContainer}>
-                    <Text style={styles.priceText}>Phí dịch vụ</Text>
-                    <Text style={styles.priceText}>{convertMoney(service_fee) + 'đ'}</Text>
-                </View>
-                <View style={styles.priceContainer}>
-                    <Text style={styles.priceText}>Tổng</Text>
-                    <Text style={styles.priceText}>{convertMoney(total) + 'đ'}</Text>
-                </View>
-
-                <TouchableOpacity style={styles.orderContainer}>
-                    <Text style={styles.orderText}>Đặt hàng</Text>
-                </TouchableOpacity>
-            </View>
-        )
-    }
-
     onNext(){
-        this.props.navigation.navigate('CartInfoView')
+        this.props.navigation.navigate('CartInfoView', {selectedItems: this.state.selectedItems})
     }
 
     listEmpty(){
@@ -140,14 +150,29 @@ class CartView extends React.Component {
         )
     }
 
+    onCheckAll(value){
+        if(value){
+            let selectedItems = []
+            this.props.cartItems.map((item) => {
+                selectedItems.push(item.id)
+            })
+            this.setState({selectedItems: selectedItems})
+        } else {
+            this.setState({selectedItems: []})
+        }
+    }
+
     render() {
 
         const {cartItems, isFetching} = this.props
+        const {selectedItems} = this.state
 
         let total = 0
 
         cartItems.map((item) => {
-            total += Math.round(parseInt(item.total_vnd))
+            if(selectedItems.indexOf(item.id) > -1){
+                total += Math.round(parseInt(item.total_vnd))
+            }
         })
 
         return (
@@ -155,6 +180,8 @@ class CartView extends React.Component {
                 <Header title='Giỏ hàng'
                     rightIcon='times'
                     rightAction={() => this.props.navigation.goBack()}
+                    leftText={selectedItems.length == cartItems.length ? 'Xoá tất cả' : 'Xoá đã chọn'}
+                    leftAction={this.deleteSelected.bind(this)}
                 />
                 <FlatList 
                     renderItem={this.renderItem.bind(this)}
@@ -166,17 +193,23 @@ class CartView extends React.Component {
                     ListEmptyComponent={this.listEmpty.bind(this)}
                 />
 
-                <View style={styles.footerContainer}>
-                    <View style={styles.finalContainer}>
-                        <Text style={[styles.priceText, {color: '#aaaaaa'}]}>Thành tiền (đã gồm VAT)</Text>
-                        <Text style={[styles.priceText, {color: Global.MainColor, fontSize: 18}]}>{convertMoney(total) + 'đ'}</Text>
-                    </View>
+                <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', padding: 16}}>
+                    <Checkbox
+                            title='Chọn tất cả'
+                            size='lg'
+                            checked={selectedItems.length == cartItems.length}
+                            onChange={this.onCheckAll.bind(this)}
+                            checkedIcon={<Icon name='check-square' size={20} color={Global.MainColor}/>}
+                            uncheckedIcon={<Icon name='square' size={20} color={'#333333'}/>}
+                    />
+                    <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, flex: 1, textAlign: 'right'}}>
+                        {'Tổng tiền:\n'}
+                        <Text style={{color: Global.MainColor, fontWeight: '500'}}>{convertMoney(total) + 'đ'}</Text>
+                    </Text>
 
-                    {cartItems.length > 0 &&
-                        <TouchableOpacity onPress={this.onNext.bind(this)} style={styles.orderContainer}>
-                            <Text style={styles.orderText}>Tiến hành đặt hàng</Text>
-                        </TouchableOpacity>
-                    }
+                    <TouchableOpacity disabled={selectedItems.length == 0} onPress={this.onNext.bind(this)} style={[styles.orderContainer, {backgroundColor: selectedItems.length == 0 ? '#777777' : Global.MainColor}]}>
+                        <Text style={styles.orderText}>Đặt hàng</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         )
@@ -194,6 +227,7 @@ const mapDispatchToProps = dispatch => {
     return {
         getCart: () => {dispatch(getCart())},
         deleteCartItem: (id) => {dispatch(deleteCartItem(id))},
+        deleteSelected: (ids) => {dispatch(deleteSelected(ids))},
         updateCartItem: (pk, value, name) => {dispatch(updateCartItem(pk, value, name))},
         updateCartItemService: (item_list, value, name) => {dispatch(updateCartItemService(item_list, value, name))},
     };

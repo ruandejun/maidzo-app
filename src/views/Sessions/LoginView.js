@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         alignItems: 'center', justifyContent: 'center', margin: 16, width: Global.ScreenWidth - 16, backgroundColor: Global.MainColor,
-        height: 50
+        height: 50, borderRadius: 5
     },
     buttonText: {
         fontSize: 20, color: 'white', fontFamily: Global.FontName

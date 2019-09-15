@@ -27,6 +27,12 @@ export const jsCheck1688ReadyToAddCart = `
               canAddCart = true
           }
       }
+      var modalBtns = document.querySelectorAll('.takla-wap-b2b-skuselector-component');
+      modalBtns.forEach(function(btn) {
+          if(btn.style.display == 'none'){
+            canAddCart = false
+          }
+      });
       window.ReactNativeWebView.postMessage(JSON.stringify({type: 'checkReadyToAddCart', value: canAddCart}))
     }
     checkReadyToAddCart();
@@ -121,6 +127,9 @@ function getProductDetailForCart() {
 function closeOptionPopup() {
     var modalBtns = document.querySelectorAll('.takla-wap-b2b-skuselector-component');
     modalBtns.forEach(function(btn) {btn.style.display='none';});
+
+    var amountSelectors = document.querySelectorAll('.amount-input');
+    amountSelectors.forEach(function(btn) {btn.value=0;});
 }
 getProductDetailForCart();
 `

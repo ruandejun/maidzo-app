@@ -31,6 +31,11 @@ export const jsCheckReadyToAddCart = `
           canAddCart = false;
         } else {}
       });
+
+      var containerShow = document.getElementsByClassName('modal-container-enter').length;
+      if (containerShow == 'undefined' || containerShow < 1) {
+        canAddCart = false;
+      }
       window.ReactNativeWebView.postMessage(JSON.stringify({type: 'checkReadyToAddCart', value: canAddCart}))
     }
     checkReadyToAddCart();

@@ -6,6 +6,7 @@ const actions = {
   ADD_CART_MANUAL: 'ADD_CART_MANUAL',
   ADD_CART_ITEM_SUCCESS: 'ADD_CART_ITEM_SUCCESS',
   DELETE_CART_ITEM: 'DELETE_CART_ITEM',
+  DELETE_SELECTED_ITEM: 'DELETE_SELECTED_ITEM',
   UPDATE_CART_ITEM: 'UPDATE_CART_ITEM',
   UPDATE_CART_ITEM_SERVICE: 'UPDATE_CART_ITEM_SERVICE'
 }
@@ -16,6 +17,15 @@ export const deleteCartItem = (id) => {
     value: id,
     pk:	id,
     name:	'xoa_san_pham'
+  }
+}
+
+export const deleteSelected = (ids) => {
+  return {
+    type: actions.DELETE_SELECTED_ITEM,
+    value: ids,
+    pk:	'xoa_da_chon',
+    name:	'xoa_da_chon'
   }
 }
 

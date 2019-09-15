@@ -114,30 +114,38 @@ class CartItem extends React.PureComponent {
         }
     }
 
+    onSelected(value){
+        if(this.props.onSelected){
+            this.props.onSelected(value)
+        }
+    }
+
     render() {
 
         const { vendor, name, id, image_url, price, price_vnd, option_selected_tag,
             rocket, currency, total_vnd, total_service_cost_vnd, quantity,
-            shipping_vnd, rocket_ship, insurance, bargain, packing} = this.props
+            shipping_vnd, rocket_ship, insurance, bargain, packing, is_selected, disable_selected} = this.props
         const { note } = this.state
 
         return (
             <View style={styles.container} >
                 <View style={styles.headerContainer}>
-                    <Text style={styles.idText}>{id}</Text>
-                    <Text style={styles.nameText}>{name}</Text>
-                    <Text onPress={this.onDelete.bind(this)} style={styles.deleteText}>Xoá</Text>
-                </View>
-                <View style={styles.contentContainer}>
-                    <Image source={{ uri: imageUrl(image_url) }} style={styles.itemImage} />
-                    <View style={styles.descriptionContainer}>
-                        <Text style={[styles.descriptionText, { color: '#1B5795' }]}>{`${vendor}`}</Text>
-                        <Text style={styles.descriptionText}>{`${currency} ${price} / ${convertMoney(price_vnd)} vnđ`}</Text>
-                        <Stepper
+                
+                    {!disable_selected &&
+                        <Checkbox
+                            size='lg'
+                            checked={is_selected}
+                            onChange={this.onSelected.bind(this)}
+                            checkedIcon={<Icon name='check-square' size={20} color={Global.MainColor}/>}
+                            uncheckedIcon={<Icon name='square' size={20} color={'#333333'}/>}
+                        />
+                    }
+                    <Text style={[styles.idText, {marginLeft : 8, flex: 1, }]}>{id}</Text>
+                    <Stepper
                             value={quantity}
                             min={1}
                             step={1}
-                            style={{ borderWidth: 0, marginTop: 8 }}
+                            style={{ borderWidth: 0, marginLeft: 8, marginRight: 16}}
                             onChange={this.onUpdateQuantity.bind(this)}
                             valueStyle={{ fontSize: 15, color: '#8a6d3b', fontFamily: Global.FontName }}
                             subButton={
@@ -152,6 +160,15 @@ class CartItem extends React.PureComponent {
                             }
                             showSeparator={false}
                         />
+                    <Text onPress={this.onDelete.bind(this)} style={styles.deleteText}>Xoá</Text>
+                </View>
+                <View style={styles.contentContainer}>
+                    <Image source={{ uri: imageUrl(image_url) }} style={styles.itemImage} />
+                    <View style={styles.descriptionContainer}>
+                        <Text style={styles.nameText}>{name}</Text>
+                        <Text style={[styles.descriptionText, { color: '#1B5795' }]}>{`${vendor}`}</Text>
+                        <Text style={styles.descriptionText}>{`${currency} ${price} / ${convertMoney(price_vnd)} vnđ`}</Text>
+                        
                         <Text style={styles.descriptionText}>{`${option_selected_tag}`}</Text>
                     </View>
                 </View>
