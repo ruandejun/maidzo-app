@@ -184,7 +184,6 @@ class OrderListView extends React.Component {
                             placeholder='Từ khoá'
                             value={keyword}
                             onChangeText={(text) => this.setState({keyword : text})}
-                            clearTextOnFocus={true}
                         />
                     </View>
                     <TouchableOpacity onPress={this.onFilter.bind(this)} style={{marginRight: 8, borderWidth: 1, borderColor: '#CECECE', backgroundColor: 'white', padding: 8, width: 150, flexDirection: 'row'}}>
