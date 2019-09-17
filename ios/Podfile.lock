@@ -33,6 +33,8 @@ PODS:
     - React-RCTText (= 0.60.5)
     - React-RCTVibration (= 0.60.5)
     - React-RCTWebSocket (= 0.60.5)
+  - React-ART (0.60.5):
+    - React-Core (= 0.60.5)
   - React-Core (0.60.5):
     - Folly (= 2018.10.22.00)
     - React-cxxreact (= 0.60.5)
@@ -111,6 +113,7 @@ DEPENDENCIES:
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - React (from `../node_modules/react-native/`)
+  - React-ART (from `../node_modules/react-native/Libraries/ART`)
   - React-Core (from `../node_modules/react-native/React`)
   - React-cxxreact (from `../node_modules/react-native/ReactCommon/cxxreact`)
   - React-DevSupport (from `../node_modules/react-native/React`)
@@ -134,7 +137,7 @@ DEPENDENCIES:
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - boost-for-react-native
     - libwebp
     - SDWebImage
@@ -149,6 +152,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   React:
     :path: "../node_modules/react-native/"
+  React-ART:
+    :path: "../node_modules/react-native/Libraries/ART"
   React-Core:
     :path: "../node_modules/react-native/React"
   React-cxxreact:
@@ -199,6 +204,7 @@ SPEC CHECKSUMS:
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
   libwebp: 057912d6d0abfb6357d8bb05c0ea470301f5d61e
   React: 53c53c4d99097af47cf60594b8706b4e3321e722
+  React-ART: 662252e1a2f87f7d4e56150403040b4cd725c0f9
   React-Core: ba421f6b4f4cbe2fb17c0b6fc675f87622e78a64
   React-cxxreact: 8384287780c4999351ad9b6e7a149d9ed10a2395
   React-DevSupport: 197fb409737cff2c4f9986e77c220d7452cb9f9f
@@ -223,6 +229,6 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: 7568737603c50f6237850afedd7e9e28e5917e6b
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
-PODFILE CHECKSUM: 754fcab9aa56cf7514137c6f8565c76450118dec
+PODFILE CHECKSUM: e4ff8d71ae6bb77d8d246c74b17feb9c240231be
 
-COCOAPODS: 1.7.2
+COCOAPODS: 1.8.0.beta.2

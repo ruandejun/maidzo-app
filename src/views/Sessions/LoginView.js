@@ -192,6 +192,7 @@ class LoginView extends React.Component{
                             placeholder='Mật khẩu*'
                             secureTextEntry
                             placeholderTextColor='#CECECE'
+                            autoCapitalize='none'
                             style={styles.inputText}/>
                     </View>
                     {isRegister &&
@@ -202,6 +203,7 @@ class LoginView extends React.Component{
                                 underlineColorAndroid='#00000000'
                                 placeholder='Nhập lại mật khẩu*'
                                 secureTextEntry
+                                autoCapitalize='none'
                                 placeholderTextColor='#CECECE'
                                 style={styles.inputText}/>
                         </View>

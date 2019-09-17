@@ -186,7 +186,7 @@ class OrderListView extends React.Component {
                             onChangeText={(text) => this.setState({keyword : text})}
                         />
                     </View>
-                    <TouchableOpacity onPress={this.onFilter.bind(this)} style={{marginRight: 8, borderWidth: 1, borderColor: '#CECECE', backgroundColor: 'white', padding: 8, width: 150, flexDirection: 'row'}}>
+                    <TouchableOpacity onPress={this.onFilter.bind(this)} style={{marginRight: 8, height: 30, borderRadius: 15, borderWidth: 1, borderColor: '#CECECE', backgroundColor: 'white', width: 160, flexDirection: 'row', alignItems: 'center', paddingLeft: 8, paddingRight: 8}}>
                         <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, marginRight: 8, flex: 1}}>{filter.title}</Text>
                         <Icon name='chevron-down' color='#aaaaaa' size={14}/>
                     </TouchableOpacity>

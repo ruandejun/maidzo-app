@@ -5,8 +5,8 @@ import {
     Text,
     StyleSheet,
     Platform,
-    ActivityIndicator,
-    AppState,
+    ProgressBarAndroid,
+    SafeAreaView,
     TouchableOpacity,
     TextInput,
     FlatList,
@@ -30,6 +30,7 @@ import CustomAlert from '../../components/CustomAlert';
 import { jsCheckReadyToAddCart, jsGetProductDetailForCart, jsHideTaobaoThing, jsShowOptionsPopup } from './script/taobao'
 import {jsHide1688Thing, js1688ShowOptionsPopup, jsCheck1688ReadyToAddCart, jsGet1688ProductDetailForCart} from './script/alibaba'
 import {jsGetChemistDetailForCart} from './script/chemist'
+import ProgressBar from 'react-native-progress/Bar'
 
 class TaobaoWebView extends React.Component {
 
@@ -83,11 +84,12 @@ class TaobaoWebView extends React.Component {
     }
 
     handleWebViewNavigationStateChange(newState) {
+        this.setState({ loading: newState && newState.loading })
+        // console.log(newState)
         if (newState && !newState.loading) {
             this.webview.injectJavaScript(jsHideTaobaoThing)
             this.webview.injectJavaScript(jsHide1688Thing)
         }
-        this.setState({ loading: newState && newState.loading })
     }
 
     async addToCart() {
@@ -204,8 +206,8 @@ class TaobaoWebView extends React.Component {
 
         return (
             <View style={styles.container}>
-                <View style={headerStyles.container}>
-                    <StatusBar translucent barStyle='dark-content' backgroundColor='#00000000' />
+                <SafeAreaView style={headerStyles.container}>
+                    <StatusBar translucent barStyle='dark-content' backgroundColor='#00000000' networkActivityIndicatorVisible={this.state.loading}/>
                     <TouchableOpacity style={headerStyles.iconLeft} onPress={this.onBack.bind(this)}>
                         <Icon name={'times'} size={22} color={Global.MainColor} />
                     </TouchableOpacity>
@@ -237,7 +239,8 @@ class TaobaoWebView extends React.Component {
                         }
                     </TouchableOpacity>
                     <View style={headerStyles.headerSeparator} />
-                </View>
+                </SafeAreaView>
+                {this.state.loading && <ProgressBar height={1} borderRadius={0} width={Global.ScreenWidth} color="#2196F3" indeterminate={true}/>}
                 <View style={{ flex: 1 }}>
                     <Webview
                         ref={ref => (this.webview = ref)}
@@ -248,11 +251,11 @@ class TaobaoWebView extends React.Component {
                         javaScriptEnabled={true}
                         originWhitelist={['*']}
                     />
-                    {this.state.loading &&
+                    {/* {this.state.loading && Platform.OS == 'android' &&
                         <View style={[StyleSheet.absoluteFill, { backgroundColor: '#00000077', alignItems: 'center', justifyContent: 'center' }]}>
                             <Image source={Media.LoadingIcon} style={{width : 30, height : 30}} resizeMode='contain'/>
                         </View>
-                    }
+                    } */}
                 </View>
                 <View style={{ width: Global.ScreenWidth, backgroundColor: Global.MainColor, flexDirection: 'row'}}>
                         <TouchableOpacity onPress={this.goBack.bind(this)} style={{ width: '25%', backgroundColor: '#aaaaaa', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>

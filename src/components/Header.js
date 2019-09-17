@@ -10,7 +10,7 @@ import {
   Text,
   StyleSheet,
   StatusBar,
-  PixelRatio,
+  SafeAreaView,
   Platform,
   TouchableOpacity,
   TextInput,
@@ -18,20 +18,15 @@ import {
   FlatList
 } from 'react-native';
 
-import {isIphoneX} from 'src/Global'
-
 export const headerStyles = StyleSheet.create({
 
  container : {
-   backgroundColor: '#F6F6F6',
+   backgroundColor: 'white',
    flexDirection : 'row',
    justifyContent: 'center',
-   paddingTop: Platform.OS === 'ios' ? (isIphoneX() ? 50 : 20) : 0,
+   paddingTop: getStatusBarHeight(),
    // borderBottomWidth: Platform.OS ? 1 / PixelRatio.getPixelSizeForLayoutSize(1) : 0,
-   height: isIphoneX() ? 84 : 64,
-   top: 0,
-   left: 0,
-   right: 0,
+   height: 50 + getStatusBarHeight(),
    width : Global.ScreenWidth
  },
  buttonIcon : {
@@ -146,6 +141,7 @@ export const headerStyles = StyleSheet.create({
 
 import Global from 'src/Global';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 export default class Header extends React.Component{
 
@@ -207,7 +203,7 @@ export default class Header extends React.Component{
    const {leftIcon, searchContainer, autoFocus, rightCount, leftText, leftAction, imageTitle, title, rightIcon, rightText, rightAction, right2Icon, right2Action, searchPlaceholder, searchText, onFocusSearch, headerChangeText, searchBar, refRight, cartCountText} = this.props;
  
    return(
-     <View style={headerStyles.container}>
+     <SafeAreaView style={headerStyles.container}>
        <StatusBar translucent barStyle='dark-content' backgroundColor='#00000000'/>
        {leftIcon &&
          <TouchableOpacity style={headerStyles.iconLeft} onPress={() => {if(leftAction) leftAction()}}>
@@ -263,7 +259,7 @@ export default class Header extends React.Component{
          <Text style={headerStyles.rightText} onPress={() => {if(rightAction) rightAction()}}>{rightText}</Text>
        }
        <View style={headerStyles.headerSeparator}/>
-     </View>
+     </SafeAreaView>
    )
  }
 }
