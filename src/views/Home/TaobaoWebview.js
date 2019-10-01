@@ -31,6 +31,7 @@ import { jsCheckReadyToAddCart, jsGetProductDetailForCart, jsHideTaobaoThing, js
 import {jsHide1688Thing, js1688ShowOptionsPopup, jsCheck1688ReadyToAddCart, jsGet1688ProductDetailForCart} from './script/alibaba'
 import {jsGetChemistDetailForCart} from './script/chemist'
 import ProgressBar from 'react-native-progress/Bar'
+import Share from 'react-native-share'
 
 class TaobaoWebView extends React.Component {
 
@@ -122,15 +123,17 @@ class TaobaoWebView extends React.Component {
         try {
             if (event.nativeEvent.data) {
                 let response = JSON.parse(event.nativeEvent.data)
-                // console.log(response)
+                console.log(response)
                 if (response) {
                     if (response.type == 'checkReadyToAddCart') {
-                        if (response.value) {
+                        if (response.value == 1) {
                             if(this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1){
                                 this.webview.injectJavaScript(jsGetProductDetailForCart)
                             } else if(this.currentUrl.indexOf('m.1688.com/offer') != -1){
                                 this.webview.injectJavaScript(jsGet1688ProductDetailForCart)
                             }
+                        } else if (response.value == 2) {
+                            CustomAlert('Có lỗi', 'Vui lòng chọn thuộc tính sản phẩm')
                         } else {
                             if(this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1){
                                 this.webview.injectJavaScript(jsShowOptionsPopup)
@@ -150,6 +153,7 @@ class TaobaoWebView extends React.Component {
                         this.props.addItemToCart(cart.title, cart.title, cart.shop_name, cart.quantity,
                             cart.price, JSON.stringify(options), cart.detailUrl, cart.detailUrl, cart.currency,
                             cart.image, cart.price)
+                        this.webview.reload()
                     }
                 }
             }
@@ -197,6 +201,12 @@ class TaobaoWebView extends React.Component {
         }
 
         this.setState({searchKeyword: searchKeyword})
+    }
+
+    onShare(){
+        Share.open({url: this.currentUrl.replace('#modal=sku', '')})
+        .then((res) => { console.log(res) })
+        .catch((err) => { err && console.log(err); });
     }
 
     render() {
@@ -258,13 +268,14 @@ class TaobaoWebView extends React.Component {
                     } */}
                 </View>
                 <View style={{ width: Global.ScreenWidth, backgroundColor: Global.MainColor, flexDirection: 'row'}}>
-                        <TouchableOpacity onPress={this.goBack.bind(this)} style={{ width: '25%', backgroundColor: '#aaaaaa', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
+                        <TouchableOpacity onPress={this.goBack.bind(this)} style={{ width: 50, backgroundColor: '#aaaaaa', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
                             <Icon name='chevron-left' color='white' size={20} style={{ marginRight: 10 }} />
-                            <Text style={{ fontSize: 13, marginTop : 5, color: 'white', fontFamily: Global.FontName, fontWeight: '500' }}>Trang trước</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={this.reloadWeb.bind(this)} style={{ width: '25%', backgroundColor: '#aaaaaa', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
+                        <TouchableOpacity onPress={this.reloadWeb.bind(this)} style={{ width: 50, backgroundColor: '#aaaaaa', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
                             <Icon name='redo' color='white' size={20} style={{ marginRight: 10 }} />
-                            <Text style={{ fontSize: 13, marginTop : 5, color: 'white', fontFamily: Global.FontName, fontWeight: '500' }}>Tải lại</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={this.onShare.bind(this)} style={{ width: 50, backgroundColor: '#aaaaaa', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
+                            <Icon name='share' color='white' size={20} style={{ marginRight: 10 }} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={this.addToCart.bind(this)} style={{ width: '50%', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
                             <Icon name='cart-plus' color='white' size={20} style={{ marginRight: 10 }} />

@@ -97,6 +97,8 @@ const fetchApiLogin = async(method, path, params={}) => {
     } else {
         options['body'] = JSON.stringify(params)
     }
+
+    // console.log(Global.apiUrl + `${finalPath}`, options)
     
     return await fetch (Global.apiUrl + `${finalPath}`, options).then(res => {
         return res.json()
@@ -105,6 +107,34 @@ const fetchApiLogin = async(method, path, params={}) => {
     }).catch(err => {
         console.info("__err__", err)
     })
+}
+
+const fetchUploadApi = async(path, imgfile) => {
+  let finalPath = path
+  let options = {
+    method: 'POST',
+    headers: {
+      'Content-Type' : 'multipart/form-data',
+      'Authorization': `JWT ${Global.userToken}`
+    }
+  }
+
+  var body = new FormData();
+  if(imgfile){
+      body.append('imgfile', imgfile);
+  }
+
+  options['body'] = body
+
+  return await fetch (Global.apiUrl + `${finalPath}`, options).then(res => {
+    if(res.status >= 400) return false
+
+    return res.json()
+  }).then(response => {
+    return response
+  }).catch(err => {
+    console.info("__err__", err)
+  })
 }
 
 const setToken = (token) => {
@@ -119,6 +149,7 @@ export {
   fetchApi,
   fetchUnlengthApi,
   fetchApiLogin,
+  fetchUploadApi,
   setToken,
   isLoggedIn
 }

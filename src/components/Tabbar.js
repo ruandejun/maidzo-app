@@ -109,8 +109,15 @@ class Tabbar extends React.PureComponent {
 
         <TouchableWithoutFeedback onPress={this.openTab.bind(this, 2)}>
             <View style={[styles.buttonContainer]}>
-                <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: currentIndex == 2 ? '#FDCC0D' : 'white'}]} source={Media.NotificationTab} />
-                <Text style={[styles.buttonText, {color: currentIndex == 2 ? '#FDCC0D' : 'white'}]}>Thông báo</Text>
+                <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: currentIndex == 2 ? '#FDCC0D' : 'white'}]} source={Media.PackageTab} />
+                <Text style={[styles.buttonText, {color: currentIndex == 2 ? '#FDCC0D' : 'white'}]}>Kiện hàng</Text>
+            </View>
+        </TouchableWithoutFeedback>
+
+        <TouchableWithoutFeedback onPress={this.openTab.bind(this, 3)}>
+            <View style={[styles.buttonContainer]}>
+                <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: currentIndex == 3 ? '#FDCC0D' : 'white'}]} source={Media.NotificationTab} />
+                <Text style={[styles.buttonText, {color: currentIndex == 3 ? '#FDCC0D' : 'white'}]}>Thông báo</Text>
             </View>
         </TouchableWithoutFeedback>
         </View>

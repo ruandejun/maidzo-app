@@ -180,6 +180,7 @@ class OrderListView extends React.Component {
                             returnKeyType='search'
                             onEndEditing={this.onEndEditing.bind(this)}
                             underlineColorAndroid='#00000000'
+                            placeholderTextColor='#777777'
                             style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, width: '100%', padding: 0}}
                             placeholder='Từ khoá'
                             value={keyword}

@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.1</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -39,8 +39,14 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Ứng dụng này cần quyền truy cập camera để upload ảnh làm avatar hoặc tìm kiếm ảnh sản phẩm</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Ứng dụng này cần quyền truy cập camera để upload ảnh làm avatar hoặc tìm kiếm ảnh sản phẩm</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Ứng dụng này cần quyền truy cập thư viện ảnh để upload ảnh làm avatar hoặc tìm kiếm ảnh sản phẩm</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Arial-Bold.ttf</string>

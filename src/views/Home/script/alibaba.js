@@ -19,20 +19,29 @@ export const jsHide1688Thing = `
 
 export const jsCheck1688ReadyToAddCart = `
     function checkReadyToAddCart() {
-      var canAddCart = false;
+      var canAddCart = 0;
       var element = document.getElementsByClassName('J_SelectedTotalAmount')[0];
       if(element){
           var count = element.innerText;
           if(count > 0){
-              canAddCart = true
+              canAddCart = 1
           }
       }
-      var modalBtns = document.querySelectorAll('.takla-wap-b2b-skuselector-component');
-      modalBtns.forEach(function(btn) {
-          if(btn.style.display == 'none'){
-            canAddCart = false
-          }
-      });
+      var modalBtns = document.querySelectorAll('.takla-wap-b2b-skuselector-component')
+      if(canAddCart == 0){
+        modalBtns.forEach(function(btn) {
+            if(btn.style.display != 'none'){
+              canAddCart = 2
+            }
+        })
+      } else {
+        modalBtns.forEach(function(btn) {
+            if(btn.style.display == 'none'){
+              canAddCart = 0
+            }
+        })
+      }
+      
       window.ReactNativeWebView.postMessage(JSON.stringify({type: 'checkReadyToAddCart', value: canAddCart}))
     }
     checkReadyToAddCart();
@@ -74,6 +83,13 @@ function getProductDetailForCart() {
       };
 
       product.detailUrl = window.location.href;
+      let links = document.getElementsByTagName('link')
+      for(var i = 0; i < links.length; i++) {
+          let link = links[i]
+          if(link.rel == 'canonical'){
+            product.detailUrl = link.href.replace('//m.', '//detail.')
+          }
+      }
       product.title = document.getElementsByClassName('title-text')[0].innerText;
       product.shop_name = document.getElementsByClassName('shop-name-text')[0].innerText;
       
@@ -125,6 +141,11 @@ function getProductDetailForCart() {
 }
 
 function closeOptionPopup() {
+    var backgroundClick = document.getElementsByClassName('component-sku-selector-mask')[0]; 
+    if(backgroundClick) { 
+        backgroundClick.click();
+    }
+
     var modalBtns = document.querySelectorAll('.takla-wap-b2b-skuselector-component');
     modalBtns.forEach(function(btn) {btn.style.display='none';});
 

@@ -102,7 +102,8 @@ export const headerStyles = StyleSheet.create({
    color : '#7F7F7F',
    position : 'absolute',
    left : 60, width : Global.ScreenWidth - 120,
-   bottom : 8
+   bottom : 8,
+   fontWeight: '500'
  },
  searchContainer : {
    borderRadius : 20,

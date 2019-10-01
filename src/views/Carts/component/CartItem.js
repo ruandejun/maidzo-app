@@ -12,7 +12,7 @@ import {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        backgroundColor: 'white', padding: 16, marginBottom: 20, marginTop: 10
+        backgroundColor: '#f2f2f2', padding: 10, marginTop: 10, borderWidth: 1, borderRadius: 5, borderColor: 'blue'
     },
     headerContainer: {
         flexDirection: 'row',
@@ -65,13 +65,14 @@ import { connect } from 'react-redux'
 import FastImage from 'react-native-fast-image'
 import { Stepper, Checkbox } from 'teaset'
 
-class CartItem extends React.PureComponent {
+export default class CartItem extends React.PureComponent {
 
     constructor(props) {
         super(props);
 
         this.state = {
             note: props.note ? props.note : '',
+            quantity: props.quantity
         }
     }
 
@@ -86,10 +87,11 @@ class CartItem extends React.PureComponent {
         ])
     }
 
-
     updateTimeout = null
 
     onUpdateQuantity(value){
+        this.setState({quantity: value})
+
         if(this.updateTimeout){
             clearTimeout(this.updateTimeout)
             this.updateTimeout = null
@@ -99,7 +101,7 @@ class CartItem extends React.PureComponent {
             if(this.props.onUpdateQuantity){
                 this.props.onUpdateQuantity(value)
             }
-        }, 1000);
+        }, 3000);
     }
 
     onUpdateNote(){
@@ -120,10 +122,16 @@ class CartItem extends React.PureComponent {
         }
     }
 
+    openItem(){
+        if(this.props.openItem){
+            this.props.openItem()
+        }
+    }
+
     render() {
 
         const { vendor, name, id, image_url, price, price_vnd, option_selected_tag,
-            rocket, currency, total_vnd, total_service_cost_vnd, quantity,
+            rocket, currency, total_vnd, total_service_cost_vnd, quantity, shipping, total_service_cost, total,
             shipping_vnd, rocket_ship, insurance, bargain, packing, is_selected, disable_selected} = this.props
         const { note } = this.state
 
@@ -142,7 +150,7 @@ class CartItem extends React.PureComponent {
                     }
                     <Text style={[styles.idText, {marginLeft : 8, flex: 1, }]}>{id}</Text>
                     <Stepper
-                            value={quantity}
+                            value={this.state.quantity}
                             min={1}
                             step={1}
                             style={{ borderWidth: 0, marginLeft: 8, marginRight: 16}}
@@ -165,10 +173,13 @@ class CartItem extends React.PureComponent {
                 <View style={styles.contentContainer}>
                     <Image source={{ uri: imageUrl(image_url) }} style={styles.itemImage} />
                     <View style={styles.descriptionContainer}>
-                        <Text style={styles.nameText}>{name}</Text>
-                        <Text style={[styles.descriptionText, { color: '#1B5795' }]}>{`${vendor}`}</Text>
+                        <Text onPress={this.openItem.bind(this)} style={styles.nameText}>{name}</Text>
                         <Text style={styles.descriptionText}>{`${currency} ${price} / ${convertMoney(price_vnd)} vnđ`}</Text>
-                        
+                        {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Text onPress={this.openItem.bind(this)} style={[styles.descriptionText]} numberOfLines={1}>{'Link: '}
+                                <Text style={{color: 'blue', textDecorationLine: 'underline'}}>{'Mở sản phẩm'}</Text>
+                            </Text>
+                        </View> */}
                         <Text style={styles.descriptionText}>{`${option_selected_tag}`}</Text>
                     </View>
                 </View>
@@ -184,7 +195,7 @@ class CartItem extends React.PureComponent {
                     onEndEditing={this.onUpdateNote.bind(this)}
                 />
 
-                <View style={{marginTop : 8, marginBottom : 8, borderRadius: 5, backgroundColor: '#f6f6f6', padding: 5}}>
+                {false && <View style={{marginTop : 8, marginBottom : 8, borderRadius: 5, backgroundColor: '#f6f6f6', padding: 5}}>
                     <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                         <Checkbox
                             title='Mua hoả tốc'
@@ -241,37 +252,41 @@ class CartItem extends React.PureComponent {
                         />
                     </View>
                 </View>
+                }
 
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Thành tiền</Text>
-                    <Text style={styles.priceText}>{convertMoney(parseInt(price_vnd) * quantity) + 'đ'}</Text>
+                    <Text style={styles.priceText}>
+                        <Text style={{color: '#3578E5'}}>{convertMoney(parseInt(price) * quantity)}</Text>
+                        /
+                        <Text style={{color: Global.MainColor}}>{convertMoney(parseInt(price_vnd) * quantity) + 'đ'}</Text>
+                    </Text>
                 </View>
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Phí ship nội địa</Text>
-                    <Text style={styles.priceText}>{convertMoney(shipping_vnd) + 'đ'}</Text>
+                    <Text style={styles.priceText}>
+                        <Text style={{color: '#3578E5'}}>{convertMoney(shipping)}</Text>
+                        /
+                        <Text style={{color: Global.MainColor}}>{convertMoney(shipping_vnd) + 'đ'}</Text>
+                    </Text>
                 </View>
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Phí dịch vụ</Text>
-                    <Text style={styles.priceText}>{convertMoney(total_service_cost_vnd) + 'đ'}</Text>
+                    <Text style={styles.priceText}>
+                        <Text style={{color: '#3578E5'}}>{convertMoney(total_service_cost)}</Text>
+                        /
+                        <Text style={{color: Global.MainColor}}>{convertMoney(total_service_cost_vnd) + 'đ'}</Text>
+                    </Text>
                 </View>
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Tổng</Text>
-                    <Text style={styles.priceText}>{convertMoney(total_vnd) + 'đ'}</Text>
+                    <Text style={styles.priceText}>
+                        <Text style={{color: '#3578E5'}}>{convertMoney(total)}</Text>
+                        /
+                        <Text style={{color: Global.MainColor}}>{convertMoney(total_vnd) + 'đ'}</Text>
+                    </Text>
                 </View>
             </View>
         )
     }
 }
-
-const mapStateToProps = (state, ownProps) => {
-    return {
-
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CartItem);

@@ -22,6 +22,9 @@ import UpdateProfileView from 'Setting/UpdateProfileView'
 
 import TrackingDetailView from 'Trackings/TrackingDetailView'
 import ItemTrackingView from 'Trackings/ItemTrackingView'
+import TrackingAllView from 'Trackings/TrackingAllView'
+import ScanQRView from 'Trackings/ScanQRView'
+import AddTransportView  from 'Trackings/AddTransportView'
 
 import SubmitReportView from 'Reports/SubmitReportView'
 import ReportListView from 'Reports/ReportListView'
@@ -37,6 +40,7 @@ import RefundOrderView from 'Wallets/RefundOrderView'
 import HomeView from 'Home/HomeView'
 import TaobaoWebView from 'Home/TaobaoWebView'
 import HomeSearchView from 'Home/HomeSearchView'
+import ImageSearchView from 'Home/ImageSearchView'
 
 import CartView from 'Carts/CartView'
 import CartConfirmView from 'Carts/CartConfirmView'
@@ -51,7 +55,8 @@ import NotificationView from 'Notifications/NotificationView'
 const DashboardView = createBottomTabNavigator({
     HomeView: { screen: HomeView },
     OrderListView: { screen: OrderListView },
-    NotificationView: { screen: NotificationView }
+    TrackingAllView: {screen: TrackingAllView},
+    NotificationView: { screen: NotificationView },
 }, {
         tabBarComponent: Tabbar,
         tabBarPosition: 'bottom',
@@ -170,6 +175,18 @@ const AppNavigator = createAppContainer(
         },
         ManualCartView: {
             screen: ManualCartView,
+            navigationOptions: { header: null }
+        },
+        ImageSearchView: {
+            screen: ImageSearchView,
+            navigationOptions: { header: null }
+        },
+        ScanQRView: {
+            screen: ScanQRView,
+            navigationOptions: { header: null }
+        },
+        AddTransportView: {
+            screen: AddTransportView,
             navigationOptions: { header: null }
         },
     }, {

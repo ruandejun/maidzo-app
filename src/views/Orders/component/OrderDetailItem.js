@@ -12,7 +12,7 @@ import {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        backgroundColor: 'white', padding: 16, marginBottom: 20, marginTop: 10
+        backgroundColor: '#f2f2f2', padding: 10, marginTop: 10, borderWidth: 1, borderRadius: 5, borderColor: 'blue'
     },
     headerContainer: {
         flexDirection: 'row',
@@ -70,8 +70,9 @@ import FastImage from 'react-native-fast-image'
 import { Stepper, Checkbox } from 'teaset'
 import CustomAlert from 'components/CustomAlert'
 import { FlatList } from 'react-native-gesture-handler';
+import Share from 'react-native-share'
 
-class OrderDetailItem extends React.PureComponent {
+export default class OrderDetailItem extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -87,7 +88,7 @@ class OrderDetailItem extends React.PureComponent {
     openQuantityDetail(){
         const {quantity, sum_arrived_quantity, paid_quantity } = this.props
 
-        CustomAlert(null, `Số lượng đã nhận: ${sum_arrived_quantity}\nSố lượng đã thanh toán: ${paid_quantity}\nTổng số lượng đã đặt: ${quantity}`)
+        CustomAlert(null, `Số lượng đã nhận: ${sum_arrived_quantity}\nTổng số lượng đã đặt: ${quantity}`)
     }
 
     onReport(){
@@ -102,10 +103,17 @@ class OrderDetailItem extends React.PureComponent {
         }
     }
 
+    onShare(){
+        const {item_url} = this.props
+        Share.open({url: item_url.replace('#modal=sku', '')})
+        .then((res) => { })
+        .catch((err) => { err && console.log(err); });
+    }
+
     render() {
 
         const { vendor, name, id, image_url, price, price_vnd, option_selected_tag,
-            status, currency, total_vnd, total_service_cost_vnd, quantity,
+            status, currency, total_vnd, total_service_cost_vnd, quantity, shipping, total_service_cost, total,
             shipping_vnd, note, sum_arrived_quantity, rocket, packing, insurance, bargain, rocket_ship, count_shipmentpackage } = this.props
 
         return (
@@ -116,23 +124,27 @@ class OrderDetailItem extends React.PureComponent {
                 </View>
                 <Text onPress={this.openItem.bind(this)} style={styles.nameText}>{name}</Text>
                 <View style={styles.contentContainer}>
-                    <Image source={{ uri: imageUrl(image_url) }} style={styles.itemImage} />
+                    <View style={{alignItems: 'center'}}>
+                        <Image source={{ uri: imageUrl(image_url) }} style={styles.itemImage} />
+                    </View>
                     <View style={styles.descriptionContainer}>
                         {!!vendor && vendor.length > 0 && <Text style={[styles.descriptionText, { color: '#1B5795' }]}>{`${vendor}`}</Text>}
                         <Text style={styles.descriptionText}>{`${currency} ${price} / ${convertMoney(price_vnd)} vnđ`}</Text>
                         <Text onPress={this.openQuantityDetail.bind(this)} style={styles.descriptionText}>{`Số lượng: ${sum_arrived_quantity}/${quantity} `}
                             <Text style={{color: Global.MainColor}}>?</Text>
                         </Text>
-                        <Text onPress={this.openItem.bind(this)} style={[styles.descriptionText]} numberOfLines={1}>{'Link: '}
-                            <Text style={{color: 'blue', textDecorationLine: 'underline'}}>{'Mở sản phẩm'}</Text>
-                        </Text>
+                        {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Text onPress={this.openItem.bind(this)} style={[styles.descriptionText]} numberOfLines={1}>{'Link: '}
+                                <Text style={{color: 'blue', textDecorationLine: 'underline'}}>{'Mở sản phẩm'}</Text>
+                            </Text>
+                        </View> */}
                         <Text style={styles.descriptionText}>{`${option_selected_tag}`}</Text>
                     </View>
                 </View>
 
                 {!!note && note.length > 0 && <Text style={styles.noteText}>{`Ghi chú: ${note}`}</Text>}
 
-                {(rocket || packing || insurance || bargain || rocket_ship) &&
+                {(rocket || packing || insurance || bargain || rocket_ship) && false &&
                     <View style={{marginTop : 8, marginBottom : 8, borderRadius: 5, backgroundColor: '#f6f6f6', padding: 5}}>
                         <FlatList 
                             data={[
@@ -162,19 +174,36 @@ class OrderDetailItem extends React.PureComponent {
 
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Thành tiền</Text>
-                    <Text style={styles.priceText}>{convertMoney(parseInt(price_vnd) * quantity) + 'đ'}</Text>
+                    <Text style={styles.priceText}>
+                        <Text style={{color: '#3578E5'}}>{convertMoney(parseInt(price) * quantity)}</Text>
+                        /
+                        <Text style={{color: Global.MainColor}}>{convertMoney(parseInt(price_vnd) * quantity) + 'đ'}</Text>
+                    </Text>
+                
                 </View>
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Phí ship nội địa</Text>
-                    <Text style={styles.priceText}>{convertMoney(shipping_vnd) + 'đ'}</Text>
+                    <Text style={styles.priceText}>
+                        <Text style={{color: '#3578E5'}}>{convertMoney(shipping)}</Text>
+                        /
+                        <Text style={{color: Global.MainColor}}>{convertMoney(shipping_vnd) + 'đ'}</Text>
+                    </Text>
                 </View>
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Phí dịch vụ</Text>
-                    <Text style={styles.priceText}>{convertMoney(total_service_cost_vnd) + 'đ'}</Text>
+                    <Text style={styles.priceText}>
+                        <Text style={{color: '#3578E5'}}>{convertMoney(total_service_cost)}</Text>
+                        /
+                        <Text style={{color: Global.MainColor}}>{convertMoney(total_service_cost_vnd) + 'đ'}</Text>
+                    </Text>
                 </View>
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Tổng</Text>
-                    <Text style={styles.priceText}>{convertMoney(total_vnd) + 'đ'}</Text>
+                    <Text style={styles.priceText}>
+                        <Text style={{color: '#3578E5'}}>{convertMoney(total)}</Text>
+                        /
+                        <Text style={{color: Global.MainColor}}>{convertMoney(total_vnd) + 'đ'}</Text>
+                    </Text>
                 </View>
                 
                 <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
@@ -187,21 +216,13 @@ class OrderDetailItem extends React.PureComponent {
                     <TouchableOpacity onPress={this.onReport.bind(this)} style={{width: 100, height: 35, margin: 10, backgroundColor: 'red', borderRadius: 5, alignItems: 'center', justifyContent: 'center'}}>
                         <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Khiếu nại</Text>
                     </TouchableOpacity>
+
+                    <TouchableOpacity onPress={this.onShare.bind(this)} style={{width: 80, flexDirection: 'row', height: 35, margin: 10, borderWidth: 1, borderColor: '#aaaaaa', borderRadius: 5, alignItems: 'center', justifyContent: 'center'}}>
+                        <Text style={{fontSize: 14, color: '#aaaaaa', fontFamily: Global.FontName, marginRight: 5}}>Share</Text>
+                        <Icon name='share' size={16} color='#aaaaaa'/>
+                    </TouchableOpacity>
                 </View>
             </View>
         )
     }
 }
-
-const mapStateToProps = (state, ownProps) => {
-    return {
-
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(OrderDetailItem);

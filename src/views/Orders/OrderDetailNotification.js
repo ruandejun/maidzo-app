@@ -109,7 +109,7 @@ class OrderDetailNotification extends React.Component {
     }
 
     openItem(link){
-        this.props.navigation.navigate('TaobaoWebView', {url: link})
+        this.props.navigation.navigate('TaobaoWebView', {url: link.replace('#modal=sku', '')})
     }
 
     renderFooter(){

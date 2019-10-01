@@ -6,7 +6,7 @@ import {
     Text,
     Linking,
     Image,
-    TextInput
+    Clipboard
 } from 'react-native'
 
 const styles = StyleSheet.create({
@@ -34,17 +34,11 @@ import moment from 'moment'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 
-class OrderTrackingItem extends React.Component {
+class OrderTransportItem extends React.Component {
 
     constructor(props) {
         super(props)
 
-    }
-
-    onPress(){
-        if(this.props.onDetail){
-            this.props.onDetail()
-        }
     }
 
     onReport(){
@@ -55,43 +49,33 @@ class OrderTrackingItem extends React.Component {
 
     render() {
 
-        const {tracking_number, id, first_image_url, status, order, note, export_shipment, arrived_tag, weight,
-              created_tag, weight_cost} = this.props
+        const {tracking_number, id, note, status, created_by_username,
+              created_tag} = this.props
 
         return (
-            <TouchableOpacity onPress={this.onPress.bind(this)} style={styles.container}>
+            <View style={styles.container}>
                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10}}>
                     <Text style={styles.idText}>{id}</Text>
                     <Text style={styles.statusText}>{status}</Text>
                 </View>
                 <View style={styles.contentContainer}>
-                    <Image source={{uri: first_image_url}} style={{width: 80, height: 80, marginRight: 8}}/>
                     <View style={{flex: 1}}>
-                        <Text style={styles.titleText}>{'Mã vận chuyển: '}
-                            <Text style={{fontWeight: '500', color: '#333333'}}>{tracking_number}</Text>
-                        </Text>
-                        <Text style={styles.titleText}>{'Đơn hàng: '}
-                            <Text style={{color: '#333333'}}>{order}</Text>
+                        <TouchableOpacity onPress={() => Clipboard.setString(`${tracking_number}`)} style={{flexDirection: 'row', marginTop: 5, width: '100%'}}>
+                            <Text style={{fontSize: 13, color: '#333333', flex: 1, fontFamily: Global.FontName}}>{`Mã vận chuyển: `}
+                                <Text style={{ color: 'black', fontSize: 14 }}>{tracking_number}</Text>
+                            </Text>
+                            <Icon name='copy' style={{width: 30}} size={20} color='#CECECE'/>
+                        </TouchableOpacity>
+                        <Text style={styles.titleText}>{'Tạo bởi: '}
+                            <Text style={{color: '#333333'}}>{created_by_username}</Text>
                         </Text>
                         {!!note && note.length > 0 &&
                             <Text style={styles.titleText}>{'Ghi chú: '}
                                 <Text style={{color: '#333333'}}>{note}</Text>
                             </Text>
                         }
-                        {/* <Text style={styles.titleText}>{'Bao xếp: '}
-                            <Text style={{color: '#333333'}}>{export_shipment}</Text>
-                        </Text> */}
-                        {/* <Text style={styles.titleText}>{'Ngày tạo: '}
+                        <Text style={styles.titleText}>{'Ngày tạo: '}
                             <Text style={{color: '#333333'}}>{created_tag}</Text>
-                        </Text> */}
-                        <Text style={styles.titleText}>{'Ngày nhận: '}
-                            <Text style={{color: '#333333'}}>{arrived_tag}</Text>
-                        </Text>
-                        <Text style={styles.titleText}>{'Cân nặng: '}
-                            <Text style={{color: '#333333'}}>{weight}</Text>
-                        </Text>
-                        <Text style={styles.titleText}>{'Giá: '}
-                            <Text style={{color: '#333333'}}>{weight_cost}</Text>
                         </Text>
                     </View>
                 </View>
@@ -99,7 +83,7 @@ class OrderTrackingItem extends React.Component {
                 <TouchableOpacity onPress={this.onReport.bind(this)} style={{width: 100, height: 35, marginTop: 10, alignSelf: 'center', backgroundColor: 'red', borderRadius: 5, alignItems: 'center', justifyContent: 'center'}}>
                     <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Khiếu nại</Text>
                 </TouchableOpacity>
-            </TouchableOpacity>
+            </View>
         )
     }
 }
@@ -115,4 +99,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderTrackingItem);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderTransportItem);

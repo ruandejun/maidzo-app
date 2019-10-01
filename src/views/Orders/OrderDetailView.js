@@ -51,7 +51,7 @@ class OrderDetailView extends React.Component {
                 >
                     <OrderDetailInfo tabLabel="Thông tin" order_id={order_id} navigation={this.props.navigation}/>
                     <OrderDetailItems tabLabel="Sản phẩm" order_id={order_id} navigation={this.props.navigation}/>
-                    <OrderDetailTransaction tabLabel="Thanh toán" order_id={order_id}/>
+                    <OrderDetailTransaction tabLabel="Thanh toán" order_id={order_id} navigation={this.props.navigation}/>
                     <OrderDetailTracking tabLabel="Vận chuyển" order_id={order_id} navigation={this.props.navigation}/>
                     <OrderDetailNotification tabLabel="Thông báo" order_id={order_id}/>
                 </ScrollableTabView>

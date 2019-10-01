@@ -90,6 +90,7 @@ class OrderDetailInfo extends React.Component {
     render() {
 
         const {orderDetail} = this.state
+        console.log(orderDetail)
 
         return (
             <View style={styles.container}>
@@ -122,6 +123,12 @@ class OrderDetailInfo extends React.Component {
                             <Text style={styles.infoText}>{`Tổng giá trị đơn hàng: `}
                                 <Text style={{color: 'red', fontSize: 14}}>{convertMoney(orderDetail.total_item_cost) + ' đ'}</Text>
                             </Text>
+
+                            {!!orderDetail.customer_note && 
+                                <Text style={styles.infoText}>{`Note: `}
+                                    <Text style={{color: 'black', fontSize: 14}}>{orderDetail.customer_note}</Text>
+                                </Text>
+                            }
 
                             <TouchableOpacity onPress={this.onReport.bind(this)} style={{width: 100, height: 35, marginTop: 10, alignSelf: 'center', backgroundColor: 'red', borderRadius: 5, alignItems: 'center', justifyContent: 'center'}}>
                                 <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Khiếu nại</Text>

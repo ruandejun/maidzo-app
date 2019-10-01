@@ -34,7 +34,6 @@ import { connect } from 'react-redux';
 import Global, { Media, convertMoney, } from 'src/Global';
 import Header from 'components/Header'
 import CartItem from './component/CartItem'
-import {getCart} from './redux/action'
 import CustomAlert from 'components/CustomAlert'
 
 class CartInfoView extends React.Component {
@@ -179,7 +178,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getCart: () => {dispatch(getCart())},
     };
 };
 

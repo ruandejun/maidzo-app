@@ -18,8 +18,8 @@ import {
 
 const styles = StyleSheet.create({
     container: {
-        flex : 1,
-        alignItems : 'center',
+        flex: 1,
+        alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'white'
     },
@@ -42,61 +42,68 @@ const styles = StyleSheet.create({
         fontSize: 18, color: 'black', fontFamily: Global.FontName, padding: 0,
     },
     inputContainer: {
-        width: '100%',
+        width: '90%',
         padding: 16,
-        borderBottomWidth: 1, borderBottomColor: '#CCCCCC'
+        borderBottomWidth: 1, borderBottomColor: Global.MainColor,
     },
     buttonContainer: {
-        alignItems: 'center', justifyContent: 'center', margin: 16, width: Global.ScreenWidth - 16, backgroundColor: Global.MainColor,
-        height: 50, borderRadius: 5
+        alignItems: 'center', justifyContent: 'center', margin: 16, width: '90%', backgroundColor: Global.MainColor,
+        height: 50, borderRadius: 5, marginTop: 30
     },
     buttonText: {
         fontSize: 20, color: 'white', fontFamily: Global.FontName
+    },
+    startText: {
+        width: '90%', fontSize: 14, color: Global.MainColor, fontFamily: Global.FontName, textAlign: 'center'
     }
- })
+})
 
-import {connect} from 'react-redux'
-import Global, {Media, getStatusBarHeight, getBottomSpace} from 'src/Global';
-import {unmountError, login, register} from './redux/action'
+import { connect } from 'react-redux'
+import Global, { Media, getStatusBarHeight, getBottomSpace } from 'src/Global';
+import { unmountError, login, register } from './redux/action'
+import { fetchApiLogin } from 'actions/api'
 import CustomAlert from 'components/CustomAlert'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-class LoginView extends React.Component{
+class LoginView extends React.Component {
 
-   state = {
-       email: '',
-       username: '',
-       verifyPassword: '',
-       facebook: '',
-       phone: '',
-       password: '',
-       isRegister: false
-   }
+    state = {
+        email: '',
+        username: '',
+        verifyPassword: '',
+        facebook: '',
+        phone: '',
+        password: '',
+        isRegister: false,
+        isStart: true,
+        searchKeyword: ''
+    }
 
-   componentDidMount(){
-       const username = this.props.navigation.getParam('username')
-       if(username){
-           this.setState({username: username})
-       }
-   }
+    componentDidMount() {
+        const username = this.props.navigation.getParam('username')
+        if (username) {
+            this.setState({ username: username })
+        }
+    }
 
-   onForgotPassword(){
-    this.props.navigation.navigate('ForgotPasswordView')
-   }
+    onForgotPassword() {
+        this.props.navigation.navigate('ForgotPasswordView')
+    }
 
-   componentWillUnmount() {
-    this.props.unmountError();
-   }
+    componentWillUnmount() {
+        this.props.unmountError();
+    }
 
-   componentWillMount() {
-    this.props.unmountError();
-   }
+    componentWillMount() {
+        this.props.unmountError();
+    }
 
-    onLogin(){
+    onLogin() {
         Keyboard.dismiss();
-        
-        const {username, password} = this.state
 
-        if(username.length == 0 || password.length == 0){
+        const { username, password } = this.state
+
+        if (username.length == 0 || password.length == 0) {
             CustomAlert('Vui lòng nhập đầy đủ thông tin')
             return
         }
@@ -104,17 +111,17 @@ class LoginView extends React.Component{
         this.props.login(username, password)
     }
 
-    onRegister(){
+    onRegister() {
         Keyboard.dismiss();
-        
-        const {username, password, verifyPassword, phone, email, facebook} = this.state
 
-        if(username.length == 0 || password.length == 0 || verifyPassword.length == 0 || email.length == 0 || phone.length == 0){
+        const { username, password, verifyPassword, phone, email, facebook } = this.state
+
+        if (username.length == 0 || password.length == 0 || verifyPassword.length == 0 || email.length == 0 || phone.length == 0) {
             CustomAlert('Vui lòng nhập đầy đủ thông tin')
             return
         }
 
-        if(verifyPassword != password){
+        if (verifyPassword != password) {
             CustomAlert('Vui lòng nhập mật khẩu trùng nhau')
             return
         }
@@ -122,95 +129,166 @@ class LoginView extends React.Component{
         this.props.register(username, email, facebook, phone, password, verifyPassword)
     }
 
-   render(){
+    onStart() {
+        const { searchKeyword } = this.state
 
-    const {username, password, verifyPassword, phone, email, facebook, isRegister} = this.state
+        fetchApiLogin('get', `page/get_username/`, { key: searchKeyword })
+            .then((data) => {
+                // console.log(data)
+                if (data && data.length > 0) {
+                    this.setState({ isStart: false, isRegister: false, username: data[0] })
+                } else {
+                    CustomAlert('Chưa tồn tại', 'Tài khoản của bạn chưa tồn tại', [
+                        { text: 'Quay lại', },
+                        {
+                            text: 'Đăng ký', onPress: () => {
+                                this.setState({ isRegister: true, isStart: false, username: '' })
+                            }
+                        }
+                    ])
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+                CustomAlert('Chưa tồn tại', 'Tài khoản của bạn chưa tồn tại', [
+                    { text: 'Quay lại', },
+                    {
+                        text: 'Đăng ký', onPress: () => {
+                            this.setState({ isRegister: true, isStart: false, username: '' })
+                        }
+                    }
+                ])
+            })
+    }
 
-       return(
-           <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-               <View style={styles.container}>
-                    <View style={styles.headerContainer}>
-                        <TouchableOpacity onPress={() => this.setState({isRegister: false})} style={[styles.modeContainer, {borderBottomWidth: isRegister ? 0 : 1}]}>
-                            <Text style={styles.modeText}>Đăng nhập</Text>
+    render() {
+
+        const { isStart, username, password, verifyPassword, phone, email, searchKeyword, facebook, isRegister } = this.state
+
+        if (isStart) {
+            return (
+                <View style={styles.container}>
+                    <KeyboardAwareScrollView contentContainerStyle={{ flex: 1, paddingBottom: 140, justifyContent: 'center', alignItems: 'center', width: '100%' }} style={{ flex: 1, width: '100%', paddingTop: getStatusBarHeight() }}>
+                        <Image source={Media.LogoFull} style={{ width: 180, height: 60, marginBottom: 60 }} resizeMode='contain' />
+
+                        <Text style={styles.startText}>Địa chỉ email hoặc tên đăng nhập</Text>
+
+                        <View style={styles.inputContainer}>
+                            <TextInput
+                                value={searchKeyword}
+                                onChangeText={(text) => this.setState({ searchKeyword: text })}
+                                underlineColorAndroid='#00000000'
+                                placeholder='Địa chỉ email hoặc tên đăng nhập'
+                                placeholderTextColor='#CECECE'
+                                autoCapitalize='none'
+                                autoFocus
+                                style={styles.inputText} />
+                        </View>
+
+                        <TouchableOpacity onPress={this.onStart.bind(this)} style={[styles.buttonContainer, { marginTop: 30 }]}>
+                            <Text style={styles.buttonText}>Tiếp</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.setState({isRegister: true})} style={[styles.modeContainer, {borderBottomWidth: isRegister ? 1 : 0}]}>
-                            <Text style={styles.modeText}>Đăng ký</Text>
-                        </TouchableOpacity>
-                    </View>
+                    </KeyboardAwareScrollView>
 
-                    <View style={styles.inputContainer}>
-                        <TextInput 
-                            value={username}
-                            onChangeText={(text) => this.setState({username: text})}
-                            underlineColorAndroid='#00000000'
-                            placeholder='Tên đăng nhập'
-                            placeholderTextColor='#CECECE'
-                            autoCapitalize='none'
-                            style={styles.inputText}/>
-                    </View>
+                    <Text onPress={() => this.setState({ isRegister: true, isStart: false })} style={{ fontSize: 14, color: '#333333', position: 'absolute', bottom: 15 + getBottomSpace(), left: 0, right: 0, textAlign: 'center', marginTop: 10, fontFamily: Global.FontName, }} >{'Bạn chưa có tài khoản? '}
+                        <Text style={{ textDecorationLine: 'underline', color: Global.MainColor }}>Đăng ký</Text>
+                    </Text>
+
+                    {this.state.isFetching &&
+                        <View style={[StyleSheet.absoluteFill, { alignItems: 'center', justifyContent: 'center', backgroundColor: '#00000044' }]}>
+                            <Image source={Media.LoadingIcon} style={{ width: 30, height: 30 }} resizeMode='contain' />
+                        </View>
+                    }
+                </View>
+            )
+        }
+
+        return (
+            <View style={styles.container}>
+                <KeyboardAwareScrollView contentContainerStyle={{ flex: 1, paddingBottom: 140, justifyContent: 'center', alignItems: 'center', width: '100%' }} style={{ flex: 1, width: '100%', paddingTop: getStatusBarHeight() }}>
+
+                    <Image source={Media.LogoFull} style={{ width: 180, height: 60, marginBottom: 30 }} resizeMode='contain' />
+
+                    {!isRegister &&
+                        <Text style={[styles.inputText, { marginBottom: 30 }]}>{'Đăng nhập với tài khoản: '}
+                            <Text style={{ color: Global.MainColor }}>{username}</Text>
+                        </Text>
+                    }
                     {isRegister &&
                         <View style={styles.inputContainer}>
-                            <TextInput 
+                            <TextInput
+                                value={username}
+                                onChangeText={(text) => this.setState({ username: text })}
+                                underlineColorAndroid='#00000000'
+                                placeholder='Tên đăng nhập'
+                                placeholderTextColor='#CECECE'
+                                autoCapitalize='none'
+                                style={styles.inputText} />
+                        </View>
+                    }
+                    {isRegister &&
+                        <View style={styles.inputContainer}>
+                            <TextInput
                                 value={email}
-                                onChangeText={(text) => this.setState({email: text})}
+                                onChangeText={(text) => this.setState({ email: text })}
                                 underlineColorAndroid='#00000000'
                                 placeholder='Địa chỉ email*'
                                 placeholderTextColor='#CECECE'
                                 keyboardType='email-address'
                                 autoCapitalize='none'
-                                style={styles.inputText}/>
+                                style={styles.inputText} />
                         </View>
                     }
                     {isRegister &&
                         <View style={styles.inputContainer}>
-                            <TextInput 
+                            <TextInput
                                 value={phone}
-                                onChangeText={(text) => this.setState({phone: text})}
+                                onChangeText={(text) => this.setState({ phone: text })}
                                 underlineColorAndroid='#00000000'
                                 placeholder='Số điện thoại*'
                                 placeholderTextColor='#CECECE'
                                 keyboardType='phone-pad'
-                                style={styles.inputText}/>
+                                style={styles.inputText} />
                         </View>
                     }
                     {isRegister &&
                         <View style={styles.inputContainer}>
-                            <TextInput 
+                            <TextInput
                                 value={facebook}
-                                onChangeText={(text) => this.setState({facebook: text})}
+                                onChangeText={(text) => this.setState({ facebook: text })}
                                 underlineColorAndroid='#00000000'
                                 placeholder='Facebook'
                                 placeholderTextColor='#CECECE'
-                                style={styles.inputText}/>
+                                style={styles.inputText} />
                         </View>
                     }
                     <View style={styles.inputContainer}>
-                        <TextInput 
+                        <TextInput
                             value={password}
-                            onChangeText={(text) => this.setState({password: text})}
+                            onChangeText={(text) => this.setState({ password: text })}
                             underlineColorAndroid='#00000000'
                             placeholder='Mật khẩu*'
                             secureTextEntry
                             placeholderTextColor='#CECECE'
                             autoCapitalize='none'
-                            style={styles.inputText}/>
+                            style={styles.inputText} />
                     </View>
                     {isRegister &&
                         <View style={styles.inputContainer}>
-                            <TextInput 
+                            <TextInput
                                 value={verifyPassword}
-                                onChangeText={(text) => this.setState({verifyPassword: text})}
+                                onChangeText={(text) => this.setState({ verifyPassword: text })}
                                 underlineColorAndroid='#00000000'
                                 placeholder='Nhập lại mật khẩu*'
                                 secureTextEntry
                                 autoCapitalize='none'
                                 placeholderTextColor='#CECECE'
-                                style={styles.inputText}/>
+                                style={styles.inputText} />
                         </View>
                     }
 
                     {!isRegister &&
-                        <Text style={{fontSize: 14, color: '#333333', marginTop : 10, fontFamily: Global.FontName, textDecorationLine:'underline'}} onPress={() => this.props.navigation.navigate('ForgotPasswordView')}>Quên mật khẩu?</Text>
+                        <Text style={{ fontSize: 14, color: '#333333', marginTop: 10, fontFamily: Global.FontName, textDecorationLine: 'underline' }} onPress={() => this.props.navigation.navigate('ForgotPasswordView')}>Quên mật khẩu?</Text>
                     }
 
                     {!isRegister &&
@@ -224,32 +302,37 @@ class LoginView extends React.Component{
                         </TouchableOpacity>
                     }
 
-                    <View style={{flex: 1}}/>
+                </KeyboardAwareScrollView>
 
-                    {this.props.isFetching &&
-                        <View style={[StyleSheet.absoluteFill, {alignItems : 'center', justifyContent : 'center', backgroundColor: '#00000044'}]}>
-                            <Image source={Media.LoadingIcon} style={{width : 30, height : 30}} resizeMode='contain'/>
-                        </View>
-                    }
-                </View>
-           </TouchableWithoutFeedback>
-       )
-   }
+                {!isStart &&
+                    <Text onPress={() => this.setState({ isStart: true, username: '' })} style={{ fontSize: 14, color: '#333333', position: 'absolute', bottom: 15 + getBottomSpace(), left: 0, right: 0, textAlign: 'center', marginTop: 10, fontFamily: Global.FontName, }} >{'Đăng nhập với tài khoản khác '}
+                        <Text style={{ textDecorationLine: 'underline', color: Global.MainColor }}>Quay lại</Text>
+                    </Text>
+                }
+
+                {this.props.isFetching &&
+                    <View style={[StyleSheet.absoluteFill, { alignItems: 'center', justifyContent: 'center', backgroundColor: '#00000044' }]}>
+                        <Image source={Media.LoadingIcon} style={{ width: 30, height: 30 }} resizeMode='contain' />
+                    </View>
+                }
+            </View>
+        )
+    }
 }
 
 const mapPropsToState = (state, ownProps) => {
-   return {
+    return {
         user: state.auth.user,
-        isFetching : state.auth.isFetching
-   }
- }
- 
- const mapDispatchToState = dispatch => {
-   return {
-    login : (username, password) => dispatch(login(username, password)),
-    register : (username, email, facebook, phone, password, verifypassword) => dispatch(register(username, email, facebook, phone, password, verifypassword)),
-    unmountError : () => dispatch(unmountError())
-   }
- }
- 
- export default connect(mapPropsToState, mapDispatchToState)(LoginView);
+        isFetching: state.auth.isFetching
+    }
+}
+
+const mapDispatchToState = dispatch => {
+    return {
+        login: (username, password) => dispatch(login(username, password)),
+        register: (username, email, facebook, phone, password, verifypassword) => dispatch(register(username, email, facebook, phone, password, verifypassword)),
+        unmountError: () => dispatch(unmountError())
+    }
+}
+
+export default connect(mapPropsToState, mapDispatchToState)(LoginView);

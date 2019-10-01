@@ -1,7 +1,7 @@
 export const jsHideTaobaoThing = `
     function hideTaobaoThings() {
-        var hides = document.querySelectorAll('.title-wrapper');
-        hides.forEach(function(h){h.style.display='none';});
+        // var hides = document.querySelectorAll('.title-wrapper');
+        // hides.forEach(function(h){h.style.display='none';});
 
         var banners = document.querySelectorAll('.smartbanner-wrapper');
         banners.forEach(function(banner){banner.style.display='none';});
@@ -23,19 +23,28 @@ export const jsHideTaobaoThing = `
 
 export const jsCheckReadyToAddCart = `
     function checkReadyToAddCart() {
-      var canAddCart = true;
+      var canAddCart = 1;
       var element = document.querySelectorAll('.modal-sku-content');
       element.forEach(function(node) {
         var opt = node.getElementsByClassName('modal-sku-content-item-active').length;
         if (opt == 'undefined' || opt < 1) {
-          canAddCart = false;
+          canAddCart = 0;
         } else {}
       });
 
       var containerShow = document.getElementsByClassName('modal-container-enter').length;
-      if (containerShow == 'undefined' || containerShow < 1) {
-        canAddCart = false;
+      if(canAddCart == 0){
+        if (containerShow == 'undefined' || containerShow < 1) {
+          canAddCart = 0;
+        } else {
+          canAddCart = 2;
+        }
+      } else {
+        if (containerShow == 'undefined' || containerShow < 1) {
+          canAddCart = 0;
+        }
       }
+      
       window.ReactNativeWebView.postMessage(JSON.stringify({type: 'checkReadyToAddCart', value: canAddCart}))
     }
     checkReadyToAddCart();
@@ -80,6 +89,15 @@ function getProductDetailForCart() {
       };
 
       product.detailUrl = window.location.href;
+
+      let link = document.getElementsByClassName('shop-link-item')[0].href;
+      if(link.indexOf('item_id=' > -1)){
+        let splits = link.split('=')
+        if(splits.length > 0){
+          product.detailUrl = 'https://detail.tmall.com/item.htm?id=' + splits[splits.length - 1] + '&ns=1'
+        }
+      }
+      
       product.title = document.getElementsByClassName('title')[0].innerText;
       var price = parseFloat(document.getElementsByClassName('modal-sku-title-price')[0].innerText);
       if(price){

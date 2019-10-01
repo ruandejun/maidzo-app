@@ -170,7 +170,7 @@ class CartConfirmView extends React.Component {
 
                 <View style={styles.footerContainer}>
                     <View style={styles.finalContainer}>
-                        <Text style={[styles.priceText, {color: '#aaaaaa'}]}>Thành tiền (đã gồm VAT)</Text>
+                        <Text style={[styles.priceText, {color: '#aaaaaa'}]}>Thành tiền (chưa bao gồm VAT)</Text>
                         <Text style={[styles.priceText, {color: Global.MainColor, fontSize: 18}]}>{convertMoney(total) + 'đ'}</Text>
                     </View>
 

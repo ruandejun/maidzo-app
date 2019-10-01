@@ -6,6 +6,7 @@ export default Media = {
     HomeTab: require('../resources/images/home_tab.png'),
     CartTab: require('../resources/images/cart_tab.png'),
     OrderTab: require('../resources/images/order_tab.png'),
+    PackageTab: require('../resources/images/package_icon.png'),
     NotificationTab: require('../resources/images/notification_tab.png'),
 
     TaobaoIcon: require('../resources/images/taobao_icon.png'),

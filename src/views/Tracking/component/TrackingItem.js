@@ -86,7 +86,7 @@ class TrackingItem extends React.PureComponent {
     openQuantityDetail(){
         const {quantity, sum_arrived_quantity, paid_quantity, } = this.props
 
-        CustomAlert(null, `Số lượng đã nhận: ${sum_arrived_quantity}\nSố lượng đã thanh toán: ${paid_quantity}\nTổng số lượng đã đặt: ${quantity}`)
+        CustomAlert(null, `Số lượng đã nhận: ${sum_arrived_quantity}\nTổng số lượng đã đặt: ${quantity}`)
     }
 
     render() {
@@ -109,9 +109,9 @@ class TrackingItem extends React.PureComponent {
                         <Text onPress={this.openQuantityDetail.bind(this)} style={styles.descriptionText}>{`Số lượng: ${sum_arrived_quantity}/${quantity} `}
                             <Text style={{color: Global.MainColor}}>?</Text>
                         </Text>
-                        <Text onPress={this.openItem.bind(this)} style={[styles.descriptionText]} numberOfLines={1}>{'Link: '}
+                        {/* <Text onPress={this.openItem.bind(this)} style={[styles.descriptionText]} numberOfLines={1}>{'Link: '}
                             <Text style={{color: 'blue', textDecorationLine: 'underline'}}>{'Mở sản phẩm'}</Text>
-                        </Text>
+                        </Text> */}
                         <Text style={styles.descriptionText}>{`${option_selected_tag}`}</Text>
                     </View>
                 </View>

@@ -119,7 +119,7 @@ class HomeSearchView extends React.Component {
     }
 
     onPressItem(url){
-        this.props.navigation.navigate('TaobaoWebView', {url: url})
+        this.props.navigation.navigate('TaobaoWebView', {url: url.replace('#modal=sku', '')})
     }
 
     renderFooter(){

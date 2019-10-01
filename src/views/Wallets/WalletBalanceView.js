@@ -112,7 +112,10 @@ class WalletBalanceView extends React.Component {
                                             <Image source={Media.VietcombankIcon} style={{width: 100, height: 30, marginTop : 10}} resizeMode='contain'/>
                                             <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, marginTop : 8, width: '100%'}}>{'Ngân hàng Vietcombank'}</Text>
                                             <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, marginTop : 5, width: '100%'}}>{`Chủ tài khoản: ${payment_information.vietcombank_name}`}</Text>
-                                            <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, marginTop : 5, width: '100%'}}>{`Số tài khoản: ${payment_information.vietcombank}`}</Text>
+                                            <TouchableOpacity onPress={() => Clipboard.setString(`${payment_information.vietcombank}`)} style={{flexDirection: 'row', marginTop : 5, width: '100%', alignItems: 'center'}}>
+                                                <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, flex: 1}}>{`Số tài khoản: ${payment_information.vietcombank}`}</Text>
+                                                <Icon name='copy' style={{width: 30}} size={20} color='#CECECE'/>
+                                            </TouchableOpacity>
                                             <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, marginTop : 5, width: '100%'}}>{`Chi nhánh: ${payment_information.vietcombank_brand}`}</Text>
                                         </View>
                                     }
@@ -122,7 +125,10 @@ class WalletBalanceView extends React.Component {
                                             <Image source={Media.TechcombankIcon} style={{width: 100, height: 30, marginTop : 10}} resizeMode='contain'/>
                                             <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, marginTop : 8, width: '100%'}}>{'Ngân hàng Techcombank'}</Text>
                                             <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, marginTop : 5, width: '100%'}}>{`Chủ tài khoản: ${payment_information.techcombank_name}`}</Text>
-                                            <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, marginTop : 5, width: '100%'}}>{`Số tài khoản: ${payment_information.techcombank}`}</Text>
+                                            <TouchableOpacity onPress={() => Clipboard.setString(`${payment_information.techcombank}`)} style={{flexDirection: 'row', marginTop : 5, width: '100%', alignItems: 'center'}}>
+                                                <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, flex: 1}}>{`Số tài khoản: ${payment_information.techcombank}`}</Text>
+                                                <Icon name='copy' style={{width: 30}} size={20} color='#CECECE'/>
+                                            </TouchableOpacity>
                                             <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, marginTop : 5, width: '100%'}}>{`Chi nhánh: ${payment_information.techcombank_brand}`}</Text>
                                         </View>
                                     }

@@ -8,7 +8,9 @@ const actions = {
   DELETE_CART_ITEM: 'DELETE_CART_ITEM',
   DELETE_SELECTED_ITEM: 'DELETE_SELECTED_ITEM',
   UPDATE_CART_ITEM: 'UPDATE_CART_ITEM',
-  UPDATE_CART_ITEM_SERVICE: 'UPDATE_CART_ITEM_SERVICE'
+  UPDATE_CART_ITEM_SERVICE: 'UPDATE_CART_ITEM_SERVICE',
+  GET_CART_COUNT: 'GET_CART_COUNT',
+  GET_CART_COUNT_SUCCESS: 'GET_CART_COUNT_SUCCESS',
 }
 
 export const deleteCartItem = (id) => {
@@ -46,6 +48,12 @@ export const updateCartItemService = (item_list, value, name) => {
 export const getCart = () => {
   return {
     type: actions.GET_CART
+  }
+}
+
+export const getCartCount = () => {
+  return {
+    type: actions.GET_CART_COUNT
   }
 }
 

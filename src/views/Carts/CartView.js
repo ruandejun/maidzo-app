@@ -48,11 +48,13 @@ import { connect } from 'react-redux';
 import Global, { Media, convertMoney, } from 'src/Global';
 import Header from 'components/Header'
 import CartItem from './component/CartItem'
+import VendorItem from './component/VendorItem'
 import {getCart, deleteCartItem, updateCartItem, updateCartItemService, deleteSelected} from './redux/action'
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import {Checkbox} from 'teaset';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import CustomAlert from 'components/CustomAlert'
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 
 class CartView extends React.Component {
 
@@ -88,33 +90,42 @@ class CartView extends React.Component {
     renderItem({item, index}){
         const {selectedItems} = this.state
 
+        const data = this.props.cartVendors[item]
+        // console.log(data)
         return(
-            <CartItem {...item} 
-                onDelete={this.onDelete.bind(this, item)}
-                onUpdateQuantity={(quantity) => this.onUpdateItem(item.id, quantity, 'quantity')}
-                onUpdateNote={(text) => this.onUpdateItem(item.id, text, 'note')}
-                onUpdateService={({value, name}) => this.onUpdateService(item.id, value, name)}
-                is_selected={selectedItems.indexOf(item.id) > -1}
-                onSelected={(selected) => this.onSelected(item.id, selected)}
+            <VendorItem vendor={item} items={data} selectedItems={selectedItems}
+                onDelete={this.onDelete.bind(this)}
+                onUpdateItem={this.onUpdateItem.bind(this)}
+                onUpdateService={this.onUpdateService.bind(this)}
+                onSelected={this.onSelected.bind(this)}
+                openItem={this.openItem.bind(this)}
             />
         )
     }
 
-    onSelected(id, selected){
-        const index = this.state.selectedItems.indexOf(id)
+    openItem(link) {
+        this.props.navigation.navigate('TaobaoWebView', { url: link.replace('#modal=sku', '') })
+    }
+
+    onSelected(item_list){
         let selectedItems = this.state.selectedItems
 
-        if(index > -1){
-            selectedItems.splice(index, 1)
-        } else {
-            selectedItems.push(id)
-        }
+        item_list.map((item) => {
+            const index = selectedItems.indexOf(item)
+        
+
+            if(index > -1){
+                selectedItems.splice(index, 1)
+            } else {
+                selectedItems.push(item)
+            }
+        })
 
         this.setState({selectedItems: selectedItems})
     }
 
-    onDelete(item){
-        this.props.deleteCartItem(item.id)
+    onDelete(item_id){
+        this.props.deleteCartItem(item_id)
     }
 
     deleteSelected(){
@@ -132,12 +143,12 @@ class CartView extends React.Component {
         ])
     }
 
-    onUpdateItem(pk, value, name){
+    onUpdateItem({pk, value, name}){
         this.props.updateCartItem(pk, value, name)
     }
 
-    onUpdateService(item_list, value, name){
-        this.props.updateCartItemService(JSON.stringify([item_list]), value, name)
+    onUpdateService({item_list, value, name}){
+        this.props.updateCartItemService(JSON.stringify(item_list), value, name)
     }
 
     onNext(){
@@ -164,7 +175,7 @@ class CartView extends React.Component {
 
     render() {
 
-        const {cartItems, isFetching} = this.props
+        const {cartItems, cartVendors, isFetching} = this.props
         const {selectedItems} = this.state
 
         let total = 0
@@ -175,6 +186,8 @@ class CartView extends React.Component {
             }
         })
 
+        console.log(cartItems)
+
         return (
             <View style={styles.container}>
                 <Header title='Giỏ hàng'
@@ -183,9 +196,9 @@ class CartView extends React.Component {
                     leftText={selectedItems.length == cartItems.length ? 'Xoá tất cả' : 'Xoá đã chọn'}
                     leftAction={this.deleteSelected.bind(this)}
                 />
-                <FlatList 
+                <KeyboardAwareFlatList 
                     renderItem={this.renderItem.bind(this)}
-                    data={cartItems}
+                    data={cartVendors ? Object.keys(cartVendors) : []}
                     refreshing={isFetching}
                     onRefresh={this.onRefresh.bind(this)}
                     style={{flex : 1}}
@@ -219,6 +232,7 @@ class CartView extends React.Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         cartItems: state.cart.items,
+        cartVendors: state.cart.vendors,
         isFetching: state.cart.isFetching,
     };
 };

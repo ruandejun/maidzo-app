@@ -23,21 +23,30 @@ export function* getCart() {
   }
 }
 
+export function* getCartCount() {
+  let response = yield call(fetchApi, 'get', 'page/get_profile/');
+  if (response) {
+
+    yield put({
+      type: actions.GET_CART_COUNT_SUCCESS,
+      data: response.cart_count
+    });
+  } else {
+    yield put({
+      type: actions.GET_CART_COUNT_SUCCESS,
+      data: 0
+    });
+  }
+}
+
 export function* deleteCartItem({pk, value, name}) {
   let response = yield call(fetchUnlengthApi, 'post', 'page/update_cart_item/', {pk, value, name});
 
   // console.log(response)
   if (response && response.success) {
 
-    let cresponse = yield call(fetchApi, 'get', 'page/cart/show/');
-    if (cresponse && cresponse.results) {
-
-      yield put({
-        type: actions.GET_CART_SUCCESS,
-        data: cresponse.results,
-        count: cresponse.count
-      });
-    }
+    yield put({type: actions.GET_CART})
+    // yield put({type: actions.GET_CART_COUNT})
   }
 
   if(response.msg){
@@ -52,15 +61,8 @@ export function* deleteSelected({pk, value, name}) {
   // console.log(response)
   if (response && response.success) {
 
-    let cresponse = yield call(fetchApi, 'get', 'page/cart/show/');
-    if (cresponse && cresponse.results) {
-
-      yield put({
-        type: actions.GET_CART_SUCCESS,
-        data: cresponse.results,
-        count: cresponse.count
-      });
-    }
+    yield put({type: actions.GET_CART})
+    // yield put({type: actions.GET_CART_COUNT})
   }
 
   if(response.msg){
@@ -75,15 +77,8 @@ export function* updateCartItem({pk, value, name}) {
   // console.log(response)
   if (response && response.success) {
 
-    let cresponse = yield call(fetchApi, 'get', 'page/cart/show/');
-    if (cresponse && cresponse.results) {
-
-      yield put({
-        type: actions.GET_CART_SUCCESS,
-        data: cresponse.results,
-        count: cresponse.count
-      });
-    }
+    yield put({type: actions.GET_CART})
+    yield put({type: actions.GET_CART_COUNT})
   }
 
   if(response.msg){
@@ -98,15 +93,8 @@ export function* updateCartItemService({item_list, value, name}) {
   // console.log(response)
   if (response && response.success) {
 
-    let cresponse = yield call(fetchApi, 'get', 'page/cart/show/');
-    if (cresponse && cresponse.results) {
-
-      yield put({
-        type: actions.GET_CART_SUCCESS,
-        data: cresponse.results,
-        count: cresponse.count
-      });
-    }
+    yield put({type: actions.GET_CART})
+    // yield put({type: actions.GET_CART_COUNT})
   }
 
   if(response.msg){
@@ -130,6 +118,7 @@ export function* addItemToCart({payload}) {
     CustomAlert('Thêm sản phẩm vào giỏ hàng thành công')
     
     yield put({type: actions.GET_CART})
+    // yield put({type: actions.GET_CART_COUNT})
   } else {
     CustomAlert('Sản phẩm này không thêm được vào giỏ hàng, vui lòng chọn sản phẩm khác.')
   }
@@ -150,6 +139,7 @@ export function* addManualItem({payload}) {
     CustomAlert('Thêm sản phẩm vào giỏ hàng thành công')
     
     yield put({type: actions.GET_CART})
+    // yield put({type: actions.GET_CART_COUNT})
   } else {
     CustomAlert('Sản phẩm này không thêm được vào giỏ hàng, vui lòng chọn sản phẩm khác.')
   }
@@ -158,6 +148,7 @@ export function* addManualItem({payload}) {
 export default function* rootSaga() {
   yield [
     yield takeEvery(actions.GET_CART, getCart),
+    yield takeEvery(actions.GET_CART_COUNT, getCartCount),
     yield takeEvery(actions.ADD_CART_ITEM, addItemToCart),
     yield takeEvery(actions.ADD_CART_MANUAL, addManualItem),
     yield takeEvery(actions.DELETE_CART_ITEM, deleteCartItem),
