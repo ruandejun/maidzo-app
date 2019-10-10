@@ -15,7 +15,7 @@ import {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f6f6f6'
+        backgroundColor: '#f0f0f0'
     },
     itemContainer: {
         width: '95%', alignSelf: 'center', borderRadius: 8, backgroundColor: 'white', padding: 16, marginTop: 8

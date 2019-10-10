@@ -182,6 +182,7 @@ class LoginView extends React.Component {
                                 placeholderTextColor='#CECECE'
                                 autoCapitalize='none'
                                 autoFocus
+                                autoCorrect={false}
                                 style={styles.inputText} />
                         </View>
 
@@ -221,6 +222,7 @@ class LoginView extends React.Component {
                                 onChangeText={(text) => this.setState({ username: text })}
                                 underlineColorAndroid='#00000000'
                                 placeholder='Tên đăng nhập'
+                                autoCorrect={false}
                                 placeholderTextColor='#CECECE'
                                 autoCapitalize='none'
                                 style={styles.inputText} />
@@ -236,6 +238,7 @@ class LoginView extends React.Component {
                                 placeholderTextColor='#CECECE'
                                 keyboardType='email-address'
                                 autoCapitalize='none'
+                                autoCorrect={false}
                                 style={styles.inputText} />
                         </View>
                     }

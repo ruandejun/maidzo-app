@@ -131,8 +131,8 @@ android {
         applicationId "com.maidzo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
-        versionName "1.0.3"
+        versionCode 9
+        versionName "1.0.4"
         missingDimensionStrategy 'react-native-camera', 'mlkit'
         multiDexEnabled true
     }

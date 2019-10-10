@@ -12,7 +12,7 @@ import {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        backgroundColor: '#f2f2f2', padding: 10, marginTop: 10, borderWidth: 1, borderRadius: 5, borderColor: 'blue'
+        backgroundColor: '#f2f2f2', padding: 10, marginTop: 10, borderRadius: 5
     },
     headerContainer: {
         flexDirection: 'row',
@@ -157,18 +157,20 @@ export default class CartItem extends React.PureComponent {
                             onChange={this.onUpdateQuantity.bind(this)}
                             valueStyle={{ fontSize: 15, color: '#8a6d3b', fontFamily: Global.FontName }}
                             subButton={
-                                <View style={{ backgroundColor: '#rgba(238, 169, 91, 0.1)', borderColor: '#8a6d3b', borderWidth: 1, borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 15, color: '#8a6d3b', fontFamily: Global.FontName }}>－</Text>
+                                <View style={{ borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={{ fontSize: 18, color: '#8a6d3b', fontFamily: Global.FontName }}>－</Text>
                                 </View>
                             }
                             addButton={
-                                <View style={{ backgroundColor: '#rgba(238, 169, 91, 0.1)', borderColor: '#8a6d3b', borderWidth: 1, borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 15, color: '#8a6d3b', fontFamily: Global.FontName }}>＋</Text>
+                                <View style={{ borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={{ fontSize: 18, color: '#8a6d3b', fontFamily: Global.FontName }}>＋</Text>
                                 </View>
                             }
                             showSeparator={false}
                         />
-                    <Text onPress={this.onDelete.bind(this)} style={styles.deleteText}>Xoá</Text>
+                        <TouchableOpacity onPress={this.onDelete.bind(this)} style={{width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
+                            <Icon name='trash' size={15} color='red'/>
+                        </TouchableOpacity>
                 </View>
                 <View style={styles.contentContainer}>
                     <Image source={{ uri: imageUrl(image_url) }} style={styles.itemImage} />

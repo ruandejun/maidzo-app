@@ -19,7 +19,7 @@ import {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f2f2f2', paddingBottom: getBottomSpace()
+        backgroundColor: '#f0f0f0', paddingBottom: getBottomSpace()
     },
     footerContainer: {
         width: '100%', backgroundColor: 'white'
@@ -124,8 +124,14 @@ class CartView extends React.Component {
         this.setState({selectedItems: selectedItems})
     }
 
-    onDelete(item_id){
-        this.props.deleteCartItem(item_id)
+    onDelete(ids){
+        console.log(ids)
+        CustomAlert(null, `Bạn có chắc chắn muốn xoá ${ids.length} sản phẩm?`, [
+            {text: 'Xoá', onPress: () => {
+                this.props.deleteSelected(JSON.stringify(ids))
+            }},
+            {text: 'Huỷ'}
+        ])
     }
 
     deleteSelected(){
@@ -206,7 +212,7 @@ class CartView extends React.Component {
                     ListEmptyComponent={this.listEmpty.bind(this)}
                 />
 
-                <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', padding: 16}}>
+                <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', padding: 16, borderTopWidth: 1, borderTopColor: '#CECECE', backgroundColor: 'white'}}>
                     <Checkbox
                             title='Chọn tất cả'
                             size='lg'

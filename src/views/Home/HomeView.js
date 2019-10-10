@@ -94,24 +94,34 @@ class HomeView extends React.Component {
         ActionSheet.show([
             {
                 title: 'Chụp ảnh sản phẩm', onPress: () => {
-                    ImagePicker.openCamera({
-                        width: 500,
-                        height: 500,
-                        cropping: true,
-                    }).then(image => {
-                        this.props.navigation.navigate('ImageSearchView', { image: { uri: image.path, type: 'image/jpeg', name: 'taobao.jpg' } })
-                    })
+                    try {
+                        ImagePicker.openCamera({
+                            width: 500,
+                            height: 500,
+                            cropping: true,
+                        }).then(image => {
+                            this.props.navigation.navigate('ImageSearchView', { image: { uri: image.path, type: 'image/jpeg', name: 'taobao.jpg' } })
+                        })
+                    } catch (error) {
+                        console.log(error)
+                    }
+                    
                 }
             },
             {
                 title: 'Chọn ảnh từ thư viện', onPress: () => {
-                    ImagePicker.openPicker({
-                        width: 500,
-                        height: 500,
-                        cropping: true,
-                    }).then(image => {
-                        this.props.navigation.navigate('ImageSearchView', { image: { uri: image.path, type: 'image/jpeg', name: 'taobao.jpg' } })
-                    })
+                    try {
+                        ImagePicker.openPicker({
+                            width: 500,
+                            height: 500,
+                            cropping: true,
+                        }).then(image => {
+                            this.props.navigation.navigate('ImageSearchView', { image: { uri: image.path, type: 'image/jpeg', name: 'taobao.jpg' } })
+                        })
+                    } catch (error) {
+                        console.log(error)
+                    }
+                    
                 }
             },
         ], { title: 'Huỷ' })

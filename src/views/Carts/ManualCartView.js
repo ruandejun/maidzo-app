@@ -162,13 +162,13 @@ class ManualCartView extends React.Component {
                             onChange={(value) => this.setState({quantity: value})}
                             valueStyle={{ fontSize: 15, color: '#8a6d3b', fontFamily: Global.FontName }}
                             subButton={
-                                <View style={{ backgroundColor: '#rgba(238, 169, 91, 0.1)', borderColor: '#8a6d3b', borderWidth: 1, borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 15, color: '#8a6d3b', fontFamily: Global.FontName }}>－</Text>
+                                <View style={{ borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={{ fontSize: 18, color: '#8a6d3b', fontFamily: Global.FontName }}>－</Text>
                                 </View>
                             }
                             addButton={
-                                <View style={{ backgroundColor: '#rgba(238, 169, 91, 0.1)', borderColor: '#8a6d3b', borderWidth: 1, borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 15, color: '#8a6d3b', fontFamily: Global.FontName }}>＋</Text>
+                                <View style={{ borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={{ fontSize: 18, color: '#8a6d3b', fontFamily: Global.FontName }}>＋</Text>
                                 </View>
                             }
                             showSeparator={false}

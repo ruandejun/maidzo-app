@@ -47,9 +47,7 @@ export function* deleteCartItem({pk, value, name}) {
 
     yield put({type: actions.GET_CART})
     // yield put({type: actions.GET_CART_COUNT})
-  }
-
-  if(response.msg){
+  } else if(response.msg){
     CustomAlert(response.msg)
   }
   
@@ -63,9 +61,7 @@ export function* deleteSelected({pk, value, name}) {
 
     yield put({type: actions.GET_CART})
     // yield put({type: actions.GET_CART_COUNT})
-  }
-
-  if(response.msg){
+  } else if(response.msg){
     CustomAlert(response.msg)
   }
   
@@ -79,9 +75,7 @@ export function* updateCartItem({pk, value, name}) {
 
     yield put({type: actions.GET_CART})
     yield put({type: actions.GET_CART_COUNT})
-  }
-
-  if(response.msg){
+  } else if(response.msg){
     CustomAlert(response.msg)
   }
   
@@ -95,9 +89,7 @@ export function* updateCartItemService({item_list, value, name}) {
 
     yield put({type: actions.GET_CART})
     // yield put({type: actions.GET_CART_COUNT})
-  }
-
-  if(response.msg){
+  } else if(response.msg){
     CustomAlert(response.msg)
   }
   
@@ -128,7 +120,7 @@ export function* addManualItem({payload}) {
   // console.log(JSON.stringify(payload))
   let response = yield call(fetchUnlengthApi, 'post', 'page/add_item_to_cart/', payload);
 
-  console.log(response)
+  // console.log(response)
   if (response && response.success) {
 
     yield put({

@@ -22,16 +22,18 @@ const styles = StyleSheet.create({
 
 import { connect } from 'react-redux';
 import Global, { Media, getBottomSpace, decode, getStatusBarHeight } from 'src/Global';
-import Header, {headerStyles} from 'components/Header'
+import Header, { headerStyles } from 'components/Header'
 import Webview from 'react-native-webview'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { addItemToCart } from 'Carts/redux/action'
+import { fetchUnlengthApi } from 'actions/api'
 import CustomAlert from '../../components/CustomAlert';
 import { jsCheckReadyToAddCart, jsGetProductDetailForCart, jsHideTaobaoThing, jsShowOptionsPopup } from './script/taobao'
-import {jsHide1688Thing, js1688ShowOptionsPopup, jsCheck1688ReadyToAddCart, jsGet1688ProductDetailForCart} from './script/alibaba'
-import {jsGetChemistDetailForCart} from './script/chemist'
+import { jsHide1688Thing, js1688ShowOptionsPopup, jsCheck1688ReadyToAddCart, jsGet1688ProductDetailForCart } from './script/alibaba'
+import { jsGetChemistDetailForCart } from './script/chemist'
 import ProgressBar from 'react-native-progress/Bar'
 import Share from 'react-native-share'
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 
 class TaobaoWebView extends React.Component {
 
@@ -41,7 +43,9 @@ class TaobaoWebView extends React.Component {
         this.state = {
             loading: false,
             searchKeyword: '',
-            url: props.navigation.getParam('url')
+            url: props.navigation.getParam('url'),
+            suggestions: [],
+            searchSource: 0 //0 = 1688, 1 = taobao, 2 = tmall, 3 = chemistwarehouse
         }
     }
 
@@ -49,6 +53,16 @@ class TaobaoWebView extends React.Component {
     currentUrl = null
 
     componentDidMount() {
+        let url = this.props.navigation.getParam('url')
+        if(url && url.indexOf('https://www.chemistwarehouse.com.au') != -1 || url.indexOf('https://dis.as.criteo.com') != -1){
+            this.setState({searchSource: 3})
+        } else if(url && url.indexOf('m.1688.com') != -1 || url.indexOf('1688.com') != -1){
+            this.setState({searchSource: 0})
+        } else if(url && url.indexOf('https://m.intl.taobao.com') != -1 || url.indexOf('intl.taobao.com') != -1){
+            this.setState({searchSource: 1})
+        } else {
+            this.setState({searchSource: 2})
+        }
     }
 
     onstartRequest(event) {
@@ -57,7 +71,7 @@ class TaobaoWebView extends React.Component {
 
             this.currentUrl = event.mainDocumentURL ? event.mainDocumentURL : event.url
 
-            if (this.currentUrl.indexOf('http') != 0) {
+            if (this.currentUrl && this.currentUrl.indexOf('http') != 0) {
                 return false
             }
 
@@ -95,22 +109,26 @@ class TaobaoWebView extends React.Component {
 
     async addToCart() {
         // console.log(this.currentUrl)
-        if(this.currentUrl.indexOf('https://ju.taobao.com/m/jusp/alone/detailwap/mtp.htm?item_id=') == 0){
-            this.setState({url: this.currentUrl.replace('https://ju.taobao.com/m/jusp/alone/detailwap/mtp.htm?item_id=', 'https://detail.m.tmall.com/item.htm?id=')})
+        if(!this.currentUrl){
             return
         }
-        if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') == -1 && this.currentUrl.indexOf('m.1688.com/offer') == -1 && 
+
+        if (this.currentUrl.indexOf('https://ju.taobao.com/m/jusp/alone/detailwap/mtp.htm?item_id=') == 0) {
+            this.setState({ url: this.currentUrl.replace('https://ju.taobao.com/m/jusp/alone/detailwap/mtp.htm?item_id=', 'https://detail.m.tmall.com/item.htm?id=') })
+            return
+        }
+        if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') == -1 && this.currentUrl.indexOf('m.1688.com/offer') == -1 &&
             this.currentUrl.indexOf('https://www.chemistwarehouse.com.au/buy/') == -1 && this.currentUrl.indexOf('https://dis.as.criteo.com/dis/dis.aspx' == -1)
         ) {
             CustomAlert(null, 'Đây không phải trang chi tiết sản phẩm')
             return
         }
 
-        if(this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1){
+        if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1) {
             this.webview.injectJavaScript(jsCheckReadyToAddCart)
-        } else if(this.currentUrl.indexOf('m.1688.com/offer') != -1){
+        } else if (this.currentUrl.indexOf('m.1688.com/offer') != -1) {
             this.webview.injectJavaScript(jsCheck1688ReadyToAddCart)
-        } else if(this.currentUrl.indexOf('https://www.chemistwarehouse.com.au/buy/') != -1 || this.currentUrl.indexOf('https://dis.as.criteo.com/dis/dis.aspx') != -1){
+        } else if (this.currentUrl.indexOf('https://www.chemistwarehouse.com.au/buy/') != -1 || this.currentUrl.indexOf('https://dis.as.criteo.com/dis/dis.aspx') != -1) {
             this.webview.injectJavaScript(jsGetChemistDetailForCart)
         }
     }
@@ -121,23 +139,23 @@ class TaobaoWebView extends React.Component {
 
     async onMessage(event) {
         try {
-            if (event.nativeEvent.data) {
+            if (event.nativeEvent.data && this.currentUrl) {
                 let response = JSON.parse(event.nativeEvent.data)
-                console.log(response)
+                // console.log(response)
                 if (response) {
                     if (response.type == 'checkReadyToAddCart') {
                         if (response.value == 1) {
-                            if(this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1){
+                            if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1) {
                                 this.webview.injectJavaScript(jsGetProductDetailForCart)
-                            } else if(this.currentUrl.indexOf('m.1688.com/offer') != -1){
+                            } else if (this.currentUrl.indexOf('m.1688.com/offer') != -1) {
                                 this.webview.injectJavaScript(jsGet1688ProductDetailForCart)
                             }
                         } else if (response.value == 2) {
                             CustomAlert('Có lỗi', 'Vui lòng chọn thuộc tính sản phẩm')
                         } else {
-                            if(this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1){
+                            if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1) {
                                 this.webview.injectJavaScript(jsShowOptionsPopup)
-                            } else if(this.currentUrl.indexOf('m.1688.com/offer') != -1){
+                            } else if (this.currentUrl.indexOf('m.1688.com/offer') != -1) {
                                 this.webview.injectJavaScript(js1688ShowOptionsPopup)
                             }
                         }
@@ -167,63 +185,137 @@ class TaobaoWebView extends React.Component {
     }
 
     onEndSubmit() {
-        if(this.state.searchKeyword.indexOf('https://') != 0){
+        if (this.state.searchKeyword.indexOf('https://') != 0) {
             return
         }
 
-        this.setState({url: this.state.searchKeyword})
+        this.setState({ url: this.state.searchKeyword })
     }
 
-    goBack(){
-        if(this.webview){
+    goBack() {
+        if (this.webview) {
             this.webview.goBack()
         }
     }
 
-    reloadWeb(){
-        if(this.webview){
+    reloadWeb() {
+        if (this.webview) {
             this.webview.reload()
         }
     }
 
-    onChangeText(text){
-        
-        
+    searchTimer = null
+
+    onChangeText(text) {
+
         let searchKeyword = text
 
         try {
             const results = text.match(/(https?:\/\/[^\s]+)/g)
-            if(results && results.length > 0){
+            // console.log(results)
+            if (results && results.length > 0) {
                 searchKeyword = results[0]
+            } else {
+                if (this.searchTimer) {
+                    clearTimeout(this.searchTimer)
+                    this.searchTimer = null
+                }
+
+                this.searchTimer = setTimeout(async () => {
+                    const suggestions = await fetchUnlengthApi('get', 'page/key_translate/', { key: searchKeyword })
+                    if (suggestions) {
+                        this.setState({ suggestions: suggestions })
+                    } else {
+                        this.setState({ suggestions: [] })
+                    }
+                }, 1000);
             }
         } catch (error) {
             console.log(error)
         }
 
-        this.setState({searchKeyword: searchKeyword})
+        this.setState({ searchKeyword: searchKeyword, suggestions: [] })
     }
 
-    onShare(){
-        Share.open({url: this.currentUrl.replace('#modal=sku', '')})
-        .then((res) => { console.log(res) })
-        .catch((err) => { err && console.log(err); });
+    onPressSuggestion(suggestion) {
+
+        const { searchSource } = this.state
+        let currentUrl = this.state.url
+
+        if (searchSource == 1) {
+            currentUrl = `https://s.m.taobao.com/h5?event_submit_do_new_search_auction=1&_input_charset=utf-8&topSearch=1&atype=b&searchfrom=1&action=home%3Aredirect_app_action&from=1&sst=1&n=20&buying=buyitnow&q=${suggestion.zh_value}`
+        } else if (searchSource == 0) {
+            currentUrl = `https://m.1688.com/offer_search/-6D7033.html?keywords=${suggestion.zh_value}`
+        } else if (searchSource == 3) {
+            currentUrl = `https://www.chemistwarehouse.com.au/search/go?w=${suggestion.key}`
+        } else if (searchSource == 2) {
+            currentUrl = `https://list.tmall.com/search_product.htm?q=${suggestion.zh_value}&type=p&tmhkh5=&spm=a220m.8599659.a2227oh.d100&from=mallfp..m_1_searchbutton&searchType=default&closedKey=`
+        }
+
+        // console.log(currentUrl)
+
+        this.setState({ searchKeyword: '', suggestions: [], url: currentUrl })
+    }
+
+    renderSuggestion({ item, index }) {
+        return (
+            <TouchableOpacity onPress={this.onPressSuggestion.bind(this, item)} style={{ padding: 8, width: '100%' }}>
+                <Text style={{ fontSize: 14, color: 'black', fontFamily: Global.FontName }}>{item.key}
+                    <Text style={{ fontSize: 12, color: '#777777' }}>{'\n' + item.zh_value}</Text>
+                </Text>
+            </TouchableOpacity>
+        )
+    }
+
+    onShare() {
+        Share.open({ url: this.currentUrl.replace('#modal=sku', '') })
+            .then((res) => { console.log(res) })
+            .catch((err) => { err && console.log(err); });
+    }
+
+    renderHeader() {
+        const {searchSource} = this.state
+        
+        return (
+            <View style={{ flexDirection: 'row', height: 60, backgroundColor: '#CECECE' }}>
+                <TouchableOpacity onPress={() => this.setState({searchSource: 0})} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 0 ? Global.MainColor : 'white'  }}>
+                    <Image source={Media.AlibabaIcon} style={{ width: 20, height: 20 }} resizeMode='contain' />
+                    <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName}}>1688</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => this.setState({searchSource: 1})} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 1 ? Global.MainColor : 'white' }}>
+                    <Image source={Media.TaobaoIcon} style={{ width: 20, height: 20 }} resizeMode='contain' />
+                    <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName }}>taobao</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => this.setState({searchSource: 2})} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 2 ? Global.MainColor : 'white' }}>
+                    <Image source={Media.TmallIcon} style={{ width: 20, height: 20 }} resizeMode='contain' />
+                    <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName }}>tmall</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => this.setState({searchSource: 3})} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 3 ? Global.MainColor : 'white' }}>
+                    <Image source={Media.ChemistIcon} style={{ width: 20, height: 20 }} resizeMode='contain' />
+                    <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName }}>chemistwarehouse</Text>
+                </TouchableOpacity>
+            </View>
+        )
     }
 
     render() {
 
-        const {url} = this.state
+        const { url, suggestions } = this.state
         const { cartCount } = this.props
 
         return (
             <View style={styles.container}>
                 <SafeAreaView style={headerStyles.container}>
-                    <StatusBar translucent barStyle='dark-content' backgroundColor='#00000000' networkActivityIndicatorVisible={this.state.loading}/>
+                    <StatusBar translucent barStyle='dark-content' backgroundColor='#00000000' networkActivityIndicatorVisible={this.state.loading} />
                     <TouchableOpacity style={headerStyles.iconLeft} onPress={this.onBack.bind(this)}>
                         <Icon name={'times'} size={22} color={Global.MainColor} />
                     </TouchableOpacity>
 
                     <View style={[headerStyles.searchContainer]}>
-                        <Icon name='search' size={15} color='#7f7f7f'/>
+                        <Icon name='search' size={15} color='#7f7f7f' />
                         <TextInput
                             style={[headerStyles.searchInput,]}
                             underlineColorAndroid='#00000000'
@@ -238,7 +330,6 @@ class TaobaoWebView extends React.Component {
                         />
                     </View>
 
-
                     <TouchableOpacity style={headerStyles.iconRight} onPress={this.openCart.bind(this)}>
                         <Icon name={'shopping-cart'} size={23} color={Global.MainColor} />
 
@@ -250,24 +341,22 @@ class TaobaoWebView extends React.Component {
                     </TouchableOpacity>
                     <View style={headerStyles.headerSeparator} />
                 </SafeAreaView>
-                {this.state.loading && <ProgressBar height={1} borderRadius={0} width={Global.ScreenWidth} color="#2196F3" indeterminate={true}/>}
-                <View style={{ flex: 1 }}>
-                    <Webview
-                        ref={ref => (this.webview = ref)}
-                        onNavigationStateChange={this.handleWebViewNavigationStateChange.bind(this)}
-                        style={{ flex: 1 }} source={{ uri: url }}
-                        onShouldStartLoadWithRequest={this.onstartRequest.bind(this)}
-                        onMessage={this.onMessage.bind(this)}
-                        javaScriptEnabled={true}
-                        originWhitelist={['*']}
-                    />
-                    {/* {this.state.loading && Platform.OS == 'android' &&
-                        <View style={[StyleSheet.absoluteFill, { backgroundColor: '#00000077', alignItems: 'center', justifyContent: 'center' }]}>
-                            <Image source={Media.LoadingIcon} style={{width : 30, height : 30}} resizeMode='contain'/>
-                        </View>
-                    } */}
-                </View>
-                <View style={{ width: Global.ScreenWidth, backgroundColor: Global.MainColor, flexDirection: 'row'}}>
+                {(!suggestions || suggestions.length == 0) && this.state.loading && <ProgressBar height={1} borderRadius={0} width={Global.ScreenWidth} color="#2196F3" indeterminate={true} />}
+                {(!suggestions || suggestions.length == 0) &&
+                    <View style={{ flex: 1 }}>
+                        <Webview
+                            ref={ref => (this.webview = ref)}
+                            onNavigationStateChange={this.handleWebViewNavigationStateChange.bind(this)}
+                            style={{ flex: 1 }} source={{ uri: url }}
+                            onShouldStartLoadWithRequest={this.onstartRequest.bind(this)}
+                            onMessage={this.onMessage.bind(this)}
+                            javaScriptEnabled={true}
+                            originWhitelist={['*']}
+                        />
+                    </View>
+                }
+                {(!suggestions || suggestions.length == 0) &&
+                    <View style={{ width: Global.ScreenWidth, backgroundColor: Global.MainColor, flexDirection: 'row' }}>
                         <TouchableOpacity onPress={this.goBack.bind(this)} style={{ width: 50, backgroundColor: '#aaaaaa', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
                             <Icon name='chevron-left' color='white' size={20} style={{ marginRight: 10 }} />
                         </TouchableOpacity>
@@ -279,9 +368,19 @@ class TaobaoWebView extends React.Component {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={this.addToCart.bind(this)} style={{ width: '50%', justifyContent: 'center', alignItems: 'center', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
                             <Icon name='cart-plus' color='white' size={20} style={{ marginRight: 10 }} />
-                            <Text style={{ fontSize: 16, marginTop : 5, color: 'white', fontFamily: Global.FontName, fontWeight: '500' }}>Thêm vào giỏ hàng</Text>
+                            <Text style={{ fontSize: 16, marginTop: 5, color: 'white', fontFamily: Global.FontName, fontWeight: '500' }}>Thêm vào giỏ hàng</Text>
                         </TouchableOpacity>
                     </View>
+                }
+                {suggestions && suggestions.length > 0 &&
+                    <KeyboardAwareFlatList
+                        ListHeaderComponent={this.renderHeader.bind(this)}
+                        data={suggestions}
+                        style={{ flex: 1 }}
+                        renderItem={this.renderSuggestion.bind(this)}
+                        keyExtractor={(item, index) => index.toString()}
+                    />
+                }
             </View>
         )
     }

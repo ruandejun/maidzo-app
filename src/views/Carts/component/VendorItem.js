@@ -11,8 +11,16 @@ import {
 
 const styles = StyleSheet.create({
     container: {
-        width: '98%', marginLeft: '1%',
-        backgroundColor: 'white', padding: 16, marginBottom: 20, marginTop: 10, borderRadius: 8, borderWidth: 2, borderColor: Global.MainColor
+        width: Global.ScreenWidth - 32, marginLeft: 16,
+        backgroundColor: 'white', padding: 16, marginBottom: 20, marginTop: 10, borderRadius: 8,
+        shadowColor: '#333333',
+        shadowOpacity: 0.5,
+        shadowRadius: 1,
+        shadowOffset: {
+            height: 1,
+            width: 0,
+        },
+        elevation: 1,
     },
     headerContainer: {
         flexDirection: 'row',
@@ -87,7 +95,15 @@ export default class VendorItem extends React.PureComponent {
 
     onDelete(item_id){
         if(this.props.onDelete){
-            this.props.onDelete(item_id)
+            this.props.onDelete([item_id])
+        }
+    }
+
+    onDeleteShop(){
+        if (this.props.onDelete) {
+            const { items } = this.props
+            const item_list = items.map((item) => item.id)
+            this.props.onDelete(item_list)
         }
     }
 
@@ -248,6 +264,11 @@ export default class VendorItem extends React.PureComponent {
                         renderItem={this.renderItem.bind(this)}
                     />
                 }
+
+                <TouchableOpacity onPress={this.onDeleteShop.bind(this)} style={{marginTop: 10, flexDirection: 'row', height: 30, alignItems: 'center', justifyContent: 'center'}}>
+                    <Icon name='trash' size={15} color='red'/>
+                    <Text style={{fontSize: 14, color: 'red', fontFamily: Global.FontName, marginLeft: 5}}>Xoá Shop</Text>
+                </TouchableOpacity>
             </View>
         )
     }

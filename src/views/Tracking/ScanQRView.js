@@ -32,8 +32,9 @@ import { RNCamera } from 'react-native-camera'
 import Header from 'components/Header'
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { QRreader } from 'react-native-qr-scanner'
-import ImagePicker from 'react-native-image-crop-picker'
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import ImagePicker from 'react-native-image-picker'
+import {ModalIndicator} from 'teaset'
 
 class ScanQRView extends React.Component {
 
@@ -75,63 +76,80 @@ class ScanQRView extends React.Component {
     }
 
     onSelectPhoto() {
-        ImagePicker.openPicker({
-            width: 500,
-            height: 500,
-            cropping: true,
-        }).then(image => {
-            console.log(image)
-            try {
-                QRreader(image.path).then((data) => {
-                    // console.log(data)
-    
-                    let tracking_id = null
-    
-                    try {
-                        const result = JSON.parse(data)
-                        if (result) {
-                            tracking_id = result.tracking_id
+        try {
+            ModalIndicator.show()
+            ImagePicker.launchImageLibrary({}, (response) => {
+                ModalIndicator.hide()
+                // console.log('Response = ', response);
+
+                if (response.didCancel) {
+                    // console.log('User cancelled image picker');
+                }
+                else if (response.error) {
+                    // console.log('ImagePicker Error: ', response.error);
+                }
+                else if (response.customButton) {
+                    // console.log('User tapped custom button: ', response.customButton);
+                }
+                else {
+                    if (response.uri) {
+                        var path = response.path;
+                        if (!path) {
+                            path = response.uri;
                         }
-    
-                    } catch (error) {
-    
-                    }
-    
-                    if (tracking_id) {
-                        CustomAlert('Thành công', 'Mở vận đơn ' + tracking_id, [
-                            { text: 'Bỏ', },
-                            { text: 'Mở', onPress: this.onOpenTracking.bind(this, tracking_id) }
-                        ])
-                    } else {
-                        CustomAlert('Thất bại', 'Không tìm thấy mã QR trong ảnh')
-                    }
-    
-                }).catch((err) => {
-                    // console.log(err)
-                    CustomAlert('Thất bại', 'Không tìm thấy mã QR trong ảnh')
-                });
-            } catch (error) {
-                console.log(error)
-            }
+                        QRreader(path).then((data) => {
+                            // console.log(data)
             
-        })
+                            let tracking_id = null
+            
+                            try {
+                                const result = JSON.parse(data)
+                                if (result) {
+                                    tracking_id = result.tracking_id
+                                }
+            
+                            } catch (error) {
+            
+                            }
+            
+                            if (tracking_id) {
+                                CustomAlert('Thành công', 'Mở vận đơn ' + tracking_id, [
+                                    { text: 'Bỏ', },
+                                    { text: 'Mở', onPress: this.onOpenTracking.bind(this, tracking_id) }
+                                ])
+                            } else {
+                                CustomAlert('Thất bại', 'Không tìm thấy mã QR trong ảnh')
+                            }
+            
+                        }).catch((err) => {
+                            // console.log(err)
+                            CustomAlert('Thất bại', 'Không tìm thấy mã QR trong ảnh')
+                        });
+
+                    }
+                }
+            });
+        } catch (error) {
+            ModalIndicator.hide()
+            console.log(error)
+        }
     }
 
     renderBounds() {
-        
+
         const { tracking } = this.state
 
         const pixelRatio = PixelRatio.get()
-        const leftBottom = {x: tracking.bounds.origin[0].x / pixelRatio, y: tracking.bounds.origin[0].y / pixelRatio}
-        const leftTop= {x: tracking.bounds.origin[1].x / pixelRatio, y: tracking.bounds.origin[1].y / pixelRatio}
-        const rightTop = {x: tracking.bounds.origin[2].x / pixelRatio, y: tracking.bounds.origin[2].y / pixelRatio}
-        const rightBottom = {x: tracking.bounds.origin[3].x / pixelRatio, y: tracking.bounds.origin[3].y / pixelRatio}
+        const leftBottom = { x: tracking.bounds.origin[0].x / pixelRatio, y: tracking.bounds.origin[0].y / pixelRatio }
+        const leftTop = { x: tracking.bounds.origin[1].x / pixelRatio, y: tracking.bounds.origin[1].y / pixelRatio }
+        const rightTop = { x: tracking.bounds.origin[2].x / pixelRatio, y: tracking.bounds.origin[2].y / pixelRatio }
+        const rightBottom = { x: tracking.bounds.origin[3].x / pixelRatio, y: tracking.bounds.origin[3].y / pixelRatio }
         let x = Math.min(leftTop.x, leftBottom.x);
         let y = Math.min(leftTop.y, rightTop.y);
         let width = Math.max(rightTop.x - leftTop.x, rightBottom.x - leftBottom.x)
-        let height = Math.max(leftBottom.y - leftTop.y , rightBottom.y - rightTop.y)
+        let height = Math.max(leftBottom.y - leftTop.y, rightBottom.y - rightTop.y)
 
-        console.log({x, y, width, height})
+        console.log({ x, y, width, height })
 
         return (
             <View style={{
@@ -174,11 +192,11 @@ class ScanQRView extends React.Component {
                     onBarCodeRead={this.onRead.bind(this)}
                 >
                 </RNCamera>
-                {Platform.OS == 'ios' &&
-                    <TouchableOpacity onPress={this.onSelectPhoto.bind(this)} style={{ position: 'absolute', top: getStatusBarHeight() + 70, right: 20, borderRadius: 5, width: 50, height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffffffaa' }} >
-                        <Icon name='images' size={25} color={Global.MainColor} />
-                    </TouchableOpacity>
-                }
+
+                <TouchableOpacity onPress={this.onSelectPhoto.bind(this)} style={{ position: 'absolute', top: getStatusBarHeight() + 70, right: 20, borderRadius: 5, width: 50, height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffffffaa' }} >
+                    <Icon name='images' size={25} color={Global.MainColor} />
+                </TouchableOpacity>
+
                 {tracking && tracking.bounds && tracking.bounds.size && tracking.bounds.origin &&
                     <View style={{
                         borderWidth: 1, borderColor: 'red',

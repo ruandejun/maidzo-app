@@ -12,7 +12,7 @@ import {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        backgroundColor: '#f2f2f2', padding: 10, marginTop: 10, borderWidth: 1, borderRadius: 5, borderColor: 'blue'
+        backgroundColor: '#f2f2f2', padding: 10, marginTop: 10, borderRadius: 5
     },
     headerContainer: {
         flexDirection: 'row',
