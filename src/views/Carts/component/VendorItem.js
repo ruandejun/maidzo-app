@@ -11,16 +11,8 @@ import {
 
 const styles = StyleSheet.create({
     container: {
-        width: Global.ScreenWidth - 32, marginLeft: 16,
-        backgroundColor: 'white', padding: 16, marginBottom: 20, marginTop: 10, borderRadius: 8,
-        shadowColor: '#333333',
-        shadowOpacity: 0.5,
-        shadowRadius: 1,
-        shadowOffset: {
-            height: 1,
-            width: 0,
-        },
-        elevation: 1,
+        width: Global.ScreenWidth,
+        backgroundColor: 'white', padding: 16, marginBottom: 20, marginTop: 10, 
     },
     headerContainer: {
         flexDirection: 'row',

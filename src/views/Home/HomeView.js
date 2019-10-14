@@ -169,6 +169,10 @@ class HomeView extends React.Component {
         Overlay.show(overlayView)
     }
 
+    openContact(){
+        this.props.navigation.navigate('ContactView')
+    }
+
     render() {
 
         return (
@@ -245,6 +249,13 @@ class HomeView extends React.Component {
                     <TouchableOpacity onPress={this.openSupport.bind(this)} style={styles.itemContainer}>
                         <Icon name='question-circle' size={15} color='#2CAC9B' />
                         <Text style={styles.itemText}>Trung tâm trợ giúp</Text>
+                        <Icon name='chevron-right' size={14} color='#333333' />
+                        <View style={styles.separator} />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={this.openContact.bind(this)} style={styles.itemContainer}>
+                        <Icon name='phone' size={15} color='#DF5539' />
+                        <Text style={styles.itemText}>Liên hệ</Text>
                         <Icon name='chevron-right' size={14} color='#333333' />
                     </TouchableOpacity>
                 </View>

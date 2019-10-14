@@ -72,7 +72,8 @@ export default class CartItem extends React.PureComponent {
 
         this.state = {
             note: props.note ? props.note : '',
-            quantity: props.quantity
+            quantity: props.quantity,
+            isFull: false
         }
     }
 
@@ -133,7 +134,7 @@ export default class CartItem extends React.PureComponent {
         const { vendor, name, id, image_url, price, price_vnd, option_selected_tag,
             rocket, currency, total_vnd, total_service_cost_vnd, quantity, shipping, total_service_cost, total,
             shipping_vnd, rocket_ship, insurance, bargain, packing, is_selected, disable_selected} = this.props
-        const { note } = this.state
+        const { note, isFull } = this.state
 
         return (
             <View style={styles.container} >
@@ -149,6 +150,11 @@ export default class CartItem extends React.PureComponent {
                         />
                     }
                     <Text style={[styles.idText, {marginLeft : 8, flex: 1, }]}>{id}</Text>
+
+                    <TouchableOpacity onPress={this.onDelete.bind(this)} style={{width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
+                            <Icon name='trash' size={15} color='red'/>
+                        </TouchableOpacity>
+
                     <Stepper
                             value={this.state.quantity}
                             min={1}
@@ -168,8 +174,9 @@ export default class CartItem extends React.PureComponent {
                             }
                             showSeparator={false}
                         />
-                        <TouchableOpacity onPress={this.onDelete.bind(this)} style={{width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
-                            <Icon name='trash' size={15} color='red'/>
+
+                        <TouchableOpacity onPress={() => this.setState({isFull: !isFull})} style={{width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
+                            <Icon name={isFull ? 'chevron-up' : 'chevron-down'} size={15} color='gray'/>
                         </TouchableOpacity>
                 </View>
                 <View style={styles.contentContainer}>
@@ -186,7 +193,7 @@ export default class CartItem extends React.PureComponent {
                     </View>
                 </View>
 
-                <TextInput
+                {isFull && <TextInput
                     value={note}
                     style={styles.noteText}
                     underlineColorAndroid='#00000000'
@@ -195,68 +202,9 @@ export default class CartItem extends React.PureComponent {
                     multiline
                     onChangeText={(text) => this.setState({note: text})}
                     onEndEditing={this.onUpdateNote.bind(this)}
-                />
+                />}
 
-                {false && <View style={{marginTop : 8, marginBottom : 8, borderRadius: 5, backgroundColor: '#f6f6f6', padding: 5}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                        <Checkbox
-                            title='Mua hoả tốc'
-                            size='md'
-                            checked={rocket}
-                            onChange={value => this.onUpdateService(value, 'rocket')}
-                            checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
-                            uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
-                        />
-
-                        <Checkbox
-                            title='Ship hoả tốc'
-                            size='md'
-                            checked={rocket_ship}
-                            onChange={value => this.onUpdateService(value, 'rocket_ship')}
-                            checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
-                            uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
-                        />
-                    </View>
-                    <View style={{flexDirection: 'row', marginTop: 8, alignItems: 'center', justifyContent: 'space-between'}}>
-                        <Checkbox
-                            title='Mặc cả'
-                            size='md'
-                            checked={bargain}
-                            onChange={value => this.onUpdateService(value, 'bargain')}
-                            checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
-                            uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
-                        />
-
-                        <Checkbox
-                            title='Bảo hiểm'
-                            size='md'
-                            checked={insurance}
-                            onChange={value => this.onUpdateService(value, 'insurance')}
-                            checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
-                            uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
-                        />
-                    </View>
-                    <View style={{flexDirection: 'row', marginTop: 8, alignItems: 'center', justifyContent: 'space-between'}}>
-                        <Checkbox
-                            title='Đóng gỗ'
-                            size='md'
-                            checked={packing}
-                            onChange={value => this.onUpdateService(value, 'packing')}
-                            checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
-                            uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
-                        />
-
-                        <Checkbox
-                            title='Phí mua hàng*'
-                            size='md'
-                            checked={true}
-                            checkedIcon={<Icon name='check-square' size={14} color={'#777777'}/>}
-                        />
-                    </View>
-                </View>
-                }
-
-                <View style={styles.priceContainer}>
+                {isFull && <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Thành tiền</Text>
                     <Text style={styles.priceText}>
                         <Text style={{color: '#3578E5'}}>{convertMoney(parseInt(price) * quantity)}</Text>
@@ -264,22 +212,23 @@ export default class CartItem extends React.PureComponent {
                         <Text style={{color: Global.MainColor}}>{convertMoney(parseInt(price_vnd) * quantity) + 'đ'}</Text>
                     </Text>
                 </View>
-                <View style={styles.priceContainer}>
+                }
+                {isFull && <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Phí ship nội địa</Text>
                     <Text style={styles.priceText}>
                         <Text style={{color: '#3578E5'}}>{convertMoney(shipping)}</Text>
                         /
                         <Text style={{color: Global.MainColor}}>{convertMoney(shipping_vnd) + 'đ'}</Text>
                     </Text>
-                </View>
-                <View style={styles.priceContainer}>
+                </View>}
+                {isFull && <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Phí dịch vụ</Text>
                     <Text style={styles.priceText}>
                         <Text style={{color: '#3578E5'}}>{convertMoney(total_service_cost)}</Text>
                         /
                         <Text style={{color: Global.MainColor}}>{convertMoney(total_service_cost_vnd) + 'đ'}</Text>
                     </Text>
-                </View>
+                </View>}
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Tổng</Text>
                     <Text style={styles.priceText}>

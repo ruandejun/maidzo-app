@@ -19,6 +19,7 @@ import AboutView from 'Setting/AboutView'
 import PrivacyView from 'Setting/PrivacyView'
 import SupportView from 'Setting/SupportView'
 import UpdateProfileView from 'Setting/UpdateProfileView'
+import ContactView from 'Setting/ContactView'
 
 import TrackingDetailView from 'Trackings/TrackingDetailView'
 import ItemTrackingView from 'Trackings/ItemTrackingView'
@@ -189,6 +190,10 @@ const AppNavigator = createAppContainer(
             screen: AddTransportView,
             navigationOptions: { header: null }
         },
+        ContactView: {
+            screen: ContactView,
+            navigationOptions: { header: null }
+        }
     }, {
 
             mode: 'modal',

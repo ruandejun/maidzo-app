@@ -52,6 +52,12 @@ import {
     return Math.round(money).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
   }
 
+  export const contacts = [
+    {title: 'Hotline', number: '1900989977'},
+    {title: 'Giải đáp thắc mắc', number: '+842466833354'},
+    {title: 'Phản ánh chất lượng dịch vụ', number: '+842466833354'},
+  ]
+
   export default Global = {
     MainColor: '#EE4D2D',
     ScreenWidth : Dimensions.get('screen').width,

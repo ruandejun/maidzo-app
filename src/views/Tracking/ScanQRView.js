@@ -138,28 +138,31 @@ class ScanQRView extends React.Component {
     renderBounds() {
 
         const { tracking } = this.state
-
-        const pixelRatio = PixelRatio.get()
-        const leftBottom = { x: tracking.bounds.origin[0].x / pixelRatio, y: tracking.bounds.origin[0].y / pixelRatio }
-        const leftTop = { x: tracking.bounds.origin[1].x / pixelRatio, y: tracking.bounds.origin[1].y / pixelRatio }
-        const rightTop = { x: tracking.bounds.origin[2].x / pixelRatio, y: tracking.bounds.origin[2].y / pixelRatio }
-        const rightBottom = { x: tracking.bounds.origin[3].x / pixelRatio, y: tracking.bounds.origin[3].y / pixelRatio }
-        let x = Math.min(leftTop.x, leftBottom.x);
-        let y = Math.min(leftTop.y, rightTop.y);
-        let width = Math.max(rightTop.x - leftTop.x, rightBottom.x - leftBottom.x)
-        let height = Math.max(leftBottom.y - leftTop.y, rightBottom.y - rightTop.y)
-
-        console.log({ x, y, width, height })
-
-        return (
-            <View style={{
-                borderWidth: 1, borderColor: 'red',
-                position: 'absolute', width: width, height: height,
-                left: x, top: y
-            }}>
-
-            </View>
-        )
+        if(tracking.bounds.origin && tracking.bounds.origin.length == 4){
+            const pixelRatio = PixelRatio.get()
+            const leftBottom = { x: tracking.bounds.origin[0].x / pixelRatio, y: tracking.bounds.origin[0].y / pixelRatio }
+            const leftTop = { x: tracking.bounds.origin[1].x / pixelRatio, y: tracking.bounds.origin[1].y / pixelRatio }
+            const rightTop = { x: tracking.bounds.origin[2].x / pixelRatio, y: tracking.bounds.origin[2].y / pixelRatio }
+            const rightBottom = { x: tracking.bounds.origin[3].x / pixelRatio, y: tracking.bounds.origin[3].y / pixelRatio }
+            let x = Math.min(leftTop.x, leftBottom.x);
+            let y = Math.min(leftTop.y, rightTop.y);
+            let width = Math.max(rightTop.x - leftTop.x, rightBottom.x - leftBottom.x)
+            let height = Math.max(leftBottom.y - leftTop.y, rightBottom.y - rightTop.y)
+    
+            console.log({ x, y, width, height })
+    
+            return (
+                <View style={{
+                    borderWidth: 1, borderColor: 'red',
+                    position: 'absolute', width: width, height: height,
+                    left: x, top: y
+                }}>
+    
+                </View>
+            )
+        } else {
+            return null
+        }
     }
 
     render() {
