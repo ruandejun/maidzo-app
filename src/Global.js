@@ -53,13 +53,13 @@ import {
   }
 
   export const contacts = [
-    {title: 'Hotline', number: '1900989977'},
-    {title: 'Giải đáp thắc mắc', number: '+842466833354'},
-    {title: 'Phản ánh chất lượng dịch vụ', number: '+842466833354'},
+    {title: 'Hotline', number: '+842422137555'},
+    {title: 'Giải đáp thắc mắc', number: '+842422642666'},
+    {title: 'Phản ánh chất lượng dịch vụ', number: '+842422642666'},
   ]
 
   export default Global = {
-    MainColor: '#EE4D2D',
+    MainColor: '#f06123',
     ScreenWidth : Dimensions.get('screen').width,
     ScreenHeight : Dimensions.get('screen').height,
     FontName : 'Arial',
