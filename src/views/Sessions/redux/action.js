@@ -20,10 +20,10 @@ export const unmountError = () => {
   }
 }
 
-export const login = (username, password) => {
+export const login = (email, password) => {
   return {
     type: actions.LOGIN,
-    username, password
+    email, password
   }
 }
 

@@ -332,7 +332,7 @@ const mapPropsToState = (state, ownProps) => {
 
 const mapDispatchToState = dispatch => {
     return {
-        login: (username, password) => dispatch(login(username, password)),
+        login: (email, password) => dispatch(login(email, password)),
         register: (username, email, facebook, phone, password, verifypassword) => dispatch(register(username, email, facebook, phone, password, verifypassword)),
         unmountError: () => dispatch(unmountError())
     }

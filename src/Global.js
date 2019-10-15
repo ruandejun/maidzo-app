@@ -53,17 +53,17 @@ import {
   }
 
   export const contacts = [
-    {title: 'Hotline', number: '1900989977'},
-    {title: 'Giải đáp thắc mắc', number: '+842466833354'},
-    {title: 'Phản ánh chất lượng dịch vụ', number: '+842466833354'},
+    {title: 'Hotline', number: '+842466721111'},
+    {title: 'Giải đáp thắc mắc', number: '+842466721111'},
+    {title: 'Phản ánh chất lượng dịch vụ', number: '+842466721111'},
   ]
 
   export default Global = {
-    MainColor: '#EE4D2D',
+    MainColor: '#1eaa51',
     ScreenWidth : Dimensions.get('screen').width,
     ScreenHeight : Dimensions.get('screen').height,
     FontName : 'Arial',
-    apiUrl: 'https://maidzo.vn/',
+    apiUrl: 'https://www.taobao365.vn/',
     username: '',
     userId: '',
     userToken: '',

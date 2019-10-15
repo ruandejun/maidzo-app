@@ -101,6 +101,7 @@ const fetchApiLogin = async(method, path, params={}) => {
     // console.log(Global.apiUrl + `${finalPath}`, options)
     
     return await fetch (Global.apiUrl + `${finalPath}`, options).then(res => {
+      console.log(res)
         return res.json()
     }).then(response => {
         return response

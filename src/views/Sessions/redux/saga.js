@@ -6,10 +6,13 @@ import NavigationService from 'actions/NavigationService'
 import actions from './action'
 import CustomAlert from 'components/CustomAlert'
 
-export function* login({username, password}) {
-  let response = yield call(fetchApiLogin, 'post', 'api-token-auth/', {username, password});
+export function* login({email, password}) {
+  console.log({email, password})
+  let response = yield call(fetchApiLogin, 'post', 'api/user/auth/login/', {email, password});
 
-    if (response.token) {
+  console.log(response)
+
+  if (response && response.token) {
     Global.userToken = response.token
     yield AsyncStorage.setItem('@USER_TOKEN', Global.userToken)
     

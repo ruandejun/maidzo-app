@@ -128,10 +128,10 @@ PODS:
   - RNVectorIcons (6.6.0):
     - React
   - RSKImageCropper (2.2.3)
-  - SDWebImage (5.1.0):
-    - SDWebImage/Core (= 5.1.0)
-  - SDWebImage/Core (5.1.0)
-  - SDWebImageWebPCoder (0.2.3):
+  - SDWebImage (5.1.1):
+    - SDWebImage/Core (= 5.1.1)
+  - SDWebImage/Core (5.1.1)
+  - SDWebImageWebPCoder (0.2.4):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.0)
   - yoga (0.60.5.React)
@@ -172,14 +172,13 @@ DEPENDENCIES:
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - boost-for-react-native
     - libwebp
-    - SDWebImage
-    - SDWebImageWebPCoder
-  trunk:
     - QBImagePickerController
     - RSKImageCropper
+    - SDWebImage
+    - SDWebImageWebPCoder
 
 EXTERNAL SOURCES:
   BugsnagReactNative:
@@ -286,10 +285,10 @@ SPEC CHECKSUMS:
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
-  SDWebImage: fb387001955223213dde14bc08c8b73f371f8d8f
-  SDWebImageWebPCoder: 7568737603c50f6237850afedd7e9e28e5917e6b
+  SDWebImage: 96d7f03415ccb28d299d765f93557ff8a617abd8
+  SDWebImageWebPCoder: cc72085bb20368b2f8dbb21b7e355c667e1309b7
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
-PODFILE CHECKSUM: e4ff8d71ae6bb77d8d246c74b17feb9c240231be
+PODFILE CHECKSUM: 524af2951639660478ce5b33fd8919ce4a551dc3
 
 COCOAPODS: 1.8.0.beta.2
