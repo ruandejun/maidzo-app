@@ -81,7 +81,7 @@ class SettingView extends React.Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={this.openPrivacy.bind(this)} style={styles.itemContainer}>
-                        <Text style={styles.itemText}>Điều khoản Maidzo</Text>
+                        <Text style={styles.itemText}>Điều khoản Alo68</Text>
                         <Icon name='chevron-right' size={14} color='#333333'/>
                         <View style={styles.separator}/>
                     </TouchableOpacity>

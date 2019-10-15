@@ -54,17 +54,17 @@ class AboutView extends React.Component {
                 <View style={{width: '100%', flex: 1, alignItems: 'center'}}>
                     <Image source={Media.LogoFull} style={{width: 300, height: 100}} resizeMode='contain'/>
                     <Text style={{width: '90%', fontSize: 15, color: '#333333', fontFamily: Global.FontName, marginTop : 20}}>{'Website: '}
-                        <Text style={{color: 'blue', textDecorationLine: 'underline'}} onPress={this.onOpenLink.bind(this, 'https://maidzo.vn')}>https://maidzo.vn</Text>
+                        <Text style={{color: 'blue', textDecorationLine: 'underline'}} onPress={this.onOpenLink.bind(this, 'https://alo68.vn/')}>https://alo68.vn/</Text>
                     </Text>
                     <View style={{width: '90%', backgroundColor: '#CECECE', height: 1, marginTop : 15, marginBottom : 15}}/>
                     <Text style={{width: '90%', fontSize: 15, color: '#333333', fontFamily: Global.FontName}}>{'Địa chỉ: '}
-                        <Text style={{color: Global.MainColor, textDecorationLine: 'underline'}} onPress={this.onOpenLink.bind(this, 'https://goo.gl/maps/NXYjvb2GAvVrS6DB8')}>Số 9, Lô 5B Trung Yên 6, Trung Hòa, Cầu Giấy, Thành phố Hà Nội</Text>
+                        <Text style={{color: Global.MainColor, textDecorationLine: 'underline'}} onPress={this.onOpenLink.bind(this, 'https://goo.gl/maps/s6rzGN7WzcRTJxAY8')}>Số 39 Đường Tiếp, Giáp CATP, Hà Đông, Hà Nội</Text>
                     </Text>
                     <View style={{width: '90%', backgroundColor: '#CECECE', height: 1, marginTop : 15, marginBottom : 15}}/>
                     <Text style={{width: '90%', fontSize: 15, color: '#333333', fontFamily: Global.FontName}}>{'Hotline: '}
-                        <Text style={{color: 'blue', textDecorationLine: 'underline'}} onPress={this.onOpenLink.bind(this, 'tel:+841900989977')}>1900989977</Text>
+                        <Text style={{color: 'blue', textDecorationLine: 'underline'}} onPress={this.onOpenLink.bind(this, 'tel:+842422642666')}>842422642666</Text>
                         <Text>{'   |   '}</Text>
-                        <Text style={{color: Global.MainColor, textDecorationLine: 'underline'}} onPress={this.onOpenLink.bind(this, 'tel:+842466833354')}>842466833354</Text>
+                        <Text style={{color: Global.MainColor, textDecorationLine: 'underline'}} onPress={this.onOpenLink.bind(this, 'tel:+842422137555')}>842422137555</Text>
                     </Text>
                     <View style={{width: '90%', backgroundColor: '#CECECE', height: 1, marginTop : 15, marginBottom : 15}}/>
                 </View>

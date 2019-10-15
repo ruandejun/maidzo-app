@@ -1,4 +1,4 @@
-package com.maidzo;
+package vn.alo68;
 
 import android.app.Application;
 import android.util.Log;

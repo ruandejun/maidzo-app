@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.maidzo"
+        applicationId "vn.alo68"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 10

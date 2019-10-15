@@ -63,7 +63,7 @@ import {
     ScreenWidth : Dimensions.get('screen').width,
     ScreenHeight : Dimensions.get('screen').height,
     FontName : 'Arial',
-    apiUrl: 'https://maidzo.vn/',
+    apiUrl: 'https://alo68.vn/',
     username: '',
     userId: '',
     userToken: '',
