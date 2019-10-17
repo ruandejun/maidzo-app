@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		0700451BA8664DEB9B48930A /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A04D9AF120ED4AB6BD5E4BFE /* Foundation.ttf */; };
 		0DC87DA5753E4F388165820E /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12A358DE4BDB4A9CB49A13DB /* FontAwesome5_Solid.ttf */; };
-		185E420E2355D1E100571081 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185E42082355D1E100571081 /* LaunchScreen.xib */; };
-		185E420F2355D1E100571081 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 185E420A2355D1E100571081 /* main.m */; };
-		185E42102355D1E100571081 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 185E420B2355D1E100571081 /* Images.xcassets */; };
-		185E42112355D1E100571081 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 185E420C2355D1E100571081 /* AppDelegate.m */; };
-		185E42122355D1E100571081 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 185E420D2355D1E100571081 /* Info.plist */; };
+		18D8B35323580EB2002F0DFA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D8B34D23580EB2002F0DFA /* LaunchScreen.xib */; };
+		18D8B35423580EB2002F0DFA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D8B34F23580EB2002F0DFA /* main.m */; };
+		18D8B35523580EB2002F0DFA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18D8B35023580EB2002F0DFA /* Images.xcassets */; };
+		18D8B35623580EB2002F0DFA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D8B35123580EB2002F0DFA /* AppDelegate.m */; };
+		18D8B35723580EB2002F0DFA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18D8B35223580EB2002F0DFA /* Info.plist */; };
 		41C3086F783347B4A19D216E /* Arial-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 365FEDECC9D04F8AB04F4509 /* Arial-Italic.ttf */; };
 		456E2B919756487ABE1E2ED2 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C836776DCA114D71A8C25E78 /* EvilIcons.ttf */; };
 		47448DD00B084DF8A9C0FDF3 /* Arial-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28EAD348A4FC4F0CBA61EFDE /* Arial-BoldItalic.ttf */; };
@@ -28,26 +28,24 @@
 		8BF29CFA68CC4BD2B62AB4B2 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EEE1F86104646F08CB02C20 /* MaterialCommunityIcons.ttf */; };
 		8CD9274742A64EC99870C9E8 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B4BC46F7D5B74570A78DA866 /* MaterialIcons.ttf */; };
 		A0703EEB7E984892951A5D67 /* Arial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD64F6335FFC4DF08D16330B /* Arial.ttf */; };
+		BBBEC4F291BEF80316ABD84C /* libPods-Chuyenhang365.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E30F9599344293E38F01FA1 /* libPods-Chuyenhang365.a */; };
 		BBF551BBFFF24D74AAD1AD89 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C900C0789E8A4DF4B3A55ADE /* FontAwesome5_Regular.ttf */; };
 		BEA1A86D693F449E891AEF96 /* Arial-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C2A5061C494C4002A4A9A87B /* Arial-Bold.ttf */; };
 		C27F9007DA0649B086E30823 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D798E8CDA92F44BC91B3FC0D /* FontAwesome5_Brands.ttf */; };
-		C4F3506F542E7D7A51F6B728 /* libPods-Taobao365.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0ABA1BAC0B29CA3BA9601BF /* libPods-Taobao365.a */; };
 		E03779ADB6EB44A497369E64 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 035AC1F2640245569D065382 /* Fontisto.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		00C7F96139CA47A7980F44C1 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* MaidzoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaidzoTests.m; sourceTree = "<group>"; };
 		035AC1F2640245569D065382 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		12A358DE4BDB4A9CB49A13DB /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Taobao365.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Taobao365.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		185E42072355D1E100571081 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		185E42092355D1E100571081 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		185E420A2355D1E100571081 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		185E420B2355D1E100571081 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		185E420C2355D1E100571081 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		185E420D2355D1E100571081 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* Chuyenhang365.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chuyenhang365.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		18D8B34C23580EB2002F0DFA /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		18D8B34E23580EB2002F0DFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		18D8B34F23580EB2002F0DFA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		18D8B35023580EB2002F0DFA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		18D8B35123580EB2002F0DFA /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		18D8B35223580EB2002F0DFA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D996B1F2D4FE40D05AA5136 /* libPods-Maidzo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Maidzo-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		203764E8B03A9BB28E7760B0 /* Pods-Maidzo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maidzo.release.xcconfig"; path = "Target Support Files/Pods-Maidzo/Pods-Maidzo.release.xcconfig"; sourceTree = "<group>"; };
 		28EAD348A4FC4F0CBA61EFDE /* Arial-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Arial-BoldItalic.ttf"; path = "../resources/fonts/Arial-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -56,6 +54,7 @@
 		4392A05F7EAB91C78DD2F379 /* Pods-Maidzo-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maidzo-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Maidzo-tvOSTests/Pods-Maidzo-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		4C1F48DA743CC4448971739E /* Pods-MaidzoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MaidzoTests.release.xcconfig"; path = "Target Support Files/Pods-MaidzoTests/Pods-MaidzoTests.release.xcconfig"; sourceTree = "<group>"; };
 		6D964FC7576C4CBBAEA27DC0 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
+		6E30F9599344293E38F01FA1 /* libPods-Chuyenhang365.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Chuyenhang365.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FADBC2C48B630AA2403BB24 /* libPods-MaidzoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MaidzoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78759D15651A43D29E1C4201 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		81781BB041924013BF70F685 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
@@ -66,15 +65,16 @@
 		A801F997D57CD7FC033B2B99 /* Pods-Taobao365.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Taobao365.release.xcconfig"; path = "Target Support Files/Pods-Taobao365/Pods-Taobao365.release.xcconfig"; sourceTree = "<group>"; };
 		A95C65BA9FFD4592B8F234DA /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		AA3E6E25AA8FBBA4CCDD2232 /* Pods-Maidzo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maidzo.debug.xcconfig"; path = "Target Support Files/Pods-Maidzo/Pods-Maidzo.debug.xcconfig"; sourceTree = "<group>"; };
+		B2E611088FCECE22F30C341A /* Pods-Chuyenhang365.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chuyenhang365.debug.xcconfig"; path = "Target Support Files/Pods-Chuyenhang365/Pods-Chuyenhang365.debug.xcconfig"; sourceTree = "<group>"; };
 		B49533F0C1F2BD12B4653FB7 /* Pods-Maidzo-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maidzo-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Maidzo-tvOSTests/Pods-Maidzo-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B4BC46F7D5B74570A78DA866 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		C2A5061C494C4002A4A9A87B /* Arial-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Arial-Bold.ttf"; path = "../resources/fonts/Arial-Bold.ttf"; sourceTree = "<group>"; };
 		C836776DCA114D71A8C25E78 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		C900C0789E8A4DF4B3A55ADE /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		C93272F8651E91528F38E82D /* Pods-Maidzo-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maidzo-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Maidzo-tvOS/Pods-Maidzo-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		D0ABA1BAC0B29CA3BA9601BF /* libPods-Taobao365.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Taobao365.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D798E8CDA92F44BC91B3FC0D /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		DAF578570319ED89512C866F /* libPods-Maidzo-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Maidzo-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E48DF71CDD6A58A6E0989710 /* Pods-Chuyenhang365.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chuyenhang365.release.xcconfig"; path = "Target Support Files/Pods-Chuyenhang365/Pods-Chuyenhang365.release.xcconfig"; sourceTree = "<group>"; };
 		ED0CDF3AED36174100FAEEDD /* Pods-MaidzoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MaidzoTests.debug.xcconfig"; path = "Target Support Files/Pods-MaidzoTests/Pods-MaidzoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -88,30 +88,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4F3506F542E7D7A51F6B728 /* libPods-Taobao365.a in Frameworks */,
+				BBBEC4F291BEF80316ABD84C /* libPods-Chuyenhang365.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* MaidzoTests */ = {
-			isa = PBXGroup;
-			children = (
-				00E356F21AD99517003FC87E /* MaidzoTests.m */,
-				00E356F01AD99517003FC87E /* Supporting Files */,
-			);
-			path = MaidzoTests;
-			sourceTree = "<group>";
-		};
-		00E356F01AD99517003FC87E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				00E356F11AD99517003FC87E /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		0162B11BDA27B1975369385C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +108,8 @@
 				4C1F48DA743CC4448971739E /* Pods-MaidzoTests.release.xcconfig */,
 				FFC9F16068BCA24DB78BDB68 /* Pods-Taobao365.debug.xcconfig */,
 				A801F997D57CD7FC033B2B99 /* Pods-Taobao365.release.xcconfig */,
+				B2E611088FCECE22F30C341A /* Pods-Chuyenhang365.debug.xcconfig */,
+				E48DF71CDD6A58A6E0989710 /* Pods-Chuyenhang365.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -156,17 +141,17 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		185E42062355D1E100571081 /* Taobao365 */ = {
+		18D8B34B23580EB2002F0DFA /* Chuyenhang365 */ = {
 			isa = PBXGroup;
 			children = (
-				185E42072355D1E100571081 /* AppDelegate.h */,
-				185E42082355D1E100571081 /* LaunchScreen.xib */,
-				185E420A2355D1E100571081 /* main.m */,
-				185E420B2355D1E100571081 /* Images.xcassets */,
-				185E420C2355D1E100571081 /* AppDelegate.m */,
-				185E420D2355D1E100571081 /* Info.plist */,
+				18D8B34C23580EB2002F0DFA /* AppDelegate.h */,
+				18D8B34D23580EB2002F0DFA /* LaunchScreen.xib */,
+				18D8B34F23580EB2002F0DFA /* main.m */,
+				18D8B35023580EB2002F0DFA /* Images.xcassets */,
+				18D8B35123580EB2002F0DFA /* AppDelegate.m */,
+				18D8B35223580EB2002F0DFA /* Info.plist */,
 			);
-			path = Taobao365;
+			path = Chuyenhang365;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -177,7 +162,7 @@
 				1D996B1F2D4FE40D05AA5136 /* libPods-Maidzo-tvOS.a */,
 				DAF578570319ED89512C866F /* libPods-Maidzo-tvOSTests.a */,
 				6FADBC2C48B630AA2403BB24 /* libPods-MaidzoTests.a */,
-				D0ABA1BAC0B29CA3BA9601BF /* libPods-Taobao365.a */,
+				6E30F9599344293E38F01FA1 /* libPods-Chuyenhang365.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -192,9 +177,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				185E42062355D1E100571081 /* Taobao365 */,
+				18D8B34B23580EB2002F0DFA /* Chuyenhang365 */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* MaidzoTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				0162B11BDA27B1975369385C /* Pods */,
@@ -208,7 +192,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Taobao365.app */,
+				13B07F961A680F5B00A75B9A /* Chuyenhang365.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -216,9 +200,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13B07F861A680F5B00A75B9A /* Taobao365 */ = {
+		13B07F861A680F5B00A75B9A /* Chuyenhang365 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Taobao365" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Chuyenhang365" */;
 			buildPhases = (
 				3BA842377AF34E5A27C68C6D /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -232,9 +216,9 @@
 			);
 			dependencies = (
 			);
-			name = Taobao365;
+			name = Chuyenhang365;
 			productName = Maidzo;
-			productReference = 13B07F961A680F5B00A75B9A /* Taobao365.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Chuyenhang365.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -251,7 +235,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Taobao365" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Chuyenhang365" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -265,7 +249,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* Taobao365 */,
+				13B07F861A680F5B00A75B9A /* Chuyenhang365 */,
 			);
 		};
 /* End PBXProject section */
@@ -285,13 +269,13 @@
 				6503E1F375804549B523B688 /* Feather.ttf in Resources */,
 				875C6CFD7ECF46E2878A0990 /* FontAwesome.ttf in Resources */,
 				C27F9007DA0649B086E30823 /* FontAwesome5_Brands.ttf in Resources */,
-				185E42122355D1E100571081 /* Info.plist in Resources */,
-				185E420E2355D1E100571081 /* LaunchScreen.xib in Resources */,
+				18D8B35723580EB2002F0DFA /* Info.plist in Resources */,
+				18D8B35323580EB2002F0DFA /* LaunchScreen.xib in Resources */,
 				BBF551BBFFF24D74AAD1AD89 /* FontAwesome5_Regular.ttf in Resources */,
 				0DC87DA5753E4F388165820E /* FontAwesome5_Solid.ttf in Resources */,
 				E03779ADB6EB44A497369E64 /* Fontisto.ttf in Resources */,
 				0700451BA8664DEB9B48930A /* Foundation.ttf in Resources */,
-				185E42102355D1E100571081 /* Images.xcassets in Resources */,
+				18D8B35523580EB2002F0DFA /* Images.xcassets in Resources */,
 				64AEF921E99F4DDF84950835 /* Ionicons.ttf in Resources */,
 				8BF29CFA68CC4BD2B62AB4B2 /* MaterialCommunityIcons.ttf in Resources */,
 				8CD9274742A64EC99870C9E8 /* MaterialIcons.ttf in Resources */,
@@ -333,7 +317,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Taobao365-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Chuyenhang365-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -346,7 +330,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Taobao365/Pods-Taobao365-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Chuyenhang365/Pods-Chuyenhang365-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/QBImagePickerController/QBImagePicker.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
@@ -389,7 +373,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Taobao365/Pods-Taobao365-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chuyenhang365/Pods-Chuyenhang365-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -418,18 +402,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				185E42112355D1E100571081 /* AppDelegate.m in Sources */,
-				185E420F2355D1E100571081 /* main.m in Sources */,
+				18D8B35623580EB2002F0DFA /* AppDelegate.m in Sources */,
+				18D8B35423580EB2002F0DFA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		185E42082355D1E100571081 /* LaunchScreen.xib */ = {
+		18D8B34D23580EB2002F0DFA /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				185E42092355D1E100571081 /* Base */,
+				18D8B34E23580EB2002F0DFA /* Base */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -439,14 +423,14 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FFC9F16068BCA24DB78BDB68 /* Pods-Taobao365.debug.xcconfig */;
+			baseConfigurationReference = B2E611088FCECE22F30C341A /* Pods-Chuyenhang365.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = X4LKZH6N8Y;
-				INFOPLIST_FILE = Taobao365/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Chuyenhang365/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
@@ -454,8 +438,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = vn.Taobao365;
-				PRODUCT_NAME = Taobao365;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chuyenhang365;
+				PRODUCT_NAME = Chuyenhang365;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -463,13 +447,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A801F997D57CD7FC033B2B99 /* Pods-Taobao365.release.xcconfig */;
+			baseConfigurationReference = E48DF71CDD6A58A6E0989710 /* Pods-Chuyenhang365.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = X4LKZH6N8Y;
-				INFOPLIST_FILE = Taobao365/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Chuyenhang365/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
@@ -477,8 +461,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = vn.Taobao365;
-				PRODUCT_NAME = Taobao365;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chuyenhang365;
+				PRODUCT_NAME = Chuyenhang365;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -586,7 +570,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Taobao365" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Chuyenhang365" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -595,7 +579,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Taobao365" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Chuyenhang365" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

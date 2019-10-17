@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   container: {
     width: Global.ScreenWidth,
     height: 60,
-    backgroundColor: '#1B5795',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -72,19 +72,19 @@ class Tabbar extends React.PureComponent {
     const currentIndex = navigation.state.index;
 
     return (
-      <SafeAreaView style={{backgroundColor: '#1B5795'}}>
+      <SafeAreaView style={{backgroundColor: 'white'}}>
         <View style={styles.container}>
         <TouchableWithoutFeedback onPress={this.openTab.bind(this, 0)}>
             <View style={[styles.buttonContainer]}>
                 <Image resizeMode='contain' style={styles.buttonIcon} source={Media.HomeTab} />
-                <Text style={[styles.buttonText, {color: currentIndex == 0 ? '#FDCC0D' : 'white'}]}>Trang chủ</Text>
+                <Text style={[styles.buttonText, {color: currentIndex == 0 ? Global.MainColor : 'gray'}]}>Trang chủ</Text>
              </View>
         </TouchableWithoutFeedback>
 
         <TouchableWithoutFeedback onPress={this.openTab.bind(this, 1)}>
             <View style={[styles.buttonContainer]}>
-                <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: currentIndex == 1 ? '#FDCC0D' : 'white'}]} source={Media.OrderTab} />
-                <Text style={[styles.buttonText, {color: currentIndex == 1 ? '#FDCC0D' : 'white'}]}>Đơn hàng</Text>
+                <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: currentIndex == 1 ? Global.MainColor : 'gray'}]} source={Media.OrderTab} />
+                <Text style={[styles.buttonText, {color: currentIndex == 1 ? Global.MainColor : 'gray'}]}>Đơn hàng</Text>
 
                 {orderCount > 0 && 
                   <View style={[styles.notiBagde]}>
@@ -96,8 +96,8 @@ class Tabbar extends React.PureComponent {
 
         <TouchableWithoutFeedback onPress={() => navigation.navigate('CartView')}>
           <View style={[styles.buttonContainer]}>
-            <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: 'white'}]} source={Media.CartTab} />
-            <Text style={[styles.buttonText, {color: 'white'}]}>Giỏ hàng</Text>
+            <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: 'gray'}]} source={Media.CartTab} />
+            <Text style={[styles.buttonText, {color: 'gray'}]}>Giỏ hàng</Text>
 
             {cartCount > 0 && 
               <View style={[styles.notiBagde]}>
@@ -109,15 +109,15 @@ class Tabbar extends React.PureComponent {
 
         <TouchableWithoutFeedback onPress={this.openTab.bind(this, 2)}>
             <View style={[styles.buttonContainer]}>
-                <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: currentIndex == 2 ? '#FDCC0D' : 'white'}]} source={Media.PackageTab} />
-                <Text style={[styles.buttonText, {color: currentIndex == 2 ? '#FDCC0D' : 'white'}]}>Kiện hàng</Text>
+                <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: currentIndex == 2 ? Global.MainColor : 'gray'}]} source={Media.PackageTab} />
+                <Text style={[styles.buttonText, {color: currentIndex == 2 ? Global.MainColor : 'gray'}]}>Kiện hàng</Text>
             </View>
         </TouchableWithoutFeedback>
 
         <TouchableWithoutFeedback onPress={this.openTab.bind(this, 3)}>
             <View style={[styles.buttonContainer]}>
-                <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: currentIndex == 3 ? '#FDCC0D' : 'white'}]} source={Media.NotificationTab} />
-                <Text style={[styles.buttonText, {color: currentIndex == 3 ? '#FDCC0D' : 'white'}]}>Thông báo</Text>
+                <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: currentIndex == 3 ? Global.MainColor : 'gray'}]} source={Media.NotificationTab} />
+                <Text style={[styles.buttonText, {color: currentIndex == 3 ? Global.MainColor : 'gray'}]}>Thông báo</Text>
             </View>
         </TouchableWithoutFeedback>
         </View>

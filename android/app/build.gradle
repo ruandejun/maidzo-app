@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "vn.taobao365"
+        applicationId "com.chuyenhang365"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -1,4 +1,4 @@
-package vn.taobao365;
+package com.chuyenhang365;
 
 import android.app.Application;
 import android.util.Log;

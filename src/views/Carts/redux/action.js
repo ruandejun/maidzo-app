@@ -74,7 +74,7 @@ export const addItemToCart = (name, short_description, vendor, quantity, price, 
       price_origin,
       is_translate: false,
       shipping: 0,
-      http_referer: 'https://www.taobao365.vn/',
+      http_referer: 'https://chuyenhang365.com/',
       note: note
     }
   }

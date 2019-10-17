@@ -1,4 +1,4 @@
-package vn.taobao365;
+package com.chuyenhang365;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -13,7 +13,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "Taobao365";
+        return "Chuyenhang365";
     }
 
       @Override

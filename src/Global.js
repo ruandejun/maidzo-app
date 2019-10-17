@@ -63,7 +63,7 @@ import {
     ScreenWidth : Dimensions.get('screen').width,
     ScreenHeight : Dimensions.get('screen').height,
     FontName : 'Arial',
-    apiUrl: 'https://www.taobao365.vn/',
+    apiUrl: 'https://chuyenhang365.com/',
     username: '',
     userId: '',
     userToken: '',
