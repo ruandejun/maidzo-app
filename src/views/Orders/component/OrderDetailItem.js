@@ -112,7 +112,7 @@ export default class OrderDetailItem extends React.PureComponent {
 
     render() {
 
-        const { vendor, name, id, image_url, price, price_vnd, option_selected_tag,
+        const { name, id, image_url, price, price_vnd, option_selected_tag,
             status, currency, total_vnd, total_service_cost_vnd, quantity, shipping, total_service_cost, total,
             shipping_vnd, note, sum_arrived_quantity, rocket, packing, insurance, bargain, rocket_ship, count_shipmentpackage } = this.props
 
@@ -128,7 +128,6 @@ export default class OrderDetailItem extends React.PureComponent {
                         <Image source={{ uri: imageUrl(image_url) }} style={styles.itemImage} />
                     </View>
                     <View style={styles.descriptionContainer}>
-                        {!!vendor && vendor.length > 0 && <Text style={[styles.descriptionText, { color: '#1B5795' }]}>{`${vendor}`}</Text>}
                         <Text style={styles.descriptionText}>{`${currency} ${price} / ${convertMoney(price_vnd)} vnđ`}</Text>
                         <Text onPress={this.openQuantityDetail.bind(this)} style={styles.descriptionText}>{`Số lượng: ${sum_arrived_quantity}/${quantity} `}
                             <Text style={{color: Global.MainColor}}>?</Text>

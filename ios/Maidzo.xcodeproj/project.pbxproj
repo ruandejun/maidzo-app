@@ -13,6 +13,7 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1859B67023749A9500615F24 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1859B66F23749A9500615F24 /* GoogleService-Info.plist */; };
 		365E02CE2FA831E2DBBBC028 /* libPods-Maidzo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB852A44325386E93E3D8973 /* libPods-Maidzo.a */; };
 		41C3086F783347B4A19D216E /* Arial-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 365FEDECC9D04F8AB04F4509 /* Arial-Italic.ttf */; };
 		456E2B919756487ABE1E2ED2 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C836776DCA114D71A8C25E78 /* EvilIcons.ttf */; };
@@ -48,6 +49,8 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Maidzo/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Maidzo/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Maidzo/main.m; sourceTree = "<group>"; };
+		1859B66F23749A9500615F24 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1859B67123749F6200615F24 /* Maidzo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Maidzo.entitlements; path = Maidzo/Maidzo.entitlements; sourceTree = "<group>"; };
 		1D996B1F2D4FE40D05AA5136 /* libPods-Maidzo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Maidzo-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		203764E8B03A9BB28E7760B0 /* Pods-Maidzo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maidzo.release.xcconfig"; path = "Target Support Files/Pods-Maidzo/Pods-Maidzo.release.xcconfig"; sourceTree = "<group>"; };
 		28EAD348A4FC4F0CBA61EFDE /* Arial-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Arial-BoldItalic.ttf"; path = "../resources/fonts/Arial-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -155,6 +158,8 @@
 		13B07FAE1A68108700A75B9A /* Maidzo */ = {
 			isa = PBXGroup;
 			children = (
+				1859B67123749F6200615F24 /* Maidzo.entitlements */,
+				1859B66F23749A9500615F24 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -291,6 +296,7 @@
 				64AEF921E99F4DDF84950835 /* Ionicons.ttf in Resources */,
 				8BF29CFA68CC4BD2B62AB4B2 /* MaterialCommunityIcons.ttf in Resources */,
 				8CD9274742A64EC99870C9E8 /* MaterialIcons.ttf in Resources */,
+				1859B67023749A9500615F24 /* GoogleService-Info.plist in Resources */,
 				612370DE58664FCD956FCAE5 /* Octicons.ttf in Resources */,
 				79562545D623451B9A7A9804 /* SimpleLineIcons.ttf in Resources */,
 				85B78B9B35C341119478AE62 /* Zocial.ttf in Resources */,
@@ -439,21 +445,22 @@
 			baseConfigurationReference = AA3E6E25AA8FBBA4CCDD2232 /* Pods-Maidzo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 3;
+				CODE_SIGN_ENTITLEMENTS = Maidzo/Maidzo.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = X4LKZH6N8Y;
 				INFOPLIST_FILE = Maidzo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Maidzo;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.maidzo;
 				PRODUCT_NAME = Maidzo;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -463,20 +470,21 @@
 			baseConfigurationReference = 203764E8B03A9BB28E7760B0 /* Pods-Maidzo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 3;
+				CODE_SIGN_ENTITLEMENTS = Maidzo/Maidzo.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = X4LKZH6N8Y;
 				INFOPLIST_FILE = Maidzo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Maidzo;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.maidzo;
 				PRODUCT_NAME = Maidzo;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

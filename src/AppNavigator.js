@@ -201,6 +201,8 @@ const AppNavigator = createAppContainer(
         })
 )
 
+import firebase from 'react-native-firebase'
+
 export class AppWithNavigationState extends React.Component {
     constructor(props) {
         super(props);
@@ -208,7 +210,36 @@ export class AppWithNavigationState extends React.Component {
 
     componentDidMount() {
         console.disableYellowBox = true
+
+        firebase.messaging().hasPermission()
+        .then(enabled => {
+          if (enabled) {
+            this.getPushToken()
+          } else {
+            firebase.messaging().requestPermission()
+            .then(() => {
+              this.getPushToken()
+            })
+            .catch(error => {
+              CustomAlert('Vui lòng bật thông báo để nhận được thông tin mới nhất')
+            });
+          } 
+        })
+
+        const notifications = firebase.notifications()
+        notifications.setBadge(0)
     }
+
+    getPushToken(){
+        firebase.messaging().getToken()
+        .then((token) => {
+          console.log(token)
+          Global.pushToken = token
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      }
 
     componentWillMount() {
         if (Text.defaultProps == null)
@@ -223,6 +254,8 @@ export class AppWithNavigationState extends React.Component {
     }
 
     componentWillUnmount() {
+        const notifications = firebase.notifications()
+        notifications.setBadge(0)
     }
 
     render() {

@@ -6,8 +6,11 @@ import NavigationService from 'actions/NavigationService'
 import actions from './action'
 import CustomAlert from 'components/CustomAlert'
 
-export function* login({username, password}) {
-  let response = yield call(fetchApiLogin, 'post', 'api-token-auth/', {username, password});
+export function* login({username, password, device_id, registastion_id, platform_type}) {
+  console.log({username, password, device_id, registastion_id, platform_type})
+  let response = yield call(fetchApiLogin, 'post', 'api-token-auth/', {username, password, device_id, registastion_id, type: platform_type});
+
+  console.log(response)
 
     if (response.token) {
     Global.userToken = response.token

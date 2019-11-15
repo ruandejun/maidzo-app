@@ -29,6 +29,7 @@ import { addItemToCart } from 'Carts/redux/action'
 import { fetchUnlengthApi } from 'actions/api'
 import CustomAlert from '../../components/CustomAlert';
 import { jsCheckReadyToAddCart, jsGetProductDetailForCart, jsHideTaobaoThing, jsShowOptionsPopup } from './script/taobao'
+import { jsCheckJDReadyToAddCart, jsGetJDProductDetailForCart, jsHideJDThing, jsShowJDOptionsPopup } from './script/taobao'
 import { jsHide1688Thing, js1688ShowOptionsPopup, jsCheck1688ReadyToAddCart, jsGet1688ProductDetailForCart } from './script/alibaba'
 import { jsGetChemistDetailForCart } from './script/chemist'
 import ProgressBar from 'react-native-progress/Bar'
@@ -45,7 +46,7 @@ class TaobaoWebView extends React.Component {
             searchKeyword: '',
             url: props.navigation.getParam('url'),
             suggestions: [],
-            searchSource: 0 //0 = 1688, 1 = taobao, 2 = tmall, 3 = chemistwarehouse
+            searchSource: 0 //0 = 1688, 1 = taobao, 2 = tmall, 3 = chemistwarehouse, 4 = JD
         }
     }
 
@@ -58,6 +59,8 @@ class TaobaoWebView extends React.Component {
             this.setState({searchSource: 3})
         } else if(url && url.indexOf('m.1688.com') != -1 || url.indexOf('1688.com') != -1){
             this.setState({searchSource: 0})
+        } if(url && url.indexOf('m.jd.com') != -1 || url.indexOf('jd.com') != -1){
+            this.setState({searchSource: 4})
         } else if(url && url.indexOf('https://m.intl.taobao.com') != -1 || url.indexOf('intl.taobao.com') != -1){
             this.setState({searchSource: 1})
         } else {
@@ -67,7 +70,7 @@ class TaobaoWebView extends React.Component {
 
     onstartRequest(event) {
         try {
-            // console.log(event)
+            console.log(event)
 
             this.currentUrl = event.mainDocumentURL ? event.mainDocumentURL : event.url
 
@@ -104,6 +107,7 @@ class TaobaoWebView extends React.Component {
         if (newState && !newState.loading) {
             this.webview.injectJavaScript(jsHideTaobaoThing)
             this.webview.injectJavaScript(jsHide1688Thing)
+            this.webview.injectJavaScript(jsHideJDThing)
         }
     }
 
@@ -117,7 +121,7 @@ class TaobaoWebView extends React.Component {
             this.setState({ url: this.currentUrl.replace('https://ju.taobao.com/m/jusp/alone/detailwap/mtp.htm?item_id=', 'https://detail.m.tmall.com/item.htm?id=') })
             return
         }
-        if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') == -1 && this.currentUrl.indexOf('m.1688.com/offer') == -1 &&
+        if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') == -1 && this.currentUrl.indexOf('m.1688.com/offer') == -1 && this.currentUrl.indexOf('item.m.jd.com') == -1 &&
             this.currentUrl.indexOf('https://www.chemistwarehouse.com.au/buy/') == -1 && this.currentUrl.indexOf('https://dis.as.criteo.com/dis/dis.aspx' == -1)
         ) {
             CustomAlert(null, 'Đây không phải trang chi tiết sản phẩm')
@@ -128,6 +132,8 @@ class TaobaoWebView extends React.Component {
             this.webview.injectJavaScript(jsCheckReadyToAddCart)
         } else if (this.currentUrl.indexOf('m.1688.com/offer') != -1) {
             this.webview.injectJavaScript(jsCheck1688ReadyToAddCart)
+        } else if (this.currentUrl.indexOf('item.m.jd.com') != -1) {
+            this.webview.injectJavaScript(jsCheckJDReadyToAddCart)
         } else if (this.currentUrl.indexOf('https://www.chemistwarehouse.com.au/buy/') != -1 || this.currentUrl.indexOf('https://dis.as.criteo.com/dis/dis.aspx') != -1) {
             this.webview.injectJavaScript(jsGetChemistDetailForCart)
         }
@@ -141,7 +147,7 @@ class TaobaoWebView extends React.Component {
         try {
             if (event.nativeEvent.data && this.currentUrl) {
                 let response = JSON.parse(event.nativeEvent.data)
-                // console.log(response)
+                console.log(response)
                 if (response) {
                     if (response.type == 'checkReadyToAddCart') {
                         if (response.value == 1) {
@@ -250,6 +256,8 @@ class TaobaoWebView extends React.Component {
             currentUrl = `https://www.chemistwarehouse.com.au/search/go?w=${suggestion.key}`
         } else if (searchSource == 2) {
             currentUrl = `https://list.tmall.com/search_product.htm?q=${suggestion.zh_value}&type=p&tmhkh5=&spm=a220m.8599659.a2227oh.d100&from=mallfp..m_1_searchbutton&searchType=default&closedKey=`
+        } else if (searchSource == 4){
+            currentUrl = `https://so.m.jd.com/ware/search.action?keyword=${suggestion.zh_value}&searchFrom=home&sf=11&as=1`
         }
 
         // console.log(currentUrl)
@@ -293,9 +301,9 @@ class TaobaoWebView extends React.Component {
                     <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName }}>tmall</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => this.setState({searchSource: 3})} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 3 ? Global.MainColor : 'white' }}>
-                    <Image source={Media.ChemistIcon} style={{ width: 20, height: 20 }} resizeMode='contain' />
-                    <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName }}>chemistwarehouse</Text>
+                <TouchableOpacity onPress={() => this.setState({searchSource: 4})} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 3 ? Global.MainColor : 'white' }}>
+                    <Image source={Media.JDIcon} style={{ width: 20, height: 20 }} resizeMode='contain' />
+                    <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName }}>jd</Text>
                 </TouchableOpacity>
             </View>
         )

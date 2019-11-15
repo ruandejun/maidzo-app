@@ -153,6 +153,11 @@ class HomeView extends React.Component {
                                     <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>tmall.com</Text>
                                 </TouchableOpacity>
 
+                                <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://m.jd.com')} style={{ width: '100%', flexDirection: 'row', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Image source={Media.JDIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
+                                    <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>jd.com</Text>
+                                </TouchableOpacity>
+
                                 <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.chemistwarehouse.com.au')} style={{ width: '100%', flexDirection: 'row', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
                                     <Image source={Media.ChemistIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
                                     <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>chemistwarehouse</Text>
