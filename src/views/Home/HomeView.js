@@ -44,6 +44,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import ActionSheet from 'teaset/components/ActionSheet/ActionSheet';
 import ImagePicker from 'react-native-image-crop-picker'
 import { Overlay } from 'teaset'
+import firebase from 'react-native-firebase'
 
 class HomeView extends React.Component {
 
@@ -57,6 +58,18 @@ class HomeView extends React.Component {
         }
         this.props.getSettings()
         this.props.getCart()
+
+        this.removeNotificationDisplayedListener = firebase.notifications().onNotificationDisplayed((notification) => {
+            console.log(notification)
+        });
+        this.removeNotificationListener = firebase.notifications().onNotification((notification) => {
+            console.log(notification)
+        });
+    }
+
+    componentWillUnmount(){
+        this.removeNotificationDisplayedListener();
+        this.removeNotificationListener();
     }
 
     onpenWeb(url) {

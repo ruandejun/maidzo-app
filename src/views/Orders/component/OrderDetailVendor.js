@@ -182,7 +182,7 @@ export default class OrderDetailVendor extends React.PureComponent {
                         <Text style={styles.priceText}>Tổng giá sản phẩm</Text>
                         {vendor && <Text style={[styles.priceText]}>
                                 <Text style={{color: '#3578E5'}}>{`${vendor.sum_price}`}</Text>
-                                /
+                                |
                                 <Text style={{color: Global.MainColor}}>{`${convertMoney(vendor.sum_price_vnd)} đ`}</Text>
                             </Text>}
                         {!vendor && 
@@ -193,7 +193,7 @@ export default class OrderDetailVendor extends React.PureComponent {
                         <Text style={styles.priceText}>Tổng phí ship nội địa</Text>
                         {vendor && <Text style={[styles.priceText]}>
                                 <Text style={{color: '#3578E5'}}>{`${vendor.sum_shipping}`}</Text>
-                                /
+                                |
                                 <Text style={{color: Global.MainColor}}>{`${convertMoney(vendor.sum_shipping_vnd)} đ`}</Text>
                             </Text>}
                         {!vendor && 
@@ -204,7 +204,7 @@ export default class OrderDetailVendor extends React.PureComponent {
                         <Text style={styles.priceText}>Tổng phí dịch vụ</Text>
                         {vendor && <Text style={[styles.priceText]}>
                                 <Text style={{color: '#3578E5'}}>{`${vendor.sum_service}`}</Text>
-                                /
+                                |
                                 <Text style={{color: Global.MainColor}}>{`${convertMoney(vendor.sum_service_vnd)} đ`}</Text>
                             </Text>}
                         {!vendor && 
@@ -215,7 +215,7 @@ export default class OrderDetailVendor extends React.PureComponent {
                         <Text style={styles.priceText}>Tổng tiền</Text>
                         {vendor && <Text style={[styles.priceText]}>
                                 <Text style={{color: '#3578E5'}}>{`${vendor.total}`}</Text>
-                                /
+                                |
                                 <Text style={{color: Global.MainColor}}>{`${convertMoney(vendor.total_vnd)} đ`}</Text>
                             </Text>}
                         {!vendor && 

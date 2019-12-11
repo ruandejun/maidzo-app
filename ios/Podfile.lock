@@ -265,12 +265,8 @@ DEPENDENCIES:
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - boost-for-react-native
-    - libwebp
-    - SDWebImage
-    - SDWebImageWebPCoder
   trunk:
+    - boost-for-react-native
     - Crashlytics
     - Fabric
     - Firebase
@@ -285,10 +281,13 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
+    - libwebp
     - nanopb
     - Protobuf
     - QBImagePickerController
     - RSKImageCropper
+    - SDWebImage
+    - SDWebImageWebPCoder
 
 EXTERNAL SOURCES:
   BugsnagReactNative:
@@ -423,4 +422,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 6e753abb6ad94ece64c63f3413b6440c21b408cc
 
-COCOAPODS: 1.8.0.beta.2
+COCOAPODS: 1.8.4

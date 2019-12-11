@@ -27,21 +27,42 @@ const styles = StyleSheet.create({
 import { connect } from 'react-redux';
 import Global, { Media, calculateDistance, decode, getStatusBarHeight } from 'src/Global';
 import Header from 'components/Header'
-import {getSettings} from 'Setting/redux/action'
+import {getAppNotifications, updateNotificationRead} from './redux/action'
+import moment from 'moment';
 
 class NotificationView extends React.Component {
 
+    componentDidMount(){
+        this.props.getAppNotifications(1)
+    }
+
     onRefresh(){
-        this.props.getSettings()
+        this.props.getAppNotifications(1)
+    }
+
+    onClick(item){
+        this.props.updateNotificationRead(item)
     }
 
     renderItem({item, index}){
         return(
-            <View style={{width: '100%', padding: 10, backgroundColor: index % 2 == 0 ? 'white' : '#f2f2f2'}}>
-                <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName,}}>{item.description}</Text>
+            <TouchableOpacity onPress={this.onClick.bind(this, item)} style={{width: '100%', padding: 16, backgroundColor: item.unread ? '#eeeeee' : 'white'}}>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{flex:1, fontSize: 16, color: 'black', fontFamily: Global.FontName}}>{item.verb}</Text>
+                    <Text style={{marginLeft: 8, fontSize: 14, color: '#333333', fontFamily: Global.FontName}}>{moment(item.timestamp).fromNow()}</Text>
+                </View>
+                <Text style={{fontSize: 13, marginTop: 3, color: '#333333', fontFamily: Global.FontName,}}>{item.description}</Text>
                 <View style={{position: 'absolute', left: 0, right: 0, height: 0.5, bottom: 0, backgroundColor: '#CECECE'}}/>
-            </View>
+            </TouchableOpacity>
         )
+    }
+
+    onEndReached(){
+        if(!this.props.canLoadMore || this.props.isLoadingMore || this.props.isFetching){
+            return
+        }
+
+        this.props.getAppNotifications(this.props.currentPage + 1)
     }
 
     render() {
@@ -49,16 +70,17 @@ class NotificationView extends React.Component {
         return (
             <View style={styles.container}>
                 <Header
-                    title='Tin tức'
+                    title='Thông báo'
                 />
 
                 <FlatList 
                     refreshing={this.props.isFetching}
                     data={this.props.notifications}
                     onRefresh={this.onRefresh.bind(this)}
-                    keyExtractor={(item, index) => item.key}
+                    keyExtractor={(item, index) => item.id}
                     style={{flex: 1, widht: '100%'}}
                     renderItem={this.renderItem.bind(this)}
+                    onEndReached={this.onEndReached.bind(this)}
                 />
             </View>
         )
@@ -68,13 +90,17 @@ class NotificationView extends React.Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         notifications: state.notification.notifications,
-        isFetching: state.wallet.isFetching
+        isFetching: state.notification.isFetching,
+        canLoadMore: state.notification.canLoadMore,
+        currentPage: state.notification.currentPage,
+        isLoadingMore: state.notification.isLoadingMore
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        getSettings: () => dispatch(getSettings())
+        getAppNotifications: (page) => dispatch(getAppNotifications(page)),
+        updateNotificationRead: (notification) => dispatch(updateNotificationRead(notification)),
     };
 };
 
