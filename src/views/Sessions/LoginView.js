@@ -338,7 +338,7 @@ const mapPropsToState = (state, ownProps) => {
 
 const mapDispatchToState = dispatch => {
     return {
-        login: (username, password, device_id, registastion_id, type) => dispatch(login(username, password, device_id, registastion_id, type)),
+        login: (username, password, device_id, registration_id, type) => dispatch(login(username, password, device_id, registration_id, type)),
         register: (username, email, facebook, phone, password, verifypassword) => dispatch(register(username, email, facebook, phone, password, verifypassword)),
         unmountError: () => dispatch(unmountError())
     }

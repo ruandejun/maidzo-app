@@ -6,9 +6,9 @@ import NavigationService from 'actions/NavigationService'
 import actions from './action'
 import CustomAlert from 'components/CustomAlert'
 
-export function* login({username, password, device_id, registastion_id, platform_type}) {
-  console.log({username, password, device_id, registastion_id, platform_type})
-  let response = yield call(fetchApiLogin, 'post', 'api-token-auth/', {username, password, device_id, registastion_id, type: platform_type});
+export function* login({username, password, device_id, registration_id, platform_type}) {
+  console.log({username, password, device_id, registration_id, platform_type})
+  let response = yield call(fetchApiLogin, 'post', 'api-token-auth/', {username, password});
 
   console.log(response)
 
@@ -16,7 +16,10 @@ export function* login({username, password, device_id, registastion_id, platform
     Global.userToken = response.token
     yield AsyncStorage.setItem('@USER_TOKEN', Global.userToken)
     
-    let uresponse = yield call(fetchApi, 'get', 'api/user/myProfile/show/');
+    let presponse = yield call(fetchApi, 'POST', 'api/user/auth/update_fcm/', {device_id, registration_id, platform_type})
+    console.log(presponse)
+    
+    let uresponse = yield call(fetchApi, 'get', 'api/user/myProfile/show/')
       if (uresponse) {
 
       yield put({

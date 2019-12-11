@@ -20,10 +20,10 @@ export const unmountError = () => {
   }
 }
 
-export const login = (username, password, device_id, registastion_id, platform_type) => {
+export const login = (username, password, device_id, registration_id, platform_type) => {
   return {
     type: actions.LOGIN,
-    username, password, device_id, registastion_id, platform_type
+    username, password, device_id, registration_id, platform_type
   }
 }
 
