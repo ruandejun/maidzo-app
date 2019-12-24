@@ -113,10 +113,12 @@ function getProductDetailForCart() {
       }
 
       element = document.getElementsByClassName('sku-2nd-prop-box')[0];
+      let products = []
       if(element){
         var propertyTitle = element.getElementsByClassName('prop-name-text')[0].innerText;
         var options = element.querySelectorAll('.sku-2nd-prop-list li');
         options.forEach(function(node) {
+            let tempProduct = {...product}
             var propertyValue = node.getElementsByClassName('main-text')[0].innerText;
             
             var quantity = parseInt(node.getElementsByClassName('amount-input')[0].value);
@@ -124,18 +126,20 @@ function getProductDetailForCart() {
 
             if(quantity > 0 && (price || specialPrice)){
                 
-                product.quantity = quantity;
+                tempProduct.quantity = quantity;
 
                 if(price){
-                    product.price = price;
+                    tempProduct.price = price;
                 }
 
-                product.options = [...selectedOptions, {propertyTitle, propertyValue}];
+                tempProduct.options = [...selectedOptions, {propertyTitle, propertyValue}];
 
-                window.ReactNativeWebView.postMessage(JSON.stringify({type: 'getProductDetailForCart', value: product}))
+                products.push(tempProduct)
             }
         });
       }
+
+      window.ReactNativeWebView.postMessage(JSON.stringify({type: 'getProductDetailForCart', value: products}))
 
       closeOptionPopup();
 }

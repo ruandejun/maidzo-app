@@ -128,7 +128,7 @@ function getProductDetailForCart() {
       product.options = selectedOptions;
       
       closeOptionPopup();
-      window.ReactNativeWebView.postMessage(JSON.stringify({type: 'getProductDetailForCart', value: product}))
+      window.ReactNativeWebView.postMessage(JSON.stringify({type: 'getProductDetailForCart', value: [product]}))
 }
 
 function closeOptionPopup() {

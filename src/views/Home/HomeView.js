@@ -15,6 +15,7 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     Linking,
+    Keyboard,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -34,22 +35,24 @@ const styles = StyleSheet.create({
 })
 
 import { connect } from 'react-redux';
-import Global, { Media, calculateDistance, decode, getStatusBarHeight } from 'src/Global';
+import Global, { Media, contacts, decode, getStatusBarHeight } from 'src/Global';
 import { getWalletBalance } from 'Wallets/redux/action'
 import { getSettings } from 'Setting/redux/action'
 import { getCart } from 'Carts/redux/action'
 import Header from 'components/Header'
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import ActionSheet from 'teaset/components/ActionSheet/ActionSheet';
 import ImagePicker from 'react-native-image-crop-picker'
 import { Overlay } from 'teaset'
 import firebase from 'react-native-firebase'
+import ActionButton from 'react-native-action-button'
 
 class HomeView extends React.Component {
 
     state = {
-        keyword: ''
+        keyword: '',
+        pastedLink: ''
     }
 
     componentDidMount() {
@@ -191,6 +194,15 @@ class HomeView extends React.Component {
         this.props.navigation.navigate('ContactView')
     }
 
+    onOpenLink(){
+        const {pastedLink} = this.state
+        Keyboard.dismiss()
+        
+        if(pastedLink && pastedLink.length > 0 && pastedLink.indexOf('http') > -1){
+            this.onpenWeb(pastedLink)
+        }
+    }
+
     render() {
 
         return (
@@ -204,79 +216,111 @@ class HomeView extends React.Component {
                     onEndSubmit={this.onSearch.bind(this)}
                 />
 
-                <View style={{ width: '100%', backgroundColor: 'white', marginTop: 10, marginBottom: 10, padding: 16 }}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Icon name='tools' size={15} color='#333333' />
-                        <Text style={{ marginLeft: 8, fontSize: 15, color: '#333333', fontFamily: Global.FontName, }}>Công cụ</Text>
-                    </View>
-                    <ScrollView horizontal style={{ width: '100%', marginTop: 8 }} showsHorizontalScrollIndicator={false}>
-                        <View style={{ flexDirection: 'row', }}>
-                            <TouchableOpacity onPress={this.onOpenWeb.bind(this)} style={{ padding: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
-                                    <Icon name='cart-plus' color='white' size={25} />
-                                </View>
-                                <Text style={{ width: 60, textAlign: 'center', fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>Tìm sản phẩm</Text>
-                            </TouchableOpacity>
+                <ScrollView style={{flex: 1, width: '100%'}}>
+                    <View style={{ width: '100%', backgroundColor: 'white', marginTop: 10, marginBottom: 10, padding: 16 }}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Icon name='tools' size={15} color='#333333' />
+                            <Text style={{ marginLeft: 8, fontSize: 15, color: '#333333', fontFamily: Global.FontName, }}>Công cụ</Text>
+                        </View>
+                        <ScrollView horizontal style={{ width: '100%', marginTop: 8 }} showsHorizontalScrollIndicator={false}>
+                            <View style={{ flexDirection: 'row', }}>
+                                <TouchableOpacity onPress={this.onOpenWeb.bind(this)} style={{ padding: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                    <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
+                                        <Icon name='cart-plus' color='white' size={25} />
+                                    </View>
+                                    <Text style={{ width: 60, textAlign: 'center', fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>Tìm sản phẩm</Text>
+                                </TouchableOpacity>
 
-                            <TouchableOpacity onPress={this.onImageSearch.bind(this)} style={{ padding: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
-                                    <Icon name='camera' color='white' size={25} />
-                                </View>
-                                <Text style={{ width: 60, textAlign: 'center', fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>Tìm kiếm bằng ảnh</Text>
-                            </TouchableOpacity>
+                                <TouchableOpacity onPress={this.onImageSearch.bind(this)} style={{ padding: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                    <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
+                                        <Icon name='camera' color='white' size={25} />
+                                    </View>
+                                    <Text style={{ width: 60, textAlign: 'center', fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>Tìm kiếm bằng ảnh</Text>
+                                </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('ScanQRView')} style={{ padding: 10, marginLeft: 8, alignItems: 'center', justifyContent: 'center' }}>
-                                <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
-                                    <Icon name='qrcode' color='white' size={25} />
-                                </View>
-                                <Text style={{ width: 60, textAlign: 'center', fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>Quét mã vận đơn</Text>
-                            </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('ScanQRView')} style={{ padding: 10, marginLeft: 8, alignItems: 'center', justifyContent: 'center' }}>
+                                    <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
+                                        <Icon name='qrcode' color='white' size={25} />
+                                    </View>
+                                    <Text style={{ width: 60, textAlign: 'center', fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>Quét mã vận đơn</Text>
+                                </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('TrackingAllView')} style={{ padding: 10, marginLeft: 8, alignItems: 'center', justifyContent: 'center' }}>
-                                <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
-                                    <Icon name='box-open' color='white' size={25} />
-                                </View>
-                                <Text style={{ width: 60, textAlign: 'center', fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>{'Kiện hàng\n'}</Text>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('TrackingAllView')} style={{ padding: 10, marginLeft: 8, alignItems: 'center', justifyContent: 'center' }}>
+                                    <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
+                                        <Icon name='box-open' color='white' size={25} />
+                                    </View>
+                                    <Text style={{ width: 60, textAlign: 'center', fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>{'Kiện hàng\n'}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </ScrollView>
+
+                        <View style={{ flexDirection: 'row', marginTop : 15 }}>
+                            <Icon name='paste' size={15} color='#333333' />
+                            <Text style={{ marginLeft: 8, fontSize: 15, color: '#333333', fontFamily: Global.FontName, }}>Tìm sản phẩm</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8}}>
+                            <View style={{height: 30, flex: 1, borderRadius: 15, backgroundColor: '#eeeeee', paddingLeft: 15, paddingRight: 15}}>
+                                <TextInput 
+                                    ref={(ref) => this.pasteInput = ref}
+                                    placeholder={'Dán link sản phẩm'}
+                                    style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, flex: 1, padding: 0}}
+                                    placeholderTextColor='#aaaaaa'
+                                    underlineColorAndroid='#00000000'
+                                    clearButtonMode='always'
+                                    clearTextOnFocus={true}
+                                    value={this.state.pastedLink}
+                                    onChangeText={(text) => this.setState({pastedLink: text})}
+                                />
+                            </View>
+                            <TouchableOpacity onPress={this.onOpenLink.bind(this)} style={{width: 50, height: 30, borderRadius: 15, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center', marginLeft: 8}}>
+                                <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName, fontWeight: '500'}}>Mở</Text>
                             </TouchableOpacity>
                         </View>
-                    </ScrollView>
-                </View>
+                    </View>
 
-                <View style={{ width: '100%', backgroundColor: 'white', marginTop: 10, marginBottom: 10, padding: 16, paddingTop: 0, paddingBottom: 0 }}>
-                    <TouchableOpacity onPress={this.openWallet.bind(this)} style={styles.itemContainer}>
-                        <Icon name='wallet' size={15} color='#DF5539' />
-                        <Text style={styles.itemText}>Ví Maidzo</Text>
-                        <Icon name='chevron-right' size={14} color='#333333' />
-                        <View style={styles.separator} />
-                    </TouchableOpacity>
+                    <View style={{ width: '100%', backgroundColor: 'white', marginTop: 10, marginBottom: 10, padding: 16, paddingTop: 0, paddingBottom: 0 }}>
+                        <TouchableOpacity onPress={this.openWallet.bind(this)} style={styles.itemContainer}>
+                            <Icon name='wallet' size={15} color='#DF5539' />
+                            <Text style={styles.itemText}>Ví Maidzo</Text>
+                            <Icon name='chevron-right' size={14} color='#333333' />
+                            <View style={styles.separator} />
+                        </TouchableOpacity>
 
-                    <TouchableOpacity onPress={this.openReports.bind(this)} style={styles.itemContainer}>
-                        <Icon name='ticket-alt' size={15} color='#DF5539' />
-                        <Text style={styles.itemText}>Danh sách khiếu nại</Text>
-                        <Icon name='chevron-right' size={14} color='#333333' />
-                        <View style={styles.separator} />
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={this.openReports.bind(this)} style={styles.itemContainer}>
+                            <Icon name='ticket-alt' size={15} color='#DF5539' />
+                            <Text style={styles.itemText}>Danh sách khiếu nại</Text>
+                            <Icon name='chevron-right' size={14} color='#333333' />
+                            <View style={styles.separator} />
+                        </TouchableOpacity>
 
-                    <TouchableOpacity onPress={this.openSetting.bind(this)} style={styles.itemContainer}>
-                        <Icon name='cog' size={15} color='#DF5539' />
-                        <Text style={styles.itemText}>Thiết lập tài khoản</Text>
-                        <Icon name='chevron-right' size={14} color='#333333' />
-                        <View style={styles.separator} />
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={this.openSetting.bind(this)} style={styles.itemContainer}>
+                            <Icon name='cog' size={15} color='#DF5539' />
+                            <Text style={styles.itemText}>Thiết lập tài khoản</Text>
+                            <Icon name='chevron-right' size={14} color='#333333' />
+                            <View style={styles.separator} />
+                        </TouchableOpacity>
 
-                    <TouchableOpacity onPress={this.openSupport.bind(this)} style={styles.itemContainer}>
-                        <Icon name='question-circle' size={15} color='#2CAC9B' />
-                        <Text style={styles.itemText}>Trung tâm trợ giúp</Text>
-                        <Icon name='chevron-right' size={14} color='#333333' />
-                        <View style={styles.separator} />
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={this.openSupport.bind(this)} style={styles.itemContainer}>
+                            <Icon name='question-circle' size={15} color='#2CAC9B' />
+                            <Text style={styles.itemText}>Trung tâm trợ giúp</Text>
+                            <Icon name='chevron-right' size={14} color='#333333' />
+                            <View style={styles.separator} />
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
 
-                    <TouchableOpacity onPress={this.openContact.bind(this)} style={styles.itemContainer}>
-                        <Icon name='phone' size={15} color='#DF5539' />
-                        <Text style={styles.itemText}>Liên hệ</Text>
-                        <Icon name='chevron-right' size={14} color='#333333' />
-                    </TouchableOpacity>
-                </View>
+                <ActionButton buttonColor={Global.MainColor}
+                    renderIcon={() => <Icon name='phone' size={20} color='white' />}
+                >
+                    {contacts.map((item) => {
+                        return(
+                            <ActionButton.Item buttonColor={'blue'} title={item.title} onPress={() => Linking.openURL(item.action)}>
+                                <Icon name={item.icon} size={18} color='white' />
+                            </ActionButton.Item>
+                        )
+                    })}
+                </ActionButton>
             </View>
         )
     }

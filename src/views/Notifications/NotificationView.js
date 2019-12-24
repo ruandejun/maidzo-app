@@ -42,6 +42,9 @@ class NotificationView extends React.Component {
 
     onClick(item){
         this.props.updateNotificationRead(item)
+        if(item.target_object_id){
+            this.props.navigation.navigate('OrderDetailView', {order_id : item.target_object_id})
+        }
     }
 
     renderItem({item, index}){

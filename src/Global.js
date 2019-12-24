@@ -53,9 +53,9 @@ import {
   }
 
   export const contacts = [
-    {title: 'Hotline', number: '1900989977'},
-    {title: 'Giải đáp thắc mắc', number: '+842466833354'},
-    {title: 'Phản ánh chất lượng dịch vụ', number: '+842466833354'},
+    {title: 'Hotline', number: '1900989977', action: 'tel:1900989977', icon: 'phone'},
+    {title: 'Giải đáp thắc mắc', number: '+842466833354', action: 'tel:+842466833354', icon: 'phone'},
+    {title: 'Messenger', number: 'MaiDzo.vn', action: 'http://m.me/MaiDzo.vn', icon: 'facebook-messenger'},
   ]
 
   export default Global = {

@@ -10,14 +10,14 @@ export function* login({username, password, device_id, registration_id, platform
   console.log({username, password, device_id, registration_id, platform_type})
   let response = yield call(fetchApiLogin, 'post', 'api-token-auth/', {username, password});
 
-  console.log(response)
+  // console.log(response)
 
     if (response.token) {
     Global.userToken = response.token
     yield AsyncStorage.setItem('@USER_TOKEN', Global.userToken)
     
     let presponse = yield call(fetchApi, 'POST', 'api/user/auth/update_fcm/', {device_id, registration_id, platform_type})
-    console.log(presponse)
+    // console.log(presponse)
     
     let uresponse = yield call(fetchApi, 'get', 'api/user/myProfile/show/')
       if (uresponse) {
@@ -42,7 +42,7 @@ export function* login({username, password, device_id, registration_id, platform
 
 export function* register({username, email, facebook, phone, password, verifypassword}) {
   let response = yield call(fetchApiLogin, 'post', 'api/user/auth/signup/', {username, email, facebook, phone, password, verifypassword});
-  console.log(response)
+  // console.log(response)
     if (response.token) {
     Global.userToken = response.token
     yield AsyncStorage.setItem('@USER_TOKEN', Global.userToken)
@@ -107,8 +107,29 @@ export function* updateProfile({pk, name, value}) {
     type: actions.UPDATE_PROFILE_SUCCESS
   });
 
+  if(response.error){
+    CustomAlert(response.error)
+  }
   if(response.message){
     CustomAlert(response.message)
+  }
+}
+
+export function* updatePassword({current_password, new_password}) {
+  let response = yield call(fetchApi, 'PUT', 'api/user/auth/changePassword/', {current_password, new_password});
+  
+  yield put({
+    type: actions.UPDATE_PASSWORD_SUCCESS
+  });
+
+  if(response.message){
+    CustomAlert(response.message)
+  }
+  if(response.success){
+    CustomAlert('Cập nhật mật khẩu thành công')
+  }
+  if(response.error){
+    CustomAlert(response.error)
   }
 }
 
@@ -127,6 +148,7 @@ export default function* rootSaga() {
     yield takeEvery(actions.SIGN_UP, register),
     yield takeEvery(actions.GET_USER, getUser),
     yield takeEvery(actions.UPDATE_PROFILE, updateProfile),
+    yield takeEvery(actions.UPDATE_PASSWORD, updatePassword),
     yield takeEvery(actions.LOGOUT, logout),
   ]
 }

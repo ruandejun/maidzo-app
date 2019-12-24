@@ -29,7 +29,7 @@ import { addItemToCart } from 'Carts/redux/action'
 import { fetchUnlengthApi } from 'actions/api'
 import CustomAlert from '../../components/CustomAlert';
 import { jsCheckReadyToAddCart, jsGetProductDetailForCart, jsHideTaobaoThing, jsShowOptionsPopup } from './script/taobao'
-import { jsCheckJDReadyToAddCart, jsGetJDProductDetailForCart, jsHideJDThing, jsShowJDOptionsPopup } from './script/taobao'
+import { jsCheckJDReadyToAddCart, jsGetJDProductDetailForCart, jsHideJDThing, jsShowJDOptionsPopup } from './script/jd'
 import { jsHide1688Thing, js1688ShowOptionsPopup, jsCheck1688ReadyToAddCart, jsGet1688ProductDetailForCart } from './script/alibaba'
 import { jsGetChemistDetailForCart } from './script/chemist'
 import ProgressBar from 'react-native-progress/Bar'
@@ -70,7 +70,7 @@ class TaobaoWebView extends React.Component {
 
     onstartRequest(event) {
         try {
-            console.log(event)
+            // console.log(event)
 
             this.currentUrl = event.mainDocumentURL ? event.mainDocumentURL : event.url
 
@@ -122,7 +122,7 @@ class TaobaoWebView extends React.Component {
             return
         }
         if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') == -1 && this.currentUrl.indexOf('m.1688.com/offer') == -1 && this.currentUrl.indexOf('item.m.jd.com') == -1 &&
-            this.currentUrl.indexOf('https://www.chemistwarehouse.com.au/buy/') == -1 && this.currentUrl.indexOf('https://dis.as.criteo.com/dis/dis.aspx' == -1)
+            this.currentUrl.indexOf('item.m.paipai.com') == -1 && this.currentUrl.indexOf('https://www.chemistwarehouse.com.au/buy/') == -1 && this.currentUrl.indexOf('https://dis.as.criteo.com/dis/dis.aspx' == -1)
         ) {
             CustomAlert(null, 'Đây không phải trang chi tiết sản phẩm')
             return
@@ -132,7 +132,7 @@ class TaobaoWebView extends React.Component {
             this.webview.injectJavaScript(jsCheckReadyToAddCart)
         } else if (this.currentUrl.indexOf('m.1688.com/offer') != -1) {
             this.webview.injectJavaScript(jsCheck1688ReadyToAddCart)
-        } else if (this.currentUrl.indexOf('item.m.jd.com') != -1) {
+        } else if (this.currentUrl.indexOf('item.m.jd.com') != -1 || this.currentUrl.indexOf('item.m.paipai.com') != -1) {
             this.webview.injectJavaScript(jsCheckJDReadyToAddCart)
         } else if (this.currentUrl.indexOf('https://www.chemistwarehouse.com.au/buy/') != -1 || this.currentUrl.indexOf('https://dis.as.criteo.com/dis/dis.aspx') != -1) {
             this.webview.injectJavaScript(jsGetChemistDetailForCart)
@@ -147,7 +147,6 @@ class TaobaoWebView extends React.Component {
         try {
             if (event.nativeEvent.data && this.currentUrl) {
                 let response = JSON.parse(event.nativeEvent.data)
-                console.log(response)
                 if (response) {
                     if (response.type == 'checkReadyToAddCart') {
                         if (response.value == 1) {
@@ -155,6 +154,8 @@ class TaobaoWebView extends React.Component {
                                 this.webview.injectJavaScript(jsGetProductDetailForCart)
                             } else if (this.currentUrl.indexOf('m.1688.com/offer') != -1) {
                                 this.webview.injectJavaScript(jsGet1688ProductDetailForCart)
+                            } else if (this.currentUrl.indexOf('item.m.jd.com') != -1 || this.currentUrl.indexOf('item.m.paipai.com') != -1) {
+                                this.webview.injectJavaScript(jsGetJDProductDetailForCart)
                             }
                         } else if (response.value == 2) {
                             CustomAlert('Có lỗi', 'Vui lòng chọn thuộc tính sản phẩm')
@@ -163,20 +164,25 @@ class TaobaoWebView extends React.Component {
                                 this.webview.injectJavaScript(jsShowOptionsPopup)
                             } else if (this.currentUrl.indexOf('m.1688.com/offer') != -1) {
                                 this.webview.injectJavaScript(js1688ShowOptionsPopup)
+                            } else if (this.currentUrl.indexOf('item.m.jd.com') != -1 || this.currentUrl.indexOf('item.m.paipai.com') != -1) {
+                                this.webview.injectJavaScript(jsShowJDOptionsPopup)
                             }
                         }
                     }
                     if (response.type == 'getProductDetailForCart') {
-                        const cart = response.value
-                        let options = {}
-                        cart.options.map((item) => {
-                            options[item.propertyTitle] = item.propertyValue
+                        const carts = response.value
+                        carts.map((cart) => {
+                            let options = {}
+                            cart.options.map((item) => {
+                                options[item.propertyTitle] = item.propertyValue
+                            })
+    
+                            // console.log(cart)
+                            this.props.addItemToCart(cart.title, cart.title, cart.shop_name, cart.quantity,
+                                cart.price, JSON.stringify(options), cart.detailUrl, cart.detailUrl, cart.currency,
+                                cart.image, cart.price)
                         })
-
-                        // console.log(cart)
-                        this.props.addItemToCart(cart.title, cart.title, cart.shop_name, cart.quantity,
-                            cart.price, JSON.stringify(options), cart.detailUrl, cart.detailUrl, cart.currency,
-                            cart.image, cart.price)
+                        
                         this.webview.reload()
                     }
                 }

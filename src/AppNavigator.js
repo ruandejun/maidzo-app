@@ -20,6 +20,7 @@ import PrivacyView from 'Setting/PrivacyView'
 import SupportView from 'Setting/SupportView'
 import UpdateProfileView from 'Setting/UpdateProfileView'
 import ContactView from 'Setting/ContactView'
+import UpdatePasswordView from 'Setting/UpdatePasswordView'
 
 import TrackingDetailView from 'Trackings/TrackingDetailView'
 import ItemTrackingView from 'Trackings/ItemTrackingView'
@@ -192,6 +193,10 @@ const AppNavigator = createAppContainer(
         },
         ContactView: {
             screen: ContactView,
+            navigationOptions: { header: null }
+        },
+        UpdatePasswordView: {
+            screen: UpdatePasswordView,
             navigationOptions: { header: null }
         }
     }, {

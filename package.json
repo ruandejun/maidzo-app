@@ -13,6 +13,7 @@
     "moment": "^2.24.0",
     "react": "16.8.6",
     "react-native": "0.60.5",
+    "react-native-action-button": "^2.8.5",
     "react-native-background-timer": "^2.1.1",
     "react-native-camera": "^3.4.0",
     "react-native-device-info": "^5.2.1",
