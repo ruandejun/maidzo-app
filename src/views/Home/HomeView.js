@@ -47,6 +47,8 @@ import ImagePicker from 'react-native-image-crop-picker'
 import { Overlay } from 'teaset'
 import firebase from 'react-native-firebase'
 import ActionButton from 'react-native-action-button'
+import {fetchApi} from 'actions/api'
+import PopupView from 'components/PopupView'
 
 class HomeView extends React.Component {
 
@@ -68,6 +70,27 @@ class HomeView extends React.Component {
         this.removeNotificationListener = firebase.notifications().onNotification((notification) => {
             console.log(notification)
         });
+
+
+        fetchApi('get', 'api/system_configure/template/thong-bao/')
+        .then((data) => {
+            if(data && data.body && data.body.length > 0){
+                let overlayView = (
+                    <Overlay.PopView
+                        modal={true}
+                        ref={v => this.alertOverlayView = v}
+                    >
+                        <View style={{width: Global.ScreenWidth, height: Global.ScreenHeight, backgroundColor: '#00000044', alignItems: 'center', justifyContent: 'center'}}>
+                            <PopupView html={data.body} onClose={() => this.alertOverlayView && this.alertOverlayView.close()}/>
+                        </View>
+                    </Overlay.PopView>
+                );
+                Overlay.show(overlayView)
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+        })
     }
 
     componentWillUnmount(){
@@ -103,7 +126,13 @@ class HomeView extends React.Component {
             return
         }
 
-        this.props.navigation.navigate('HomeSearchView', { keyword: this.state.keyword })
+        let regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+        if(regex.test(this.state.keyword)){
+            this.onpenWeb(this.state.keyword)
+        } else {
+            this.props.navigation.navigate('HomeSearchView', { keyword: this.state.keyword })
+        }
+        
     }
 
     onImageSearch() {
@@ -254,12 +283,12 @@ class HomeView extends React.Component {
                             </View>
                         </ScrollView>
 
-                        <View style={{ flexDirection: 'row', marginTop : 15 }}>
+                        {/* <View style={{ flexDirection: 'row', marginTop : 15 }}>
                             <Icon name='paste' size={15} color='#333333' />
                             <Text style={{ marginLeft: 8, fontSize: 15, color: '#333333', fontFamily: Global.FontName, }}>Tìm sản phẩm</Text>
-                        </View>
+                        </View> */}
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8}}>
+                        {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8}}>
                             <View style={{height: 30, flex: 1, borderRadius: 15, backgroundColor: '#eeeeee', paddingLeft: 15, paddingRight: 15}}>
                                 <TextInput 
                                     ref={(ref) => this.pasteInput = ref}
@@ -276,7 +305,7 @@ class HomeView extends React.Component {
                             <TouchableOpacity onPress={this.onOpenLink.bind(this)} style={{width: 50, height: 30, borderRadius: 15, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center', marginLeft: 8}}>
                                 <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName, fontWeight: '500'}}>Mở</Text>
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </View>
 
                     <View style={{ width: '100%', backgroundColor: 'white', marginTop: 10, marginBottom: 10, padding: 16, paddingTop: 0, paddingBottom: 0 }}>
