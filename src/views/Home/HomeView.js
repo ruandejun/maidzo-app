@@ -35,13 +35,13 @@ const styles = StyleSheet.create({
 })
 
 import { connect } from 'react-redux';
-import Global, { Media, contacts, decode, getStatusBarHeight } from 'src/Global';
+import Global, { Media, contacts, decode, convertMoney } from 'src/Global';
 import { getWalletBalance } from 'Wallets/redux/action'
 import { getSettings } from 'Setting/redux/action'
 import { getCart } from 'Carts/redux/action'
 import Header from 'components/Header'
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import { ScrollView, TextInput } from 'react-native-gesture-handler';
+import { ScrollView, TextInput, FlatList } from 'react-native-gesture-handler';
 import ActionSheet from 'teaset/components/ActionSheet/ActionSheet';
 import ImagePicker from 'react-native-image-crop-picker'
 import { Overlay } from 'teaset'
@@ -54,7 +54,8 @@ class HomeView extends React.Component {
 
     state = {
         keyword: '',
-        pastedLink: ''
+        pastedLink: '',
+        currencies: []
     }
 
     componentDidMount() {
@@ -70,6 +71,7 @@ class HomeView extends React.Component {
         this.removeNotificationListener = firebase.notifications().onNotification((notification) => {
             console.log(notification)
         });
+        this.onLoadCurrency()
 
 
         fetchApi('get', 'api/system_configure/template/thong-bao/')
@@ -86,6 +88,20 @@ class HomeView extends React.Component {
                     </Overlay.PopView>
                 );
                 Overlay.show(overlayView)
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+
+    onLoadCurrency(){
+        fetchApi('get', 'page/get_data_currency/',{order : 'asc', offset : 0, limit: 50})
+        .then((data) => {
+            console.log(data)
+            if(data && data.rows){
+                
+                this.setState({currencies: data.rows})
             }
         })
         .catch((error) => {
@@ -241,12 +257,13 @@ class HomeView extends React.Component {
                     searchText={this.state.keyword}
                     searchContainer={{ left: 16, width: Global.ScreenWidth - 32 }}
                     headerChangeText={(text) => this.setState({ keyword: text })}
-                    searchPlaceholder='Nhập từ khoá để tìm kiếm sản phẩm'
+                    searchPlaceholder='Nhập để tìm kiếm hoặc dán link sản phẩm'
                     onEndSubmit={this.onSearch.bind(this)}
                 />
 
                 <ScrollView style={{flex: 1, width: '100%'}}>
                     <View style={{ width: '100%', backgroundColor: 'white', marginTop: 10, marginBottom: 10, padding: 16 }}>
+                        
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name='tools' size={15} color='#333333' />
                             <Text style={{ marginLeft: 8, fontSize: 15, color: '#333333', fontFamily: Global.FontName, }}>Công cụ</Text>
@@ -307,6 +324,18 @@ class HomeView extends React.Component {
                             </TouchableOpacity>
                         </View> */}
                     </View>
+
+                    <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row', height: 30, paddingLeft: 10, paddingRight: 10}}>
+                            <ScrollView horizontal style={{flex: 1}}>
+                                {this.state.currencies.map((item) => {
+                                    return(
+                                        <View style={{height: 30, padding: 5, textAlign: 'center', justifyContent:'center', borderWidth: 0.5, borderRadius: 3, borderColor: '#aaaaaa', marginLeft: 5, marginRight: 5}}>
+                                            <Text style={{fontSize: 11, color: '#333333', fontFamily: Global.FontName}}>{`1 ${item.currency} = ${convertMoney(item.exchange_rate)} VND`}</Text>
+                                        </View>
+                                    )
+                                })}
+                            </ScrollView>
+                        </View>
 
                     <View style={{ width: '100%', backgroundColor: 'white', marginTop: 10, marginBottom: 10, padding: 16, paddingTop: 0, paddingBottom: 0 }}>
                         <TouchableOpacity onPress={this.openWallet.bind(this)} style={styles.itemContainer}>

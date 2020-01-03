@@ -44,8 +44,14 @@ export const jsCheckReadyToAddCart = `
           canAddCart = 0;
         }
       }
+
+      var banButton = document.querySelectorAll('.ban-sale').length;
+      window.ReactNativeWebView.postMessage(JSON.stringify({type: 'checkReadyToAddCart1', value: banButton}));
+      if (!(banButton == 'undefined' || banButton < 1)){
+        canAddCart = 3;
+      }
       
-      window.ReactNativeWebView.postMessage(JSON.stringify({type: 'checkReadyToAddCart', value: canAddCart}))
+      window.ReactNativeWebView.postMessage(JSON.stringify({type: 'checkReadyToAddCart', value: canAddCart}));
     }
     checkReadyToAddCart();
 `

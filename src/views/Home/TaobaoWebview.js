@@ -147,6 +147,7 @@ class TaobaoWebView extends React.Component {
         try {
             if (event.nativeEvent.data && this.currentUrl) {
                 let response = JSON.parse(event.nativeEvent.data)
+                // console.log(response)
                 if (response) {
                     if (response.type == 'checkReadyToAddCart') {
                         if (response.value == 1) {
@@ -159,6 +160,11 @@ class TaobaoWebView extends React.Component {
                             }
                         } else if (response.value == 2) {
                             CustomAlert('Có lỗi', 'Vui lòng chọn thuộc tính sản phẩm')
+                        } else if (response.value == 3) {
+                            CustomAlert('Có lỗi', 'Sản phẩm đã hết hàng hoặc phải đăng nhập để đặt hàng.', [
+                                {text: 'Cancel'},
+                                {text: 'Đăng nhập', onPress: () => this.setState({url: `https://login.m.taobao.com/login_oversea.htm?spm=a2141.8294655.toolbar.3&redirectURL=${this.currentUrl}`})}
+                            ])
                         } else {
                             if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1) {
                                 this.webview.injectJavaScript(jsShowOptionsPopup)
