@@ -13,7 +13,7 @@ import {
     ActivityIndicator,
     AppState,
     TouchableOpacity,
-    TouchableWithoutFeedback,
+    StatusBar,
     Linking,
     Keyboard,
 } from 'react-native';
@@ -93,6 +93,8 @@ class HomeView extends React.Component {
         .catch((error) => {
             console.log(error)
         })
+
+        StatusBar.setBarStyle('dark-content')
     }
 
     onLoadCurrency(){
@@ -248,6 +250,10 @@ class HomeView extends React.Component {
         }
     }
 
+    onScanCode(){
+        this.props.navigation.navigate('HomeScanView')
+    }
+
     render() {
 
         return (
@@ -255,10 +261,12 @@ class HomeView extends React.Component {
                 <Header
                     searchBar
                     searchText={this.state.keyword}
-                    searchContainer={{ left: 16, width: Global.ScreenWidth - 32 }}
+                    searchContainer={{ left: 16, width: Global.ScreenWidth - 62 }}
                     headerChangeText={(text) => this.setState({ keyword: text })}
                     searchPlaceholder='Nhập để tìm kiếm hoặc dán link sản phẩm'
                     onEndSubmit={this.onSearch.bind(this)}
+                    rightIcon='qrcode'
+                    rightAction={this.onScanCode.bind(this)}
                 />
 
                 <ScrollView style={{flex: 1, width: '100%'}}>

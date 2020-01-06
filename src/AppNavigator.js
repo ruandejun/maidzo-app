@@ -43,6 +43,7 @@ import HomeView from 'Home/HomeView'
 import TaobaoWebView from 'Home/TaobaoWebView'
 import HomeSearchView from 'Home/HomeSearchView'
 import ImageSearchView from 'Home/ImageSearchView'
+import HomeScanView from 'Home/HomeScanView'
 
 import CartView from 'Carts/CartView'
 import CartConfirmView from 'Carts/CartConfirmView'
@@ -129,6 +130,10 @@ const AppNavigator = createAppContainer(
         },
         CartView: {
             screen: CartView,
+            navigationOptions: { header: null }
+        },
+        HomeScanView: {
+            screen: HomeScanView,
             navigationOptions: { header: null }
         },
         DepositListView: {

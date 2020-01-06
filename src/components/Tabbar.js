@@ -68,7 +68,7 @@ class Tabbar extends React.PureComponent {
 
   render() {
 
-    const { navigation, orderCount, cartCount} = this.props;
+    const { navigation, orderCount, cartCount, unread} = this.props;
     const currentIndex = navigation.state.index;
 
     return (
@@ -118,6 +118,12 @@ class Tabbar extends React.PureComponent {
             <View style={[styles.buttonContainer]}>
                 <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: currentIndex == 3 ? '#FDCC0D' : 'white'}]} source={Media.NotificationTab} />
                 <Text style={[styles.buttonText, {color: currentIndex == 3 ? '#FDCC0D' : 'white'}]}>Thông báo</Text>
+
+                {unread > 0 && 
+                <View style={[styles.notiBagde]}>
+                  <Text style={styles.bagdeText}>{unread}</Text>
+                </View>
+              }
             </View>
         </TouchableWithoutFeedback>
         </View>
@@ -135,6 +141,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     cartCount: state.cart.count,
     orderCount: state.order.count,
+    unread: state.notification.unread
   };
 }
 

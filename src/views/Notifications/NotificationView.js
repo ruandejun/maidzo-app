@@ -27,8 +27,9 @@ const styles = StyleSheet.create({
 import { connect } from 'react-redux';
 import Global, { Media, calculateDistance, decode, getStatusBarHeight } from 'src/Global';
 import Header from 'components/Header'
-import {getAppNotifications, updateNotificationRead} from './redux/action'
+import {getAppNotifications, updateNotificationRead, updateNotificationAllRead} from './redux/action'
 import moment from 'moment';
+import CustomAlert from '../../components/CustomAlert';
 
 class NotificationView extends React.Component {
 
@@ -68,12 +69,23 @@ class NotificationView extends React.Component {
         this.props.getAppNotifications(this.props.currentPage + 1)
     }
 
+    onReadAll(){
+        CustomAlert('Đã đọc', 'Bạn có muốn đánh dấu tất cả là đã đọc?', [
+            {text: 'Huỷ'},
+            {text: 'Đã đọc', onPress: () => {
+                this.props.updateNotificationAllRead()
+            }}
+        ])
+    }
+
     render() {
 
         return (
             <View style={styles.container}>
                 <Header
                     title='Thông báo'
+                    rightIcon='low-vision'
+                    rightAction={this.onReadAll.bind(this)}
                 />
 
                 <FlatList 
@@ -104,6 +116,7 @@ const mapDispatchToProps = dispatch => {
     return {
         getAppNotifications: (page) => dispatch(getAppNotifications(page)),
         updateNotificationRead: (notification) => dispatch(updateNotificationRead(notification)),
+        updateNotificationAllRead: () => dispatch(updateNotificationAllRead()),
     };
 };
 

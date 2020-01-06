@@ -6,6 +6,7 @@ const initState = {
     isLoadingMore: false,
     canLoadMore: true,
     currentPage: 1,
+    unread: 0
 };
 
 export default function appReducer(state = initState, action) {
@@ -24,17 +25,20 @@ export default function appReducer(state = initState, action) {
                 notifications[index].unread = false
             }
             return{...state, notifications: notifications, isFetching: true}
+        case actions.UPDATE_NOTIFICATION_READ_ALL:
+            return{...state, isFetching: true}
         case actions.UPDATE_NOTIFICATION_READ_SUCCESS:
+        case actions.UPDATE_NOTIFICATION_READ_ALL_SUCCESS:
             return{...state, isFetching: false}
         case actions.GET_APP_NOTIFICATION_SUCCESS:
             if(action.page == 1){
-                return{...state, notifications: action.data, currentPage: action.page, isFetching: false, canLoadMore: action.canLoadMore}
+                return{...state, notifications: action.data, currentPage: action.page, isFetching: false, canLoadMore: action.canLoadMore, unread: action.unread}
             } else {
                 let notifications = state.notifications
                 action.data.map((item) => {
                     notifications.push(item)
                 })
-                return{...state, notifications: notifications, currentPage: action.page, isLoadingMore: false, canLoadMore: action.canLoadMore}
+                return{...state, notifications: notifications, currentPage: action.page, isLoadingMore: false, canLoadMore: action.canLoadMore, unread: action.unread}
             }
             
         default:

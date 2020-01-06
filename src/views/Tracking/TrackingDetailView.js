@@ -29,6 +29,7 @@ import Header from 'components/Header'
 import TrackingItem from './component/TrackingItem'
 import { fetchApi } from 'actions/api'
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import {Toast} from 'teaset'
 
 class TrackingDetailView extends React.Component {
 
@@ -98,7 +99,7 @@ class TrackingDetailView extends React.Component {
 
                     <View style={{width: '100%', height: StyleSheet.hairlineWidth, backgroundColor: '#aaaaaa', marginTop: 10, marginBottom: 5}}/>
 
-                    <TouchableOpacity onPress={() => Clipboard.setString(`${package_info.tracking_number}`)} style={{flexDirection: 'row', marginTop: 5, width: '100%'}}>
+                    <TouchableOpacity onPress={() => {Clipboard.setString(`${package_info.tracking_number}`); Toast.message('Đã copy')}} style={{flexDirection: 'row', marginTop: 5, width: '100%'}}>
                         <Text style={{fontSize: 13, color: '#333333', flex: 1, fontFamily: Global.FontName}}>{`Mã vận chuyển: `}
                             <Text style={{ color: 'black', fontSize: 14 }}>{package_info.tracking_number}</Text>
                         </Text>
