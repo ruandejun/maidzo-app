@@ -83,7 +83,7 @@ class HomeView extends React.Component {
                         ref={v => this.alertOverlayView = v}
                     >
                         <View style={{width: Global.ScreenWidth, height: Global.ScreenHeight, backgroundColor: '#00000044', alignItems: 'center', justifyContent: 'center'}}>
-                            <PopupView html={data.body} onClose={() => this.alertOverlayView && this.alertOverlayView.close()}/>
+                            <PopupView title={data.title} html={data.body} onClose={() => this.alertOverlayView && this.alertOverlayView.close()}/>
                         </View>
                     </Overlay.PopView>
                 );
