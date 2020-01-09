@@ -139,7 +139,11 @@ export function* logout({username, password}) {
   Global.userToken = null
   yield AsyncStorage.removeItem('@USER_TOKEN')
 
-  NavigationService.reset('LoginView')
+  yield put({
+    type: actions.LOGOUT_SUCCESS
+  })
+  // NavigationService.reset('LoginView')
+  NavigationService.reset('DashboardView')
 }
 
 export default function* rootSaga() {

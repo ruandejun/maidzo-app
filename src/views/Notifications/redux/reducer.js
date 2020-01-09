@@ -35,9 +35,12 @@ export default function appReducer(state = initState, action) {
                 return{...state, notifications: action.data, currentPage: action.page, isFetching: false, canLoadMore: action.canLoadMore, unread: action.unread}
             } else {
                 let notifications = state.notifications
-                action.data.map((item) => {
-                    notifications.push(item)
-                })
+                if(action.data){
+                    action.data.map((item) => {
+                        notifications.push(item)
+                    })
+                }
+                
                 return{...state, notifications: notifications, currentPage: action.page, isLoadingMore: false, canLoadMore: action.canLoadMore, unread: action.unread}
             }
             

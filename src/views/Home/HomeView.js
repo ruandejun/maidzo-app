@@ -139,6 +139,10 @@ class HomeView extends React.Component {
         this.props.navigation.navigate('ReportListView')
     }
 
+    openLogin(){
+        this.props.navigation.navigate('LoginView')
+    }
+
     onSearch() {
         if (this.state.keyword.length == 0) {
             return
@@ -256,6 +260,8 @@ class HomeView extends React.Component {
 
     render() {
 
+        const {user} = this.props
+
         return (
             <View style={styles.container}>
                 <Header
@@ -360,12 +366,14 @@ class HomeView extends React.Component {
                             <View style={styles.separator} />
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={this.openSetting.bind(this)} style={styles.itemContainer}>
-                            <Icon name='cog' size={15} color='#DF5539' />
-                            <Text style={styles.itemText}>Thiết lập tài khoản</Text>
-                            <Icon name='chevron-right' size={14} color='#333333' />
-                            <View style={styles.separator} />
-                        </TouchableOpacity>
+                        {user &&
+                            <TouchableOpacity onPress={this.openSetting.bind(this)} style={styles.itemContainer}>
+                                <Icon name='cog' size={15} color='#DF5539' />
+                                <Text style={styles.itemText}>Thiết lập tài khoản</Text>
+                                <Icon name='chevron-right' size={14} color='#333333' />
+                                <View style={styles.separator} />
+                            </TouchableOpacity>
+                        }
 
                         <TouchableOpacity onPress={this.openSupport.bind(this)} style={styles.itemContainer}>
                             <Icon name='question-circle' size={15} color='#2CAC9B' />
@@ -373,6 +381,15 @@ class HomeView extends React.Component {
                             <Icon name='chevron-right' size={14} color='#333333' />
                             <View style={styles.separator} />
                         </TouchableOpacity>
+
+                        {!user && 
+                            <TouchableOpacity onPress={this.openLogin.bind(this)} style={styles.itemContainer}>
+                                <Icon name='user' size={15} color='#DF5539' />
+                                <Text style={styles.itemText}>Đăng nhập</Text>
+                                <Icon name='chevron-right' size={14} color='#333333' />
+                                <View style={styles.separator} />
+                            </TouchableOpacity>
+                        }
                     </View>
                 </ScrollView>
 

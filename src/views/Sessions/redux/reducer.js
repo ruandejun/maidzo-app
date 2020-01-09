@@ -27,7 +27,7 @@ export default function appReducer(state = initState, action) {
         case actions.SIGN_UP_FAIL:
             return {...state,  isFetching: false, isLogin : false}
         case actions.LOGOUT_SUCCESS:
-        return {...state,  currentUser: null};
+        return {...state,  user: null};
         case actions.UNMOUNT_ERROR:
             return { ...state,  isFetching : false};
         default:

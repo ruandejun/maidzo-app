@@ -19,9 +19,12 @@ export default function appReducer(state = initState, action) {
             })
         case actions.GET_MORE_ORDER_SUCCESS:
             let items = state.items
-            action.data.map((item) => {
-                items.push(item)
-            })
+            if(action.data){
+                action.data.map((item) => {
+                    items.push(item)
+                })
+            }
+            
             return Object.assign({}, state, {
                 items: items,
                 loadingMore: false,
@@ -42,7 +45,7 @@ export default function appReducer(state = initState, action) {
                 items: action.data,
                 count: action.total,
                 isFetching: false,
-                canLoadMore: action.data.length < action.total
+                canLoadMore: (action.data && action.data.length < action.total)
             })
         case actions.GET_DETAIL_SUCCESS:
             return Object.assign({}, state, {

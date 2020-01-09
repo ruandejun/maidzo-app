@@ -112,6 +112,14 @@ class TaobaoWebView extends React.Component {
     }
 
     async addToCart() {
+        if(!this.props.user){
+            CustomAlert('Lỗi', 'Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng', [
+                {text: 'Bỏ'},
+                {text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView')}
+            ])
+            return
+        }
+
         // console.log(this.currentUrl)
         if(!this.currentUrl){
             return
@@ -409,6 +417,7 @@ class TaobaoWebView extends React.Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         cartCount: state.cart.count,
+        user: state.auth.user,
     };
 };
 
