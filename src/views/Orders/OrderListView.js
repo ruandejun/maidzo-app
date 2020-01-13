@@ -180,6 +180,9 @@ class OrderListView extends React.Component {
             return(
                 <View style={{width: '100%', height: 300, alignItems: 'center', justifyContent: 'center'}}>
                     <Text style={{fontSize: 14, color: '#777777', fontFamily: Global.FontName}}>Vui lòng đăng nhập để xem đơn hàng của bạn</Text>
+                    <TouchableOpacity style={{padding: 20, borderRadius: 8, backgroundColor: Global.MainColor, marginTop: 15}} onPress={() => this.props.navigation.navigate('LoginView')}>
+                        <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Đăng nhập</Text>
+                    </TouchableOpacity>
                 </View>
             )
         }

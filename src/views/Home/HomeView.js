@@ -128,6 +128,14 @@ class HomeView extends React.Component {
     }
 
     openWallet() {
+        if(!this.props.user){
+            CustomAlert('Lỗi', 'Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng', [
+                {text: 'Bỏ'},
+                {text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView')}
+            ])
+            return
+        }
+
         this.props.navigation.navigate('WalletBalanceView')
     }
 
@@ -136,6 +144,14 @@ class HomeView extends React.Component {
     }
 
     openReports() {
+        if(!this.props.user){
+            CustomAlert('Lỗi', 'Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng', [
+                {text: 'Bỏ'},
+                {text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView')}
+            ])
+            return
+        }
+
         this.props.navigation.navigate('ReportListView')
     }
 
@@ -158,6 +174,14 @@ class HomeView extends React.Component {
     }
 
     onImageSearch() {
+        if(!this.props.user){
+            CustomAlert('Lỗi', 'Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng', [
+                {text: 'Bỏ'},
+                {text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView')}
+            ])
+            return
+        }
+        
         ActionSheet.show([
             {
                 title: 'Chụp ảnh sản phẩm', onPress: () => {
@@ -258,6 +282,30 @@ class HomeView extends React.Component {
         this.props.navigation.navigate('HomeScanView')
     }
 
+    onTracking(){
+        if(!this.props.user){
+            CustomAlert('Lỗi', 'Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng', [
+                {text: 'Bỏ'},
+                {text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView')}
+            ])
+            return
+        }
+
+        this.props.navigation.navigate('TrackingAllView')
+    }
+
+    onScanTracking(){
+        if(!this.props.user){
+            CustomAlert('Lỗi', 'Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng', [
+                {text: 'Bỏ'},
+                {text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView')}
+            ])
+            return
+        }
+
+        this.props.navigation.navigate('ScanQRView')
+    }
+
     render() {
 
         const {user} = this.props
@@ -298,14 +346,14 @@ class HomeView extends React.Component {
                                     <Text style={{ width: 60, textAlign: 'center', fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>Tìm kiếm bằng ảnh</Text>
                                 </TouchableOpacity>
 
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('ScanQRView')} style={{ padding: 10, marginLeft: 8, alignItems: 'center', justifyContent: 'center' }}>
+                                <TouchableOpacity onPress={this.onScanTracking.bind(this)} style={{ padding: 10, marginLeft: 8, alignItems: 'center', justifyContent: 'center' }}>
                                     <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
                                         <Icon name='qrcode' color='white' size={25} />
                                     </View>
                                     <Text style={{ width: 60, textAlign: 'center', fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>Quét mã vận đơn</Text>
                                 </TouchableOpacity>
 
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('TrackingAllView')} style={{ padding: 10, marginLeft: 8, alignItems: 'center', justifyContent: 'center' }}>
+                                <TouchableOpacity onPress={this.onTracking.bind(this)} style={{ padding: 10, marginLeft: 8, alignItems: 'center', justifyContent: 'center' }}>
                                     <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
                                         <Icon name='box-open' color='white' size={25} />
                                     </View>

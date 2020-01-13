@@ -66,6 +66,7 @@ import CustomAlert from 'components/CustomAlert'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DeviceInfo from 'react-native-device-info'
 import {ModalIndicator} from 'teaset'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 
 class LoginView extends React.Component {
 
@@ -206,6 +207,9 @@ class LoginView extends React.Component {
                             <Image source={Media.LoadingIcon} style={{ width: 30, height: 30 }} resizeMode='contain' />
                         </View>
                     }
+                    <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{position: 'absolute', left: 16, top: 16 + getStatusBarHeight(), width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
+                        <Icon name='chevron-left' color='black' size={18}/>
+                    </TouchableOpacity>
                 </View>
             )
         }
@@ -324,6 +328,9 @@ class LoginView extends React.Component {
                         <Image source={Media.LoadingIcon} style={{ width: 30, height: 30 }} resizeMode='contain' />
                     </View>
                 }
+                <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{position: 'absolute', left: 16, top: 16 + getStatusBarHeight(), width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
+                        <Icon name='chevron-left' color='black' size={18}/>
+                    </TouchableOpacity>
             </View>
         )
     }
