@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "921644491544",
+    "firebase_url": "https://maidzo.firebaseio.com",
+    "project_id": "maidzo",
+    "storage_bucket": "maidzo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921644491544:android:490006cf30fc94054df46d",
+        "android_client_info": {
+          "package_name": "com.maidzo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921644491544-7mufde7poredqdftbpdkdshh4vg8has3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.maidzo",
+            "certificate_hash": "17ecc53363a171e154f4b097a8ffd49fe3323580"
+          }
+        },
+        {
+          "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCruwEpLJfmZkwNAnBPnmpFefn3HptkZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921644491544-nehiqmh53l8ea4trmg2tnqcvjtscqeq6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "vn.maidzo",
+                "app_store_id": "1485188102"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

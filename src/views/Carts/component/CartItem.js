@@ -208,7 +208,7 @@ export default class CartItem extends React.PureComponent {
                     <Text style={styles.priceText}>Thành tiền</Text>
                     <Text style={styles.priceText}>
                         <Text style={{color: '#3578E5'}}>{convertMoney(parseInt(price) * quantity)}</Text>
-                        /
+                        |
                         <Text style={{color: Global.MainColor}}>{convertMoney(parseInt(price_vnd) * quantity) + 'đ'}</Text>
                     </Text>
                 </View>
@@ -217,7 +217,7 @@ export default class CartItem extends React.PureComponent {
                     <Text style={styles.priceText}>Phí ship nội địa</Text>
                     <Text style={styles.priceText}>
                         <Text style={{color: '#3578E5'}}>{convertMoney(shipping)}</Text>
-                        /
+                        |
                         <Text style={{color: Global.MainColor}}>{convertMoney(shipping_vnd) + 'đ'}</Text>
                     </Text>
                 </View>}
@@ -225,7 +225,7 @@ export default class CartItem extends React.PureComponent {
                     <Text style={styles.priceText}>Phí dịch vụ</Text>
                     <Text style={styles.priceText}>
                         <Text style={{color: '#3578E5'}}>{convertMoney(total_service_cost)}</Text>
-                        /
+                        |
                         <Text style={{color: Global.MainColor}}>{convertMoney(total_service_cost_vnd) + 'đ'}</Text>
                     </Text>
                 </View>}
@@ -233,7 +233,7 @@ export default class CartItem extends React.PureComponent {
                     <Text style={styles.priceText}>Tổng</Text>
                     <Text style={styles.priceText}>
                         <Text style={{color: '#3578E5'}}>{convertMoney(total)}</Text>
-                        /
+                        |
                         <Text style={{color: Global.MainColor}}>{convertMoney(total_vnd) + 'đ'}</Text>
                     </Text>
                 </View>

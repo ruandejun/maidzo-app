@@ -49,24 +49,25 @@ import {
 
   export const convertMoney = (money) => {
     if(!money) return money
-    return Math.round(money).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    return (Math.round(money * 100) / 100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
   }
 
   export const contacts = [
-    {title: 'Hotline', number: '+842466721111'},
-    {title: 'Giải đáp thắc mắc', number: '+842466721111'},
-    {title: 'Phản ánh chất lượng dịch vụ', number: '+842466721111'},
+    {title: 'Hotline', number: '1900989977', action: 'tel:1900989977', icon: 'phone'},
+    {title: 'Zalo', number: '+840393382222', action: 'https://zalo.me/1807717681848049893', icon: 'headset'},
+    {title: 'Messenger', number: 'MaiDzo.vn', action: 'http://m.me/MaiDzo.vn', icon: 'facebook-messenger'},
   ]
 
   export default Global = {
-    MainColor: '#1eaa51',
+    MainColor: '#EE4D2D',
     ScreenWidth : Dimensions.get('screen').width,
     ScreenHeight : Dimensions.get('screen').height,
     FontName : 'Arial',
-    apiUrl: 'https://chuyenhang365.com/',
+    apiUrl: 'https://quanly.maidzo.vn/',
     username: '',
     userId: '',
     userToken: '',
+    pushToken: '',
     overlayPopView: null,
   }
   

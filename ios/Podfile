@@ -28,6 +28,8 @@ target 'Chuyenhang365' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  pod 'Firebase/Messaging'
+  
   use_native_modules!
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 

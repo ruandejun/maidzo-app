@@ -26,6 +26,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import {TextInputMask} from 'react-native-masked-text'
 import { addManualItem } from 'Carts/redux/action'
 import ActionSheet from 'teaset/components/ActionSheet/ActionSheet';
+import CustomAlert from '../../components/CustomAlert';
 
 const currencies = ['VND', 'CNY', 'AUD']
 
@@ -44,6 +45,14 @@ class ManualCartView extends React.Component {
     }
 
     onSend() {
+        if(!this.props.user){
+            CustomAlert('Lỗi', 'Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng', [
+                {text: 'Bỏ'},
+                {text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView')}
+            ])
+            return
+        }
+
         const {color, size, detailUrl, parentImage, quantity, title, currency, note, price} = this.state
 
         if(detailUrl.length == 0 || parentImage.length == 0 || quantity <= 0 || title.length == 0 || price == 0){

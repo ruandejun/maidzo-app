@@ -11,8 +11,10 @@ export default function appReducer(state = initState, action) {
     // console.log(action)
     switch (action.type) {
         case actions.UPDATE_PROFILE:
+        case actions.UPDATE_PASSWORD:
             return {...state, updating: true}
         case actions.UPDATE_PROFILE_SUCCESS:
+        case actions.UPDATE_PASSWORD_SUCCESS:
             return {...state, updating: false}
         case actions.LOGIN:
         case actions.SIGN_UP:
@@ -25,7 +27,7 @@ export default function appReducer(state = initState, action) {
         case actions.SIGN_UP_FAIL:
             return {...state,  isFetching: false, isLogin : false}
         case actions.LOGOUT_SUCCESS:
-        return {...state,  currentUser: null};
+        return {...state,  user: null};
         case actions.UNMOUNT_ERROR:
             return { ...state,  isFetching : false};
         default:

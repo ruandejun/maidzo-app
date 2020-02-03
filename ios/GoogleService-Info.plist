@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>921644491544-nehiqmh53l8ea4trmg2tnqcvjtscqeq6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.921644491544-nehiqmh53l8ea4trmg2tnqcvjtscqeq6</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>921644491544-1gog6dr5rfokjhtf72cmst5lga42p98u.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBMsFhaa9S4RR_yCSckZjFAR5NZAaaVxlk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>921644491544</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>vn.maidzo</string>
+	<key>PROJECT_ID</key>
+	<string>maidzo</string>
+	<key>STORAGE_BUCKET</key>
+	<string>maidzo.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:921644491544:ios:a3bffbdc395999c54df46d</string>
+	<key>DATABASE_URL</key>
+	<string>https://maidzo.firebaseio.com</string>
+</dict>
+</plist>

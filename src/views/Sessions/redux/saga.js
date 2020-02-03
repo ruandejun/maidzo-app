@@ -6,14 +6,20 @@ import NavigationService from 'actions/NavigationService'
 import actions from './action'
 import CustomAlert from 'components/CustomAlert'
 
-export function* login({username, password}) {
+export function* login({username, password, device_id, registration_id, platform_type}) {
+  console.log({username, password, device_id, registration_id, platform_type})
   let response = yield call(fetchApiLogin, 'post', 'api-token-auth/', {username, password});
 
-  if (response && response.token) {
+  // console.log(response)
+
+    if (response.token) {
     Global.userToken = response.token
     yield AsyncStorage.setItem('@USER_TOKEN', Global.userToken)
     
-    let uresponse = yield call(fetchApi, 'get', 'api/user/myProfile/show/');
+    let presponse = yield call(fetchApi, 'POST', 'api/user/auth/update_fcm/', {device_id, registration_id, platform_type})
+    // console.log(presponse)
+    
+    let uresponse = yield call(fetchApi, 'get', 'api/user/myProfile/show/')
       if (uresponse) {
 
       yield put({
@@ -36,7 +42,7 @@ export function* login({username, password}) {
 
 export function* register({username, email, facebook, phone, password, verifypassword}) {
   let response = yield call(fetchApiLogin, 'post', 'api/user/auth/signup/', {username, email, facebook, phone, password, verifypassword});
-  console.log(response)
+  // console.log(response)
     if (response.token) {
     Global.userToken = response.token
     yield AsyncStorage.setItem('@USER_TOKEN', Global.userToken)
@@ -101,8 +107,29 @@ export function* updateProfile({pk, name, value}) {
     type: actions.UPDATE_PROFILE_SUCCESS
   });
 
+  if(response.error){
+    CustomAlert(response.error)
+  }
   if(response.message){
     CustomAlert(response.message)
+  }
+}
+
+export function* updatePassword({current_password, new_password}) {
+  let response = yield call(fetchApi, 'PUT', 'api/user/auth/changePassword/', {current_password, new_password});
+  
+  yield put({
+    type: actions.UPDATE_PASSWORD_SUCCESS
+  });
+
+  if(response.message){
+    CustomAlert(response.message)
+  }
+  if(response.success){
+    CustomAlert('Cập nhật mật khẩu thành công')
+  }
+  if(response.error){
+    CustomAlert(response.error)
   }
 }
 
@@ -112,7 +139,11 @@ export function* logout({username, password}) {
   Global.userToken = null
   yield AsyncStorage.removeItem('@USER_TOKEN')
 
-  NavigationService.reset('LoginView')
+  yield put({
+    type: actions.LOGOUT_SUCCESS
+  })
+  // NavigationService.reset('LoginView')
+  NavigationService.reset('DashboardView')
 }
 
 export default function* rootSaga() {
@@ -121,6 +152,7 @@ export default function* rootSaga() {
     yield takeEvery(actions.SIGN_UP, register),
     yield takeEvery(actions.GET_USER, getUser),
     yield takeEvery(actions.UPDATE_PROFILE, updateProfile),
+    yield takeEvery(actions.UPDATE_PASSWORD, updatePassword),
     yield takeEvery(actions.LOGOUT, logout),
   ]
 }
