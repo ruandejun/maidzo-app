@@ -24,7 +24,7 @@ export function* getAppNotifications({page}) {
       data: [],
       canLoadMore: false,
       page: page,
-      unread: response.unread ? response.unread : 0
+      unread: response && response.unread ? response.unread : 0
     });
   }
 }
