@@ -29,6 +29,7 @@ import { addItemToCart } from 'Carts/redux/action'
 import { fetchUnlengthApi } from 'actions/api'
 import CustomAlert from '../../components/CustomAlert';
 import { jsCheckReadyToAddCart, jsGetProductDetailForCart, jsHideTaobaoThing, jsShowOptionsPopup } from './script/taobao'
+import { jsCheckJDReadyToAddCart, jsGetJDProductDetailForCart, jsHideJDThing, jsShowJDOptionsPopup } from './script/jd'
 import { jsHide1688Thing, js1688ShowOptionsPopup, jsCheck1688ReadyToAddCart, jsGet1688ProductDetailForCart } from './script/alibaba'
 import { jsGetChemistDetailForCart } from './script/chemist'
 import ProgressBar from 'react-native-progress/Bar'
@@ -45,7 +46,7 @@ class TaobaoWebView extends React.Component {
             searchKeyword: '',
             url: props.navigation.getParam('url'),
             suggestions: [],
-            searchSource: 0 //0 = 1688, 1 = taobao, 2 = tmall, 3 = chemistwarehouse
+            searchSource: 0 //0 = 1688, 1 = taobao, 2 = tmall, 3 = chemistwarehouse, 4 = JD
         }
     }
 
@@ -58,6 +59,8 @@ class TaobaoWebView extends React.Component {
             this.setState({searchSource: 3})
         } else if(url && url.indexOf('m.1688.com') != -1 || url.indexOf('1688.com') != -1){
             this.setState({searchSource: 0})
+        } if(url && url.indexOf('m.jd.com') != -1 || url.indexOf('jd.com') != -1){
+            this.setState({searchSource: 4})
         } else if(url && url.indexOf('https://m.intl.taobao.com') != -1 || url.indexOf('intl.taobao.com') != -1){
             this.setState({searchSource: 1})
         } else {
@@ -104,10 +107,19 @@ class TaobaoWebView extends React.Component {
         if (newState && !newState.loading) {
             this.webview.injectJavaScript(jsHideTaobaoThing)
             this.webview.injectJavaScript(jsHide1688Thing)
+            this.webview.injectJavaScript(jsHideJDThing)
         }
     }
 
     async addToCart() {
+        if(!this.props.user){
+            CustomAlert('Lỗi', 'Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng', [
+                {text: 'Bỏ'},
+                {text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView')}
+            ])
+            return
+        }
+
         // console.log(this.currentUrl)
         if(!this.currentUrl){
             return
@@ -117,8 +129,8 @@ class TaobaoWebView extends React.Component {
             this.setState({ url: this.currentUrl.replace('https://ju.taobao.com/m/jusp/alone/detailwap/mtp.htm?item_id=', 'https://detail.m.tmall.com/item.htm?id=') })
             return
         }
-        if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') == -1 && this.currentUrl.indexOf('m.1688.com/offer') == -1 &&
-            this.currentUrl.indexOf('https://www.chemistwarehouse.com.au/buy/') == -1 && this.currentUrl.indexOf('https://dis.as.criteo.com/dis/dis.aspx' == -1)
+        if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') == -1 && this.currentUrl.indexOf('m.1688.com/offer') == -1 && this.currentUrl.indexOf('item.m.jd.com') == -1 &&
+            this.currentUrl.indexOf('item.m.paipai.com') == -1 && this.currentUrl.indexOf('https://www.chemistwarehouse.com.au/buy/') == -1 && this.currentUrl.indexOf('https://dis.as.criteo.com/dis/dis.aspx' == -1)
         ) {
             CustomAlert(null, 'Đây không phải trang chi tiết sản phẩm')
             return
@@ -128,6 +140,8 @@ class TaobaoWebView extends React.Component {
             this.webview.injectJavaScript(jsCheckReadyToAddCart)
         } else if (this.currentUrl.indexOf('m.1688.com/offer') != -1) {
             this.webview.injectJavaScript(jsCheck1688ReadyToAddCart)
+        } else if (this.currentUrl.indexOf('item.m.jd.com') != -1 || this.currentUrl.indexOf('item.m.paipai.com') != -1) {
+            this.webview.injectJavaScript(jsCheckJDReadyToAddCart)
         } else if (this.currentUrl.indexOf('https://www.chemistwarehouse.com.au/buy/') != -1 || this.currentUrl.indexOf('https://dis.as.criteo.com/dis/dis.aspx') != -1) {
             this.webview.injectJavaScript(jsGetChemistDetailForCart)
         }
@@ -149,28 +163,40 @@ class TaobaoWebView extends React.Component {
                                 this.webview.injectJavaScript(jsGetProductDetailForCart)
                             } else if (this.currentUrl.indexOf('m.1688.com/offer') != -1) {
                                 this.webview.injectJavaScript(jsGet1688ProductDetailForCart)
+                            } else if (this.currentUrl.indexOf('item.m.jd.com') != -1 || this.currentUrl.indexOf('item.m.paipai.com') != -1) {
+                                this.webview.injectJavaScript(jsGetJDProductDetailForCart)
                             }
                         } else if (response.value == 2) {
                             CustomAlert('Có lỗi', 'Vui lòng chọn thuộc tính sản phẩm')
+                        } else if (response.value == 3) {
+                            CustomAlert('Có lỗi', 'Sản phẩm đã hết hàng hoặc phải đăng nhập để đặt hàng.', [
+                                {text: 'Cancel'},
+                                {text: 'Đăng nhập', onPress: () => this.setState({url: `https://login.m.taobao.com/login_oversea.htm?spm=a2141.8294655.toolbar.3&redirectURL=${this.currentUrl}`})}
+                            ])
                         } else {
                             if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1) {
                                 this.webview.injectJavaScript(jsShowOptionsPopup)
                             } else if (this.currentUrl.indexOf('m.1688.com/offer') != -1) {
                                 this.webview.injectJavaScript(js1688ShowOptionsPopup)
+                            } else if (this.currentUrl.indexOf('item.m.jd.com') != -1 || this.currentUrl.indexOf('item.m.paipai.com') != -1) {
+                                this.webview.injectJavaScript(jsShowJDOptionsPopup)
                             }
                         }
                     }
                     if (response.type == 'getProductDetailForCart') {
-                        const cart = response.value
-                        let options = {}
-                        cart.options.map((item) => {
-                            options[item.propertyTitle] = item.propertyValue
+                        const carts = response.value
+                        carts.map((cart) => {
+                            let options = {}
+                            cart.options.map((item) => {
+                                options[item.propertyTitle] = item.propertyValue
+                            })
+    
+                            // console.log(cart)
+                            this.props.addItemToCart(cart.title, cart.title, cart.shop_name, cart.quantity,
+                                cart.price, JSON.stringify(options), cart.detailUrl, cart.detailUrl, cart.currency,
+                                cart.image, cart.price)
                         })
-
-                        // console.log(cart)
-                        this.props.addItemToCart(cart.title, cart.title, cart.shop_name, cart.quantity,
-                            cart.price, JSON.stringify(options), cart.detailUrl, cart.detailUrl, cart.currency,
-                            cart.image, cart.price)
+                        
                         this.webview.reload()
                     }
                 }
@@ -243,13 +269,15 @@ class TaobaoWebView extends React.Component {
         let currentUrl = this.state.url
 
         if (searchSource == 1) {
-            currentUrl = `https://s.m.taobao.com/h5?event_submit_do_new_search_auction=1&_input_charset=utf-8&topSearch=1&atype=b&searchfrom=1&action=home%3Aredirect_app_action&from=1&sst=1&n=20&buying=buyitnow&q=${suggestion.zh_value}`
+            currentUrl = `https://m.intl.taobao.com/search/search.html?q=${suggestion.zh_value}`
         } else if (searchSource == 0) {
             currentUrl = `https://m.1688.com/offer_search/-6D7033.html?keywords=${suggestion.zh_value}`
         } else if (searchSource == 3) {
             currentUrl = `https://www.chemistwarehouse.com.au/search/go?w=${suggestion.key}`
         } else if (searchSource == 2) {
             currentUrl = `https://list.tmall.com/search_product.htm?q=${suggestion.zh_value}&type=p&tmhkh5=&spm=a220m.8599659.a2227oh.d100&from=mallfp..m_1_searchbutton&searchType=default&closedKey=`
+        } else if (searchSource == 4){
+            currentUrl = `https://so.m.jd.com/ware/search.action?keyword=${suggestion.zh_value}&searchFrom=home&sf=11&as=1`
         }
 
         // console.log(currentUrl)
@@ -293,9 +321,9 @@ class TaobaoWebView extends React.Component {
                     <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName }}>tmall</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => this.setState({searchSource: 3})} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 3 ? Global.MainColor : 'white' }}>
-                    <Image source={Media.ChemistIcon} style={{ width: 20, height: 20 }} resizeMode='contain' />
-                    <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName }}>chemistwarehouse</Text>
+                <TouchableOpacity onPress={() => this.setState({searchSource: 4})} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 3 ? Global.MainColor : 'white' }}>
+                    <Image source={Media.JDIcon} style={{ width: 20, height: 20 }} resizeMode='contain' />
+                    <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName }}>jd</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -389,6 +417,7 @@ class TaobaoWebView extends React.Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         cartCount: state.cart.count,
+        user: state.auth.user,
     };
 };
 

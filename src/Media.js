@@ -13,6 +13,7 @@ export default Media = {
     TmallIcon: require('../resources/images/tmall_icon.png'),
     AlibabaIcon: require('../resources/images/1688_icon.png'),
     ChemistIcon: require('../resources/images/chemist_icon.png'),
+    JDIcon: require('../resources/images/jd_icon.png'),
 
     LoadingIcon: require('../resources/images/loading_icon.gif'),
 

@@ -61,6 +61,10 @@ class SettingView extends React.Component {
         this.props.navigation.navigate('UpdateProfileView')
     }
 
+    onUpdatePassword(){
+        this.props.navigation.navigate('UpdatePasswordView')
+    }
+
     render() {
 
         const {user} = this.props
@@ -76,6 +80,12 @@ class SettingView extends React.Component {
                 <View style={{flex: 1, width: '100%', backgroundColor: 'white', marginTop : 10, marginBottom: 10, padding: 16, paddingTop: 0, paddingBottom: 0}}>
                     <TouchableOpacity onPress={this.onProfile.bind(this)} style={styles.itemContainer}>
                         <Text style={styles.itemText}>Hồ sơ của tôi</Text>
+                        <Icon name='chevron-right' size={14} color='#333333'/>
+                        <View style={styles.separator}/>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={this.onUpdatePassword.bind(this)} style={styles.itemContainer}>
+                        <Text style={styles.itemText}>Cập nhật mật khẩu</Text>
                         <Icon name='chevron-right' size={14} color='#333333'/>
                         <View style={styles.separator}/>
                     </TouchableOpacity>

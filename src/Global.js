@@ -49,24 +49,24 @@ import {
 
   export const convertMoney = (money) => {
     if(!money) return money
-    return Math.round(money).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    return (Math.round(money * 100) / 100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
   }
 
   export const contacts = [
-    {title: 'Hotline', number: '+842422137555'},
-    {title: 'Giải đáp thắc mắc', number: '+842422642666'},
-    {title: 'Phản ánh chất lượng dịch vụ', number: '+842422642666'},
+    {title: 'Hotline', number: '02422642666', action: 'tel:842422642666', icon: 'phone'},
+    {title: 'Messenger', number: 'Alo68.vn', action: 'http://m.me/Alo68.vn', icon: 'facebook-messenger'},
   ]
 
   export default Global = {
-    MainColor: '#f06123',
+    MainColor: '#EE4D2D',
     ScreenWidth : Dimensions.get('screen').width,
     ScreenHeight : Dimensions.get('screen').height,
     FontName : 'Arial',
-    apiUrl: 'https://alo68.vn/',
+    apiUrl: 'https://quanly.alo68.vn/',
     username: '',
     userId: '',
     userToken: '',
+    pushToken: '',
     overlayPopView: null,
   }
   

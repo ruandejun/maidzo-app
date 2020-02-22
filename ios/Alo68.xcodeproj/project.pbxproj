@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0700451BA8664DEB9B48930A /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A04D9AF120ED4AB6BD5E4BFE /* Foundation.ttf */; };
 		0DC87DA5753E4F388165820E /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12A358DE4BDB4A9CB49A13DB /* FontAwesome5_Solid.ttf */; };
+		185A5ED12401D8F8006BD100 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 185A5ED02401D8F8006BD100 /* GoogleService-Info.plist */; };
 		185E421B235627EE00571081 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185E4215235627EE00571081 /* LaunchScreen.xib */; };
 		185E421C235627EE00571081 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 185E4217235627EE00571081 /* main.m */; };
 		185E421D235627EE00571081 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 185E4218235627EE00571081 /* Images.xcassets */; };
@@ -40,6 +41,8 @@
 		035AC1F2640245569D065382 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		12A358DE4BDB4A9CB49A13DB /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Alo68.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alo68.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		185A5ECF2401D89D006BD100 /* Alo68.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Alo68.entitlements; sourceTree = "<group>"; };
+		185A5ED02401D8F8006BD100 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		185E4214235627EE00571081 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		185E4216235627EE00571081 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		185E4217235627EE00571081 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -140,6 +143,8 @@
 		185E4213235627EE00571081 /* Alo68 */ = {
 			isa = PBXGroup;
 			children = (
+				185A5ED02401D8F8006BD100 /* GoogleService-Info.plist */,
+				185A5ECF2401D89D006BD100 /* Alo68.entitlements */,
 				185E4214235627EE00571081 /* AppDelegate.h */,
 				185E4215235627EE00571081 /* LaunchScreen.xib */,
 				185E4217235627EE00571081 /* main.m */,
@@ -272,6 +277,7 @@
 				E03779ADB6EB44A497369E64 /* Fontisto.ttf in Resources */,
 				0700451BA8664DEB9B48930A /* Foundation.ttf in Resources */,
 				185E421D235627EE00571081 /* Images.xcassets in Resources */,
+				185A5ED12401D8F8006BD100 /* GoogleService-Info.plist in Resources */,
 				64AEF921E99F4DDF84950835 /* Ionicons.ttf in Resources */,
 				8BF29CFA68CC4BD2B62AB4B2 /* MaterialCommunityIcons.ttf in Resources */,
 				8CD9274742A64EC99870C9E8 /* MaterialIcons.ttf in Resources */,
@@ -422,13 +428,14 @@
 			baseConfigurationReference = 3CE821B3D778F5E1C9808962 /* Pods-Alo68.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Alo68/Alo68.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = X4LKZH6N8Y;
 				INFOPLIST_FILE = "$(SRCROOT)/Alo68/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -446,12 +453,13 @@
 			baseConfigurationReference = 8FE322E7F980AF32084179A4 /* Pods-Alo68.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Alo68/Alo68.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = X4LKZH6N8Y;
 				INFOPLIST_FILE = "$(SRCROOT)/Alo68/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

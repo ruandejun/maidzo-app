@@ -12,6 +12,8 @@ const actions = {
   LOGOUT: 'LOGOUT',
   LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
   SIGN_UP_SUCCESS: 'SIGN_UP_SUCCESS',
+  UPDATE_PASSWORD: 'UPDATE_PASSWORD',
+  UPDATE_PASSWORD_SUCCESS: 'UPDATE_PASSWORD_SUCCESS',
 }
 
 export const unmountError = () => {
@@ -20,10 +22,10 @@ export const unmountError = () => {
   }
 }
 
-export const login = (username, password) => {
+export const login = (username, password, device_id, registration_id, platform_type) => {
   return {
     type: actions.LOGIN,
-    username, password
+    username, password, device_id, registration_id, platform_type
   }
 }
 
@@ -44,6 +46,13 @@ export const updateProfile = (pk, value, name) => {
   return {
     type: actions.UPDATE_PROFILE,
     pk, value, name
+  }
+}
+
+export const updatePassword = (current_password, new_password) => {
+  return {
+    type: actions.UPDATE_PASSWORD,
+    current_password, new_password
   }
 }
 

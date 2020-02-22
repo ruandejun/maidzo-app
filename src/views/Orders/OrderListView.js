@@ -61,11 +61,15 @@ class OrderListView extends React.Component {
 
     componentDidMount(){
         this.props.getOrder('asc', 0, 1)
-        this.onRefresh()
+        this.onRefresh()        
     }
 
     onRefresh(){
         const {filter} = this.state
+
+        if(!this.props.user){
+            return
+        }
 
         this.setState({isFetching: true, loadingMore: false, canLoadMore: true}, () => {
             let body = {order: 'asc', offset: 0, limit: LIMIT}
@@ -76,8 +80,11 @@ class OrderListView extends React.Component {
             fetchApi('get', `page/${filter ? filter.path : 'get_data_orders/data.json'}`, body)
             .then((data) => {
                 // console.log(data)
-
-                this.setState({isFetching: false, orderItems: data.rows, canLoadMore: data.rows.length < data.total})
+                if(data && data.rows){
+                    this.setState({isFetching: false, orderItems: data.rows, canLoadMore: data.rows.length < data.total})
+                } else {
+                    this.setState({isFetching: false, orderItems: [], canLoadMore: false})
+                }
             })
             .catch((error) => {
                 console.log(error)
@@ -89,7 +96,7 @@ class OrderListView extends React.Component {
     onEndReached(){
         const {filter} = this.state
 
-        if(this.state.isFetching || !this.state.canLoadMore || this.state.loadingMore){
+        if(this.state.isFetching || !this.state.canLoadMore || this.state.loadingMore || !this.props.user){
             return
         }
 
@@ -102,7 +109,7 @@ class OrderListView extends React.Component {
             fetchApi('get', `page/${filter ? filter.path : 'get_data_orders/data.json'}`, body)
             .then((data) => {
                 // console.log(data)
-                if(data){
+                if(data && data.rows){
                     let orderItems = this.state.orderItems
                     data.rows.map((item) => {
                         orderItems.push(item)
@@ -162,6 +169,25 @@ class OrderListView extends React.Component {
         this.onRefresh()
     }
 
+    renderEmpty(){
+        if(this.props.user){
+            return(
+                <View style={{width: '100%', height: 300, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{fontSize: 14, color: '#777777', fontFamily: Global.FontName}}>Bạn chưa có đơn hàng nào</Text>
+                </View>
+            )
+        } else{
+            return(
+                <View style={{width: '100%', height: 300, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{fontSize: 14, color: '#777777', fontFamily: Global.FontName}}>Vui lòng đăng nhập để xem đơn hàng của bạn</Text>
+                    <TouchableOpacity style={{padding: 20, borderRadius: 8, backgroundColor: Global.MainColor, marginTop: 15}} onPress={() => this.props.navigation.navigate('LoginView')}>
+                        <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Đăng nhập</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+    }
+
     render() {
 
         const {isFetching, orderItems, filter, keyword} = this.state
@@ -203,6 +229,7 @@ class OrderListView extends React.Component {
                     showsVerticalScrollIndicator={false}
                     onEndReached={this.onEndReached.bind(this)}
                     ListFooterComponent={this.renderFooter.bind(this)}
+                    ListEmptyComponent={this.renderEmpty.bind(this)}
                 />
             </View>
         )
@@ -211,7 +238,8 @@ class OrderListView extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        isFetching: state.order.isFetching
+        isFetching: state.order.isFetching,
+        user: state.auth.user,
     };
 };
 

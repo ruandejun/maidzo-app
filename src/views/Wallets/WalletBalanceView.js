@@ -33,6 +33,7 @@ import Global, { Media, convertMoney, decode, getBottomSpace } from 'src/Global'
 import Header from 'components/Header'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import {getWalletBalance} from './redux/action'
+import {Toast} from 'teaset'
 
 class WalletBalanceView extends React.Component {
 
@@ -98,7 +99,7 @@ class WalletBalanceView extends React.Component {
                                     <Text style={{fontSize: 18, color: '#777777', fontFamily: Global.FontName, width: '100%'}}>Hướng dẫn nạp tiền vào tài khoản</Text>
 
                                     <Text style={{fontSize: 15, marginTop: 20, color: '#333333', fontFamily: Global.FontName, width: '100%'}}>Nội dung chuyển khoản</Text>
-                                    <TouchableOpacity onPress={() => Clipboard.setString(`NAP ${user.username} ${user.phone_number}`)} style={{flexDirection: 'row', padding: 8, backgroundColor: '#333333', marginTop : 10, width: '100%', alignItems: 'center'}}>
+                                    <TouchableOpacity onPress={() => {Clipboard.setString(`NAP ${user.username} ${user.phone_number}`); Toast.message('Đã copy')}} style={{flexDirection: 'row', padding: 8, backgroundColor: '#333333', marginTop : 10, width: '100%', alignItems: 'center'}}>
                                         <Text style={{textAlign: 'center', marginLeft : 30, flex: 1, fontSize: 14, color: 'white', fontFamily: Global.FontName}}>{`NAP ${user.username} ${user.phone_number}`}</Text>
                                         <Icon name='copy' style={{width: 30}} size={20} color='#CECECE'/>
                                     </TouchableOpacity>
@@ -112,7 +113,7 @@ class WalletBalanceView extends React.Component {
                                             <Image source={Media.VietcombankIcon} style={{width: 100, height: 30, marginTop : 10}} resizeMode='contain'/>
                                             <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, marginTop : 8, width: '100%'}}>{'Ngân hàng Vietcombank'}</Text>
                                             <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, marginTop : 5, width: '100%'}}>{`Chủ tài khoản: ${payment_information.vietcombank_name}`}</Text>
-                                            <TouchableOpacity onPress={() => Clipboard.setString(`${payment_information.vietcombank}`)} style={{flexDirection: 'row', marginTop : 5, width: '100%', alignItems: 'center'}}>
+                                            <TouchableOpacity onPress={() => {Clipboard.setString(`${payment_information.vietcombank}`); Toast.message('Đã copy')}} style={{flexDirection: 'row', marginTop : 5, width: '100%', alignItems: 'center'}}>
                                                 <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, flex: 1}}>{`Số tài khoản: ${payment_information.vietcombank}`}</Text>
                                                 <Icon name='copy' style={{width: 30}} size={20} color='#CECECE'/>
                                             </TouchableOpacity>
@@ -125,7 +126,7 @@ class WalletBalanceView extends React.Component {
                                             <Image source={Media.TechcombankIcon} style={{width: 100, height: 30, marginTop : 10}} resizeMode='contain'/>
                                             <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, marginTop : 8, width: '100%'}}>{'Ngân hàng Techcombank'}</Text>
                                             <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, marginTop : 5, width: '100%'}}>{`Chủ tài khoản: ${payment_information.techcombank_name}`}</Text>
-                                            <TouchableOpacity onPress={() => Clipboard.setString(`${payment_information.techcombank}`)} style={{flexDirection: 'row', marginTop : 5, width: '100%', alignItems: 'center'}}>
+                                            <TouchableOpacity onPress={() => {Clipboard.setString(`${payment_information.techcombank}`); Toast.message('Đã copy')}} style={{flexDirection: 'row', marginTop : 5, width: '100%', alignItems: 'center'}}>
                                                 <Text style={{fontSize: 14, color: '#333333', fontFamily: Global.FontName, flex: 1}}>{`Số tài khoản: ${payment_information.techcombank}`}</Text>
                                                 <Icon name='copy' style={{width: 30}} size={20} color='#CECECE'/>
                                             </TouchableOpacity>

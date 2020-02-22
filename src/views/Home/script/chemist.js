@@ -24,7 +24,7 @@ function getProductDetailForCart() {
                 product.image = document.getElementsByClassName('product-thumbnail')[0].getAttribute('src');
                 product.parentImage = document.getElementsByClassName('product-thumbnail')[0].getAttribute('src');
                 
-                window.ReactNativeWebView.postMessage(JSON.stringify({type: 'getProductDetailForCart', value: product}))
+                window.ReactNativeWebView.postMessage(JSON.stringify({type: 'getProductDetailForCart', value: [product]}))
         }
     }
 
