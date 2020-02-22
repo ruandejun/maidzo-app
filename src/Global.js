@@ -49,24 +49,24 @@ import {
 
   export const convertMoney = (money) => {
     if(!money) return money
-    return Math.round(money).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    return (Math.round(money * 100) / 100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
   }
 
   export const contacts = [
-    {title: 'Hotline', number: '+842439999247'},
-    {title: 'Giải đáp thắc mắc', number: '+842439999247'},
-    {title: 'Phản ánh chất lượng dịch vụ', number: '+842439999247'},
+    {title: 'Hotline', number: '02439999247', action: 'tel:842439999247', icon: 'phone'},
+    {title: 'Messenger', number: 'shipway247', action: 'http://m.me/shipway247', icon: 'facebook-messenger'},
   ]
 
   export default Global = {
-    MainColor: '#EC4A48',
+    MainColor: '#EE4D2D',
     ScreenWidth : Dimensions.get('screen').width,
     ScreenHeight : Dimensions.get('screen').height,
     FontName : 'Arial',
-    apiUrl: 'https://shipway247.com/',
+    apiUrl: 'https://quanly.shipway247.com/',
     username: '',
     userId: '',
     userToken: '',
+    pushToken: '',
     overlayPopView: null,
   }
   

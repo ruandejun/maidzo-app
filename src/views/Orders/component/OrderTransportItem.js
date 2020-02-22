@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 })
 
 import Global, { imageUrl, convertMoney } from 'src/Global'
-import { ActionSheet } from 'teaset'
+import { Toast } from 'teaset'
 import moment from 'moment'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
@@ -60,7 +60,7 @@ class OrderTransportItem extends React.Component {
                 </View>
                 <View style={styles.contentContainer}>
                     <View style={{flex: 1}}>
-                        <TouchableOpacity onPress={() => Clipboard.setString(`${tracking_number}`)} style={{flexDirection: 'row', marginTop: 5, width: '100%'}}>
+                        <TouchableOpacity onPress={() => {Clipboard.setString(`${tracking_number}`); Toast.message('Đã copy')}} style={{flexDirection: 'row', marginTop: 5, width: '100%'}}>
                             <Text style={{fontSize: 13, color: '#333333', flex: 1, fontFamily: Global.FontName}}>{`Mã vận chuyển: `}
                                 <Text style={{ color: 'black', fontSize: 14 }}>{tracking_number}</Text>
                             </Text>

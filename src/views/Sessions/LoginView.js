@@ -11,7 +11,7 @@ import {
     TextInput,
     TouchableOpacity,
     Keyboard,
-    TouchableWithoutFeedback,
+    Platform,
     Alert
 } from 'react-native'
 
@@ -64,6 +64,9 @@ import { unmountError, login, register } from './redux/action'
 import { fetchApiLogin } from 'actions/api'
 import CustomAlert from 'components/CustomAlert'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import DeviceInfo from 'react-native-device-info'
+import {ModalIndicator} from 'teaset'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 
 class LoginView extends React.Component {
 
@@ -108,7 +111,7 @@ class LoginView extends React.Component {
             return
         }
 
-        this.props.login(username, password)
+        this.props.login(username, password, DeviceInfo.getUniqueId(), Global.pushToken, Platform.OS)
     }
 
     onRegister() {
@@ -132,9 +135,12 @@ class LoginView extends React.Component {
     onStart() {
         const { searchKeyword } = this.state
 
+        ModalIndicator.show()
+
         fetchApiLogin('get', `page/get_username/`, { key: searchKeyword })
             .then((data) => {
                 // console.log(data)
+                ModalIndicator.hide()
                 if (data && data.length > 0) {
                     this.setState({ isStart: false, isRegister: false, username: data[0] })
                 } else {
@@ -149,6 +155,7 @@ class LoginView extends React.Component {
                 }
             })
             .catch((error) => {
+                ModalIndicator.hide()
                 console.log(error)
                 CustomAlert('Chưa tồn tại', 'Tài khoản của bạn chưa tồn tại', [
                     { text: 'Quay lại', },
@@ -200,6 +207,9 @@ class LoginView extends React.Component {
                             <Image source={Media.LoadingIcon} style={{ width: 30, height: 30 }} resizeMode='contain' />
                         </View>
                     }
+                    <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{position: 'absolute', left: 16, top: 16 + getStatusBarHeight(), width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
+                        <Icon name='chevron-left' color='black' size={18}/>
+                    </TouchableOpacity>
                 </View>
             )
         }
@@ -318,6 +328,9 @@ class LoginView extends React.Component {
                         <Image source={Media.LoadingIcon} style={{ width: 30, height: 30 }} resizeMode='contain' />
                     </View>
                 }
+                <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{position: 'absolute', left: 16, top: 16 + getStatusBarHeight(), width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
+                        <Icon name='chevron-left' color='black' size={18}/>
+                    </TouchableOpacity>
             </View>
         )
     }
@@ -332,7 +345,7 @@ const mapPropsToState = (state, ownProps) => {
 
 const mapDispatchToState = dispatch => {
     return {
-        login: (username, password) => dispatch(login(username, password)),
+        login: (username, password, device_id, registration_id, type) => dispatch(login(username, password, device_id, registration_id, type)),
         register: (username, email, facebook, phone, password, verifypassword) => dispatch(register(username, email, facebook, phone, password, verifypassword)),
         unmountError: () => dispatch(unmountError())
     }

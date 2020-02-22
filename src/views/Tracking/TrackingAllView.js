@@ -146,6 +146,23 @@ class TrackingAllView extends React.Component {
         this.props.navigation.navigate('AddTransportView', {onDone: () => this.setState({filter: {title: 'Kiện hàng ký gửi', type: 'get_data_transport_trackings_by_username'}}, this.onRefresh.bind(this))})
     }
 
+    renderEmpty(){
+        if(this.props.user){
+            return(
+                <Text style={{width: '100%', fontSize: 13, textAlign: 'center', padding: 16, fontFamily: Global.FontName, color: '#aaaaaa'}}>Chưa có thông tin vận chuyển</Text>
+            )
+        } else {
+            return(
+                <View style={{width: '100%', height: 300, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{fontSize: 14, color: '#777777', fontFamily: Global.FontName}}>Vui lòng đăng nhập để xem kiện hàng của bạn</Text>
+                    <TouchableOpacity style={{padding: 20, borderRadius: 8, backgroundColor: Global.MainColor, marginTop: 15}} onPress={() => this.props.navigation.navigate('LoginView')}>
+                        <Text style={{fontSize: 14, color: 'white', fontFamily: Global.FontName}}>Đăng nhập</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
+    }
+
     render() {
 
         const {isFetching, items, filter} = this.state
@@ -175,7 +192,7 @@ class TrackingAllView extends React.Component {
                     showsVerticalScrollIndicator={false}
                     onEndReached={this.onEndReached.bind(this)}
                     ListFooterComponent={this.renderFooter.bind(this)}
-                    ListEmptyComponent={() => <Text style={{width: '100%', fontSize: 13, textAlign: 'center', padding: 16, fontFamily: Global.FontName, color: '#aaaaaa'}}>Chưa có thông tin vận chuyển</Text>}
+                    ListEmptyComponent={this.renderEmpty.bind(this)}
                 />
             </View>
         )

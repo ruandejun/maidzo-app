@@ -9,11 +9,20 @@
 /* Begin PBXBuildFile section */
 		0700451BA8664DEB9B48930A /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A04D9AF120ED4AB6BD5E4BFE /* Foundation.ttf */; };
 		0DC87DA5753E4F388165820E /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12A358DE4BDB4A9CB49A13DB /* FontAwesome5_Solid.ttf */; };
+<<<<<<< HEAD:ios/Shipway247.xcodeproj/project.pbxproj
 		184E02012358B4A4002A15F7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184E01FB2358B4A4002A15F7 /* LaunchScreen.xib */; };
 		184E02022358B4A4002A15F7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E01FD2358B4A4002A15F7 /* main.m */; };
 		184E02032358B4A4002A15F7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 184E01FE2358B4A4002A15F7 /* Images.xcassets */; };
 		184E02042358B4A4002A15F7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E01FF2358B4A4002A15F7 /* AppDelegate.m */; };
 		184E02052358B4A4002A15F7 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 184E02002358B4A4002A15F7 /* Info.plist */; };
+=======
+		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
+		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1859B67023749A9500615F24 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1859B66F23749A9500615F24 /* GoogleService-Info.plist */; };
+		365E02CE2FA831E2DBBBC028 /* libPods-Maidzo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB852A44325386E93E3D8973 /* libPods-Maidzo.a */; };
+>>>>>>> development:ios/Maidzo.xcodeproj/project.pbxproj
 		41C3086F783347B4A19D216E /* Arial-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 365FEDECC9D04F8AB04F4509 /* Arial-Italic.ttf */; };
 		456E2B919756487ABE1E2ED2 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C836776DCA114D71A8C25E78 /* EvilIcons.ttf */; };
 		47448DD00B084DF8A9C0FDF3 /* Arial-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28EAD348A4FC4F0CBA61EFDE /* Arial-BoldItalic.ttf */; };
@@ -39,6 +48,7 @@
 		00C7F96139CA47A7980F44C1 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		035AC1F2640245569D065382 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		12A358DE4BDB4A9CB49A13DB /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
+<<<<<<< HEAD:ios/Shipway247.xcodeproj/project.pbxproj
 		13B07F961A680F5B00A75B9A /* Shipway247.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shipway247.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		150484F5856935EE6FA1FA55 /* libPods-Shipway247.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Shipway247.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		184E01FA2358B4A4002A15F7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -47,6 +57,17 @@
 		184E01FE2358B4A4002A15F7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		184E01FF2358B4A4002A15F7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		184E02002358B4A4002A15F7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+=======
+		13B07F961A680F5B00A75B9A /* Maidzo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maidzo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Maidzo/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Maidzo/AppDelegate.m; sourceTree = "<group>"; };
+		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Maidzo/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Maidzo/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Maidzo/main.m; sourceTree = "<group>"; };
+		1859B66F23749A9500615F24 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1859B67123749F6200615F24 /* Maidzo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Maidzo.entitlements; path = Maidzo/Maidzo.entitlements; sourceTree = "<group>"; };
+>>>>>>> development:ios/Maidzo.xcodeproj/project.pbxproj
 		1D996B1F2D4FE40D05AA5136 /* libPods-Maidzo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Maidzo-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		203764E8B03A9BB28E7760B0 /* Pods-Maidzo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maidzo.release.xcconfig"; path = "Target Support Files/Pods-Maidzo/Pods-Maidzo.release.xcconfig"; sourceTree = "<group>"; };
 		28EAD348A4FC4F0CBA61EFDE /* Arial-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Arial-BoldItalic.ttf"; path = "../resources/fonts/Arial-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -140,6 +161,7 @@
 		184E01F92358B4A4002A15F7 /* Shipway247 */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD:ios/Shipway247.xcodeproj/project.pbxproj
 				184E01FA2358B4A4002A15F7 /* AppDelegate.h */,
 				184E01FB2358B4A4002A15F7 /* LaunchScreen.xib */,
 				184E01FD2358B4A4002A15F7 /* main.m */,
@@ -148,6 +170,19 @@
 				184E02002358B4A4002A15F7 /* Info.plist */,
 			);
 			path = Shipway247;
+=======
+				1859B67123749F6200615F24 /* Maidzo.entitlements */,
+				1859B66F23749A9500615F24 /* GoogleService-Info.plist */,
+				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
+				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				13B07FB61A68108700A75B9A /* Info.plist */,
+				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
+				13B07FB71A68108700A75B9A /* main.m */,
+			);
+			name = Maidzo;
+>>>>>>> development:ios/Maidzo.xcodeproj/project.pbxproj
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -275,6 +310,7 @@
 				64AEF921E99F4DDF84950835 /* Ionicons.ttf in Resources */,
 				8BF29CFA68CC4BD2B62AB4B2 /* MaterialCommunityIcons.ttf in Resources */,
 				8CD9274742A64EC99870C9E8 /* MaterialIcons.ttf in Resources */,
+				1859B67023749A9500615F24 /* GoogleService-Info.plist in Resources */,
 				612370DE58664FCD956FCAE5 /* Octicons.ttf in Resources */,
 				79562545D623451B9A7A9804 /* SimpleLineIcons.ttf in Resources */,
 				85B78B9B35C341119478AE62 /* Zocial.ttf in Resources */,
@@ -296,7 +332,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		3BA842377AF34E5A27C68C6D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -422,20 +458,34 @@
 			baseConfigurationReference = A452C607E8652F1E7B5287D3 /* Pods-Shipway247.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+<<<<<<< HEAD:ios/Shipway247.xcodeproj/project.pbxproj
 				CURRENT_PROJECT_VERSION = 1;
+=======
+				CODE_SIGN_ENTITLEMENTS = Maidzo/Maidzo.entitlements;
+				CURRENT_PROJECT_VERSION = 6;
+>>>>>>> development:ios/Maidzo.xcodeproj/project.pbxproj
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = X4LKZH6N8Y;
 				INFOPLIST_FILE = "$(SRCROOT)/Shipway247/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+<<<<<<< HEAD:ios/Shipway247.xcodeproj/project.pbxproj
 				MARKETING_VERSION = 1.0.0;
+=======
+				MARKETING_VERSION = 1.0.1;
+>>>>>>> development:ios/Maidzo.xcodeproj/project.pbxproj
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
+<<<<<<< HEAD:ios/Shipway247.xcodeproj/project.pbxproj
 				PRODUCT_BUNDLE_IDENTIFIER = com.shipway247;
 				PRODUCT_NAME = Shipway247;
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = vn.maidzo;
+				PRODUCT_NAME = Maidzo;
+>>>>>>> development:ios/Maidzo.xcodeproj/project.pbxproj
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -446,19 +496,33 @@
 			baseConfigurationReference = 71FE493070E18D2B6FCC8A27 /* Pods-Shipway247.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+<<<<<<< HEAD:ios/Shipway247.xcodeproj/project.pbxproj
 				CURRENT_PROJECT_VERSION = 1;
+=======
+				CODE_SIGN_ENTITLEMENTS = Maidzo/Maidzo.entitlements;
+				CURRENT_PROJECT_VERSION = 6;
+>>>>>>> development:ios/Maidzo.xcodeproj/project.pbxproj
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = X4LKZH6N8Y;
 				INFOPLIST_FILE = "$(SRCROOT)/Shipway247/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+<<<<<<< HEAD:ios/Shipway247.xcodeproj/project.pbxproj
 				MARKETING_VERSION = 1.0.0;
+=======
+				MARKETING_VERSION = 1.0.1;
+>>>>>>> development:ios/Maidzo.xcodeproj/project.pbxproj
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
+<<<<<<< HEAD:ios/Shipway247.xcodeproj/project.pbxproj
 				PRODUCT_BUNDLE_IDENTIFIER = com.shipway247;
 				PRODUCT_NAME = Shipway247;
+=======
+				PRODUCT_BUNDLE_IDENTIFIER = vn.maidzo;
+				PRODUCT_NAME = Maidzo;
+>>>>>>> development:ios/Maidzo.xcodeproj/project.pbxproj
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
