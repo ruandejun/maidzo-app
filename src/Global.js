@@ -53,17 +53,17 @@ import {
   }
 
   export const contacts = [
-    {title: 'Hotline', number: '1900989977'},
-    {title: 'Giải đáp thắc mắc', number: '+842466833354'},
-    {title: 'Phản ánh chất lượng dịch vụ', number: '+842466833354'},
+    {title: 'Hotline', number: '+842439999247'},
+    {title: 'Giải đáp thắc mắc', number: '+842439999247'},
+    {title: 'Phản ánh chất lượng dịch vụ', number: '+842439999247'},
   ]
 
   export default Global = {
-    MainColor: '#EE4D2D',
+    MainColor: '#EC4A48',
     ScreenWidth : Dimensions.get('screen').width,
     ScreenHeight : Dimensions.get('screen').height,
     FontName : 'Arial',
-    apiUrl: 'https://maidzo.vn/',
+    apiUrl: 'https://shipway247.com/',
     username: '',
     userId: '',
     userToken: '',

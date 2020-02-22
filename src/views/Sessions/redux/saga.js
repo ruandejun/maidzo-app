@@ -9,7 +9,7 @@ import CustomAlert from 'components/CustomAlert'
 export function* login({username, password}) {
   let response = yield call(fetchApiLogin, 'post', 'api-token-auth/', {username, password});
 
-    if (response.token) {
+    if (response && response.token) {
     Global.userToken = response.token
     yield AsyncStorage.setItem('@USER_TOKEN', Global.userToken)
     
@@ -36,8 +36,8 @@ export function* login({username, password}) {
 
 export function* register({username, email, facebook, phone, password, verifypassword}) {
   let response = yield call(fetchApiLogin, 'post', 'api/user/auth/signup/', {username, email, facebook, phone, password, verifypassword});
-  console.log(response)
-    if (response.token) {
+  // console.log(response)
+    if (response && response.token) {
     Global.userToken = response.token
     yield AsyncStorage.setItem('@USER_TOKEN', Global.userToken)
     
