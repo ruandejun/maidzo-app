@@ -7,8 +7,15 @@ import actions from './action'
 
 export function* getCart() {
   let response = yield call(fetchApi, 'get', 'page/cart/show/');
-  if (response && response.results) {
+  
+  if(response && (response.detail == 'Invalid token.' || response.detail == 'Invalid token header. No credentials provided.')){
+    yield put({
+      type: 'LOGOUT'
+    });
+    return
+  }
 
+  if (response && response.results) {
     yield put({
       type: actions.GET_CART_SUCCESS,
       data: response.results,
@@ -25,8 +32,14 @@ export function* getCart() {
 
 export function* getCartCount() {
   let response = yield call(fetchApi, 'get', 'page/get_profile/');
-  if (response) {
+  if(response && (response.detail == 'Invalid token.' || response.detail == 'Invalid token header. No credentials provided.')){
+    yield put({
+      type: 'LOGOUT'
+    });
+    return
+  }
 
+  if (response) {
     yield put({
       type: actions.GET_CART_COUNT_SUCCESS,
       data: response.cart_count
@@ -70,6 +83,13 @@ export function* deleteSelected({pk, value, name}) {
 export function* updateCartItem({pk, value, name}) {
   let response = yield call(fetchUnlengthApi, 'post', 'page/update_cart_item/', {pk, value, name});
 
+  if(response && (response.detail == 'Invalid token.' || response.detail == 'Invalid token header. No credentials provided.')){
+    yield put({
+      type: 'LOGOUT'
+    });
+    return
+  }
+
   // console.log(response)
   if (response && response.success) {
 
@@ -83,6 +103,13 @@ export function* updateCartItem({pk, value, name}) {
 
 export function* updateCartItemService({item_list, value, name}) {
   let response = yield call(fetchUnlengthApi, 'post', 'page/update_cart_item_list_service/', {item_list, value, name});
+
+  if(response && (response.detail == 'Invalid token.' || response.detail == 'Invalid token header. No credentials provided.')){
+    yield put({
+      type: 'LOGOUT'
+    });
+    return
+  }
 
   // console.log(response)
   if (response && response.success) {
@@ -98,6 +125,13 @@ export function* updateCartItemService({item_list, value, name}) {
 export function* addItemToCart({payload}) {
   // console.log(JSON.stringify(payload))
   let response = yield call(fetchApi, 'post', 'api/shop_module/cart/', payload);
+
+  if(response && (response.detail == 'Invalid token.' || response.detail == 'Invalid token header. No credentials provided.')){
+    yield put({
+      type: 'LOGOUT'
+    });
+    return
+  }
 
   // console.log(response)
   if (response && response.id) {
@@ -119,6 +153,13 @@ export function* addItemToCart({payload}) {
 export function* addManualItem({payload}) {
   // console.log(JSON.stringify(payload))
   let response = yield call(fetchUnlengthApi, 'post', 'page/add_item_to_cart/', payload);
+
+  if(response && (response.detail == 'Invalid token.' || response.detail == 'Invalid token header. No credentials provided.')){
+    yield put({
+      type: 'LOGOUT'
+    });
+    return
+  }
 
   // console.log(response)
   if (response && response.success) {

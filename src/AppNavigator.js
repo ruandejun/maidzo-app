@@ -235,9 +235,6 @@ export class AppWithNavigationState extends React.Component {
             });
           } 
         })
-
-        const notifications = firebase.notifications()
-        notifications.setBadge(0)
     }
 
     getPushToken(){
@@ -265,7 +262,7 @@ export class AppWithNavigationState extends React.Component {
 
     componentWillUnmount() {
         const notifications = firebase.notifications()
-        notifications.setBadge(0)
+        notifications.setBadge(this.props.unread)
     }
 
     render() {
@@ -278,6 +275,7 @@ export class AppWithNavigationState extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    unread: state.notification.unread
 });
 
 export default connect(mapStateToProps)(AppWithNavigationState)
