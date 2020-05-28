@@ -11,34 +11,42 @@ import {
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
-        backgroundColor: 'white', padding: 16, marginBottom: 20, marginTop: 10
+        width: Global.ScreenWidth - 16,
+        backgroundColor: 'white', padding: 16, margin: 8, borderRadius: 5
     },
     headerContainer: {
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between', height: 40,
-        borderBottomWidth: 1, borderBottomColor: '#cccccc'
+        alignItems: 'flex-start',
+        justifyContent: 'center'
     },
     nameText: {
         fontSize: 14, color: Global.MainColor, fontFamily: Global.FontName, flex: 1, marginRight: 10
     },
     idText: {
-        fontSize: 14, color: 'white', fontFamily: Global.FontName, marginRight: 8, padding: 5, borderRadius: 5, backgroundColor: '#1B5795'
+        fontSize: 17, color: Global.MainColor, fontFamily: Global.FontName, fontWeight: 'bold', marginTop: 10
     },
     statusText: {
-        fontSize: 14, color: 'white', fontFamily: Global.FontName, marginRight: 8, padding: 5, borderRadius: 5, backgroundColor: 'gray'
+        fontSize: 15, color: 'white', fontFamily: Global.FontName, marginTop: 10, padding: 5, backgroundColor: 'gray'
     },
     contentContainer: {
         flexDirection: 'row',
         alignItems: 'center'
     },
     itemImage: {
-        width: 80, height: 80, margin: 10
+        width: 50, height: 50, marginRight: 10, backgroundColor: '#aaaaaa77'
     },
     descriptionText: {
-        fontSize: 14, color: 'black', fontFamily: Global.FontName, width: '100%', marginTop: 5
+        fontSize: 14, color: 'black', fontFamily: Global.FontName
     },
+    separator: {
+        position: 'absolute', top: 0, left: 0, right: 0, height: StyleSheet.hairlineWidth, backgroundColor: '#aaaaaa77'
+    },
+    descriptionContainer: {
+        marginTop: 5, padding: 5
+    },
+    textContainer: {
+        width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 3
+    }
 })
 
 import Global, { imageUrl, convertMoney } from 'src/Global'
@@ -63,7 +71,7 @@ class OrderListItem extends React.PureComponent {
 
     render() {
 
-        const { first_image_url, id, status_value, username, status_processing, sum_payment_transaction, total_item_cost, need_to_pay, created_tag } = this.props
+        const { first_image_url, payment_left, id, status_value, username, status_processing, sum_payment_transaction, total_item_cost, need_to_pay, created_tag } = this.props
 
         let statusColor = '#777777'
         switch (status_value.toLowerCase()) {
@@ -81,28 +89,39 @@ class OrderListItem extends React.PureComponent {
         return (
             <TouchableOpacity onPress={this.onPress.bind(this)} style={styles.container} >
                 <View style={styles.headerContainer}>
+                    <Image source={{ uri: imageUrl(first_image_url) }} style={styles.itemImage} />
                     <Text style={styles.idText}>{id}</Text>
+                    <View style={{ flex: 1 }} />
                     <Text style={[styles.statusText, { backgroundColor: statusColor }]}>{status_processing}</Text>
                 </View>
-                <View style={styles.contentContainer}>
-                    <Image source={{ uri: imageUrl(first_image_url) }} style={styles.itemImage} />
-                    <View style={styles.descriptionContainer}>
-                        <Text style={[styles.descriptionText,]}>{'Người đặt: '}
-                            <Text style={{ color: '#1B5795', fontWeight: '500' }}>{`${username}`}</Text>
-                        </Text>
-                        <Text style={[styles.descriptionText,]}>{'Tổng số tiền: '}
-                            <Text style={{ fontWeight: '500' }}>{`${convertMoney(total_item_cost)} đ`}</Text>
-                        </Text>
-                        <Text style={[styles.descriptionText,]}>{'Đã đặt cọc: '}
-                            <Text style={{ fontWeight: '500' }}>{`${convertMoney(sum_payment_transaction)} đ`}</Text>
-                        </Text>
-                        <Text style={[styles.descriptionText,]}>{'Cọc thêm: '}
-                            <Text style={{ color: Global.MainColor, fontWeight: '500' }}>{`${convertMoney(need_to_pay)} đ`}</Text>
-                        </Text>
-                        <Text style={[styles.descriptionText,]}>{'Ngày tạo: '}
-                            <Text style={{ fontWeight: '500' }}>{`${created_tag}`}</Text>
-                        </Text>
+                <View style={styles.descriptionContainer}>
+                    <View style={styles.textContainer}>
+                        <Text style={[styles.descriptionText,]}>{'Người đặt: '}</Text>
+                        <Text style={[styles.descriptionText, { color: '#1B5795', fontWeight: '500' }]}>{`${username}`}</Text>
                     </View>
+
+                    <View style={styles.textContainer}>
+                        <Text style={[styles.descriptionText,]}>{'Tổng số tiền: '}</Text>
+                        <Text style={[styles.descriptionText, { fontWeight: '500' }]}>{`${convertMoney(Math.round(total_item_cost))} đ`}</Text>
+                    </View>
+
+                    <View style={styles.textContainer}>
+                        <Text style={[styles.descriptionText,]}>{'Ngày đặt: '}</Text>
+                        <Text style={[styles.descriptionText, { fontWeight: '500' }]}>{`${created_tag}`}</Text>
+                    </View>
+
+                </View>
+                <View style={styles.descriptionContainer}>
+                    <View style={styles.separator} />
+                    <View style={styles.textContainer}>
+                        <Text style={[styles.descriptionText,]}>{'Đã đặt cọc'}</Text>
+                        <Text style={[styles.descriptionText, { fontWeight: '500', color: 'green' }]}>{`${convertMoney(Math.round(sum_payment_transaction))} đ`}</Text>
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={[styles.descriptionText,]}>{'Còn thiếu'}</Text>
+                        <Text style={[styles.descriptionText, { color: 'red', fontWeight: '500' }]}>{`${convertMoney(Math.round(payment_left))} đ`}</Text>
+                    </View>
+
                 </View>
             </TouchableOpacity>
         )
