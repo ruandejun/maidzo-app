@@ -306,6 +306,15 @@ class HomeView extends React.Component {
         this.props.navigation.navigate('ScanQRView')
     }
 
+    onSelectChinaSource(){
+        ActionSheet.show([
+            {title: '1688', onPress: this.onpenWeb.bind(this, 'https://1688.com')},
+            {title: 'taobao', onPress: this.onpenWeb.bind(this, 'https://m.intl.taobao.com')},
+            {title: 'tmall', onPress: this.onpenWeb.bind(this, 'https://www.tmall.com')},
+            {title: 'jd', onPress: this.onpenWeb.bind(this, 'https://m.jd.com')}
+        ], {title: 'Bỏ'})
+    }
+
     render() {
 
         const {user} = this.props
@@ -325,20 +334,49 @@ class HomeView extends React.Component {
 
                 <ScrollView style={{flex: 1, width: '100%'}}>
                     <View style={{ width: '100%', backgroundColor: 'white', marginTop: 10, marginBottom: 10, padding: 16 }}>
-                        
                         <View style={{ flexDirection: 'row' }}>
+                            <Icon name='cart-plus' size={15} color='#333333' />
+                            <Text style={{ marginLeft: 8, fontSize: 15, color: '#333333', fontFamily: Global.FontName, }}>Sản phẩm</Text>
+                        </View>
+                        <ScrollView style={{ width: '100%', marginTop: 12 }} horizontal showsHorizontalScrollIndicator={false}>
+                                {/* <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://1688.com')} style={{ marginRight: 16, width: 60, height: 60, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Image source={Media.AlibabaIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://m.intl.taobao.com')} style={{ marginRight: 16, width: 60, height: 60, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Image source={Media.TaobaoIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.tmall.com')} style={{ marginRight: 16, width: 60, height: 60, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Image source={Media.TmallIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://m.jd.com')} style={{ marginRight: 16, width: 60, height: 60, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Image source={Media.JDIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.chemistwarehouse.com.au')} style={{ marginRight: 16, width: 60, height: 60, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Image source={Media.ChemistIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
+                                </TouchableOpacity> */}
+
+                                {/* <TouchableOpacity onPress={this.onSelectChinaSource.bind(this)} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500'}}>Hàng Trung Quốc</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.chemistwarehouse.com.au')} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500'}}>Hàng Úc</Text>
+                                </TouchableOpacity> */}
+
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('ManualCartView')} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500'}}>Thêm sản phẩm ngoài</Text>
+                                </TouchableOpacity>
+                        </ScrollView>
+                        <View style={{ flexDirection: 'row', marginTop: 20 }}>
                             <Icon name='tools' size={15} color='#333333' />
                             <Text style={{ marginLeft: 8, fontSize: 15, color: '#333333', fontFamily: Global.FontName, }}>Công cụ</Text>
                         </View>
                         <ScrollView horizontal style={{ width: '100%', marginTop: 8 }} showsHorizontalScrollIndicator={false}>
                             <View style={{ flexDirection: 'row', }}>
-                                <TouchableOpacity onPress={this.onOpenWeb.bind(this)} style={{ padding: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                    <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
-                                        <Icon name='cart-plus' color='white' size={25} />
-                                    </View>
-                                    <Text style={{ width: 60, textAlign: 'center', fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>Tìm sản phẩm</Text>
-                                </TouchableOpacity>
-
                                 <TouchableOpacity onPress={this.onImageSearch.bind(this)} style={{ padding: 10, alignItems: 'center', justifyContent: 'center' }}>
                                     <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
                                         <Icon name='camera' color='white' size={25} />

@@ -370,6 +370,11 @@ class TaobaoWebView extends React.Component {
                     <View style={headerStyles.headerSeparator} />
                 </SafeAreaView>
                 {(!suggestions || suggestions.length == 0) && this.state.loading && <ProgressBar height={1} borderRadius={0} width={Global.ScreenWidth} color="#2196F3" indeterminate={true} />}
+                <View style={{backgroundColor: Global.MainColor, width: '100%', paddingHorizontal: 10, paddingVertical: 5}}>
+                    <View style={{height: 32, borderRadius: 5, justifyContent: 'center', backgroundColor: 'white', padding: 5}}>
+                         <Text style={{fontSize: 14, color: 'black'}}>{this.currentUrl}</Text>
+                    </View>
+                </View>
                 {(!suggestions || suggestions.length == 0) &&
                     <View style={{ flex: 1 }}>
                         <Webview
