@@ -308,10 +308,10 @@ class HomeView extends React.Component {
 
     onSelectChinaSource(){
         ActionSheet.show([
-            {title: '1688', onPress: this.onpenWeb.bind(this, 'https://1688.com')},
-            {title: 'taobao', onPress: this.onpenWeb.bind(this, 'https://m.intl.taobao.com')},
-            {title: 'tmall', onPress: this.onpenWeb.bind(this, 'https://www.tmall.com')},
-            {title: 'jd', onPress: this.onpenWeb.bind(this, 'https://m.jd.com')}
+            {title: '1688.com', onPress: this.onpenWeb.bind(this, 'https://1688.com')},
+            {title: 'taobao.com', onPress: this.onpenWeb.bind(this, 'https://m.intl.taobao.com')},
+            {title: 'tmall.com', onPress: this.onpenWeb.bind(this, 'https://www.tmall.com')},
+            {title: 'jd.com', onPress: this.onpenWeb.bind(this, 'https://m.jd.com')}
         ], {title: 'Bỏ'})
     }
 
@@ -326,7 +326,7 @@ class HomeView extends React.Component {
                     searchText={this.state.keyword}
                     searchContainer={{ left: 16, width: Global.ScreenWidth - 62 }}
                     headerChangeText={(text) => this.setState({ keyword: text })}
-                    searchPlaceholder='Nhập để tìm kiếm hoặc dán link sản phẩm'
+                    searchPlaceholder='Nhập để tìm kiếm sản phẩm'
                     onEndSubmit={this.onSearch.bind(this)}
                     rightIcon='qrcode'
                     rightAction={this.onScanCode.bind(this)}
@@ -359,13 +359,13 @@ class HomeView extends React.Component {
                                     <Image source={Media.ChemistIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
                                 </TouchableOpacity> */}
 
-                                {/* <TouchableOpacity onPress={this.onSelectChinaSource.bind(this)} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
+                                <TouchableOpacity onPress={this.onSelectChinaSource.bind(this)} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
                                     <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500'}}>Hàng Trung Quốc</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.chemistwarehouse.com.au')} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
                                     <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500'}}>Hàng Úc</Text>
-                                </TouchableOpacity> */}
+                                </TouchableOpacity>
 
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('ManualCartView')} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
                                     <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500'}}>Thêm sản phẩm ngoài</Text>
