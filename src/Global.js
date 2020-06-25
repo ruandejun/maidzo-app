@@ -58,7 +58,7 @@ import {
   ]
 
   export default Global = {
-    MainColor: '#EE4D2D',
+    MainColor: '#e93c26',
     ScreenWidth : Dimensions.get('screen').width,
     ScreenHeight : Dimensions.get('screen').height,
     FontName : 'Arial',

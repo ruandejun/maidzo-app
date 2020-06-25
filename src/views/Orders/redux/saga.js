@@ -7,6 +7,13 @@ import actions from './action'
 
 export function* createOrderFromCart({full_name, street, district, city, phone_number, ship_method, order_note, facebook, item_submit}) {
   let response = yield call(fetchUnlengthApi, 'post', 'page/build_order_from_cart/', {full_name, street, district, city, phone_number, ship_method, order_note, facebook, item_submit});
+
+  if(response && (response.detail == 'Invalid token.' || response.detail == 'Invalid token header. No credentials provided.')){
+    yield put({
+      type: 'LOGOUT'
+    });
+    return
+  }
   // console.log(response)
   if (response) {
 
@@ -30,6 +37,13 @@ export function* createOrderFromCart({full_name, street, district, city, phone_n
 export function* getOrder({order = 'asc', offset = 0, limit = 10}) {
   
   let response = yield call(fetchApi, 'get', 'page/get_data_orders/data.json', {order, offset, limit});
+  if(response && (response.detail == 'Invalid token.' || response.detail == 'Invalid token header. No credentials provided.')){
+    yield put({
+      type: 'LOGOUT'
+    });
+    return
+  }
+
   // console.log(response)
   if (response) {
 
@@ -44,7 +58,7 @@ export function* getOrder({order = 'asc', offset = 0, limit = 10}) {
 export function* getMoreOrder({order = 'asc', offset = 0, limit = 10}) {
   
   let response = yield call(fetchApi, 'get', 'page/get_data_orders/data.json', {order, offset, limit});
-  // console.log(response)
+  console.log({response})
   if (response) {
 
     yield put({
