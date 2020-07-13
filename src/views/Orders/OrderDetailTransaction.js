@@ -107,11 +107,11 @@ class OrderDetailTransaction extends React.Component {
                 <View style={{ width: '100%', height: 1, backgroundColor: '#CECECE', marginTop: 8, marginBottom: 8 }} />
 
                 <Text style={styles.infoText}>{`Tổng giá trị đơn hàng: `}
-                    <Text style={{ color: 'black', fontSize: 14 }}>{convertMoney(orderDetail.total_item_cost) + ' đ'}</Text>
+                    <Text style={{ color: 'black', fontSize: 14 }}>{convertMoney(Math.round(orderDetail.total_item_cost)) + ' đ'}</Text>
                 </Text>
 
                 <Text style={styles.infoText}>{`Tổng đã trả: `}
-                    <Text style={{ color: 'black', fontSize: 14 }}>{convertMoney(orderDetail.sum_payment_transaction) + ' đ'}</Text>
+                    <Text style={{ color: 'black', fontSize: 14 }}>{convertMoney(Math.round(orderDetail.sum_payment_transaction)) + ' đ'}</Text>
                 </Text>
 
                 <Text style={styles.infoText}>{`Số lần trả: `}
@@ -119,11 +119,11 @@ class OrderDetailTransaction extends React.Component {
                 </Text>
 
                 <Text style={styles.infoText}>{`Tổng còn thiếu: `}
-                    <Text style={{ color: 'black', fontSize: 14 }}>{convertMoney(orderDetail.payment_left) + ' đ'}</Text>
+                    <Text style={{ color: 'black', fontSize: 14 }}>{convertMoney(Math.round(orderDetail.payment_left)) + ' đ'}</Text>
                 </Text>
 
                 <Text style={styles.infoText}>{`Cần cọc thêm: `}
-                    <Text style={{ color: 'red', fontSize: 14 }}>{convertMoney(orderDetail.need_to_pay) + ' đ'}</Text>
+                    <Text style={{ color: 'red', fontSize: 14 }}>{convertMoney(Math.round(orderDetail.need_to_pay)) + ' đ'}</Text>
                 </Text>
 
                 <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>

@@ -1,14 +1,14 @@
 import { takeEvery, put, call, fork } from 'redux-saga/effects'
 import { AsyncStorage, Alert } from 'react-native';
 import Global from 'src/Global';
-import { fetchApi, fetchApiLogin, fetchUnlengthApi } from "actions/api"
+import { fetchApi, fetchApiLogin, fetchUnlengthApi, fetchUnlengthApiLogin } from "actions/api"
 import NavigationService from 'actions/NavigationService'
 import actions from './action'
 import CustomAlert from 'components/CustomAlert'
 
 export function* login({username, password, device_id, registration_id, platform_type}) {
   console.log({username, password, device_id, registration_id, platform_type})
-  let response = yield call(fetchApiLogin, 'post', 'api-token-auth/', {username, password});
+  let response = yield call(fetchUnlengthApiLogin, 'post', 'api/user/auth/login/', {email: username, password});
 
   // console.log(response)
 
@@ -32,6 +32,8 @@ export function* login({username, password, device_id, registration_id, platform
   } else {
       if(response && response.non_field_errors){
         CustomAlert(response.non_field_errors[0])
+      } else if(response && response.error){
+        CustomAlert(response.error)
       }
         yield put({
             type: actions.LOGIN_FAIL,
@@ -117,10 +119,16 @@ export function* updateProfile({pk, name, value}) {
 
 export function* updatePassword({current_password, new_password}) {
   let response = yield call(fetchApi, 'PUT', 'api/user/auth/changePassword/', {current_password, new_password});
-  
+  console.log(response)
   yield put({
     type: actions.UPDATE_PASSWORD_SUCCESS
   });
+
+  if(response && response.token){
+    Global.userToken = response.token
+    yield AsyncStorage.setItem('@USER_TOKEN', Global.userToken)
+    CustomAlert('Cập nhật mật khẩu thành công')
+  }
 
   if(response.message){
     CustomAlert(response.message)
@@ -143,7 +151,7 @@ export function* logout({username, password}) {
     type: actions.LOGOUT_SUCCESS
   })
   // NavigationService.reset('LoginView')
-  NavigationService.reset('DashboardView')
+  // NavigationService.reset('DashboardView')
 }
 
 export default function* rootSaga() {

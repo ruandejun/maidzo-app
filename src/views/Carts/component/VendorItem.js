@@ -245,7 +245,7 @@ export default class VendorItem extends React.PureComponent {
                         <Text style={[styles.priceText, ]}>
                             <Text style={{color: '#3578E5'}}>{total}</Text>
                             |
-                            <Text style={{color: Global.MainColor}}>{convertMoney(total_vnd) + ' đ'}</Text>
+                            <Text style={{color: Global.MainColor}}>{convertMoney(Math.round(total_vnd)) + ' đ'}</Text>
                         </Text>
                     </View>
                 </View>
