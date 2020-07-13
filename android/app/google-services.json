@@ -8,6 +8,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:921644491544:android:8c95b2016ed50e754df46d",
+        "android_client_info": {
+          "package_name": "com.chuyenhang365"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCruwEpLJfmZkwNAnBPnmpFefn3HptkZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921644491544-o5skiqumv8gld961pbf36sq3b78bfbu2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.chuyenhang365"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:921644491544:android:490006cf30fc94054df46d",
         "android_client_info": {
           "package_name": "com.maidzo"
@@ -40,11 +76,10 @@
               "client_type": 3
             },
             {
-              "client_id": "921644491544-nehiqmh53l8ea4trmg2tnqcvjtscqeq6.apps.googleusercontent.com",
+              "client_id": "921644491544-o5skiqumv8gld961pbf36sq3b78bfbu2.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "vn.maidzo",
-                "app_store_id": "1485188102"
+                "bundle_id": "com.chuyenhang365"
               }
             }
           ]

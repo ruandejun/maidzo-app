@@ -128,10 +128,10 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.maidzo"
+        applicationId "com.chuyenhang365"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 11
+        versionCode 2
         versionName "1.1.0"
         missingDimensionStrategy 'react-native-camera', 'mlkit'
         multiDexEnabled true

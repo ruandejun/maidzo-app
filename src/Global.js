@@ -53,9 +53,9 @@ import {
   }
 
   export const contacts = [
-    {title: 'Hotline', number: '1900989977', action: 'tel:1900989977', icon: 'phone'},
-    {title: 'Zalo', number: '+840393382222', action: 'https://zalo.me/1807717681848049893', icon: 'headset'},
-    {title: 'Messenger', number: 'MaiDzo.vn', action: 'http://m.me/MaiDzo.vn', icon: 'facebook-messenger'},
+    {title: 'Hotline', number: '02466721111', action: 'tel:02466721111', icon: 'phone'},
+    // {title: 'Zalo', number: '+840393382222', action: 'https://zalo.me/1807717681848049893', icon: 'headset'},
+    {title: 'Messenger', number: 'Chuyenhang365', action: 'http://m.me/Chuyenhang365', icon: 'facebook-messenger'},
   ]
 
   export default Global = {
@@ -63,7 +63,7 @@ import {
     ScreenWidth : Dimensions.get('screen').width,
     ScreenHeight : Dimensions.get('screen').height,
     FontName : 'Arial',
-    apiUrl: 'https://quanly.maidzo.vn/',
+    apiUrl: 'https://quanly.chuyenhang365.com/',
     username: '',
     userId: '',
     userToken: '',
