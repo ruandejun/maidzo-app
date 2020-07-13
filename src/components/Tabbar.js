@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
 
 import Global, { Media } from 'src/Global';
 import { connect } from 'react-redux';
+import firebase from 'react-native-firebase'
 
 class Tabbar extends React.PureComponent {
 
@@ -64,6 +65,13 @@ class Tabbar extends React.PureComponent {
     const {routes} = state
 
     this.props.jumpTo(routes[tabIndex].routeName)
+  }
+
+  componentDidUpdate(prevProps){
+    if(this.props.unread != prevProps.unread){
+      const notifications = firebase.notifications()
+      notifications.setBadge(this.props.unread)
+    }
   }
 
   render() {
@@ -86,7 +94,7 @@ class Tabbar extends React.PureComponent {
                 <Image resizeMode='contain' style={[styles.buttonIcon, {tintColor: currentIndex == 1 ? '#FDCC0D' : 'white'}]} source={Media.OrderTab} />
                 <Text style={[styles.buttonText, {color: currentIndex == 1 ? '#FDCC0D' : 'white'}]}>Đơn hàng</Text>
 
-                {orderCount > 0 && 
+                {false && orderCount > 0 && 
                   <View style={[styles.notiBagde]}>
                     <Text style={styles.bagdeText}>{orderCount}</Text>
                   </View>
@@ -140,7 +148,7 @@ const mapStateToProps = (state, ownProps) => {
   // console.log(state)
   return {
     cartCount: state.cart.count,
-    orderCount: state.order.count,
+    // orderCount: state.order.count,
     unread: state.notification.unread
   };
 }

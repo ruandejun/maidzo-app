@@ -2263,7 +2263,12 @@ escape-html@~1.0.3:
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
 
-escape-string-regexp@1.0.5, escape-string-regexp@^1.0.5:
+escape-string-regexp@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz#a30304e99daa32e23b2fd20f51babd07cffca344"
+  integrity sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==
+
+escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
@@ -5513,12 +5518,12 @@ react-native-vector-icons@^6.6.0:
     prop-types "^15.6.2"
     yargs "^13.2.2"
 
-react-native-webview@^7.0.2:
-  version "7.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-7.0.2.tgz#9513444c5afe6a09842e563ee0df8a70adf36efa"
-  integrity sha512-xauF9uYRbAw2V5mCtRDLzlSixfP1CLhOWj1lf+tssPFrmUbU1yVoh9YF/zAI6dHhEQMu5pQD8uILHdcQ6sU7mA==
+react-native-webview@^10.3.1:
+  version "10.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-10.3.1.tgz#04a2b17a37daf04575b3abd10b1fb29d2c154c6f"
+  integrity sha512-Ac0v4lFaJl5P/haLook+UIKMW4Ru5xg0+AdxD2oJRB2TPgdqoATziYNU0LBMjntlxDp+DVzdr3fVDuLMdox0tg==
   dependencies:
-    escape-string-regexp "1.0.5"
+    escape-string-regexp "2.0.0"
     invariant "2.2.4"
 
 react-native@0.60.5:

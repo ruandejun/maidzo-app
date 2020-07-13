@@ -216,7 +216,7 @@ export default class OrderDetailVendor extends React.PureComponent {
                         {vendor && <Text style={[styles.priceText]}>
                                 <Text style={{color: '#3578E5'}}>{`${vendor.total}`}</Text>
                                 |
-                                <Text style={{color: Global.MainColor}}>{`${convertMoney(vendor.total_vnd)} đ`}</Text>
+                                <Text style={{color: Global.MainColor}}>{`${convertMoney(Math.round(vendor.total_vnd))} đ`}</Text>
                             </Text>}
                         {!vendor && 
                             <Text style={[styles.priceText, {color: Global.MainColor}]}>{''}</Text>

@@ -8,7 +8,13 @@ import actions from './action'
 export function* getAppNotifications({page}) {
   let response = yield call(fetchApi, 'get', 'api/notification_module/notification/', {page})
 
-  console.log(response)
+  if(response && (response.detail == 'Invalid token.' || response.detail == 'Invalid token header. No credentials provided.')){
+    yield put({
+      type: 'LOGOUT'
+    });
+    return
+  }
+  console.log({response})
   if (response && response.results) {
 
     yield put({
