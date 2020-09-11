@@ -56,6 +56,8 @@ export default function appReducer(state = initState, action) {
                 detailItems: action.data,
                 detailFetching: false
             })
+        case actions.LOGOUT:
+            return initState
         default:
             return state
     }
