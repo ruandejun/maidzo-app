@@ -49,6 +49,7 @@ import firebase from 'react-native-firebase'
 import ActionButton from 'react-native-action-button'
 import {fetchApi} from 'actions/api'
 import PopupView from 'components/PopupView'
+import DeviceInfo from 'react-native-device-info'
 
 class HomeView extends React.Component {
 
@@ -70,7 +71,23 @@ class HomeView extends React.Component {
         });
         this.removeNotificationListener = firebase.notifications().onNotification((notification) => {
             console.log(notification)
-        });
+        })
+
+        this.removeRefreshTokenlistener = firebase.messaging().onTokenRefresh((token) => {
+            console.log({token})
+            Global.pushToken = token
+
+            if(this.props.user){
+                fetchApi('post', 'api/user/auth/update_fcm/', {device_id: DeviceInfo.getUniqueId(), registration_id: token, platform_type: Platform.OS})
+                .then((data) => {
+                    console.log({data})
+                })
+                .catch((error) => {
+                    console.log({error})
+                })
+            }
+        })
+
         this.onLoadCurrency()
 
 
@@ -114,6 +131,7 @@ class HomeView extends React.Component {
     componentWillUnmount(){
         this.removeNotificationDisplayedListener();
         this.removeNotificationListener();
+        this.removeRefreshTokenlistener()
     }
 
     onpenWeb(url) {

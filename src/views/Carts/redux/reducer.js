@@ -34,6 +34,7 @@ export default function appReducer(state = initState, action) {
                     count: action.data
                 })
         case actions.CREATE_ORDER_SUCCESS:
+        case actions.LOGOUT:
             return initState
         default:
             return state
