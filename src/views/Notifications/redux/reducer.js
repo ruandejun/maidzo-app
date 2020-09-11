@@ -24,7 +24,7 @@ export default function appReducer(state = initState, action) {
             if(index > -1){
                 notifications[index].unread = false
             }
-            return{...state, notifications: notifications, isFetching: true}
+            return{...state, notifications: notifications, unread: state.unread - 1, isFetching: true}
         case actions.UPDATE_NOTIFICATION_READ_ALL:
             return{...state, isFetching: true}
         case actions.UPDATE_NOTIFICATION_READ_SUCCESS:
@@ -43,7 +43,8 @@ export default function appReducer(state = initState, action) {
                 
                 return{...state, notifications: notifications, currentPage: action.page, isLoadingMore: false, canLoadMore: action.canLoadMore, unread: action.unread}
             }
-            
+        case actions.LOGOUT:
+            return initState
         default:
             return state
   }

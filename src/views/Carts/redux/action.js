@@ -11,6 +11,7 @@ const actions = {
   UPDATE_CART_ITEM_SERVICE: 'UPDATE_CART_ITEM_SERVICE',
   GET_CART_COUNT: 'GET_CART_COUNT',
   GET_CART_COUNT_SUCCESS: 'GET_CART_COUNT_SUCCESS',
+  LOGOUT: 'LOGOUT',
 }
 
 export const deleteCartItem = (id) => {

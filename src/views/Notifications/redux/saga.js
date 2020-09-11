@@ -38,7 +38,7 @@ export function* getAppNotifications({page}) {
 export function* updateNotificationRead({notification}) {
   let response = yield call(fetchApi, 'get', `api/notification_module/notification/${notification.id}/mark_as_read/`)
 
-  // console.log(response)
+  // console.log({response})
   yield put({
     type: actions.UPDATE_NOTIFICATION_READ_SUCCESS
   });

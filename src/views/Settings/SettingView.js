@@ -44,7 +44,10 @@ class SettingView extends React.Component {
 
     onLogout(){
         CustomAlert('Đăng xuất', 'Bạn có chắc chắn muốn đăng xuất?', [
-            {text: 'Đăng xuất', onPress: () => this.props.logout()},
+            {text: 'Đăng xuất', onPress: () => {
+                this.props.logout()
+                this.props.navigation.goBack()
+            }},
             {text: 'Bỏ', }
         ])
     }
