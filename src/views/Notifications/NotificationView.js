@@ -43,8 +43,14 @@ class NotificationView extends React.Component {
 
     onClick(item){
         this.props.updateNotificationRead(item)
-        if(item.target_object_id){
+        if(item.target_content_type == 'order' && item.target_object_id){
             this.props.navigation.navigate('OrderDetailView', {order_id : item.target_object_id})
+        }
+        if(item.target_content_type == 'balanceaccount'){
+            this.props.navigation.navigate('WalletBalanceView')
+        }
+        if(item.target_content_type == 'shipmentpackage' && item.target_object_id){
+            this.props.navigation.navigate('TrackingDetailView', {tracking_id : item.target_object_id})
         }
     }
 
@@ -57,6 +63,7 @@ class NotificationView extends React.Component {
                 </View>
                 <Text style={{fontSize: 13, marginTop: 3, color: '#333333', fontFamily: Global.FontName,}}>{item.description}</Text>
                 <View style={{position: 'absolute', left: 0, right: 0, height: 0.5, bottom: 0, backgroundColor: '#CECECE'}}/>
+                {item.unread && <View style={{position: 'absolute', right: 2, top: 8, bottom: 8, width: 3, backgroundColor: Global.MainColor}}/>}
             </TouchableOpacity>
         )
     }
