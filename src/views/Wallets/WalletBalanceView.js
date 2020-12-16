@@ -75,7 +75,7 @@ class WalletBalanceView extends React.Component {
         return (
             <View style={styles.container}>
                 <Header
-                    title='Ví Maidzo'
+                    title='Ví'
                     leftIcon='chevron-left'
                     leftAction={() => this.props.navigation.goBack()}
                 />

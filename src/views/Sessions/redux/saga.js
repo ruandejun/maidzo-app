@@ -7,12 +7,12 @@ import actions from './action'
 import CustomAlert from 'components/CustomAlert'
 
 export function* login({username, password, device_id, registration_id, platform_type}) {
-  console.log({username, password, device_id, registration_id, platform_type})
+  // console.log({username, password, device_id, registration_id, platform_type})
   let response = yield call(fetchUnlengthApiLogin, 'post', 'api/user/auth/login/', {email: username, password});
 
   // console.log(response)
 
-    if (response.token) {
+    if (response && response.token) {
     Global.userToken = response.token
     yield AsyncStorage.setItem('@USER_TOKEN', Global.userToken)
     
@@ -45,7 +45,7 @@ export function* login({username, password, device_id, registration_id, platform
 export function* register({username, email, facebook, phone, password, verifypassword}) {
   let response = yield call(fetchApiLogin, 'post', 'api/user/auth/signup/', {username, email, facebook, phone, password, verifypassword});
   // console.log(response)
-    if (response.token) {
+    if (response && response.token) {
     Global.userToken = response.token
     yield AsyncStorage.setItem('@USER_TOKEN', Global.userToken)
     
@@ -59,7 +59,7 @@ export function* register({username, email, facebook, phone, password, verifypas
 
       NavigationService.reset('DashboardView')
     }
-  } else if(response.success) {
+  } else if(response && response.success) {
     
     yield put({
       type: actions.SIGN_UP_SUCCESS
@@ -69,9 +69,9 @@ export function* register({username, email, facebook, phone, password, verifypas
   } else {
     if(response && response.non_field_errors){
       CustomAlert(response.non_field_errors[0])
-    } else if(response.error && response.error.username){
+    } else if(response && response.error && response.error.username){
       CustomAlert(response.error.username[0])
-    } else if(response.error && response.error.email){
+    } else if(response && response.error && response.error.email){
       CustomAlert(response.error.email[0])
     }
         yield put({
@@ -109,10 +109,10 @@ export function* updateProfile({pk, name, value}) {
     type: actions.UPDATE_PROFILE_SUCCESS
   });
 
-  if(response.error){
+  if(response && response.error){
     CustomAlert(response.error)
   }
-  if(response.message){
+  if(response && response.message){
     CustomAlert(response.message)
   }
 }
@@ -130,13 +130,13 @@ export function* updatePassword({current_password, new_password}) {
     CustomAlert('Cập nhật mật khẩu thành công')
   }
 
-  if(response.message){
+  if(response && response.message){
     CustomAlert(response.message)
   }
-  if(response.success){
+  if(response && response.success){
     CustomAlert('Cập nhật mật khẩu thành công')
   }
-  if(response.error){
+  if(response && response.error){
     CustomAlert(response.error)
   }
 }

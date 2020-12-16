@@ -231,7 +231,7 @@ class LoginView extends React.Component {
                                 value={username}
                                 onChangeText={(text) => this.setState({ username: text })}
                                 underlineColorAndroid='#00000000'
-                                placeholder='Tên đăng nhập'
+                                placeholder='Tên đăng nhập*'
                                 autoCorrect={false}
                                 placeholderTextColor='#CECECE'
                                 autoCapitalize='none'
