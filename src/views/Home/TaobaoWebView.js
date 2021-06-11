@@ -10,7 +10,10 @@ import {
     TouchableOpacity,
     TextInput,
     FlatList,
-    StatusBar
+    StatusBar,
+    Modal,
+    ScrollView,
+    TouchableWithoutFeedback
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -35,6 +38,436 @@ import { jsGetChemistDetailForCart } from './script/chemist'
 import ProgressBar from 'react-native-progress/Bar'
 import Share from 'react-native-share'
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
+// import testData from './script/test21.json'
+import Stepper from 'teaset/components/Stepper/Stepper';
+
+class Option1688View extends React.Component {
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            selectedAmount: {},
+            selectedProps: null
+        }
+    }
+
+    componentDidMount() {
+        const { skuModel, onClose } = this.props
+        const { skuPriceScale, skuInfoMap, skuProps } = skuModel
+        if (skuProps && skuProps.length == 2) {
+            this.setState({ selectedProps: skuProps[0].value[0], selectedAmount: {} })
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.skuModel != this.props.skuModel) {
+            const { skuModel, onClose } = this.props
+            const { skuPriceScale, skuInfoMap, skuProps } = skuModel
+            if (skuProps && skuProps.length == 2) {
+                this.setState({ selectedProps: skuProps[0].value[0], selectedAmount: {} })
+            }
+        }
+    }
+
+    onBuy() {
+        let carts = []
+        const { skuModel, tempModel, onBuy, orderParamModel, shareModel } = this.props
+        const { skuInfoMap, skuProps } = skuModel
+        const { selectedAmount } = this.state
+        const { offerTitle, companyName } = tempModel
+        const { orderParam } = orderParamModel
+        const { skuParam, canBookedAmount } = orderParam
+        const { skuRangePrices, skuPriceType } = skuParam
+
+        const keys = Object.keys(selectedAmount)
+        let totalAmount = 0
+
+        if (skuProps && skuProps.length == 1) {
+            for (var i = 0; i < keys.length; i++) {
+                const amount = selectedAmount[keys[i]]
+                const detail = skuInfoMap[keys[i]]
+                totalAmount += amount
+                if (detail && amount > 0) {
+                    const filter = skuProps[0].value.filter((item) => item.name == keys[i])
+
+                    let price = detail.discountPrice
+                    if (skuPriceType == 'rangePrice') {
+                        let itemPrice = skuRangePrices[0].price
+                        for (var k = 0; k < skuRangePrices.length; k++) {
+                            if (amount > skuRangePrices[k].beginAmount) {
+                                itemPrice = skuRangePrices[k].price
+                            }
+                        }
+
+                        price = itemPrice
+                    }
+
+                    if (filter && filter.length > 0) {
+                        let cart = { title: offerTitle, shop_name: companyName, quantity: amount, price: price, options: [{ propertyTitle: skuProps[0].prop, propertyValue: keys[i] }], image: filter[0].imageUrl ? filter[0].imageUrl : shareModel.picUrl }
+
+                        carts.push(cart)
+                    }
+
+                }
+            }
+        } else if (skuProps && skuProps.length == 2) {
+            for (var i = 0; i < keys.length; i++) {
+                const amount = selectedAmount[keys[i]]
+                const props = keys[i].split('&gt;')
+                const detail = skuInfoMap[keys[i]]
+                totalAmount += amount
+
+                if (detail && amount > 0 && props.length == 2) {
+                    const filter0 = skuProps[0].value.filter((item) => item.name == props[0])
+                    const filter1 = skuProps[1].value.filter((item) => item.name == props[1])
+
+                    let price = detail.discountPrice
+                    if (skuPriceType == 'rangePrice') {
+                        let itemPrice = skuRangePrices[0].price
+                        for (var k = 0; k < skuRangePrices.length; k++) {
+                            if (amount >= skuRangePrices[k].beginAmount) {
+                                itemPrice = skuRangePrices[k].price
+                            }
+                        }
+
+                        price = itemPrice
+                    }
+
+                    if (filter0 && filter1 && filter0.length > 0 && filter1.length > 0) {
+                        let cart = { title: offerTitle, shop_name: companyName, quantity: amount, price: price, options: [{ propertyTitle: skuProps[0].prop, propertyValue: props[0] }, { propertyTitle: skuProps[1].prop, propertyValue: props[1] }], image: filter0[0].imageUrl ? filter0[0].imageUrl : shareModel.picUrl }
+
+                        carts.push(cart)
+                    }
+                }
+            }
+        } else if(!skuProps){
+            const amount = (selectedAmount && selectedAmount[offerTitle]) ? selectedAmount[offerTitle] : 0
+            totalAmount += amount
+            let cart = { title: offerTitle, shop_name: companyName, quantity: amount, price: skuRangePrices[0].price, options: [], image: shareModel.picUrl }
+
+            carts.push(cart)
+        }
+
+        if (skuRangePrices && skuRangePrices.length > 0 && totalAmount < skuRangePrices[0].beginAmount) {
+            alert(`Phải mua tối thiểu ${skuRangePrices[0].beginAmount} sản phẩm`)
+            return
+        }
+
+        if (onBuy) {
+            onBuy(carts)
+        }
+    }
+
+    render() {
+        const { skuModel, orderParamModel, onClose, shareModel, tempModel } = this.props
+        const { skuPriceScale, skuInfoMap, skuProps } = skuModel
+        const { selectedAmount, selectedProps } = this.state
+        const { orderParam } = orderParamModel
+        const { skuParam, canBookedAmount } = orderParam
+        const { skuRangePrices, skuPriceType } = skuParam
+        const { offerTitle, companyName } = tempModel
+
+        let totalAmount = 0
+        let totalPrice = 0
+
+        const keys = Object.keys(selectedAmount)
+        for (var i = 0; i < keys.length; i++) {
+            const amount = selectedAmount[keys[i]]
+
+            if (skuProps) {
+                const detail = skuInfoMap[keys[i]]
+                if (detail) {
+                    totalAmount += amount
+                    let price = 0
+                    if (skuPriceType == 'rangePrice') {
+                        let itemPrice = skuRangePrices[0].price
+                        for (var k = 0; k < skuRangePrices.length; k++) {
+                            if (amount >= skuRangePrices[k].beginAmount) {
+                                itemPrice = skuRangePrices[k].price
+                            }
+                        }
+
+                        price = parseInt(amount * parseFloat(itemPrice) * 100) / 100
+                    } else {
+                        price = parseInt(amount * parseFloat(detail.discountPrice) * 100) / 100
+                    }
+
+                    totalPrice += price
+                }
+            } else {
+                totalAmount += amount
+                let price = 0
+                if (skuPriceType == 'rangePrice') {
+                    let itemPrice = skuRangePrices[0].price
+                    for (var k = 0; k < skuRangePrices.length; k++) {
+                        if (amount >= skuRangePrices[k].beginAmount) {
+                            itemPrice = skuRangePrices[k].price
+                        }
+                    }
+
+                    price = parseInt(amount * parseFloat(itemPrice) * 100) / 100
+                } else {
+                    price = parseInt(amount * parseFloat(skuRangePrices[0].price) * 100) / 100
+                }
+
+                totalPrice += price
+            }
+
+        }
+
+        if (skuProps && skuProps.length == 1) {
+            return (
+                <View style={{ height: Global.ScreenHeight - 50 - getBottomSpace() - getStatusBarHeight(), width: '100%', backgroundColor: '#eeeeee', paddingBottom: getBottomSpace() }}>
+                    {skuPriceType != 'rangePrice' &&
+                        <View style={{ height: 70, width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ fontSize: 18, color: Global.MainColor, fontFamily: Global.FontName }}>{skuPriceScale}</Text>
+                            {skuRangePrices.length > 0 &&
+                                <Text style={{ fontSize: 12, color: '#333333', fontFamily: Global.FontName }}>{`Tối thiểu ${skuRangePrices[0].beginAmount} sản phẩm`}</Text>
+                            }
+                        </View>
+                    }
+                    {skuPriceType == 'rangePrice' &&
+                        <View style={{ height: 70, width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row', paddingHorizontal: 16 }}>
+                            {skuRangePrices.map((item, index) => {
+                                let amount = ''
+                                if (index < skuRangePrices.length - 1) {
+                                    amount = `${item.beginAmount}-${skuRangePrices[index + 1].beginAmount - 1}`
+                                } else {
+                                    amount = `> ${item.beginAmount}`
+                                }
+                                return (
+                                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                                        <Text style={{ fontSize: 18, color: Global.MainColor, fontFamily: Global.FontName }}>{'￥' + item.price}</Text>
+                                        <Text style={{ fontSize: 10, color: '#333333', fontFamily: Global.FontName }}>{amount}</Text>
+
+                                    </View>
+                                )
+                            })}
+                        </View>
+                    }
+                    <View style={{ width: '95%', flex: 1, alignSelf: 'center', }}>
+                        {skuProps && skuProps.length > 0 &&
+                            <ScrollView showsVerticalScrollIndicator={false}>
+                                <View style={{ flex: 1 }}>
+                                    {skuProps[0].value.map((item, index) => {
+                                        const detail = skuInfoMap[item.name]
+                                        const amount = (selectedAmount && selectedAmount[item.name]) ? selectedAmount[item.name] : 0
+
+                                        if (detail) {
+                                            return (
+                                                <View key={index.toString()} style={{ width: '100%', backgroundColor: 'white', marginBottom: 10, borderRadius: 5, flexDirection: 'row', padding: 16, paddingHorizontal: 8, alignItems: 'center' }}>
+                                                    <Image source={{ uri: item.imageUrl ? item.imageUrl : shareModel.picUrl }} style={{ width: 50, height: 50, borderRadius: 2, marginRight: 10 }} />
+                                                    <View style={{ flex: 1 }}>
+                                                        <Text style={{ fontSize: 15, color: 'black', fontFamily: Global.FontName }}>{item.name}</Text>
+                                                        <Text style={{ fontSize: 12, color: '#777777', fontFamily: Global.FontName }}>{'Số lượng: ' + detail.canBookCount}</Text>
+                                                        {skuPriceType != 'rangePrice' && <Text style={{ fontSize: 12, color: '#777777', fontFamily: Global.FontName }}>{'Giá: ￥' + detail.discountPrice}</Text>}
+                                                    </View>
+                                                    <Stepper style={{ height: 30 }} min={0} max={detail.canBookCount} value={amount} onChange={value => this.setState({ selectedAmount: { ...selectedAmount, [item.name]: value } })} />
+                                                </View>
+                                            )
+                                        } else {
+                                            return null
+                                        }
+
+                                    })}
+                                </View>
+                            </ScrollView>
+                        }
+                    </View>
+
+                    <View style={{ padding: 10, paddingHorizontal: 16, flexDirection: 'row', backgroundColor: 'white', marginTop: 5, width: '100%' }}>
+                        <View style={{ flex: 1 }}>
+                            <Text style={{ fontSize: 14, fontFamily: Global.FontName, color: '#333333' }}>{`Tổng số lượng: ${totalAmount}`}</Text>
+                            <Text style={{ fontSize: 14, fontFamily: Global.FontName, color: '#333333', marginTop: 5 }}>{`Tổng số tiền: ￥${totalPrice}`}</Text>
+                        </View>
+                        <TouchableWithoutFeedback onPress={this.onBuy.bind(this)} disabled={totalAmount == 0} >
+                            <View style={{ width: 100, height: 40, borderRadius: 20, backgroundColor: totalAmount > 0 ? Global.MainColor : 'gray', alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ color: 'white', fontSize: 15, fontFamily: Global.FontName }}>Đặt mua</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+
+                    <TouchableOpacity onPress={() => onClose && onClose()} style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center', borderRadius: 15, backgroundColor: 'red', position: 'absolute', top: 5, right: 5 }}>
+                        <Icon name='times' color='white' size={20} />
+                    </TouchableOpacity>
+                </View>
+            )
+        } else if (skuProps && skuProps.length == 2) {
+            return (
+                <View style={{ height: Global.ScreenHeight - 50 - getBottomSpace() - getStatusBarHeight(), width: '100%', backgroundColor: '#eeeeee', paddingBottom: getBottomSpace() }}>
+                    <View style={{ width: '100%', flex: 1, alignSelf: 'center', flexDirection: 'row', marginTop: 16 }}>
+                        <View style={{ width: 150, height: '100%' }}>
+                            <ScrollView style={{ width: 150, height: '100%' }}>
+                                <View style={{ width: 150 }}>
+                                    {skuProps[0].value.map((item, index) => {
+                                        let totalAmount = 0
+                                        for (var i = 0; i < skuProps[1].value.length; i++) {
+                                            const itemName = `${item.name}&gt;${skuProps[1].value[i].name}`
+                                            totalAmount += ((selectedAmount && selectedAmount[itemName]) ? selectedAmount[itemName] : 0)
+                                        }
+
+                                        return (
+                                            <TouchableOpacity onPress={() => this.setState({ selectedProps: item })} key={index.toString()} style={{ width: '100%', backgroundColor: 'white', borderColor: Global.MainColor, borderWidth: selectedProps && selectedProps.name == item.name ? 2 : 0, marginBottom: 3, borderRadius: 5, flexDirection: 'row', padding: 5, alignItems: 'center' }}>
+                                                <Image source={{ uri: item.imageUrl }} style={{ width: 50, height: 50, borderRadius: 2, marginRight: 5 }} />
+                                                <Text style={{ fontSize: 13, color: 'black', fontFamily: Global.FontName, flex: 1 }}>{item.name}</Text>
+                                                {totalAmount > 0 &&
+                                                    <View style={{ backgroundColor: Global.MainColor, position: 'absolute', bottom: 2, right: 2, height: 16, borderRadius: 8, justifyContent: 'center', paddingHorizontal: 8 }}>
+                                                        <Text style={{ fontSize: 11, color: 'white', fontFamily: Global.FontName, fontWeight: 'bold' }}>{totalAmount}</Text>
+                                                    </View>
+                                                }
+                                            </TouchableOpacity>
+                                        )
+
+                                    })}
+                                </View>
+                            </ScrollView>
+                        </View>
+                        <View style={{ flex: 1, marginLeft: 8 }}>
+                            <View style={{ flexDirection: 'row', padding: 8, width: '100%' }}>
+                                <Image source={selectedProps ? { uri: selectedProps.imageUrl } : null} style={{ width: 100, height: 100, borderRadius: 2, marginRight: 10 }} />
+
+                                {skuPriceType != 'rangePrice' &&
+                                    <View style={{ paddingRight: 16, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                                        <Text numberOfLines={3} style={{ textAlign: 'center', fontSize: 20, fontWeight: '600', color: Global.MainColor, fontFamily: Global.FontName }}>{skuRangePrices.length == 2 ? `￥${skuRangePrices[0].price} \n~\n￥${skuRangePrices[1].price}` : skuPriceScale}</Text>
+                                        {skuRangePrices.length > 0 &&
+                                            <Text style={{ textAlign: 'center', fontSize: 10, color: '#333333', fontFamily: Global.FontName, marginTop: 5 }}>{`Tối thiểu ${skuRangePrices[0].beginAmount} sản phẩm`}</Text>
+                                        }
+                                    </View>
+                                }
+
+
+                                {skuPriceType == 'rangePrice' &&
+                                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
+                                        {skuRangePrices.map((item, index) => {
+                                            let amount = ''
+                                            if (index < skuRangePrices.length - 1) {
+                                                amount = `${item.beginAmount}-${skuRangePrices[index + 1].beginAmount - 1}`
+                                            } else {
+                                                amount = `> ${item.beginAmount}`
+                                            }
+                                            return (
+                                                <View style={{ marginTop: 5, alignItems: 'center', justifyContent: 'center' }}>
+                                                    <Text style={{ fontSize: 15, color: Global.MainColor, fontFamily: Global.FontName }}>{'￥' + item.price}</Text>
+                                                    <Text style={{ fontSize: 9, color: '#333333', fontFamily: Global.FontName }}>{amount}</Text>
+
+                                                </View>
+                                            )
+                                        })}
+                                    </View>
+                                }
+                            </View>
+                            {selectedProps &&
+                                <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, width: '100%' }}>
+                                    <View style={{ flex: 1 }}>
+                                        {skuProps[1].value.map((item, index) => {
+                                            const itemName = `${selectedProps.name}&gt;${item.name}`
+                                            const detail = skuInfoMap[itemName]
+                                            const amount = (selectedAmount && selectedAmount[itemName]) ? selectedAmount[itemName] : 0
+
+                                            if (detail) {
+                                                return (
+                                                    <View key={index.toString()} style={{ width: '100%', backgroundColor: 'white', marginBottom: 10, borderRadius: 5, flexDirection: 'row', padding: 8, alignItems: 'center' }}>
+                                                        <View style={{ flex: 1 }}>
+                                                            <Text style={{ fontSize: 15, color: 'black', fontFamily: Global.FontName }}>{item.name}</Text>
+                                                            <Text style={{ fontSize: 12, color: '#777777', fontFamily: Global.FontName }}>{'Số lượng: ' + detail.canBookCount}</Text>
+                                                            {skuPriceType != 'rangePrice' && <Text style={{ fontSize: 12, color: '#777777', fontFamily: Global.FontName }}>{'Giá: ￥' + detail.discountPrice}</Text>}
+                                                        </View>
+                                                        <Stepper style={{ height: 30 }} min={0} max={detail.canBookCount} value={amount} onChange={value => this.setState({ selectedAmount: { ...selectedAmount, [itemName]: value } })} />
+                                                    </View>
+                                                )
+                                            } else {
+                                                return null
+                                            }
+
+                                        })}
+                                    </View>
+                                </ScrollView>
+                            }
+                        </View>
+                    </View>
+
+                    <View style={{ padding: 10, paddingHorizontal: 16, flexDirection: 'row', backgroundColor: 'white', marginTop: 5, width: '100%' }}>
+                        <View style={{ flex: 1 }}>
+                            <Text style={{ fontSize: 14, fontFamily: Global.FontName, color: '#333333' }}>{`Tổng số lượng: ${totalAmount}`}</Text>
+                            <Text style={{ fontSize: 14, fontFamily: Global.FontName, color: '#333333', marginTop: 5 }}>{`Tổng số tiền: ￥${totalPrice}`}</Text>
+                        </View>
+                        <TouchableWithoutFeedback onPress={this.onBuy.bind(this)} disabled={totalAmount == 0} >
+                            <View style={{ width: 100, height: 40, borderRadius: 20, backgroundColor: totalAmount > 0 ? Global.MainColor : 'gray', alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ color: 'white', fontSize: 15, fontFamily: Global.FontName }}>Đặt mua</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+
+                    <TouchableOpacity onPress={() => onClose && onClose()} style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center', borderRadius: 15, backgroundColor: 'red', position: 'absolute', top: 5, right: 5 }}>
+                        <Icon name='times' color='white' size={20} />
+                    </TouchableOpacity>
+                </View>
+            )
+        } else if (!skuProps) {
+            return (
+                <View style={{ height: Global.ScreenHeight - 50 - getBottomSpace() - getStatusBarHeight(), width: '100%', backgroundColor: '#eeeeee', paddingBottom: getBottomSpace() }}>
+                    {skuPriceType != 'rangePrice' &&
+                        <View style={{ height: 70, width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ fontSize: 18, color: Global.MainColor, fontFamily: Global.FontName }}>{skuPriceScale}</Text>
+                            {skuRangePrices.length > 0 &&
+                                <Text style={{ fontSize: 12, color: '#333333', fontFamily: Global.FontName }}>{`Tối thiểu ${skuRangePrices[0].beginAmount} sản phẩm`}</Text>
+                            }
+                        </View>
+                    }
+                    {skuPriceType == 'rangePrice' &&
+                        <View style={{ height: 70, width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row', paddingHorizontal: 16 }}>
+                            {skuRangePrices.map((item, index) => {
+                                let amount = ''
+                                if (index < skuRangePrices.length - 1) {
+                                    amount = `${item.beginAmount}-${skuRangePrices[index + 1].beginAmount - 1}`
+                                } else {
+                                    amount = `> ${item.beginAmount}`
+                                }
+                                return (
+                                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                                        <Text style={{ fontSize: 18, color: Global.MainColor, fontFamily: Global.FontName }}>{'￥' + item.price}</Text>
+                                        <Text style={{ fontSize: 10, color: '#333333', fontFamily: Global.FontName }}>{amount}</Text>
+
+                                    </View>
+                                )
+                            })}
+                        </View>
+                    }
+                    <View style={{ width: '95%', flex: 1, alignSelf: 'center', }}>
+                        <View style={{ flex: 1 }}>
+                            <View style={{ width: '100%', backgroundColor: 'white', marginBottom: 10, borderRadius: 5, flexDirection: 'row', padding: 16, paddingHorizontal: 8, alignItems: 'center' }}>
+                                <Image source={{ uri: shareModel.picUrl }} style={{ width: 50, height: 50, borderRadius: 2, marginRight: 10 }} />
+                                <View style={{ flex: 1 }}>
+                                    <Text style={{ fontSize: 12, color: '#777777', fontFamily: Global.FontName }}>{'Số lượng: ' + canBookedAmount}</Text>
+                                </View>
+                                <Stepper style={{ height: 30 }} min={0} max={canBookedAmount} value={totalAmount} onChange={value => this.setState({ selectedAmount: { ...selectedAmount, [offerTitle]: value } })} />
+                            </View>
+                        </View>
+                    </View>
+
+                    <View style={{ padding: 10, paddingHorizontal: 16, flexDirection: 'row', backgroundColor: 'white', marginTop: 5, width: '100%' }}>
+                        <View style={{ flex: 1 }}>
+                            <Text style={{ fontSize: 14, fontFamily: Global.FontName, color: '#333333' }}>{`Tổng số lượng: ${totalAmount}`}</Text>
+                            <Text style={{ fontSize: 14, fontFamily: Global.FontName, color: '#333333', marginTop: 5 }}>{`Tổng số tiền: ￥${totalPrice}`}</Text>
+                        </View>
+                        <TouchableWithoutFeedback onPress={this.onBuy.bind(this)} disabled={totalAmount == 0} >
+                            <View style={{ width: 100, height: 40, borderRadius: 20, backgroundColor: totalAmount > 0 ? Global.MainColor : 'gray', alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ color: 'white', fontSize: 15, fontFamily: Global.FontName }}>Đặt mua</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+
+                    <TouchableOpacity onPress={() => onClose && onClose()} style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center', borderRadius: 15, backgroundColor: 'red', position: 'absolute', top: 5, right: 5 }}>
+                        <Icon name='times' color='white' size={20} />
+                    </TouchableOpacity>
+                </View>
+            )
+        } else {
+            return null
+        }
+    }
+}
 
 class TaobaoWebView extends React.Component {
 
@@ -46,6 +479,7 @@ class TaobaoWebView extends React.Component {
             searchKeyword: '',
             url: props.navigation.getParam('url'),
             suggestions: [],
+            options1688: null,
             searchSource: 0 //0 = 1688, 1 = taobao, 2 = tmall, 3 = chemistwarehouse, 4 = JD
         }
     }
@@ -55,22 +489,22 @@ class TaobaoWebView extends React.Component {
 
     componentDidMount() {
         let url = this.props.navigation.getParam('url')
-        if(url && url.indexOf('https://www.chemistwarehouse.com.au') != -1 || url.indexOf('https://dis.as.criteo.com') != -1){
-            this.setState({searchSource: 3})
-        } else if(url && url.indexOf('m.1688.com') != -1 || url.indexOf('1688.com') != -1){
-            this.setState({searchSource: 0})
-        } if(url && url.indexOf('m.jd.com') != -1 || url.indexOf('jd.com') != -1){
-            this.setState({searchSource: 4})
-        } else if(url && url.indexOf('https://m.intl.taobao.com') != -1 || url.indexOf('intl.taobao.com') != -1){
-            this.setState({searchSource: 1})
+        if (url && url.indexOf('https://www.chemistwarehouse.com.au') != -1 || url.indexOf('https://dis.as.criteo.com') != -1) {
+            this.setState({ searchSource: 3 })
+        } else if (url && url.indexOf('m.1688.com') != -1 || url.indexOf('1688.com') != -1) {
+            this.setState({ searchSource: 0 })
+        } if (url && url.indexOf('m.jd.com') != -1 || url.indexOf('jd.com') != -1) {
+            this.setState({ searchSource: 4 })
+        } else if (url && url.indexOf('https://m.intl.taobao.com') != -1 || url.indexOf('intl.taobao.com') != -1) {
+            this.setState({ searchSource: 1 })
         } else {
-            this.setState({searchSource: 2})
+            this.setState({ searchSource: 2 })
         }
     }
 
     onstartRequest(event) {
         try {
-            // console.log(event)
+            console.log(event)
 
             this.currentUrl = event.mainDocumentURL ? event.mainDocumentURL : event.url
 
@@ -112,16 +546,16 @@ class TaobaoWebView extends React.Component {
     }
 
     async addToCart() {
-        if(!this.props.user){
+        if (!this.props.user) {
             CustomAlert('Lỗi', 'Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng', [
-                {text: 'Bỏ'},
-                {text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView')}
+                { text: 'Bỏ' },
+                { text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView') }
             ])
             return
         }
 
         // console.log(this.currentUrl)
-        if(!this.currentUrl){
+        if (!this.currentUrl) {
             return
         }
 
@@ -155,8 +589,29 @@ class TaobaoWebView extends React.Component {
         try {
             if (event.nativeEvent.data && this.currentUrl) {
                 let response = JSON.parse(event.nativeEvent.data)
-                // console.log(response)
+                console.log({ response })
                 if (response) {
+                    if (response.type == '1688ShowOptionPopUp') {
+                        const startIndex = response.value.indexOf('__INIT_DATA=')
+                        if (startIndex > -1) {
+                            const endIndex = response.value.indexOf('</script>', startIndex)
+                            const dataString = response.value.substring(startIndex + 12, endIndex)
+                            try {
+                                const data = JSON.parse(dataString)
+                                if (data && data.globalData) {
+                                    // if(data.globalData.skuModel && data.globalData.skuModel.skuProps){
+                                    this.setState({ options1688: data.globalData })
+                                    // } else {
+                                    //     alert('Hiện tại không thể mua sản phẩm này')
+                                    // }
+
+                                }
+                            } catch (error) {
+                                console.log({ error })
+                            }
+                        }
+                        return
+                    }
                     if (response.type == 'checkReadyToAddCart') {
                         if (response.value == 1) {
                             if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1) {
@@ -170,8 +625,8 @@ class TaobaoWebView extends React.Component {
                             CustomAlert('Có lỗi', 'Vui lòng chọn thuộc tính sản phẩm')
                         } else if (response.value == 3) {
                             CustomAlert('Có lỗi', 'Sản phẩm đã hết hàng hoặc phải đăng nhập để đặt hàng.', [
-                                {text: 'Cancel'},
-                                {text: 'Đăng nhập', onPress: () => this.setState({url: `https://login.m.taobao.com/login_oversea.htm?spm=a2141.8294655.toolbar.3&redirectURL=${this.currentUrl}`})}
+                                { text: 'Cancel' },
+                                { text: 'Đăng nhập', onPress: () => this.setState({ url: `https://login.m.taobao.com/login_oversea.htm?spm=a2141.8294655.toolbar.3&redirectURL=${this.currentUrl}` }) }
                             ])
                         } else {
                             if (this.currentUrl.indexOf('https://m.intl.taobao.com/detail/detail.html') != -1) {
@@ -190,20 +645,35 @@ class TaobaoWebView extends React.Component {
                             cart.options.map((item) => {
                                 options[item.propertyTitle] = item.propertyValue
                             })
-    
-                            // console.log(cart)
+
                             this.props.addItemToCart(cart.title, cart.title, cart.shop_name, cart.quantity,
                                 cart.price, JSON.stringify(options), cart.detailUrl, cart.detailUrl, cart.currency,
                                 cart.image, cart.price)
                         })
-                        
+
                         this.webview.reload()
                     }
                 }
             }
         } catch (error) {
-
+            console.log({ error })
         }
+    }
+
+    onBuy1688(carts) {
+        console.log({ carts })
+        this.setState({ options1688: null, })
+        carts.map((cart) => {
+            let options = {}
+            cart.options.map((item) => {
+                options[item.propertyTitle] = item.propertyValue
+            })
+
+            this.props.addItemToCart(cart.title, cart.title, cart.shop_name, cart.quantity,
+                cart.price, JSON.stringify(options), this.currentUrl, this.currentUrl, 'CNY',
+                cart.image, cart.price)
+        })
+        this.webview.reload()
     }
 
     openCart() {
@@ -215,7 +685,7 @@ class TaobaoWebView extends React.Component {
             return
         }
 
-        this.setState({ url: this.state.searchKeyword })
+        this.setState({ url: this.state.searchKeyword, options1688: null })
     }
 
     goBack() {
@@ -276,7 +746,7 @@ class TaobaoWebView extends React.Component {
             currentUrl = `https://www.chemistwarehouse.com.au/search/go?w=${suggestion.key}`
         } else if (searchSource == 2) {
             currentUrl = `https://list.tmall.com/search_product.htm?q=${suggestion.zh_value}&type=p&tmhkh5=&spm=a220m.8599659.a2227oh.d100&from=mallfp..m_1_searchbutton&searchType=default&closedKey=`
-        } else if (searchSource == 4){
+        } else if (searchSource == 4) {
             currentUrl = `https://so.m.jd.com/ware/search.action?keyword=${suggestion.zh_value}&searchFrom=home&sf=11&as=1`
         }
 
@@ -302,26 +772,26 @@ class TaobaoWebView extends React.Component {
     }
 
     renderHeader() {
-        const {searchSource} = this.state
-        
+        const { searchSource } = this.state
+
         return (
             <View style={{ flexDirection: 'row', height: 60, backgroundColor: '#CECECE' }}>
-                <TouchableOpacity onPress={() => this.setState({searchSource: 0})} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 0 ? Global.MainColor : 'white'  }}>
+                <TouchableOpacity onPress={() => this.setState({ searchSource: 0 })} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 0 ? Global.MainColor : 'white' }}>
                     <Image source={Media.AlibabaIcon} style={{ width: 20, height: 20 }} resizeMode='contain' />
-                    <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName}}>1688</Text>
+                    <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName }}>1688</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => this.setState({searchSource: 1})} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 1 ? Global.MainColor : 'white' }}>
+                <TouchableOpacity onPress={() => this.setState({ searchSource: 1 })} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 1 ? Global.MainColor : 'white' }}>
                     <Image source={Media.TaobaoIcon} style={{ width: 20, height: 20 }} resizeMode='contain' />
                     <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName }}>taobao</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => this.setState({searchSource: 2})} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 2 ? Global.MainColor : 'white' }}>
+                <TouchableOpacity onPress={() => this.setState({ searchSource: 2 })} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 2 ? Global.MainColor : 'white' }}>
                     <Image source={Media.TmallIcon} style={{ width: 20, height: 20 }} resizeMode='contain' />
                     <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName }}>tmall</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => this.setState({searchSource: 4})} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 3 ? Global.MainColor : 'white' }}>
+                <TouchableOpacity onPress={() => this.setState({ searchSource: 4 })} style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: 'white', borderBottomColor: searchSource == 3 ? Global.MainColor : 'white' }}>
                     <Image source={Media.JDIcon} style={{ width: 20, height: 20 }} resizeMode='contain' />
                     <Text numberOfLines={1} style={{ width: '100%', textAlign: 'center', fontSize: 14, marginTop: 5, color: 'black', fontFamily: Global.FontName }}>jd</Text>
                 </TouchableOpacity>
@@ -331,7 +801,7 @@ class TaobaoWebView extends React.Component {
 
     render() {
 
-        const { url, suggestions } = this.state
+        const { url, suggestions, options1688 } = this.state
         const { cartCount } = this.props
 
         return (
@@ -414,6 +884,18 @@ class TaobaoWebView extends React.Component {
                         keyExtractor={(item, index) => index.toString()}
                     />
                 }
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={options1688 != null}
+                    onRequestClose={() => {
+                        this.setState({ options1688: null })
+                    }}
+                >
+                    <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+                        <Option1688View {...options1688} onClose={() => this.setState({ options1688: null })} onBuy={this.onBuy1688.bind(this)} />
+                    </View>
+                </Modal>
             </View>
         )
     }
