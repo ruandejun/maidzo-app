@@ -14,7 +14,7 @@
 		184E02032358B4A4002A15F7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 184E01FE2358B4A4002A15F7 /* Images.xcassets */; };
 		184E02042358B4A4002A15F7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 184E01FF2358B4A4002A15F7 /* AppDelegate.m */; };
 		184E02052358B4A4002A15F7 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 184E02002358B4A4002A15F7 /* Info.plist */; };
-		185A5ECD2401D10F006BD100 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 185A5ECC2401D10F006BD100 /* GoogleService-Info.plist */; };
+		185B86F3251C4CC9004CDD4B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 185B86F2251C4CC9004CDD4B /* GoogleService-Info.plist */; };
 		41C3086F783347B4A19D216E /* Arial-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 365FEDECC9D04F8AB04F4509 /* Arial-Italic.ttf */; };
 		456E2B919756487ABE1E2ED2 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C836776DCA114D71A8C25E78 /* EvilIcons.ttf */; };
 		47448DD00B084DF8A9C0FDF3 /* Arial-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28EAD348A4FC4F0CBA61EFDE /* Arial-BoldItalic.ttf */; };
@@ -48,8 +48,8 @@
 		184E01FE2358B4A4002A15F7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		184E01FF2358B4A4002A15F7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		184E02002358B4A4002A15F7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		185A5ECC2401D10F006BD100 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		185A5ECE2401D11A006BD100 /* Shipway247.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Shipway247.entitlements; sourceTree = "<group>"; };
+		185B86F2251C4CC9004CDD4B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1D996B1F2D4FE40D05AA5136 /* libPods-Maidzo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Maidzo-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		203764E8B03A9BB28E7760B0 /* Pods-Maidzo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maidzo.release.xcconfig"; path = "Target Support Files/Pods-Maidzo/Pods-Maidzo.release.xcconfig"; sourceTree = "<group>"; };
 		28EAD348A4FC4F0CBA61EFDE /* Arial-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Arial-BoldItalic.ttf"; path = "../resources/fonts/Arial-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -143,8 +143,8 @@
 		184E01F92358B4A4002A15F7 /* Shipway247 */ = {
 			isa = PBXGroup;
 			children = (
+				185B86F2251C4CC9004CDD4B /* GoogleService-Info.plist */,
 				185A5ECE2401D11A006BD100 /* Shipway247.entitlements */,
-				185A5ECC2401D10F006BD100 /* GoogleService-Info.plist */,
 				184E01FA2358B4A4002A15F7 /* AppDelegate.h */,
 				184E01FB2358B4A4002A15F7 /* LaunchScreen.xib */,
 				184E01FD2358B4A4002A15F7 /* main.m */,
@@ -232,7 +232,7 @@
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = X4LKZH6N8Y;
+						DevelopmentTeam = 6H2CVT4X98;
 					};
 				};
 			};
@@ -277,7 +277,7 @@
 				E03779ADB6EB44A497369E64 /* Fontisto.ttf in Resources */,
 				0700451BA8664DEB9B48930A /* Foundation.ttf in Resources */,
 				184E02032358B4A4002A15F7 /* Images.xcassets in Resources */,
-				185A5ECD2401D10F006BD100 /* GoogleService-Info.plist in Resources */,
+				185B86F3251C4CC9004CDD4B /* GoogleService-Info.plist in Resources */,
 				64AEF921E99F4DDF84950835 /* Ionicons.ttf in Resources */,
 				8BF29CFA68CC4BD2B62AB4B2 /* MaterialCommunityIcons.ttf in Resources */,
 				8CD9274742A64EC99870C9E8 /* MaterialIcons.ttf in Resources */,
@@ -429,19 +429,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Shipway247/Shipway247.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = X4LKZH6N8Y;
+				DEVELOPMENT_TEAM = 6H2CVT4X98;
 				INFOPLIST_FILE = "$(SRCROOT)/Shipway247/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shipway247;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.shipway247;
 				PRODUCT_NAME = Shipway247;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -454,18 +454,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Shipway247/Shipway247.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = X4LKZH6N8Y;
+				DEVELOPMENT_TEAM = 6H2CVT4X98;
 				INFOPLIST_FILE = "$(SRCROOT)/Shipway247/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shipway247;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.shipway247;
 				PRODUCT_NAME = Shipway247;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
