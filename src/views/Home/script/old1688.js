@@ -1,6 +1,5 @@
 export const jsHide1688Thing = `
     function hideWebThings() {
-        window.ReactNativeWebView.postMessage(JSON.stringify({type: 'source', value: document.body.innerHTML}))
         var hides = document.querySelectorAll('.footer-bar-container');
         hides.forEach(function(h){h.style.display='none';});
 
@@ -20,15 +19,37 @@ export const jsHide1688Thing = `
 
 export const jsCheck1688ReadyToAddCart = `
     function checkReadyToAddCart() {
-      window.ReactNativeWebView.postMessage(JSON.stringify({type: '1688ShowOptionPopUp', value: document.body.innerHTML}))
+      var canAddCart = 0;
+      var element = document.getElementsByClassName('J_SelectedTotalAmount')[0];
+      if(element){
+          var count = element.innerText;
+          if(count > 0){
+              canAddCart = 1
+          }
+      }
+      var modalBtns = document.querySelectorAll('.takla-wap-b2b-skuselector-component')
+      if(canAddCart == 0){
+        modalBtns.forEach(function(btn) {
+            if(btn.style.display != 'none'){
+              canAddCart = 2
+            }
+        })
+      } else {
+        modalBtns.forEach(function(btn) {
+            if(btn.style.display == 'none'){
+              canAddCart = 0
+            }
+        })
+      }
+      
+      window.ReactNativeWebView.postMessage(JSON.stringify({type: 'checkReadyToAddCart', value: canAddCart}))
     }
     checkReadyToAddCart();
 `
 
 export const js1688ShowOptionsPopup = `
     function forceShowOptionPopup(){
-        window.ReactNativeWebView.postMessage(JSON.stringify({type: 'source', value: document.body.innerHTML}))
-    var addCart = document.getElementsByClassName('rax-ui-view left-action3')[0]; 
+    var addCart = document.getElementsByClassName('takla-item-content has-item-arrow J_SkuBtn')[0]; 
     if(addCart) { 
         addCart.click();
     } else { 
@@ -119,10 +140,12 @@ function getProductDetailForCart() {
       }
 
       window.ReactNativeWebView.postMessage(JSON.stringify({type: 'getProductDetailForCart', value: products}))
+
+      closeOptionPopup();
 }
 
 function closeOptionPopup() {
-    var backgroundClick = document.getElementsByClassName('close-icon')[0]; 
+    var backgroundClick = document.getElementsByClassName('component-sku-selector-mask')[0]; 
     if(backgroundClick) { 
         backgroundClick.click();
     }
