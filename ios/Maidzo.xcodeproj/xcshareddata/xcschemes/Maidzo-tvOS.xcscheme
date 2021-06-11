@@ -31,7 +31,7 @@
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
                BuildableName = "Maidzo-tvOS.app"
                BlueprintName = "Maidzo-tvOS"
-               ReferencedContainer = "container:Vanma.xcodeproj">
+               ReferencedContainer = "container:Maidzo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
                BuildableName = "Maidzo-tvOSTests.xctest"
                BlueprintName = "Maidzo-tvOSTests"
-               ReferencedContainer = "container:Vanma.xcodeproj">
+               ReferencedContainer = "container:Maidzo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -55,15 +55,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "Maidzo-tvOS.app"
-            BlueprintName = "Maidzo-tvOS"
-            ReferencedContainer = "container:Vanma.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -72,10 +63,21 @@
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
                BuildableName = "Maidzo-tvOSTests.xctest"
                BlueprintName = "Maidzo-tvOSTests"
-               ReferencedContainer = "container:Vanma.xcodeproj">
+               ReferencedContainer = "container:Maidzo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
+            BuildableName = "Maidzo-tvOS.app"
+            BlueprintName = "Maidzo-tvOS"
+            ReferencedContainer = "container:Maidzo.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -94,9 +96,11 @@
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
             BuildableName = "Maidzo-tvOS.app"
             BlueprintName = "Maidzo-tvOS"
-            ReferencedContainer = "container:Vanma.xcodeproj">
+            ReferencedContainer = "container:Maidzo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -111,7 +115,7 @@
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
             BuildableName = "Maidzo-tvOS.app"
             BlueprintName = "Maidzo-tvOS"
-            ReferencedContainer = "container:Vanma.xcodeproj">
+            ReferencedContainer = "container:Maidzo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -49,7 +49,7 @@ class PrivacyView extends React.Component {
         return (
             <View style={styles.container}>
                 <Header
-                    title='Điều khoản'
+                    title='Điều khoản Maidzo'
                     leftIcon='chevron-left'
                     leftAction={() => this.props.navigation.goBack()}
                 />

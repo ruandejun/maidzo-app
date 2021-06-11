@@ -364,9 +364,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BugsnagReactNative: c6d12b6ea33c10db071c063b47c3b7f60ff75883
-  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
-  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 9cbe4e5b5eaafa05dc932be58b7c8c3820d71e88
   FirebaseAnalytics: 843c7f64a8f9c79f0d03281197ebe7bb1d58d477
   FirebaseAnalyticsInterop: d48b6ab67bcf016a05e55b71fc39c61c0cb6b7f3
@@ -420,6 +420,6 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: 7568737603c50f6237850afedd7e9e28e5917e6b
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
-PODFILE CHECKSUM: fda209516b0818ff62f9d24def502853d3d08adc
+PODFILE CHECKSUM: 6e753abb6ad94ece64c63f3413b6440c21b408cc
 
 COCOAPODS: 1.9.3

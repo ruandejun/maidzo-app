@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Vanma.app"
-               BlueprintName = "Vanma"
-               ReferencedContainer = "container:Vanma.xcodeproj">
+               BuildableName = "Maidzo.app"
+               BlueprintName = "Maidzo"
+               ReferencedContainer = "container:Maidzo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
                BuildableName = "MaidzoTests.xctest"
                BlueprintName = "MaidzoTests"
-               ReferencedContainer = "container:Vanma.xcodeproj">
+               ReferencedContainer = "container:Maidzo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -59,9 +59,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Vanma.app"
-            BlueprintName = "Vanma"
-            ReferencedContainer = "container:Vanma.xcodeproj">
+            BuildableName = "Maidzo.app"
+            BlueprintName = "Maidzo"
+            ReferencedContainer = "container:Maidzo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -72,7 +72,7 @@
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
                BuildableName = "MaidzoTests.xctest"
                BlueprintName = "MaidzoTests"
-               ReferencedContainer = "container:Vanma.xcodeproj">
+               ReferencedContainer = "container:Maidzo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -92,9 +92,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Vanma.app"
-            BlueprintName = "Vanma"
-            ReferencedContainer = "container:Vanma.xcodeproj">
+            BuildableName = "Maidzo.app"
+            BlueprintName = "Maidzo"
+            ReferencedContainer = "container:Maidzo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -109,9 +109,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Vanma.app"
-            BlueprintName = "Vanma"
-            ReferencedContainer = "container:Vanma.xcodeproj">
+            BuildableName = "Maidzo.app"
+            BlueprintName = "Maidzo"
+            ReferencedContainer = "container:Maidzo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

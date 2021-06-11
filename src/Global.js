@@ -53,16 +53,17 @@ import {
   }
 
   export const contacts = [
-    {title: 'Hotline', number: '039.338.2222', action: 'tel:84393382222', icon: 'phone'},
-    {title: 'Messenger', number: 'Vanma.vn', action: 'http://m.me/Vanma.vn', icon: 'facebook-messenger'},
+    {title: 'Hotline', number: '1900989977', action: 'tel:1900989977', icon: 'phone'},
+    {title: 'Zalo', number: '+840393382222', action: 'https://zalo.me/1807717681848049893', icon: 'headset'},
+    {title: 'Messenger', number: 'MaiDzo.vn', action: 'http://m.me/MaiDzo.vn', icon: 'facebook-messenger'},
   ]
 
   export default Global = {
-    MainColor: '#3daed4',
+    MainColor: '#EE4D2D',
     ScreenWidth : Dimensions.get('screen').width,
     ScreenHeight : Dimensions.get('screen').height,
     FontName : 'Arial',
-    apiUrl: 'https://quanly.vanma.vn/',
+    apiUrl: 'https://quanly.maidzo.vn/',
     username: '',
     userId: '',
     userToken: '',

@@ -1,4 +1,4 @@
-package vn.vanma;
+package com.maidzo;
 
 import android.app.Application;
 import android.util.Log;

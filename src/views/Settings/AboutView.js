@@ -54,7 +54,7 @@ class AboutView extends React.Component {
                 <View style={{width: '100%', flex: 1, alignItems: 'center'}}>
                     <Image source={Media.LogoFull} style={{width: 300, height: 100}} resizeMode='contain'/>
                     <Text style={{width: '90%', fontSize: 15, color: '#333333', fontFamily: Global.FontName, marginTop : 20}}>{'Website: '}
-                        <Text style={{color: 'blue', textDecorationLine: 'underline'}} onPress={this.onOpenLink.bind(this, 'https://vanma.vn')}>https://vanma.vn</Text>
+                        <Text style={{color: 'blue', textDecorationLine: 'underline'}} onPress={this.onOpenLink.bind(this, 'https://maidzo.vn')}>https://maidzo.vn</Text>
                     </Text>
                     <View style={{width: '90%', backgroundColor: '#CECECE', height: 1, marginTop : 15, marginBottom : 15}}/>
                     <Text style={{width: '90%', fontSize: 15, color: '#333333', fontFamily: Global.FontName}}>{'Địa chỉ: '}

@@ -13,7 +13,8 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		18ED409E25411CA20058F50D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18ED409D25411CA20058F50D /* GoogleService-Info.plist */; };
+		1859B67023749A9500615F24 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1859B66F23749A9500615F24 /* GoogleService-Info.plist */; };
+		365E02CE2FA831E2DBBBC028 /* libPods-Maidzo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB852A44325386E93E3D8973 /* libPods-Maidzo.a */; };
 		41C3086F783347B4A19D216E /* Arial-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 365FEDECC9D04F8AB04F4509 /* Arial-Italic.ttf */; };
 		456E2B919756487ABE1E2ED2 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C836776DCA114D71A8C25E78 /* EvilIcons.ttf */; };
 		47448DD00B084DF8A9C0FDF3 /* Arial-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28EAD348A4FC4F0CBA61EFDE /* Arial-BoldItalic.ttf */; };
@@ -22,7 +23,6 @@
 		64AEF921E99F4DDF84950835 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78759D15651A43D29E1C4201 /* Ionicons.ttf */; };
 		6503E1F375804549B523B688 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A95C65BA9FFD4592B8F234DA /* Feather.ttf */; };
 		6A5687B1056E4B6780245DC1 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 00C7F96139CA47A7980F44C1 /* Entypo.ttf */; };
-		7756FB724FCA3D7AFFAFAFFA /* libPods-Vanma.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0878069131784BB555CDDBC1 /* libPods-Vanma.a */; };
 		79562545D623451B9A7A9804 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81781BB041924013BF70F685 /* SimpleLineIcons.ttf */; };
 		85B78B9B35C341119478AE62 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 407A4D7BB60B439995BD1B78 /* Zocial.ttf */; };
 		875C6CFD7ECF46E2878A0990 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9B2A169C8D13489380C67E50 /* FontAwesome.ttf */; };
@@ -41,17 +41,16 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* MaidzoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaidzoTests.m; sourceTree = "<group>"; };
 		035AC1F2640245569D065382 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
-		0878069131784BB555CDDBC1 /* libPods-Vanma.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Vanma.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		12A358DE4BDB4A9CB49A13DB /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Vanma.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vanma.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Maidzo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maidzo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Maidzo/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Maidzo/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Maidzo/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Maidzo/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Maidzo/main.m; sourceTree = "<group>"; };
+		1859B66F23749A9500615F24 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1859B67123749F6200615F24 /* Maidzo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Maidzo.entitlements; path = Maidzo/Maidzo.entitlements; sourceTree = "<group>"; };
-		18ED409D25411CA20058F50D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1D996B1F2D4FE40D05AA5136 /* libPods-Maidzo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Maidzo-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		203764E8B03A9BB28E7760B0 /* Pods-Maidzo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maidzo.release.xcconfig"; path = "Target Support Files/Pods-Maidzo/Pods-Maidzo.release.xcconfig"; sourceTree = "<group>"; };
 		28EAD348A4FC4F0CBA61EFDE /* Arial-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Arial-BoldItalic.ttf"; path = "../resources/fonts/Arial-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -63,7 +62,6 @@
 		6FADBC2C48B630AA2403BB24 /* libPods-MaidzoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MaidzoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78759D15651A43D29E1C4201 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		81781BB041924013BF70F685 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
-		8419A3FA7DBAE89B0AA748D7 /* Pods-Vanma.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vanma.release.xcconfig"; path = "Target Support Files/Pods-Vanma/Pods-Vanma.release.xcconfig"; sourceTree = "<group>"; };
 		8EEE1F86104646F08CB02C20 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		9B2A169C8D13489380C67E50 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		9F80700EF5D548D39179431A /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
@@ -72,11 +70,11 @@
 		AA3E6E25AA8FBBA4CCDD2232 /* Pods-Maidzo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maidzo.debug.xcconfig"; path = "Target Support Files/Pods-Maidzo/Pods-Maidzo.debug.xcconfig"; sourceTree = "<group>"; };
 		B49533F0C1F2BD12B4653FB7 /* Pods-Maidzo-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maidzo-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Maidzo-tvOSTests/Pods-Maidzo-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B4BC46F7D5B74570A78DA866 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		BB852A44325386E93E3D8973 /* libPods-Maidzo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Maidzo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2A5061C494C4002A4A9A87B /* Arial-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Arial-Bold.ttf"; path = "../resources/fonts/Arial-Bold.ttf"; sourceTree = "<group>"; };
 		C836776DCA114D71A8C25E78 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		C900C0789E8A4DF4B3A55ADE /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		C93272F8651E91528F38E82D /* Pods-Maidzo-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maidzo-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Maidzo-tvOS/Pods-Maidzo-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		D78D22353605948D812CF41B /* Pods-Vanma.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vanma.debug.xcconfig"; path = "Target Support Files/Pods-Vanma/Pods-Vanma.debug.xcconfig"; sourceTree = "<group>"; };
 		D798E8CDA92F44BC91B3FC0D /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		DAF578570319ED89512C866F /* libPods-Maidzo-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Maidzo-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED0CDF3AED36174100FAEEDD /* Pods-MaidzoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MaidzoTests.debug.xcconfig"; path = "Target Support Files/Pods-MaidzoTests/Pods-MaidzoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -91,7 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7756FB724FCA3D7AFFAFAFFA /* libPods-Vanma.a in Frameworks */,
+				365E02CE2FA831E2DBBBC028 /* libPods-Maidzo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,8 +124,6 @@
 				4392A05F7EAB91C78DD2F379 /* Pods-Maidzo-tvOSTests.release.xcconfig */,
 				ED0CDF3AED36174100FAEEDD /* Pods-MaidzoTests.debug.xcconfig */,
 				4C1F48DA743CC4448971739E /* Pods-MaidzoTests.release.xcconfig */,
-				D78D22353605948D812CF41B /* Pods-Vanma.debug.xcconfig */,
-				8419A3FA7DBAE89B0AA748D7 /* Pods-Vanma.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -163,7 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				1859B67123749F6200615F24 /* Maidzo.entitlements */,
-				18ED409D25411CA20058F50D /* GoogleService-Info.plist */,
+				1859B66F23749A9500615F24 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -180,10 +176,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
+				BB852A44325386E93E3D8973 /* libPods-Maidzo.a */,
 				1D996B1F2D4FE40D05AA5136 /* libPods-Maidzo-tvOS.a */,
 				DAF578570319ED89512C866F /* libPods-Maidzo-tvOSTests.a */,
 				6FADBC2C48B630AA2403BB24 /* libPods-MaidzoTests.a */,
-				0878069131784BB555CDDBC1 /* libPods-Vanma.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -214,7 +210,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Vanma.app */,
+				13B07F961A680F5B00A75B9A /* Maidzo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -222,9 +218,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13B07F861A680F5B00A75B9A /* Vanma */ = {
+		13B07F861A680F5B00A75B9A /* Maidzo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Vanma" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Maidzo" */;
 			buildPhases = (
 				3BA842377AF34E5A27C68C6D /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -238,9 +234,9 @@
 			);
 			dependencies = (
 			);
-			name = Vanma;
+			name = Maidzo;
 			productName = Maidzo;
-			productReference = 13B07F961A680F5B00A75B9A /* Vanma.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Maidzo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -257,7 +253,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Vanma" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Maidzo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -271,7 +267,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* Vanma */,
+				13B07F861A680F5B00A75B9A /* Maidzo */,
 			);
 		};
 /* End PBXProject section */
@@ -300,7 +296,7 @@
 				64AEF921E99F4DDF84950835 /* Ionicons.ttf in Resources */,
 				8BF29CFA68CC4BD2B62AB4B2 /* MaterialCommunityIcons.ttf in Resources */,
 				8CD9274742A64EC99870C9E8 /* MaterialIcons.ttf in Resources */,
-				18ED409E25411CA20058F50D /* GoogleService-Info.plist in Resources */,
+				1859B67023749A9500615F24 /* GoogleService-Info.plist in Resources */,
 				612370DE58664FCD956FCAE5 /* Octicons.ttf in Resources */,
 				79562545D623451B9A7A9804 /* SimpleLineIcons.ttf in Resources */,
 				85B78B9B35C341119478AE62 /* Zocial.ttf in Resources */,
@@ -339,7 +335,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Vanma-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Maidzo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -352,7 +348,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Vanma/Pods-Vanma-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Maidzo/Pods-Maidzo-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/QBImagePickerController/QBImagePicker.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
@@ -395,7 +391,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Vanma/Pods-Vanma-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Maidzo/Pods-Maidzo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -446,24 +442,24 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D78D22353605948D812CF41B /* Pods-Vanma.debug.xcconfig */;
+			baseConfigurationReference = AA3E6E25AA8FBBA4CCDD2232 /* Pods-Maidzo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Maidzo/Maidzo.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = X4LKZH6N8Y;
 				INFOPLIST_FILE = Maidzo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Vanma;
-				PRODUCT_NAME = Vanma;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.maidzo;
+				PRODUCT_NAME = Maidzo;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -471,23 +467,23 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8419A3FA7DBAE89B0AA748D7 /* Pods-Vanma.release.xcconfig */;
+			baseConfigurationReference = 203764E8B03A9BB28E7760B0 /* Pods-Maidzo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Maidzo/Maidzo.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = X4LKZH6N8Y;
 				INFOPLIST_FILE = Maidzo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Vanma;
-				PRODUCT_NAME = Vanma;
+				PRODUCT_BUNDLE_IDENTIFIER = vn.maidzo;
+				PRODUCT_NAME = Maidzo;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -595,7 +591,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Vanma" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Maidzo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -604,7 +600,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Vanma" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Maidzo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
