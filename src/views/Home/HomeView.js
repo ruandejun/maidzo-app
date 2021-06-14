@@ -151,7 +151,9 @@ class HomeView extends React.Component {
                         // })
                     }
                 })
-                .catch(console.error);
+                .catch(error => {
+                    console.log({error})
+                });
         } catch (error) {
             console.log({ error })
         }
