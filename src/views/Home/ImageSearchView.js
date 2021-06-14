@@ -8,7 +8,7 @@ import {
     ActivityIndicator,
     AppState,
     TouchableOpacity,
-    TouchableWithoutFeedback,
+    Linking,
     FlatList,
 } from 'react-native';
 
@@ -87,8 +87,12 @@ class ImageSearchView extends React.Component {
         )
     }
 
-    onPressItem(url){
-        this.props.navigation.navigate('TaobaoWebView', {url: url.replace('#modal=sku', '')})
+    onPressItem(link){
+        if(Global.showCart){
+            this.props.navigation.navigate('TaobaoWebView', { url: link.replace('#modal=sku', '') })
+        } else {
+            Linking.openURL(link)
+        }
     }
 
     render() {

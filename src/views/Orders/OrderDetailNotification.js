@@ -8,7 +8,7 @@ import {
     ActivityIndicator,
     AppState,
     TouchableOpacity,
-    TouchableWithoutFeedback,
+    Linking,
     FlatList,
 } from 'react-native';
 
@@ -109,7 +109,11 @@ class OrderDetailNotification extends React.Component {
     }
 
     openItem(link){
-        this.props.navigation.navigate('TaobaoWebView', {url: link.replace('#modal=sku', '')})
+        if(Global.showCart){
+            this.props.navigation.navigate('TaobaoWebView', { url: link.replace('#modal=sku', '') })
+        } else {
+            Linking.openURL(link)
+        }
     }
 
     renderFooter(){

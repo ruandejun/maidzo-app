@@ -10,7 +10,7 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     Alert,
-    PixelRatio
+    Linking
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -54,8 +54,12 @@ class HomeScanView extends React.Component {
         }
     }
 
-    onpenWeb(url) {
-        this.props.navigation.replace('TaobaoWebView', { url: url.replace('#modal=sku', '') })
+    onpenWeb(link) {
+        if(Global.showCart){
+            this.props.navigation.navigate('TaobaoWebView', { url: link.replace('#modal=sku', '') })
+        } else {
+            Linking.openURL(link)
+        }
     }
 
 

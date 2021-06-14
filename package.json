@@ -52,10 +52,5 @@
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|react-navigation)"
     ]
-  },
-  "rnpm": {
-    "assets": [
-      "./resources/fonts"
-    ]
   }
 }

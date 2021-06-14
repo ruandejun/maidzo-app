@@ -14,6 +14,7 @@ import {
     AppState,
     TouchableOpacity,
     FlatList,
+    Linking,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -104,7 +105,11 @@ class CartView extends React.Component {
     }
 
     openItem(link) {
-        this.props.navigation.navigate('TaobaoWebView', { url: link.replace('#modal=sku', '') })
+        if(Global.showCart){
+            this.props.navigation.navigate('TaobaoWebView', { url: link.replace('#modal=sku', '') })
+        } else {
+            Linking.openURL(link)
+        }
     }
 
     onSelected(item_list){

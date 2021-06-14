@@ -1,6 +1,7 @@
 import actions from './action'
 
 const initState = {
+    showCart: false
 };
 
 export default function appReducer(state = initState, action) {

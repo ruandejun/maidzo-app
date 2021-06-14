@@ -37,6 +37,7 @@ target 'Maidzo' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'Firebase/Messaging'
+  pod 'Firebase/RemoteConfig'
   
   use_native_modules!
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
