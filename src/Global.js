@@ -72,8 +72,7 @@ export default Global = {
   userId: '',
   userToken: '',
   pushToken: '',
-  overlayPopView: null,
-  showCart: false
+  overlayPopView: null
 }
 
 export const Media = media;

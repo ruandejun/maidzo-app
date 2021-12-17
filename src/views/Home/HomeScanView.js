@@ -55,13 +55,8 @@ class HomeScanView extends React.Component {
     }
 
     onpenWeb(link) {
-        if(Global.showCart){
-            this.props.navigation.navigate('TaobaoWebView', { url: link.replace('#modal=sku', '') })
-        } else {
-            Linking.openURL(link)
-        }
+        this.props.navigation.navigate('TaobaoWebView', { url: link.replace('#modal=sku', '') })
     }
-
 
     onSelectPhoto() {
         try {

@@ -56,8 +56,7 @@ class HomeView extends React.Component {
     state = {
         keyword: '',
         pastedLink: '',
-        currencies: [],
-        showCart: false
+        currencies: []
     }
 
     componentDidMount() {
@@ -91,6 +90,12 @@ class HomeView extends React.Component {
 
         this.onLoadCurrency()
 
+        StatusBar.setBarStyle('dark-content')
+
+        this.getNotify()
+    }
+
+    getNotify() {
         fetchApi('get', 'api/system_configure/template/thong-bao/')
             .then((data) => {
                 if (data && data.body && data.body.length > 0) {
@@ -110,53 +115,6 @@ class HomeView extends React.Component {
             .catch((error) => {
                 console.log(error)
             })
-
-        StatusBar.setBarStyle('dark-content')
-
-        this.getCart()
-    }
-
-    async getCart() {
-        try {
-            firebase.config().setDefaults({
-                maidzo_show_cart: JSON.stringify({ios: false, android: true}),
-              })
-
-            firebase.config().fetch(0)
-                .then(() => {
-                    return firebase.config().activateFetched();
-                })
-                .then((activated) => {
-                    if (!activated) console.log('Fetched data not activated');
-                    return firebase.config().getValue('maidzo_show_cart');
-                })
-                .then((snapshot) => {
-                    const showCart = snapshot.val();
-
-                    if (showCart) {
-                        console.log({ showCart })
-                        const values = JSON.parse(showCart)
-                        console.log({ values })
-                        if(Platform.OS == 'ios'){
-                            this.setState({ showCart: values.ios })
-                            Global.showCart = values.ios
-                        }
-                        if(Platform.OS == 'android'){
-                            this.setState({ showCart: values.android })
-                            Global.showCart = values.android
-                        }
-                        // Platform.select({
-                        //     ios: () => this.setState({ showCart: values.ios }),
-                        //     android: () => this.setState({ showCart: values.android })
-                        // })
-                    }
-                })
-                .catch(error => {
-                    console.log({error})
-                });
-        } catch (error) {
-            console.log({ error })
-        }
     }
 
     onLoadCurrency() {
@@ -381,28 +339,19 @@ class HomeView extends React.Component {
     render() {
 
         const { user } = this.props
-        const { showCart } = this.state
-        console.log({showCart})
 
         return (
             <View style={styles.container}>
-                {showCart &&
-                    <Header
-                        searchBar
-                        searchText={this.state.keyword}
-                        searchContainer={{ left: 16, width: Global.ScreenWidth - 62 }}
-                        headerChangeText={(text) => this.setState({ keyword: text })}
-                        searchPlaceholder='Nhập để tìm kiếm sản phẩm'
-                        onEndSubmit={this.onSearch.bind(this)}
-                        rightIcon='qrcode'
-                        rightAction={this.onScanCode.bind(this)}
-                    />
-                }
-                {!showCart &&
-                    <Header
-                        title={'Home'}
-                    />
-                }
+                <Header
+                    searchBar
+                    searchText={this.state.keyword}
+                    searchContainer={{ left: 16, width: Global.ScreenWidth - 62 }}
+                    headerChangeText={(text) => this.setState({ keyword: text })}
+                    searchPlaceholder='Nhập để tìm kiếm sản phẩm'
+                    onEndSubmit={this.onSearch.bind(this)}
+                    rightIcon='qrcode'
+                    rightAction={this.onScanCode.bind(this)}
+                />
 
                 <ScrollView style={{ flex: 1, width: '100%' }}>
                     <View style={{ width: '100%', backgroundColor: 'white', marginTop: 10, marginBottom: 10, padding: 16 }}>
@@ -431,18 +380,12 @@ class HomeView extends React.Component {
                                     <Image source={Media.ChemistIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
                                 </TouchableOpacity> */}
 
-                            {showCart &&
-                                <TouchableOpacity onPress={this.onSelectChinaSource.bind(this)} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500' }}>Hàng Trung Quốc</Text>
-                                </TouchableOpacity>
-                            }
-
-                            {showCart &&
-                                <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.chemistwarehouse.com.au')} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500' }}>Hàng Úc</Text>
-                                </TouchableOpacity>
-                            }
-
+                            <TouchableOpacity onPress={this.onSelectChinaSource.bind(this)} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500' }}>Hàng Trung Quốc</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.chemistwarehouse.com.au')} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500' }}>Hàng Úc</Text>
+                            </TouchableOpacity>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('ManualCartView')} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500' }}>Thêm sản phẩm ngoài</Text>
                             </TouchableOpacity>
@@ -453,15 +396,12 @@ class HomeView extends React.Component {
                         </View>
                         <ScrollView horizontal style={{ width: '100%', marginTop: 8 }} showsHorizontalScrollIndicator={false}>
                             <View style={{ flexDirection: 'row', }}>
-                                {showCart &&
-                                    <TouchableOpacity onPress={this.onImageSearch.bind(this)} style={{ padding: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                        <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
-                                            <Icon name='camera' color='white' size={25} />
-                                        </View>
-                                        <Text style={{ width: 60, textAlign: 'center', fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>Tìm kiếm bằng ảnh</Text>
-                                    </TouchableOpacity>
-                                }
-
+                                <TouchableOpacity onPress={this.onImageSearch.bind(this)} style={{ padding: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                    <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
+                                        <Icon name='camera' color='white' size={25} />
+                                    </View>
+                                    <Text style={{ width: 60, textAlign: 'center', fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>Tìm kiếm bằng ảnh</Text>
+                                </TouchableOpacity>
                                 <TouchableOpacity onPress={this.onScanTracking.bind(this)} style={{ padding: 10, marginLeft: 8, alignItems: 'center', justifyContent: 'center' }}>
                                     <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
                                         <Icon name='qrcode' color='white' size={25} />
