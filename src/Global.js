@@ -57,9 +57,8 @@ export const convertMoney = (money) => {
 }
 
 export const contacts = [
-  { title: 'Hotline', number: '1900989977', action: 'tel:1900989977', icon: 'phone' },
-  { title: 'Zalo', number: '+840393382222', action: 'https://zalo.me/1807717681848049893', icon: 'headset' },
-  { title: 'Messenger', number: 'MaiDzo.vn', action: 'http://m.me/MaiDzo.vn', icon: 'facebook-messenger' },
+  {title: 'Hotline', number: '02422642666', action: 'tel:842422642666', icon: 'phone'},
+  {title: 'Messenger', number: 'Alo68.vn', action: 'http://m.me/Alo68.vn', icon: 'facebook-messenger'},
 ]
 
 export default Global = {
@@ -67,7 +66,7 @@ export default Global = {
   ScreenWidth: Dimensions.get('screen').width,
   ScreenHeight: Dimensions.get('screen').height,
   FontName: 'Arial',
-  apiUrl: 'https://quanly.maidzo.vn/',
+  apiUrl: 'https://quanly.alo68.vn/',
   username: '',
   userId: '',
   userToken: '',
