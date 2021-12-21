@@ -45,11 +45,9 @@ import { ScrollView, TextInput, FlatList } from 'react-native-gesture-handler';
 import ActionSheet from 'teaset/components/ActionSheet/ActionSheet';
 import ImagePicker from 'react-native-image-crop-picker'
 import { Overlay } from 'teaset'
-import firebase from 'react-native-firebase'
 import ActionButton from 'react-native-action-button'
 import { fetchApi } from 'actions/api'
 import PopupView from 'components/PopupView'
-import DeviceInfo from 'react-native-device-info'
 
 class HomeView extends React.Component {
 
@@ -65,28 +63,6 @@ class HomeView extends React.Component {
         }
         this.props.getSettings()
         this.props.getCart()
-
-        this.removeNotificationDisplayedListener = firebase.notifications().onNotificationDisplayed((notification) => {
-            console.log(notification)
-        });
-        this.removeNotificationListener = firebase.notifications().onNotification((notification) => {
-            console.log(notification)
-        })
-
-        this.removeRefreshTokenlistener = firebase.messaging().onTokenRefresh((token) => {
-            console.log({ token })
-            Global.pushToken = token
-
-            if (this.props.user) {
-                fetchApi('post', 'api/user/auth/update_fcm/', { device_id: DeviceInfo.getUniqueId(), registration_id: token, platform_type: Platform.OS })
-                    .then((data) => {
-                        console.log({ data })
-                    })
-                    .catch((error) => {
-                        console.log({ error })
-                    })
-            }
-        })
 
         this.onLoadCurrency()
 
@@ -129,12 +105,6 @@ class HomeView extends React.Component {
             .catch((error) => {
                 console.log(error)
             })
-    }
-
-    componentWillUnmount() {
-        this.removeNotificationDisplayedListener();
-        this.removeNotificationListener();
-        this.removeRefreshTokenlistener()
     }
 
     onpenWeb(url) {

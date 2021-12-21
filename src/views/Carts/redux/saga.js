@@ -1,5 +1,5 @@
 import { takeEvery, put, call, fork, take } from 'redux-saga/effects'
-import { AsyncStorage, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import Global from 'src/Global';
 import { fetchApi, fetchApiLogin, fetchUnlengthApi } from "actions/api"
 import NavigationService from 'actions/NavigationService'

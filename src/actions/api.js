@@ -1,4 +1,3 @@
-import { AsyncStorage } from 'react-native'
 import Global from 'src/Global'
 import NavigationService from 'actions/NavigationService'
 

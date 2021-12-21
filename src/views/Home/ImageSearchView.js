@@ -44,7 +44,7 @@ class ImageSearchView extends React.Component {
     }
 
     onRefresh(){
-        const image = this.props.navigation.getParam('image')
+        const {image} = this.props.route.params
 
         this.setState({isFetching: true}, () => {
             fetchUploadApi(`page/image_search/?type=taobao`, image)
