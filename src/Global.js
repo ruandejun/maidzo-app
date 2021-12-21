@@ -71,7 +71,7 @@ export default Global = {
   userId: '',
   userToken: '',
   pushToken: '',
-  overlayPopView: null,
+  overlayPopView: null
 }
 
 export const Media = media;

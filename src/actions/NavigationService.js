@@ -1,36 +1,43 @@
-import { NavigationActions, StackActions } from 'react-navigation';
+import * as React from 'react';
+import { StackActions, CommonActions } from '@react-navigation/native'
 
-let _navigator;
+export const isReadyRef = React.createRef();
 
-function setTopLevelNavigator(navigatorRef) {
-    _navigator = navigatorRef;
+export const navigationRef = React.createRef();
+
+function navigate(name, params) {
+    if (isReadyRef.current && navigationRef.current) {
+        // Perform navigation if the app has mounted
+        navigationRef.current.navigate(name, params);
+    } else {
+        // You can decide what to do if the app hasn't mounted
+        // You can ignore this, or add these actions to a queue you can call later
+    }
 }
 
-function navigate(routeName, params) {
-    _navigator.dispatch(
-        NavigationActions.navigate({
-            routeName,
-            params,
-        })
-    );
+function push(...args) {
+    navigationRef.current?.dispatch(StackActions.push(...args));
 }
 
-function reset(routeName, params) {
-    _navigator.dispatch(
-        StackActions.reset({
+function goBack() {
+    navigationRef.current?.dispatch(StackActions.pop());
+}
+
+function reset(name, params) {
+    navigationRef.current?.dispatch(
+        CommonActions.reset({
             index: 0,
             key: null,
-            actions: [
-                NavigationActions.navigate({
-                    routeName,
-                    params,
-                })]
+            routes: [
+                {name: name}
+            ]
         })
-    );
+    )
 }
 
 export default {
     navigate,
     reset,
-    setTopLevelNavigator,
-};
+    push,
+    goBack
+}

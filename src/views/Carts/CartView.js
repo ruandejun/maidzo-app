@@ -14,6 +14,7 @@ import {
     AppState,
     TouchableOpacity,
     FlatList,
+    Linking,
 } from 'react-native';
 
 const styles = StyleSheet.create({

@@ -1,10 +1,11 @@
 import { takeEvery, put, call, fork } from 'redux-saga/effects'
-import { AsyncStorage, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import Global from 'src/Global';
 import { fetchApi, fetchApiLogin, fetchUnlengthApi, fetchUnlengthApiLogin } from "actions/api"
 import NavigationService from 'actions/NavigationService'
 import actions from './action'
 import CustomAlert from 'components/CustomAlert'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export function* login({username, password, device_id, registration_id, platform_type}) {
   console.log({username, password, device_id, registration_id, platform_type})
