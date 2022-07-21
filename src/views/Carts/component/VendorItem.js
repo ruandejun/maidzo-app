@@ -12,7 +12,7 @@ import {
 const styles = StyleSheet.create({
     container: {
         width: Global.ScreenWidth,
-        backgroundColor: 'white', padding: 16, marginBottom: 20, marginTop: 10, 
+        backgroundColor: 'white', padding: 16, marginBottom: 20, marginTop: 10,
     },
     headerContainer: {
         flexDirection: 'row',
@@ -59,7 +59,7 @@ export default class VendorItem extends React.PureComponent {
         }
     }
 
-    onUpdateShopService(value, name){
+    onUpdateShopService(value, name) {
         if (this.props.onUpdateService) {
             const { items } = this.props
             const item_list = items.map((item) => item.id)
@@ -85,13 +85,13 @@ export default class VendorItem extends React.PureComponent {
         this.setState({ showItem: !this.state.showItem })
     }
 
-    onDelete(item_id){
-        if(this.props.onDelete){
+    onDelete(item_id) {
+        if (this.props.onDelete) {
             this.props.onDelete([item_id])
         }
     }
 
-    onDeleteShop(){
+    onDeleteShop() {
         if (this.props.onDelete) {
             const { items } = this.props
             const item_list = items.map((item) => item.id)
@@ -99,22 +99,22 @@ export default class VendorItem extends React.PureComponent {
         }
     }
 
-    onUpdateItem(pk, value, name){
-        if(this.props.onUpdateItem){
-            this.props.onUpdateItem({pk, value, name})
+    onUpdateItem(pk, value, name) {
+        if (this.props.onUpdateItem) {
+            this.props.onUpdateItem({ pk, value, name })
         }
     }
 
-    openItem(url){
-        if(this.props.openItem){
+    openItem(url) {
+        if (this.props.openItem) {
             this.props.openItem(url)
         }
     }
 
     renderItem({ item, index }) {
         const is_selected = this.props.selectedItems && this.props.selectedItems.indexOf(item.id) > -1
-        
-        return(
+
+        return (
             <CartItem {...item}
                 onDelete={this.onDelete.bind(this, item.id)}
                 onUpdateQuantity={(quantity) => this.onUpdateItem(item.id, quantity, 'quantity')}
@@ -145,13 +145,13 @@ export default class VendorItem extends React.PureComponent {
             quantity += parseInt(item.quantity)
             total_vnd += parseFloat(item.total_vnd)
             total += parseFloat(item.total)
-            if(!item.rocket) rocket = false
-            if(!item.rocket_ship) rocket_ship = false
-            if(!item.bargain) bargain = false
-            if(!item.insurance) insurance = false
-            if(!item.packing) packing = false
-            
-            if(selectedItems.indexOf(item.id) == -1){
+            if (!item.rocket) rocket = false
+            if (!item.rocket_ship) rocket_ship = false
+            if (!item.bargain) bargain = false
+            if (!item.insurance) insurance = false
+            if (!item.packing) packing = false
+
+            if (selectedItems.indexOf(item.id) == -1) {
                 is_selected = false
             }
         })
@@ -160,16 +160,16 @@ export default class VendorItem extends React.PureComponent {
             <View style={styles.container} >
                 <View style={styles.headerContainer}>
                     {!disable_selected &&
-                            <Checkbox
-                                size='lg'
-                                checked={is_selected}
-                                onChange={this.onShopSelected.bind(this)}
-                                checkedIcon={<Icon name='check-square' size={20} color={Global.MainColor}/>}
-                                uncheckedIcon={<Icon name='square' size={20} color={'#333333'}/>}
-                            />
-                        }
+                        <Checkbox
+                            size='lg'
+                            checked={is_selected}
+                            onChange={this.onShopSelected.bind(this)}
+                            checkedIcon={<Icon name='check-square' size={20} color={Global.MainColor} />}
+                            uncheckedIcon={<Icon name='square' size={20} color={'#333333'} />}
+                        />
+                    }
 
-                    <Icon name='store' size={18} color={Global.MainColor} style={{marginLeft: 8}}/>
+                    <Icon name='store' size={18} color={Global.MainColor} style={{ marginLeft: 8 }} />
                     <Text style={styles.vendorName}>{vendor}</Text>
 
                     <TouchableOpacity onPress={this.showHideItem.bind(this)} style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
@@ -178,15 +178,15 @@ export default class VendorItem extends React.PureComponent {
                 </View>
 
                 <View>
-                    <View style={{marginTop : 8, marginBottom : 8, borderRadius: 5, backgroundColor: '#f6f6f6', padding: 5}}>
-                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                    <View style={{ marginTop: 8, marginBottom: 8, borderRadius: 5, backgroundColor: '#f6f6f6', padding: 5 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                             <Checkbox
                                 title='Mua hoả tốc'
                                 size='md'
                                 checked={rocket}
                                 onChange={value => this.onUpdateShopService(value, 'rocket')}
-                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
-                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor} />}
+                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'} />}
                             />
 
                             <Checkbox
@@ -194,18 +194,18 @@ export default class VendorItem extends React.PureComponent {
                                 size='md'
                                 checked={rocket_ship}
                                 onChange={value => this.onUpdateShopService(value, 'rocket_ship')}
-                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
-                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor} />}
+                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'} />}
                             />
                         </View>
-                        <View style={{flexDirection: 'row', marginTop: 8, alignItems: 'center', justifyContent: 'space-between'}}>
+                        <View style={{ flexDirection: 'row', marginTop: 8, alignItems: 'center', justifyContent: 'space-between' }}>
                             <Checkbox
                                 title='Mặc cả'
                                 size='md'
                                 checked={bargain}
                                 onChange={value => this.onUpdateShopService(value, 'bargain')}
-                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
-                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor} />}
+                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'} />}
                             />
 
                             <Checkbox
@@ -213,39 +213,39 @@ export default class VendorItem extends React.PureComponent {
                                 size='md'
                                 checked={insurance}
                                 onChange={value => this.onUpdateShopService(value, 'insurance')}
-                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
-                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor} />}
+                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'} />}
                             />
                         </View>
-                        <View style={{flexDirection: 'row', marginTop: 8, alignItems: 'center', justifyContent: 'space-between'}}>
+                        <View style={{ flexDirection: 'row', marginTop: 8, alignItems: 'center', justifyContent: 'space-between' }}>
                             <Checkbox
                                 title='Đóng gỗ'
                                 size='md'
                                 checked={packing}
                                 onChange={value => this.onUpdateShopService(value, 'packing')}
-                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor}/>}
-                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'}/>}
+                                checkedIcon={<Icon name='check-square' size={14} color={Global.MainColor} />}
+                                uncheckedIcon={<Icon name='square' size={14} color={'#333333'} />}
                             />
 
                             <Checkbox
                                 title='Phí mua hàng*'
                                 size='md'
                                 checked={true}
-                                checkedIcon={<Icon name='check-square' size={14} color={'#777777'}/>}
+                                checkedIcon={<Icon name='check-square' size={14} color={'#777777'} />}
                             />
                         </View>
                     </View>
 
                     <View style={styles.priceContainer}>
                         <Text style={styles.priceText}>Tổng số lượng</Text>
-                        <Text style={styles.priceText}>{quantity}</Text>
+                        <Text style={styles.priceText}>{quantity}</Text>
                     </View>
                     <View style={styles.priceContainer}>
                         <Text style={styles.priceText}>Tổng tiền</Text>
-                        <Text style={[styles.priceText, ]}>
-                            <Text style={{color: '#3578E5'}}>{total}</Text>
+                        <Text style={[styles.priceText,]}>
+                            <Text style={{ color: '#3578E5' }}>{convertMoney(total)}</Text>
                             |
-                            <Text style={{color: Global.MainColor}}>{convertMoney(Math.round(total_vnd)) + ' đ'}</Text>
+                            <Text style={{ color: Global.MainColor }}>{convertMoney(Math.round(total_vnd)) + ' đ'}</Text>
                         </Text>
                     </View>
                 </View>
@@ -257,9 +257,9 @@ export default class VendorItem extends React.PureComponent {
                     />
                 }
 
-                <TouchableOpacity onPress={this.onDeleteShop.bind(this)} style={{marginTop: 10, flexDirection: 'row', height: 30, alignItems: 'center', justifyContent: 'center'}}>
-                    <Icon name='trash' size={15} color='red'/>
-                    <Text style={{fontSize: 14, color: 'red', fontFamily: Global.FontName, marginLeft: 5}}>Xoá Shop</Text>
+                <TouchableOpacity onPress={this.onDeleteShop.bind(this)} style={{ marginTop: 10, flexDirection: 'row', height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                    <Icon name='trash' size={15} color='red' />
+                    <Text style={{ fontSize: 14, color: 'red', fontFamily: Global.FontName, marginLeft: 5 }}>Xoá Shop</Text>
                 </TouchableOpacity>
             </View>
         )

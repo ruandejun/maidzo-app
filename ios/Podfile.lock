@@ -598,7 +598,7 @@ SPEC CHECKSUMS:
   BugsnagReactNative: 98fb350df4bb0c94cce903023531a1a5cc11fa51
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: 49cbe4b43e445b06bf29199b6ad2057649e4c8f5
-  FBReactNativeSpec: e8a9addb0996b6d63171f3e6b75e4f8d9d5f0490
+  FBReactNativeSpec: 597c1e6f495f51d0e135b6ebf4a5ab2634ee34b3
   Firebase: 44213362f1dcc52555b935dc925ed35ac55f1b20
   FirebaseCore: 04186597c095da37d90ff9fd3e53bc61a1ff2440
   FirebaseCoreDiagnostics: 56fb7216d87e0e6ec2feddefa9d8a392fe8b2c18
@@ -660,4 +660,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 2f2fdce6b10697eeeb9719a0a3d2a78cea5566c4
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
