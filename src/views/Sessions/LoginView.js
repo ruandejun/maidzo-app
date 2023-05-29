@@ -83,7 +83,7 @@ class LoginView extends React.Component {
     }
 
     componentDidMount() {
-        const username = this.props.navigation.getParam('username')
+        const {username} = (this.props && this.props.route && this.props.route.params) ? this.props.route.params : {}
         if (username) {
             this.setState({ username: username })
         }

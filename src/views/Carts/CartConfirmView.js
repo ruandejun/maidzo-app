@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         fontSize: 14, color: 'white', fontFamily: Global.FontName
     },
     orderContainer: {
-        height: 50, marginBottom : 20, marginTop : 10, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center'
+        height: 50, marginBottom: 20, marginTop: 10, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center'
     },
     orderText: {
         fontSize: 14, color: 'white', fontWeight: '500', fontFamily: Global.FontName
@@ -43,22 +43,22 @@ import { connect } from 'react-redux';
 import Global, { Media, convertMoney, } from 'src/Global';
 import Header from 'components/Header'
 import CartItem from './component/CartItem'
-import {createOrderFromCart} from 'Orders/redux/action'
-import {StackActions} from 'react-navigation'
+import { createOrderFromCart } from 'Orders/redux/action'
+import { StackActions } from '@react-navigation/native'
 
 class CartConfirmView extends React.Component {
 
-    renderItem({item, index}){
-        return(
-            <CartItem {...item} disable_selected={true}/>
+    renderItem({ item, index }) {
+        return (
+            <CartItem {...item} disable_selected={true} />
         )
     }
 
-    footerView(){
+    footerView() {
 
-        const {cartItems} = this.props
+        const { cartItems } = this.props
 
-        if(cartItems.length == 0){
+        if (cartItems.length == 0) {
             return null
         }
 
@@ -74,7 +74,7 @@ class CartConfirmView extends React.Component {
             total += parseInt(item.total_vnd)
         })
 
-        return(
+        return (
             <View style={styles.footerContainer}>
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Thành tiền</Text>
@@ -100,15 +100,14 @@ class CartConfirmView extends React.Component {
         )
     }
 
-    onNext(){
-        const cart_info = this.props.navigation.getParam('cart_info')
-        const selectedItems = this.props.navigation.getParam('selectedItems')
+    onNext() {
+        const { cart_info, selectedItems } = this.props.route.params
 
-        if(!cart_info){
+        if (!cart_info) {
             return null
         }
 
-        const {full_name, street, district, city, phone_number, ship_method, order_note, facebook} = cart_info
+        const { full_name, street, district, city, phone_number, ship_method, order_note, facebook } = cart_info
         let item_submit = []
 
         selectedItems.map((item) => {
@@ -118,35 +117,35 @@ class CartConfirmView extends React.Component {
         this.props.createOrderFromCart(full_name, street, district, city, phone_number, ship_method, order_note, facebook, JSON.stringify(item_submit))
     }
 
-    renderHeader(){
-        const cart_info = this.props.navigation.getParam('cart_info')
+    renderHeader() {
+        const { cart_info } = this.props.route.params
 
-        if(!cart_info){
+        if (!cart_info) {
             return null
         }
 
-        const {full_name, phone_number, street, district, city} = cart_info
+        const { full_name, phone_number, street, district, city } = cart_info
 
-        return(
-            <View style={{padding: 16}}>
-                <Text style={{fontSize: 11, color: '#777777', fontFamily: Global.FontName}}>Thông tin người nhận hàng</Text>
-                <Text  style={{fontSize: 16, color: 'black', marginTop: 8, fontFamily: Global.FontName}}>{`${full_name}`}</Text>
-                <Text  style={{fontSize: 14, color: '#333333', marginTop: 5, fontFamily: Global.FontName}}>{`${phone_number}`}</Text>
-                <Text  style={{fontSize: 13, color: '#333333', marginTop: 5, fontFamily: Global.FontName}}>{`${street}, ${district}, ${city}`}</Text>
+        return (
+            <View style={{ padding: 16 }}>
+                <Text style={{ fontSize: 11, color: '#777777', fontFamily: Global.FontName }}>Thông tin người nhận hàng</Text>
+                <Text style={{ fontSize: 16, color: 'black', marginTop: 8, fontFamily: Global.FontName }}>{`${full_name}`}</Text>
+                <Text style={{ fontSize: 14, color: '#333333', marginTop: 5, fontFamily: Global.FontName }}>{`${phone_number}`}</Text>
+                <Text style={{ fontSize: 13, color: '#333333', marginTop: 5, fontFamily: Global.FontName }}>{`${street}, ${district}, ${city}`}</Text>
             </View>
         )
     }
 
     render() {
 
-        const {cartItems, isFetching} = this.props
-        const selectedItems = this.props.navigation.getParam('selectedItems')
+        const { cartItems, isFetching } = this.props
+        const { selectedItems } = this.props.route.params
 
         let total = 0
         let finalItems = []
 
         cartItems.map((item) => {
-            if(selectedItems.indexOf(item.id) > -1){
+            if (selectedItems.indexOf(item.id) > -1) {
                 total += Math.round(parseInt(item.total_vnd))
                 finalItems.push(item)
             }
@@ -155,23 +154,23 @@ class CartConfirmView extends React.Component {
         return (
             <View style={styles.container}>
                 <Header title='Xác nhận đơn hàng'
-                        leftIcon='chevron-left'
-                        leftAction={() => this.props.navigation.goBack()}
-                        rightIcon='times'
-                        rightAction={() => this.props.navigation.dispatch(StackActions.popToTop())}
+                    leftIcon='chevron-left'
+                    leftAction={() => this.props.navigation.goBack()}
+                    rightIcon='times'
+                    rightAction={() => this.props.navigation.dispatch(StackActions.popToTop())}
                 />
-                <FlatList 
+                <FlatList
                     renderItem={this.renderItem.bind(this)}
                     data={finalItems}
-                    style={{flex : 1}}
+                    style={{ flex: 1 }}
                     showsVerticalScrollIndicator={false}
                     ListHeaderComponent={this.renderHeader.bind(this)}
                 />
 
                 <View style={styles.footerContainer}>
                     <View style={styles.finalContainer}>
-                        <Text style={[styles.priceText, {color: '#aaaaaa'}]}>Thành tiền (chưa bao gồm VAT)</Text>
-                        <Text style={[styles.priceText, {color: Global.MainColor, fontSize: 18}]}>{convertMoney(total) + 'đ'}</Text>
+                        <Text style={[styles.priceText, { color: '#aaaaaa' }]}>Thành tiền (chưa bao gồm VAT)</Text>
+                        <Text style={[styles.priceText, { color: Global.MainColor, fontSize: 18 }]}>{convertMoney(total) + 'đ'}</Text>
                     </View>
 
                     <TouchableOpacity onPress={this.onNext.bind(this)} style={styles.orderContainer}>

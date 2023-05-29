@@ -4,9 +4,10 @@
 
 import React from 'react';
 import { View, StatusBar, Platform, BackHandler, Alert, Text } from 'react-native'
-import { createStackNavigator, createAppContainer, createBottomTabNavigator } from "react-navigation"
-import { connect } from 'react-redux'
-import NavigationService from 'actions/NavigationService'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { navigationRef, isReadyRef } from 'actions/NavigationService'
 import Tabbar from 'components/Tabbar'
 
 import SplashScreenView from './SplashScreenView'
@@ -26,7 +27,7 @@ import TrackingDetailView from 'Trackings/TrackingDetailView'
 import ItemTrackingView from 'Trackings/ItemTrackingView'
 import TrackingAllView from 'Trackings/TrackingAllView'
 import ScanQRView from 'Trackings/ScanQRView'
-import AddTransportView  from 'Trackings/AddTransportView'
+import AddTransportView from 'Trackings/AddTransportView'
 
 import SubmitReportView from 'Reports/SubmitReportView'
 import ReportListView from 'Reports/ReportListView'
@@ -55,163 +56,19 @@ import OrderDetailView from 'Orders/OrderDetailView'
 
 import NotificationView from 'Notifications/NotificationView'
 
-const DashboardView = createBottomTabNavigator({
-    HomeView: { screen: HomeView },
-    OrderListView: { screen: OrderListView },
-    TrackingAllView: {screen: TrackingAllView},
-    NotificationView: { screen: NotificationView },
-}, {
-        tabBarComponent: Tabbar,
-        tabBarPosition: 'bottom',
-        swipeEnabled: false, // fixes a bug in react navigation
-        lazy: false, // fixes a bug in react navigation
-        animationEnabled: true,
-        removeClippedSubviews: true
-    }
-)
+const Stack = createStackNavigator()
+const Tab = createBottomTabNavigator()
 
-const AppNavigator = createAppContainer(
-    createStackNavigator({
-        SplashScreenView: {
-            screen: SplashScreenView,
-            navigationOptions: { header: null }
-        },
-        LoginView: {
-            screen: LoginView,
-            navigationOptions: { header: null }
-        },
-        ForgotPasswordView: {
-            screen: ForgotPasswordView,
-            navigationOptions: { header: null }
-        },
-        DashboardView: {
-            screen: DashboardView,
-            navigationOptions: { header: null }
-        },
-        CartConfirmView: {
-            screen: CartConfirmView,
-            navigationOptions: { header: null }
-        },
-        CartInfoView: {
-            screen: CartInfoView,
-            navigationOptions: { header: null }
-        },
-        TaobaoWebView: {
-            screen: TaobaoWebView,
-            navigationOptions: { header: null }
-        },
-        OrderDetailView: {
-            screen: OrderDetailView,
-            navigationOptions: { header: null }
-        },
-        SettingView: {
-            screen: SettingView,
-            navigationOptions: { header: null }
-        },
-        AboutView: {
-            screen: AboutView,
-            navigationOptions: { header: null }
-        },
-        PrivacyView: {
-            screen: PrivacyView,
-            navigationOptions: { header: null }
-        },
-        SupportView: {
-            screen: SupportView,
-            navigationOptions: { header: null }
-        },
-        WalletBalanceView: {
-            screen: WalletBalanceView,
-            navigationOptions: { header: null }
-        },
-        UpdateProfileView: {
-            screen: UpdateProfileView,
-            navigationOptions: { header: null }
-        },
-        CartView: {
-            screen: CartView,
-            navigationOptions: { header: null }
-        },
-        HomeScanView: {
-            screen: HomeScanView,
-            navigationOptions: { header: null }
-        },
-        DepositListView: {
-            screen: DepositListView,
-            navigationOptions: { header: null }
-        },
-        PayListView: {
-            screen: PayListView,
-            navigationOptions: { header: null }
-        },
-        RefundListView: {
-            screen: RefundListView,
-            navigationOptions: { header: null }
-        },
-        TrackingDetailView: {
-            screen: TrackingDetailView,
-            navigationOptions: { header: null }
-        },
-        SubmitReportView: {
-            screen: SubmitReportView,
-            navigationOptions: { header: null }
-        },
-        ReportListView: {
-            screen: ReportListView,
-            navigationOptions: { header: null }
-        },
-        ReportDetailView: {
-            screen: ReportDetailView,
-            navigationOptions: { header: null }
-        },
-        HomeSearchView: {
-            screen: HomeSearchView,
-            navigationOptions: { header: null }
-        },
-        PayOrderView: {
-            screen: PayOrderView,
-            navigationOptions: { header: null }
-        },
-        RefundOrderView: {
-            screen: RefundOrderView,
-            navigationOptions: { header: null }
-        },
-        ItemTrackingView: {
-            screen: ItemTrackingView,
-            navigationOptions: { header: null }
-        },
-        ManualCartView: {
-            screen: ManualCartView,
-            navigationOptions: { header: null }
-        },
-        ImageSearchView: {
-            screen: ImageSearchView,
-            navigationOptions: { header: null }
-        },
-        ScanQRView: {
-            screen: ScanQRView,
-            navigationOptions: { header: null }
-        },
-        AddTransportView: {
-            screen: AddTransportView,
-            navigationOptions: { header: null }
-        },
-        ContactView: {
-            screen: ContactView,
-            navigationOptions: { header: null }
-        },
-        UpdatePasswordView: {
-            screen: UpdatePasswordView,
-            navigationOptions: { header: null }
-        }
-    }, {
-
-            mode: 'modal',
-            navigationOptions: { header: null }
-        })
-)
-
-import firebase from 'react-native-firebase'
+const DashboardView = () => {
+    return (
+        <Tab.Navigator tabBar={props => <Tabbar {...props} />}>
+            <Tab.Screen name="HomeView" component={HomeView} />
+            <Tab.Screen name="OrderListView" component={OrderListView} />
+            <Tab.Screen name="TrackingAllView" component={TrackingAllView} />
+            <Tab.Screen name="NotificationView" component={NotificationView} />
+        </Tab.Navigator>
+    )
+}
 
 export class AppWithNavigationState extends React.Component {
     constructor(props) {
@@ -220,33 +77,7 @@ export class AppWithNavigationState extends React.Component {
 
     componentDidMount() {
         console.disableYellowBox = true
-
-        firebase.messaging().hasPermission()
-        .then(enabled => {
-          if (enabled) {
-            this.getPushToken()
-          } else {
-            firebase.messaging().requestPermission()
-            .then(() => {
-              this.getPushToken()
-            })
-            .catch(error => {
-              CustomAlert('Vui lòng bật thông báo để nhận được thông tin mới nhất')
-            });
-          } 
-        })
     }
-
-    getPushToken(){
-        firebase.messaging().getToken()
-        .then((token) => {
-          console.log(token)
-          Global.pushToken = token
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-      }
 
     componentWillMount() {
         if (Text.defaultProps == null)
@@ -260,22 +91,52 @@ export class AppWithNavigationState extends React.Component {
         StatusBar.setBarStyle('dark-content');
     }
 
-    componentWillUnmount() {
-        const notifications = firebase.notifications()
-        notifications.setBadge(this.props.unread)
-    }
-
     render() {
         const { dispatch } = this.props;
 
         return (
-            <AppNavigator ref={navigationRef => { NavigationService.setTopLevelNavigator(navigationRef) }} dispatch={dispatch} />
+            <NavigationContainer
+                ref={navigationRef}
+                onReady={() => {
+                    isReadyRef.current = true;
+                }}>
+                <Stack.Navigator initialRouteName="SplashScreenView" headerMode="float">
+                    <Stack.Screen name="SplashScreenView" component={SplashScreenView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="LoginView" component={LoginView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="ForgotPasswordView" component={ForgotPasswordView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="DashboardView" component={DashboardView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="CartConfirmView" component={CartConfirmView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="CartInfoView" component={CartInfoView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="TaobaoWebView" component={TaobaoWebView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="OrderDetailView" component={OrderDetailView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="SettingView" component={SettingView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="AboutView" component={AboutView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="PrivacyView" component={PrivacyView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="SupportView" component={SupportView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="WalletBalanceView" component={WalletBalanceView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="UpdateProfileView" component={UpdateProfileView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="CartView" component={CartView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="DepositListView" component={DepositListView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="HomeScanView" component={HomeScanView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="PayListView" component={PayListView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="RefundListView" component={RefundListView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="TrackingDetailView" component={TrackingDetailView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="SubmitReportView" component={SubmitReportView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="ReportDetailView" component={ReportDetailView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="HomeSearchView" component={HomeSearchView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="PayOrderView" component={PayOrderView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="RefundOrderView" component={RefundOrderView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="ItemTrackingView" component={ItemTrackingView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="ManualCartView" component={ManualCartView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="ImageSearchView" component={ImageSearchView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="ScanQRView" component={ScanQRView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="AddTransportView" component={AddTransportView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="ContactView" component={ContactView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="UpdatePasswordView" component={UpdatePasswordView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                </Stack.Navigator>
+            </NavigationContainer>
         )
     }
 }
 
-const mapStateToProps = state => ({
-    unread: state.notification.unread
-});
-
-export default connect(mapStateToProps)(AppWithNavigationState)
+export default AppWithNavigationState

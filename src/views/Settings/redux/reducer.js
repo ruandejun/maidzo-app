@@ -5,12 +5,15 @@ const initState = {
     payment_information: null,
     huongdan: [],
     chinhsach: [],
-    isFetching: false
+    isFetching: false,
+    showCart: false
 };
 
 export default function appReducer(state = initState, action) {
     // console.log(action)
     switch (action.type) {
+        case actions.SET_SETTING:
+            return {...state, showCart: action.showCart}
         case actions.GET_SETTINGS:
             return {...state, isFetching: true}
         case actions.GET_SETTING_INFORMATION_SUCCESS:

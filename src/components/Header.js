@@ -14,7 +14,7 @@ import {
   Platform,
   TouchableOpacity,
   TextInput,
-  Dimensions, AsyncStorage,
+  Dimensions,
   FlatList
 } from 'react-native';
 
@@ -143,6 +143,7 @@ export const headerStyles = StyleSheet.create({
 import Global from 'src/Global';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default class Header extends React.Component{
 

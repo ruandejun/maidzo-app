@@ -8,7 +8,7 @@ import {
     ActivityIndicator,
     AppState,
     TouchableOpacity,
-    TouchableWithoutFeedback,
+    Linking,
     FlatList,
 } from 'react-native';
 

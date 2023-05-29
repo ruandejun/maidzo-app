@@ -23,10 +23,10 @@ const styles = StyleSheet.create({
 import { connect } from 'react-redux';
 import Global, { Media, calculateDistance, decode, getStatusBarHeight } from 'src/Global';
 import Header from 'components/Header'
-import {getDetailInfo, getDetailItems} from './redux/action'
+import { getDetailInfo, getDetailItems } from './redux/action'
 import OrderDetailItem from './component/OrderDetailItem'
-import {fetchApi} from 'actions/api'
-import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view'
+import { fetchApi } from 'actions/api'
+import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view'
 import OrderDetailItems from './OrderDetailItems'
 import OrderDetailInfo from './OrderDetailInfo'
 import OrderDetailNotification from './OrderDetailNotification'
@@ -37,7 +37,7 @@ import { getBottomSpace } from 'react-native-iphone-x-helper';
 class OrderDetailView extends React.Component {
 
     render() {
-        const order_id = this.props.navigation.getParam('order_id')
+        const { order_id } = this.props.route.params
 
         return (
             <View style={styles.container}>
@@ -46,14 +46,14 @@ class OrderDetailView extends React.Component {
                     leftAction={() => this.props.navigation.goBack()}
                 />
 
-                <ScrollableTabView tabBarUnderlineStyle={{backgroundColor: Global.MainColor}} tabBarActiveTextColor={Global.MainColor} 
+                <ScrollableTabView tabBarUnderlineStyle={{ backgroundColor: Global.MainColor }} tabBarActiveTextColor={Global.MainColor}
                     renderTabBar={() => <ScrollableTabBar />}
                 >
-                    <OrderDetailInfo tabLabel="Thông tin" order_id={order_id} navigation={this.props.navigation}/>
-                    <OrderDetailItems tabLabel="Sản phẩm" order_id={order_id} navigation={this.props.navigation}/>
-                    <OrderDetailTransaction tabLabel="Thanh toán" order_id={order_id} navigation={this.props.navigation}/>
-                    <OrderDetailTracking tabLabel="Vận chuyển" order_id={order_id} navigation={this.props.navigation}/>
-                    <OrderDetailNotification tabLabel="Thông báo" order_id={order_id}/>
+                    <OrderDetailInfo tabLabel="Thông tin" order_id={order_id} navigation={this.props.navigation} />
+                    <OrderDetailItems tabLabel="Sản phẩm" order_id={order_id} navigation={this.props.navigation} />
+                    <OrderDetailTransaction tabLabel="Thanh toán" order_id={order_id} navigation={this.props.navigation} />
+                    <OrderDetailTracking tabLabel="Vận chuyển" order_id={order_id} navigation={this.props.navigation} />
+                    <OrderDetailNotification tabLabel="Thông báo" order_id={order_id} />
                 </ScrollableTabView>
             </View>
         )

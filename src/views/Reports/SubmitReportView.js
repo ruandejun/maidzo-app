@@ -14,11 +14,10 @@ import {
     TouchableWithoutFeedback
 } from 'react-native'
 
-import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import Global, { Media } from 'src/Global';
 import NavigationService from 'actions/NavigationService'
-import {ActionSheet} from 'teaset'
+import { ActionSheet } from 'teaset'
 import Header from 'components/Header'
 import { fetchApi, fetchUnlengthApi } from 'actions/api'
 
@@ -30,76 +29,72 @@ class SubmitReportView extends React.Component {
         group: null
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
-        const item_id = this.props.navigation.getParam('item_id')
-        const shipment_package = this.props.navigation.getParam('shipment_package')
-        const order_number = this.props.navigation.getParam('order_number')
+        const { item_id, shipment_package, order_number } = this.props.route.params
 
-        if(order_number){
-            this.setState({title: 'Tôi cần khiếu nại đơn hàng ' + order_number})
+        if (order_number) {
+            this.setState({ title: 'Tôi cần khiếu nại đơn hàng ' + order_number })
         }
 
-        if(item_id){
-            this.setState({title: 'Tôi cần khiếu nại sản phẩm ' + item_id})
+        if (item_id) {
+            this.setState({ title: 'Tôi cần khiếu nại sản phẩm ' + item_id })
         }
 
-        if(shipment_package){
-            this.setState({title: 'Tôi cần khiếu nại vận đơn ' + shipment_package})
+        if (shipment_package) {
+            this.setState({ title: 'Tôi cần khiếu nại vận đơn ' + shipment_package })
         }
     }
 
     onSend() {
-        const {title, body, group} = this.state
+        const { title, body, group } = this.state
 
-        if(body.length == 0 || group == null || title.length == 0){
+        if (body.length == 0 || group == null || title.length == 0) {
             CustomAlert(null, 'Vui lòng nhập thông tin khiếu nại')
             return
         }
 
-        let requestBody = {username: this.props.user.username, title: title, body: body, group: group.id, type: 'manual', item_id: 0, order_number: 0, shop: 0}
+        let requestBody = { username: this.props.user.username, title: title, body: body, group: group.id, type: 'manual', item_id: 0, order_number: 0, shop: 0 }
 
-        const item_id = this.props.navigation.getParam('item_id')
-        const shipment_package = this.props.navigation.getParam('shipment_package')
-        const order_number = this.props.navigation.getParam('order_number')
+        const { item_id, shipment_package, order_number } = this.props.route.params
 
-        if(item_id){
+        if (item_id) {
             requestBody.item_id = item_id
         }
 
-        if(shipment_package){
+        if (shipment_package) {
             requestBody.shipment_package = shipment_package
         }
 
-        if(order_number){
+        if (order_number) {
             requestBody.order_number = order_number
         }
 
         // console.log(requestBody)
 
         fetchUnlengthApi('post', 'page/create_ticket/', requestBody)
-        .then((data) => {
-            // console.log(data)
-            if(data.success){
-                CustomAlert(null, 'Khiếu nại của bạn đã gửi thành công.', [
-                    {text: 'Quay lại', onPress: () => this.props.navigation.goBack()}
-                ])
-            } else {
-                CustomAlert(null, data.msg)
-            }
-        })
-        .catch((error) => {
-            console.log(error)
-            CustomAlert(null, 'Gửi khiếu nại không thành công')
-        })
+            .then((data) => {
+                // console.log(data)
+                if (data.success) {
+                    CustomAlert(null, 'Khiếu nại của bạn đã gửi thành công.', [
+                        { text: 'Quay lại', onPress: () => this.props.navigation.goBack() }
+                    ])
+                } else {
+                    CustomAlert(null, data.msg)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+                CustomAlert(null, 'Gửi khiếu nại không thành công')
+            })
     }
 
-    onChangeGroup(){
+    onChangeGroup() {
         ActionSheet.show([
-            {title: 'Chăm sóc khách hàng', onPress: () => this.setState({group: {title: 'Chăm sóc khách hàng', id: 'cskh'}})},
-            {title: 'Kế toán', onPress: () => this.setState({group: {title: 'Kế toán', id: 'ketoan'}})},
-            {title: 'Đặt hàng', onPress: () => this.setState({group: {title: 'Đặt hàng', id: 'dathang'}})},
-            {title: 'Kiểm hàng', onPress: () => this.setState({group: {title: 'Kiểm hàng', id: 'kiemhang'}})},
+            { title: 'Chăm sóc khách hàng', onPress: () => this.setState({ group: { title: 'Chăm sóc khách hàng', id: 'cskh' } }) },
+            { title: 'Kế toán', onPress: () => this.setState({ group: { title: 'Kế toán', id: 'ketoan' } }) },
+            { title: 'Đặt hàng', onPress: () => this.setState({ group: { title: 'Đặt hàng', id: 'dathang' } }) },
+            { title: 'Kiểm hàng', onPress: () => this.setState({ group: { title: 'Kiểm hàng', id: 'kiemhang' } }) },
         ])
     }
 
@@ -131,15 +126,15 @@ class SubmitReportView extends React.Component {
                         style={styles.inputText} />
                 </TouchableOpacity>
 
-                <View style={[styles.inputContainer, {height: 80}]}>
+                <View style={[styles.inputContainer, { height: 80 }]}>
                     <TextInput
                         value={this.state.body}
-                        onChangeText={(text) => this.setState({body: text})}
+                        onChangeText={(text) => this.setState({ body: text })}
                         underlineColorAndroid='#00000000'
                         placeholder='Nội dung khiếu nại'
                         placeholderTextColor='#CECECE'
                         multiline
-                        style={[styles.inputText, {height: 80, textAlignVertical: 'top'}]} />
+                        style={[styles.inputText, { height: 80, textAlignVertical: 'top' }]} />
                 </View>
                 <TouchableOpacity onPress={this.onSend.bind(this)} style={[styles.buttonContainer, { backgroundColor: Global.MainColor }]}>
                     <Text style={styles.loginText}>Gửi khiếu nại</Text>

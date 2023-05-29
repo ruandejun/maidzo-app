@@ -8,7 +8,7 @@ import {
     ActivityIndicator,
     AppState,
     TouchableOpacity,
-    TouchableWithoutFeedback,
+    Linking,
     FlatList,
 } from 'react-native';
 
@@ -44,7 +44,7 @@ class ImageSearchView extends React.Component {
     }
 
     onRefresh(){
-        const image = this.props.navigation.getParam('image')
+        const {image} = this.props.route.params
 
         this.setState({isFetching: true}, () => {
             fetchUploadApi(`page/image_search/?type=taobao`, image)
@@ -87,8 +87,8 @@ class ImageSearchView extends React.Component {
         )
     }
 
-    onPressItem(url){
-        this.props.navigation.navigate('TaobaoWebView', {url: url.replace('#modal=sku', '')})
+    onPressItem(link){
+        this.props.navigation.navigate('TaobaoWebView', { url: link.replace('#modal=sku', '') })
     }
 
     render() {

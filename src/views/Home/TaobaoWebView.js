@@ -141,7 +141,7 @@ class Option1688View extends React.Component {
                     }
                 }
             }
-        } else if(!skuProps){
+        } else if (!skuProps) {
             const amount = (selectedAmount && selectedAmount[offerTitle]) ? selectedAmount[offerTitle] : 0
             totalAmount += amount
             let cart = { title: offerTitle, shop_name: companyName, quantity: amount, price: skuRangePrices[0].price, options: [], image: shareModel.picUrl }
@@ -474,10 +474,12 @@ class TaobaoWebView extends React.Component {
     constructor(props) {
         super(props)
 
+        const { url } = props.route.params
+
         this.state = {
             loading: false,
             searchKeyword: '',
-            url: props.navigation.getParam('url'),
+            url: url,
             suggestions: [],
             options1688: null,
             searchSource: 0 //0 = 1688, 1 = taobao, 2 = tmall, 3 = chemistwarehouse, 4 = JD
@@ -488,7 +490,7 @@ class TaobaoWebView extends React.Component {
     currentUrl = null
 
     componentDidMount() {
-        let url = this.props.navigation.getParam('url')
+        let { url } = this.props.route.params
         if (url && url.indexOf('https://www.chemistwarehouse.com.au') != -1 || url.indexOf('https://dis.as.criteo.com') != -1) {
             this.setState({ searchSource: 3 })
         } else if (url && url.indexOf('m.1688.com') != -1 || url.indexOf('1688.com') != -1) {

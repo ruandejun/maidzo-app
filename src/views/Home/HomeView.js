@@ -45,11 +45,9 @@ import { ScrollView, TextInput, FlatList } from 'react-native-gesture-handler';
 import ActionSheet from 'teaset/components/ActionSheet/ActionSheet';
 import ImagePicker from 'react-native-image-crop-picker'
 import { Overlay } from 'teaset'
-import firebase from 'react-native-firebase'
 import ActionButton from 'react-native-action-button'
-import {fetchApi} from 'actions/api'
+import { fetchApi } from 'actions/api'
 import PopupView from 'components/PopupView'
-import DeviceInfo from 'react-native-device-info'
 
 class HomeView extends React.Component {
 
@@ -66,76 +64,51 @@ class HomeView extends React.Component {
         this.props.getSettings()
         this.props.getCart()
 
-        this.removeNotificationDisplayedListener = firebase.notifications().onNotificationDisplayed((notification) => {
-            console.log(notification)
-        });
-        this.removeNotificationListener = firebase.notifications().onNotification((notification) => {
-            console.log(notification)
-        })
-
-        this.removeRefreshTokenlistener = firebase.messaging().onTokenRefresh((token) => {
-            console.log({token})
-            Global.pushToken = token
-
-            if(this.props.user){
-                fetchApi('post', 'api/user/auth/update_fcm/', {device_id: DeviceInfo.getUniqueId(), registration_id: token, platform_type: Platform.OS})
-                .then((data) => {
-                    console.log({data})
-                })
-                .catch((error) => {
-                    console.log({error})
-                })
-            }
-        })
-
         this.onLoadCurrency()
 
-
-        fetchApi('get', 'api/system_configure/template/thong-bao/')
-        .then((data) => {
-            if(data && data.body && data.body.length > 0){
-                let overlayView = (
-                    <Overlay.PopView
-                        modal={true}
-                        ref={v => this.alertOverlayView = v}
-                    >
-                        <View style={{width: Global.ScreenWidth, height: Global.ScreenHeight, backgroundColor: '#00000044', alignItems: 'center', justifyContent: 'center'}}>
-                            <PopupView title={data.title} html={data.body} onClose={() => this.alertOverlayView && this.alertOverlayView.close()}/>
-                        </View>
-                    </Overlay.PopView>
-                );
-                Overlay.show(overlayView)
-            }
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-
         StatusBar.setBarStyle('dark-content')
+
+        this.getNotify()
     }
 
-    onLoadCurrency(){
-        fetchApi('get', 'page/get_data_currency/',{order : 'asc', offset : 0, limit: 50})
-        .then((data) => {
-            console.log(data)
-            if(data && data.rows){
-                
-                this.setState({currencies: data.rows})
-            }
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+    getNotify() {
+        fetchApi('get', 'api/system_configure/template/thong-bao/')
+            .then((data) => {
+                if (data && data.body && data.body.length > 0) {
+                    let overlayView = (
+                        <Overlay.PopView
+                            modal={true}
+                            ref={v => this.alertOverlayView = v}
+                        >
+                            <View style={{ width: Global.ScreenWidth, height: Global.ScreenHeight, backgroundColor: '#00000044', alignItems: 'center', justifyContent: 'center' }}>
+                                <PopupView title={data.title} html={data.body} onClose={() => this.alertOverlayView && this.alertOverlayView.close()} />
+                            </View>
+                        </Overlay.PopView>
+                    );
+                    Overlay.show(overlayView)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
-    componentWillUnmount(){
-        this.removeNotificationDisplayedListener();
-        this.removeNotificationListener();
-        this.removeRefreshTokenlistener()
+    onLoadCurrency() {
+        fetchApi('get', 'page/get_data_currency/', { order: 'asc', offset: 0, limit: 50 })
+            .then((data) => {
+                console.log(data)
+                if (data && data.rows) {
+
+                    this.setState({ currencies: data.rows })
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     onpenWeb(url) {
-        if(this.overlayView){
+        if (this.overlayView) {
             this.overlayView.close()
         }
         this.props.navigation.navigate('TaobaoWebView', { url: url.replace('#modal=sku', '') })
@@ -146,10 +119,10 @@ class HomeView extends React.Component {
     }
 
     openWallet() {
-        if(!this.props.user){
+        if (!this.props.user) {
             CustomAlert('Lỗi', 'Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng', [
-                {text: 'Bỏ'},
-                {text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView')}
+                { text: 'Bỏ' },
+                { text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView') }
             ])
             return
         }
@@ -162,10 +135,10 @@ class HomeView extends React.Component {
     }
 
     openReports() {
-        if(!this.props.user){
+        if (!this.props.user) {
             CustomAlert('Lỗi', 'Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng', [
-                {text: 'Bỏ'},
-                {text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView')}
+                { text: 'Bỏ' },
+                { text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView') }
             ])
             return
         }
@@ -173,7 +146,7 @@ class HomeView extends React.Component {
         this.props.navigation.navigate('ReportListView')
     }
 
-    openLogin(){
+    openLogin() {
         this.props.navigation.navigate('LoginView')
     }
 
@@ -183,23 +156,23 @@ class HomeView extends React.Component {
         }
 
         let regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
-        if(regex.test(this.state.keyword)){
+        if (regex.test(this.state.keyword)) {
             this.onpenWeb(this.state.keyword)
         } else {
             this.props.navigation.navigate('HomeSearchView', { keyword: this.state.keyword })
         }
-        
+
     }
 
     onImageSearch() {
-        if(!this.props.user){
+        if (!this.props.user) {
             CustomAlert('Lỗi', 'Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng', [
-                {text: 'Bỏ'},
-                {text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView')}
+                { text: 'Bỏ' },
+                { text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView') }
             ])
             return
         }
-        
+
         ActionSheet.show([
             {
                 title: 'Chụp ảnh sản phẩm', onPress: () => {
@@ -214,7 +187,7 @@ class HomeView extends React.Component {
                     } catch (error) {
                         console.log(error)
                     }
-                    
+
                 }
             },
             {
@@ -230,7 +203,7 @@ class HomeView extends React.Component {
                     } catch (error) {
                         console.log(error)
                     }
-                    
+
                 }
             },
         ], { title: 'Huỷ' })
@@ -243,68 +216,68 @@ class HomeView extends React.Component {
                 overlayOpacity={0.6}
                 ref={v => this.overlayView = v}
             >
-                    <View style={{ alignSelf: 'center', width: Global.ScreenWidth * 0.9, marginTop: Global.ScreenHeight * 0.5 - 240, height: 480, backgroundColor: 'white', borderRadius: 10, padding: 16, alignItems: 'center', justifyContent: 'center' }}>
+                <View style={{ alignSelf: 'center', width: Global.ScreenWidth * 0.9, marginTop: Global.ScreenHeight * 0.5 - 240, height: 480, backgroundColor: 'white', borderRadius: 10, padding: 16, alignItems: 'center', justifyContent: 'center' }}>
 
-                        <Text style={{ fontSize: 20, color: 'black', fontWeight: '500', marginBottom: 10, fontFamily: Global.FontName, }}>Chọn nguồn hàng</Text>
-                        <ScrollView style={{ width: '100%' }} showsHorizontalScrollIndicator={false}>
-                                <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://1688.com')} style={{ width: '100%', flexDirection: 'row', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Image source={Media.AlibabaIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
-                                    <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>1688.com</Text>
-                                </TouchableOpacity>
+                    <Text style={{ fontSize: 20, color: 'black', fontWeight: '500', marginBottom: 10, fontFamily: Global.FontName, }}>Chọn nguồn hàng</Text>
+                    <ScrollView style={{ width: '100%' }} showsHorizontalScrollIndicator={false}>
+                        <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://1688.com')} style={{ width: '100%', flexDirection: 'row', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
+                            <Image source={Media.AlibabaIcon} style={{ width: 60, height: 60 }} resizeMode='contain' />
+                            <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>1688.com</Text>
+                        </TouchableOpacity>
 
-                                <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://m.intl.taobao.com')} style={{ width: '100%', flexDirection: 'row', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Image source={Media.TaobaoIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
-                                    <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>taobao.com</Text>
-                                </TouchableOpacity>
+                        <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://m.intl.taobao.com')} style={{ width: '100%', flexDirection: 'row', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
+                            <Image source={Media.TaobaoIcon} style={{ width: 60, height: 60 }} resizeMode='contain' />
+                            <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>taobao.com</Text>
+                        </TouchableOpacity>
 
-                                <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.tmall.com')} style={{ width: '100%', flexDirection: 'row', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Image source={Media.TmallIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
-                                    <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>tmall.com</Text>
-                                </TouchableOpacity>
+                        <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.tmall.com')} style={{ width: '100%', flexDirection: 'row', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
+                            <Image source={Media.TmallIcon} style={{ width: 60, height: 60 }} resizeMode='contain' />
+                            <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>tmall.com</Text>
+                        </TouchableOpacity>
 
-                                <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://m.jd.com')} style={{ width: '100%', flexDirection: 'row', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Image source={Media.JDIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
-                                    <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>jd.com</Text>
-                                </TouchableOpacity>
+                        <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://m.jd.com')} style={{ width: '100%', flexDirection: 'row', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
+                            <Image source={Media.JDIcon} style={{ width: 60, height: 60 }} resizeMode='contain' />
+                            <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>jd.com</Text>
+                        </TouchableOpacity>
 
-                                <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.chemistwarehouse.com.au')} style={{ width: '100%', flexDirection: 'row', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Image source={Media.ChemistIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
-                                    <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>chemistwarehouse</Text>
-                                </TouchableOpacity>
+                        <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.chemistwarehouse.com.au')} style={{ width: '100%', flexDirection: 'row', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
+                            <Image source={Media.ChemistIcon} style={{ width: 60, height: 60 }} resizeMode='contain' />
+                            <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>chemistwarehouse</Text>
+                        </TouchableOpacity>
 
-                                <TouchableOpacity onPress={() => {this.overlayView && this.overlayView.close(); this.props.navigation.navigate('ManualCartView')}} style={{ width: '100%', flexDirection: 'row', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Image source={Media.LogoIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
-                                    <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>Thêm sản phẩm ngoài</Text>
-                                </TouchableOpacity>
-                        </ScrollView>
-                    </View>
+                        <TouchableOpacity onPress={() => { this.overlayView && this.overlayView.close(); this.props.navigation.navigate('ManualCartView') }} style={{ width: '100%', flexDirection: 'row', padding: 10, alignItems: 'center', justifyContent: 'center' }}>
+                            <Image source={Media.LogoIcon} style={{ width: 60, height: 60 }} resizeMode='contain' />
+                            <Text style={{ flex: 1, marginLeft: 8, fontSize: 18, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>Thêm sản phẩm ngoài</Text>
+                        </TouchableOpacity>
+                    </ScrollView>
+                </View>
             </Overlay.PopView>
         );
         Overlay.show(overlayView)
     }
 
-    openContact(){
+    openContact() {
         this.props.navigation.navigate('ContactView')
     }
 
-    onOpenLink(){
-        const {pastedLink} = this.state
+    onOpenLink() {
+        const { pastedLink } = this.state
         Keyboard.dismiss()
-        
-        if(pastedLink && pastedLink.length > 0 && pastedLink.indexOf('http') > -1){
+
+        if (pastedLink && pastedLink.length > 0 && pastedLink.indexOf('http') > -1) {
             this.onpenWeb(pastedLink)
         }
     }
 
-    onScanCode(){
+    onScanCode() {
         this.props.navigation.navigate('HomeScanView')
     }
 
-    onTracking(){
-        if(!this.props.user){
+    onTracking() {
+        if (!this.props.user) {
             CustomAlert('Lỗi', 'Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng', [
-                {text: 'Bỏ'},
-                {text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView')}
+                { text: 'Bỏ' },
+                { text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView') }
             ])
             return
         }
@@ -312,11 +285,11 @@ class HomeView extends React.Component {
         this.props.navigation.navigate('TrackingAllView')
     }
 
-    onScanTracking(){
-        if(!this.props.user){
+    onScanTracking() {
+        if (!this.props.user) {
             CustomAlert('Lỗi', 'Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng', [
-                {text: 'Bỏ'},
-                {text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView')}
+                { text: 'Bỏ' },
+                { text: 'Đăng nhập', onPress: () => this.props.navigation.navigate('LoginView') }
             ])
             return
         }
@@ -324,18 +297,18 @@ class HomeView extends React.Component {
         this.props.navigation.navigate('ScanQRView')
     }
 
-    onSelectChinaSource(){
+    onSelectChinaSource() {
         ActionSheet.show([
-            {title: '1688.com', onPress: this.onpenWeb.bind(this, 'https://1688.com')},
-            {title: 'taobao.com', onPress: this.onpenWeb.bind(this, 'https://m.intl.taobao.com')},
-            {title: 'tmall.com', onPress: this.onpenWeb.bind(this, 'https://www.tmall.com')},
-            {title: 'jd.com', onPress: this.onpenWeb.bind(this, 'https://m.jd.com')}
-        ], {title: 'Bỏ'})
+            { title: '1688.com', onPress: this.onpenWeb.bind(this, 'https://1688.com') },
+            { title: 'taobao.com', onPress: this.onpenWeb.bind(this, 'https://m.intl.taobao.com') },
+            { title: 'tmall.com', onPress: this.onpenWeb.bind(this, 'https://www.tmall.com') },
+            { title: 'jd.com', onPress: this.onpenWeb.bind(this, 'https://m.jd.com') }
+        ], { title: 'Bỏ' })
     }
 
     render() {
 
-        const {user} = this.props
+        const { user } = this.props
 
         return (
             <View style={styles.container}>
@@ -350,14 +323,14 @@ class HomeView extends React.Component {
                     rightAction={this.onScanCode.bind(this)}
                 />
 
-                <ScrollView style={{flex: 1, width: '100%'}}>
+                <ScrollView style={{ flex: 1, width: '100%' }}>
                     <View style={{ width: '100%', backgroundColor: 'white', marginTop: 10, marginBottom: 10, padding: 16 }}>
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name='cart-plus' size={15} color='#333333' />
                             <Text style={{ marginLeft: 8, fontSize: 15, color: '#333333', fontFamily: Global.FontName, }}>Sản phẩm</Text>
                         </View>
                         <ScrollView style={{ width: '100%', marginTop: 12 }} horizontal showsHorizontalScrollIndicator={false}>
-                                {/* <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://1688.com')} style={{ marginRight: 16, width: 60, height: 60, alignItems: 'center', justifyContent: 'center' }}>
+                            {/* <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://1688.com')} style={{ marginRight: 16, width: 60, height: 60, alignItems: 'center', justifyContent: 'center' }}>
                                     <Image source={Media.AlibabaIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
                                 </TouchableOpacity>
 
@@ -377,17 +350,15 @@ class HomeView extends React.Component {
                                     <Image source={Media.ChemistIcon} style={{ width: 60, height: 60 }} resizeMode='contain'/>
                                 </TouchableOpacity> */}
 
-                                <TouchableOpacity onPress={this.onSelectChinaSource.bind(this)} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500'}}>Hàng Trung Quốc</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.chemistwarehouse.com.au')} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500'}}>Hàng Úc</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('ManualCartView')} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500'}}>Thêm sản phẩm ngoài</Text>
-                                </TouchableOpacity>
+                            <TouchableOpacity onPress={this.onSelectChinaSource.bind(this)} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500' }}>Hàng Trung Quốc</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={this.onpenWeb.bind(this, 'https://www.chemistwarehouse.com.au')} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500' }}>Hàng Úc</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('ManualCartView')} style={{ marginRight: 16, width: 60, height: 60, borderRadius: 5, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ textAlign: 'center', color: 'white', fontFamily: Global.FontName, fontSize: 12, fontWeight: '500' }}>Thêm sản phẩm ngoài</Text>
+                            </TouchableOpacity>
                         </ScrollView>
                         <View style={{ flexDirection: 'row', marginTop: 20 }}>
                             <Icon name='tools' size={15} color='#333333' />
@@ -401,7 +372,6 @@ class HomeView extends React.Component {
                                     </View>
                                     <Text style={{ width: 60, textAlign: 'center', fontSize: 13, color: 'black', fontFamily: Global.FontName, marginTop: 4 }}>Tìm kiếm bằng ảnh</Text>
                                 </TouchableOpacity>
-
                                 <TouchableOpacity onPress={this.onScanTracking.bind(this)} style={{ padding: 10, marginLeft: 8, alignItems: 'center', justifyContent: 'center' }}>
                                     <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', borderRadius: 30, backgroundColor: Global.MainColor }}>
                                         <Icon name='qrcode' color='white' size={25} />
@@ -443,17 +413,17 @@ class HomeView extends React.Component {
                         </View> */}
                     </View>
 
-                    <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row', height: 30, paddingLeft: 10, paddingRight: 10}}>
-                            <ScrollView horizontal style={{flex: 1}}>
-                                {this.state.currencies.map((item) => {
-                                    return(
-                                        <View style={{height: 30, padding: 5, textAlign: 'center', justifyContent:'center', borderWidth: 0.5, borderRadius: 3, borderColor: '#aaaaaa', marginLeft: 5, marginRight: 5}}>
-                                            <Text style={{fontSize: 11, color: '#333333', fontFamily: Global.FontName}}>{`1 ${item.currency} = ${convertMoney(item.exchange_rate)} VND`}</Text>
-                                        </View>
-                                    )
-                                })}
-                            </ScrollView>
-                        </View>
+                    <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row', height: 30, paddingLeft: 10, paddingRight: 10 }}>
+                        <ScrollView horizontal style={{ flex: 1 }}>
+                            {this.state.currencies.map((item) => {
+                                return (
+                                    <View style={{ height: 30, padding: 5, textAlign: 'center', justifyContent: 'center', borderWidth: 0.5, borderRadius: 3, borderColor: '#aaaaaa', marginLeft: 5, marginRight: 5 }}>
+                                        <Text style={{ fontSize: 11, color: '#333333', fontFamily: Global.FontName }}>{`1 ${item.currency} = ${convertMoney(item.exchange_rate)} VND`}</Text>
+                                    </View>
+                                )
+                            })}
+                        </ScrollView>
+                    </View>
 
                     <View style={{ width: '100%', backgroundColor: 'white', marginTop: 10, marginBottom: 10, padding: 16, paddingTop: 0, paddingBottom: 0 }}>
                         <TouchableOpacity onPress={this.openWallet.bind(this)} style={styles.itemContainer}>
@@ -486,7 +456,7 @@ class HomeView extends React.Component {
                             <View style={styles.separator} />
                         </TouchableOpacity>
 
-                        {!user && 
+                        {!user &&
                             <TouchableOpacity onPress={this.openLogin.bind(this)} style={styles.itemContainer}>
                                 <Icon name='user' size={15} color='#DF5539' />
                                 <Text style={styles.itemText}>Đăng nhập</Text>
@@ -501,7 +471,7 @@ class HomeView extends React.Component {
                     renderIcon={() => <Icon name='phone' size={20} color='white' />}
                 >
                     {contacts.map((item) => {
-                        return(
+                        return (
                             <ActionButton.Item buttonColor={'blue'} title={item.title} onPress={() => Linking.openURL(item.action)}>
                                 <Icon name={item.icon} size={18} color='white' />
                             </ActionButton.Item>
