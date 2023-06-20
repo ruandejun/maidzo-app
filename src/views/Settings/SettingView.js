@@ -15,6 +15,7 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     FlatList,
+    Alert,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -38,7 +39,7 @@ import Global, { Media, calculateDistance, decode, getBottomSpace } from 'src/Gl
 import Header from 'components/Header'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import CustomAlert from 'components/CustomAlert';
-import {logout} from 'Sessions/redux/action'
+import {logout, deleteAccount} from 'Sessions/redux/action'
 
 class SettingView extends React.Component {
 
@@ -66,6 +67,15 @@ class SettingView extends React.Component {
 
     onUpdatePassword(){
         this.props.navigation.navigate('UpdatePasswordView')
+    }
+
+    onDeleteAccount(){
+        Alert.alert('Xoá tài khoản', 'Bạn có xác nhận xoá tài khoản? Mọi thông tin sẽ bị xoá.', [
+            {text: 'Không'},
+            {text: 'Xoá', onPress: () => {
+                this.props.deleteAccount()
+            }}
+        ])
     }
 
     render() {
@@ -104,6 +114,10 @@ class SettingView extends React.Component {
                         <Icon name='chevron-right' size={14} color='#333333'/>
                         <View style={styles.separator}/>
                     </TouchableOpacity>
+
+                    <TouchableOpacity onPress={this.onDeleteAccount.bind(this)} style={[styles.itemContainer, {marginTop: 32}]}>
+                        <Text style={[styles.itemText, {color: 'red'}]}>Xoá tài khoản</Text>
+                    </TouchableOpacity>
                 </View>
 
                 <TouchableOpacity onPress={this.onLogout.bind(this)} style={{width: '100%', height: 45 + getBottomSpace(), paddingBottom: getBottomSpace(), backgroundColor: '#DF5539', alignItems: 'center', justifyContent: 'center'}}>
@@ -122,7 +136,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        logout: () => dispatch(logout())
+        logout: () => dispatch(logout()),
+        deleteAccount: () => dispatch(deleteAccount())
     };
 };
 
