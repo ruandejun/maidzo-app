@@ -74,7 +74,8 @@ class Tabbar extends React.PureComponent {
       },
       onNotification: function (notification) {
         console.log("NOTIFICATION:", notification)
-        notification.finish(PushNotificationIOS.FetchResult.NoData);
+        if(Platform.OS === 'ios')
+          notification.finish(PushNotificationIOS.FetchResult.NoData);
       },
       onAction: function (notification) {
         console.log("ACTION:", notification.action);
@@ -145,7 +146,8 @@ class Tabbar extends React.PureComponent {
         this.onNotificationOpennedAppListener()
       }
 
-      PushNotificationIOS.setApplicationIconBadgeNumber(this.props.unread)
+      if(Platform.OS === 'ios')
+        PushNotificationIOS.setApplicationIconBadgeNumber(this.props.unread)
     } catch (error) {
 
     }
@@ -153,6 +155,7 @@ class Tabbar extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (this.props.unread != prevProps.unread) {
+      if(Platform.OS === 'ios')
       PushNotificationIOS.setApplicationIconBadgeNumber(this.props.unread)
     }
   }
