@@ -53,7 +53,7 @@ export function imageUrl(image_url) {
 
 export const convertMoney = (money) => {
   if (!money) return money
-  return (Math.round(money * 100) / 100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+  return (Math.round(money * 100) / 100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + '₫'
 }
 
 export const contacts = [

@@ -57,6 +57,7 @@ import PushNotificationIOS from "@react-native-community/push-notification-ios"
 import PushNotification from "react-native-push-notification"
 import messaging from '@react-native-firebase/messaging'
 import DeviceInfo from 'react-native-device-info'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 
 class Tabbar extends React.PureComponent {
 
@@ -201,23 +202,33 @@ class Tabbar extends React.PureComponent {
             </View>
           </TouchableWithoutFeedback>
 
-          <TouchableWithoutFeedback onPress={this.openTab.bind(this, 2)}>
+          {/* <TouchableWithoutFeedback onPress={this.openTab.bind(this, 2)}>
             <View style={[styles.buttonContainer]}>
               <Image resizeMode='contain' style={[styles.buttonIcon, { tintColor: currentIndex == 2 ? '#FDCC0D' : 'white' }]} source={Media.PackageTab} />
               <Text style={[styles.buttonText, { color: currentIndex == 2 ? '#FDCC0D' : 'white' }]}>Kiện hàng</Text>
             </View>
-          </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback> */}
 
-          <TouchableWithoutFeedback onPress={this.openTab.bind(this, 3)}>
+          <TouchableWithoutFeedback onPress={this.openTab.bind(this, 2)}>
             <View style={[styles.buttonContainer]}>
-              <Image resizeMode='contain' style={[styles.buttonIcon, { tintColor: currentIndex == 3 ? '#FDCC0D' : 'white' }]} source={Media.NotificationTab} />
-              <Text style={[styles.buttonText, { color: currentIndex == 3 ? '#FDCC0D' : 'white' }]}>Thông báo</Text>
+              <Image resizeMode='contain' style={[styles.buttonIcon, { tintColor: currentIndex == 2 ? '#FDCC0D' : 'white' }]} source={Media.NotificationTab} />
+              <Text style={[styles.buttonText, { color: currentIndex == 2 ? '#FDCC0D' : 'white' }]}>Thông báo</Text>
 
               {unread > 0 &&
                 <View style={[styles.notiBagde]}>
                   <Text style={styles.bagdeText}>{unread}</Text>
                 </View>
               }
+            </View>
+          </TouchableWithoutFeedback>
+
+
+          <TouchableWithoutFeedback onPress={this.openTab.bind(this, 3)}>
+            <View style={[styles.buttonContainer]}>
+              <View style={{width: 25, height: 25, alignItems: 'center', justifyContent: 'center'}}>
+              <Icon name='user' solid size={20} color={currentIndex == 3 ? '#FDCC0D' : 'white'} />
+              </View>
+              <Text style={[styles.buttonText, { color: currentIndex == 3 ? '#FDCC0D' : 'white' }]}>Tài khoản</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>

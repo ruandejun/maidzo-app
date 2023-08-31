@@ -16,6 +16,7 @@
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
+    "axios": "^1.5.0",
     "hermes-engine": "^0.2.1",
     "moment": "^2.24.0",
     "react": "17.0.1",
@@ -43,7 +44,8 @@
     "redux": "^4.0.4",
     "redux-persist": "^5.10.0",
     "redux-saga": "^1.0.5",
-    "teaset": "https://github.com/tungmt/teaset"
+    "teaset": "https://github.com/tungmt/teaset",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

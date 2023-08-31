@@ -56,6 +56,8 @@ import OrderDetailView from 'Orders/OrderDetailView'
 
 import NotificationView from 'Notifications/NotificationView'
 
+import MenuView from 'Setting/MenuView'
+
 const Stack = createStackNavigator()
 const Tab = createBottomTabNavigator()
 
@@ -64,8 +66,8 @@ const DashboardView = () => {
         <Tab.Navigator tabBar={props => <Tabbar {...props} />}>
             <Tab.Screen name="HomeView" component={HomeView} />
             <Tab.Screen name="OrderListView" component={OrderListView} />
-            <Tab.Screen name="TrackingAllView" component={TrackingAllView} />
             <Tab.Screen name="NotificationView" component={NotificationView} />
+            <Tab.Screen name="MenuView" component={MenuView} />
         </Tab.Navigator>
     )
 }
@@ -133,6 +135,7 @@ export class AppWithNavigationState extends React.Component {
                     <Stack.Screen name="AddTransportView" component={AddTransportView} options={{ header: () => null, headerBackTitle: () => "" }} />
                     <Stack.Screen name="ContactView" component={ContactView} options={{ header: () => null, headerBackTitle: () => "" }} />
                     <Stack.Screen name="UpdatePasswordView" component={UpdatePasswordView} options={{ header: () => null, headerBackTitle: () => "" }} />
+                    <Stack.Screen name="TrackingAllView" component={TrackingAllView} options={{ header: () => null, headerBackTitle: () => "" }} />
                 </Stack.Navigator>
             </NavigationContainer>
         )
