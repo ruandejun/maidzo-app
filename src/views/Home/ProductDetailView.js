@@ -164,10 +164,11 @@ const ProductDetailView = () => {
                                     <View key={prop.pid} style={{ marginTop: 16, padding: 16, backgroundColor: 'white' }}>
                                         <TranslateText style={{ fontSize: 18, color: 'black', marginBottom: 8, fontWeight: '700' }} text={prop.prop_name} />
                                         {prop.values.map((value) => {
-                                            const priceFilter = productData.skus.filter((s) => s.props_ids === `${prop.pid}:${value.vid}`)
-
+                                        
+                                            const priceFilter = productData.skus.filter((s) => s.props_ids.split(';').indexOf(`${prop.pid}:${value.vid}`) >= 0)
                                             if (priceFilter && priceFilter.length > 0) {
                                                 const price = priceFilter[0]
+
                                                 const hasSale = price.sale_price && price.origin_price !== price.sale_price
                                                 const option = selectProps[`${prop.pid}:${value.vid}`]
                                                 return (
@@ -196,7 +197,7 @@ const ProductDetailView = () => {
                                                                 }}
                                                                 step={1}
                                                                 min={0}
-                                                                max={value.stock}
+                                                                max={price.stock}
                                                                 subButton={
                                                                     <View style={{ width: 24, height: 24, alignItems: 'center', justifyContent: 'center' }}>
                                                                         <Text style={{ fontSize: 16, color: Global.MainColor }}>-</Text>
