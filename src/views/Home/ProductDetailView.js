@@ -21,6 +21,7 @@ import FastImage from 'react-native-fast-image'
 import Stepper from 'components/Stepper'
 import TranslateText from '../../components/TranslateText'
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder'
 
 const ProductDetailView = () => {
     const route = useRoute()
@@ -88,7 +89,10 @@ const ProductDetailView = () => {
     }
 
     const onAddCart = () => {
-        if (!productData || totalPrice === 0 || totalQuantity === 0) return
+        if (!productData || totalPrice === 0 || totalQuantity === 0) {
+            alert('Vui lòng thêm sản phẩm!')
+            return
+        }
 
         Alert.alert('Xác nhận đơn!', `Xác nhận đặt ${totalQuantity} sản phẩm với tổng giá tiền ${totalPrice} ${productData.currency}!`, [
             { text: 'Huỷ' },
@@ -148,30 +152,56 @@ const ProductDetailView = () => {
                 rightAction={openCart}
                 rightCount={cartCount}
             />
-            <ScrollView style={{ flex: 1, width: '100%' }} refreshControl={<RefreshControl refreshing={loading} onRefresh={onRefresh} />}>
-                {productData &&
+            {
+                !productData &&
+                <View style={{ flex: 1, width: '100%', backgroundColor: 'white', paddingBottom: 16 }}>
+                    <FlatList pagingEnabled horizontal data={imageList} renderItem={renderImage} style={{ width: '100%', height: Global.ScreenHeight * 0.3 }} />
+                    <ImageView images={[{ uri: product.pict_url }]} imageIndex={0} visible={imageViewerVisible} onRequestClose={() => setImageViewerVisible(false)} />
+                    <View style={{ flex: 1, minHeight: 100, paddingBottom: 16 }}>
+                        <View style={{ width: '100%', padding: 16, backgroundColor: 'white' }}>
+                            <TranslateText style={{ width: '100%', fontSize: 16, color: 'black', fontWeight: '400' }} text={product.title} />
+                            <Text style={{ fontSize: 16, color: 'black', fontWeight: '400', marginTop: 16 }}>{`Giá từ: `}<Text style={{ fontSize: 20, fontWeight: '700' }}>{product.zk_final_price}</Text>{` CNY`}</Text>
+                        </View>
+                    </View>
+                </View>
+            }
+            {
+                loading &&
+                <View style={{ flex: 1, backgroundColor: 'white', padding: 16 }}>
+                    <SkeletonPlaceholder borderRadius={4}>
+                        <SkeletonPlaceholder.Item>
+                            <SkeletonPlaceholder.Item width={Global.ScreenWidth - 32} height={16} />
+                            <SkeletonPlaceholder.Item marginTop={8} width={Global.ScreenWidth - 96} height={16} />
+                            <SkeletonPlaceholder.Item marginTop={8} width={Global.ScreenWidth - 120} height={16} />
+                            <SkeletonPlaceholder.Item marginTop={8} width={Global.ScreenWidth - 180} height={16} />
+                        </SkeletonPlaceholder.Item>
+                    </SkeletonPlaceholder>
+                </View>
+            }
+            {productData &&
+                <ScrollView style={{ flex: 1, width: '100%' }} refreshControl={<RefreshControl refreshing={false} onRefresh={onRefresh} />}>
                     <View style={{ flex: 1, width: '100%' }}>
                         <FlatList pagingEnabled horizontal data={imageList} renderItem={renderImage} style={{ width: '100%', height: Global.ScreenHeight * 0.3 }} />
                         <ImageView images={imageList} imageIndex={0} visible={imageViewerVisible} onRequestClose={() => setImageViewerVisible(false)} />
                         <View style={{ flex: 1, paddingBottom: 16 }}>
-                            <View style={{ padding: 16, backgroundColor: 'white' }}>
+                            <View style={{ width: '100%', padding: 16, backgroundColor: 'white' }}>
                                 <TranslateText style={{ width: '100%', fontSize: 16, color: 'black', fontWeight: '400' }} text={productData.title} />
                                 <Text style={{ fontSize: 16, color: 'black', fontWeight: '400', marginTop: 16 }}>{`Giá từ: `}<Text style={{ fontSize: 20, fontWeight: '700' }}>{productData.price_info.origin_price}</Text>{` ${productData.currency}`}</Text>
                             </View>
-                            <View style={{width: '100%', backgroundColor: 'white', marginTop: 16, padding: 16}}>
-                                <TouchableOpacity onPress={() => setShowDetail((old) => !old)} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
-                                    <Text style={{fontSize: 20, fontWeight: '700', color: Global.MainColor}}>Chi tiết sản phẩm</Text>
-                                    <Icon name={showDetail ? 'chevron-down' : 'chevron-right'} size={22} color={Global.MainColor}/>
+                            <View style={{ width: '100%', backgroundColor: 'white', marginTop: 16, padding: 16 }}>
+                                <TouchableOpacity onPress={() => setShowDetail((old) => !old)} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                    <Text style={{ fontSize: 20, fontWeight: '700', color: Global.MainColor }}>Chi tiết sản phẩm</Text>
+                                    <Icon name={showDetail ? 'chevron-down' : 'chevron-right'} size={22} color={Global.MainColor} />
                                 </TouchableOpacity>
                                 {
                                     showDetail &&
-                                    <View style={{width: '100%', marginTop: 8}}>
+                                    <View style={{ width: '100%', marginTop: 8 }}>
                                         {
                                             productData.product_props.map((prop, index) => {
                                                 const keys = Object.keys(prop)
-                                                for(const key of keys) {
-                                                    return(
-                                                        <TranslateText key={`${key}-${index}`} style={{fontSize: 14, color: 'black', marginTop: 4, width: '100%'}} text={`${key}: ${prop[key]}`}/>
+                                                for (const key of keys) {
+                                                    return (
+                                                        <TranslateText key={`${key}-${index}`} style={{ fontSize: 14, color: 'black', marginTop: 4, width: '100%' }} text={`${key}: ${prop[key]}`} />
                                                     )
                                                 }
                                             })
@@ -184,7 +214,7 @@ const ProductDetailView = () => {
                                     <View key={prop.pid} style={{ marginTop: 16, padding: 16, backgroundColor: 'white' }}>
                                         <TranslateText style={{ fontSize: 18, color: 'black', marginBottom: 8, fontWeight: '700' }} text={prop.prop_name} />
                                         {prop.values.map((value) => {
-                                        
+
                                             const priceFilter = productData.skus.filter((s) => s.props_ids.split(';').indexOf(`${prop.pid}:${value.vid}`) >= 0)
                                             if (priceFilter && priceFilter.length > 0) {
                                                 const price = priceFilter[0]
@@ -243,8 +273,8 @@ const ProductDetailView = () => {
                             })}
                         </View>
                     </View>
-                }
-            </ScrollView>
+                </ScrollView>
+            }
             {productData &&
                 <View style={{ flexDirection: 'row', width: '100%', paddingTop: 8, backgroundColor: '#eeeeee', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
                     <View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'center', paddingHorizontal: 16 }}>
@@ -252,11 +282,11 @@ const ProductDetailView = () => {
                             <Text style={{ fontSize: 16, fontWeight: '700' }}>{totalQuantity}</Text>
                         </Text>
                         <Text style={{ fontSize: 14, marginTop: 8, color: 'black' }}>{`Thành tiền: `}
-                            <Text style={{ fontSize: 16, fontWeight: '700' }}>{totalPrice}</Text>
+                            <Text style={{ fontSize: 16, fontWeight: '700' }}>{totalPrice.toFixed(2)}</Text>
                             <Text>{` ${productData.currency}`}</Text>
                         </Text>
                     </View>
-                    <TouchableOpacity disabled={totalQuantity === 0 || totalPrice === 0} onPress={onAddCart} style={{ borderRadius: 5, width: 100, height: '100%', backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
+                    <TouchableOpacity onPress={onAddCart} style={{ borderRadius: 5, width: 100, height: '100%', backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
                         <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Đặt hàng</Text>
                     </TouchableOpacity>
                 </View>
