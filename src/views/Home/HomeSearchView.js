@@ -25,6 +25,7 @@ import Header from 'components/Header'
 import { fetchApi } from 'actions/api'
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import FastImage from 'react-native-fast-image';
+import TranslateText from '../../components/TranslateText';
 
 const LIMIT = 20
 
@@ -80,7 +81,7 @@ class HomeSearchView extends React.Component {
         this.setState({ loadingMore: true, page: this.state.page + 1 }, () => {
             fetchApi('get', `page/search/`, { key: keyword, page_no: this.state.page, page_size: LIMIT, platform: 1 })
                 .then((data) => {
-                    // console.log(data)
+                    console.log(data)
                     if (data) {
                         let items = this.state.items
 
@@ -107,20 +108,20 @@ class HomeSearchView extends React.Component {
 
     renderItem({ item, index }) {
         return (
-            <TouchableOpacity onPress={this.onPressItem.bind(this, item.item_url)} style={{ backgroundColor: 'white', padding: 10, marginTop: 8, flexDirection: 'row' }}>
+            <TouchableOpacity onPress={this.onPressItem.bind(this, item)} style={{ backgroundColor: 'white', padding: 10, marginTop: 8, flexDirection: 'row' }}>
                 <FastImage source={{ uri: item.pict_url }} style={{ width: 60, height: 60 }} resizeMode='cover' />
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginLeft: 8 }}>
-                    <Text style={{ fontSize: 14, color: Global.MainColor, fontFamily: Global.Fontname, width: '100%' }} numberOfLines={1}>{item.short_title}</Text>
-                    <Text style={{ fontSize: 13, marginTop: 5, color: '#333333', fontFamily: Global.Fontname, width: '100%' }} numberOfLines={1}>{item.title}</Text>
-                    <Text style={{ fontSize: 13, marginTop: 5, color: '#333333', fontFamily: Global.Fontname, width: '100%' }}>{'Giá: ¥' + item.reserve_price}</Text>
-                    <Text style={{ fontSize: 13, marginTop: 5, color: '#333333', fontFamily: Global.Fontname, width: '100%' }}>{'Khuyến mãi: ' + item.coupon_info}</Text>
+                    <TranslateText style={{ fontSize: 14, color: Global.MainColor, fontFamily: Global.Fontname, width: '100%' }} numberOfLines={1} text={item.short_title} />
+                    <TranslateText style={{ fontSize: 13, marginTop: 5, color: '#333333', fontFamily: Global.Fontname, width: '100%' }} numberOfLines={1} text={item.title} />
+                    <Text style={{ fontSize: 13, marginTop: 5, color: '#333333', fontFamily: Global.Fontname, width: '100%' }}>{'Giá: CNY' + item.reserve_price}</Text>
+                    <TranslateText style={{ fontSize: 13, marginTop: 5, color: '#333333', fontFamily: Global.Fontname, width: '100%' }} text={item.coupon_info} />
                 </View>
             </TouchableOpacity>
         )
     }
 
-    onPressItem(link) {
-        this.props.navigation.navigate('TaobaoWebView', { url: link.replace('#modal=sku', '') })
+    onPressItem(item) {
+        this.props.navigation.navigate('ProductDetailView', { product: {...item, click_url: item.url} })
     }
 
     renderFooter() {

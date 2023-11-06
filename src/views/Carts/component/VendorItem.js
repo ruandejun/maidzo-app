@@ -42,6 +42,7 @@ import FastImage from 'react-native-fast-image'
 import { Stepper, Checkbox } from 'teaset'
 import CartItem from './CartItem'
 import { FlatList } from 'react-native-gesture-handler';
+import TranslateText from '../../../components/TranslateText';
 
 export default class VendorItem extends React.PureComponent {
 
@@ -170,7 +171,7 @@ export default class VendorItem extends React.PureComponent {
                     }
 
                     <Icon name='store' size={18} color={Global.MainColor} style={{ marginLeft: 8 }} />
-                    <Text style={styles.vendorName}>{vendor}</Text>
+                    <TranslateText style={styles.vendorName} text={vendor}/>
 
                     <TouchableOpacity onPress={this.showHideItem.bind(this)} style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
                         <Icon name={this.state.showItem ? 'angle-up' : 'angle-down'} size={20} />

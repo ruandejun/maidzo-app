@@ -199,10 +199,14 @@ class HomeView extends React.Component {
         this.props.navigation.navigate('HomeScanView')
     }
 
+    openDetail(item) {
+        this.props.navigation.navigate('ProductDetailView', {product: item})
+    }
+
     renderItem({ item, index }) {
         const {cnyConvert} = this.state
         return (
-            <ProductItem {...item} convert={cnyConvert} />
+            <ProductItem {...item} convert={cnyConvert} onPress={() => this.openDetail(item)} />
         )
     }
 
@@ -233,9 +237,9 @@ class HomeView extends React.Component {
                         <FlatList
                             data={ifashionItems}
                             renderItem={this.renderItem.bind(this)}
-                            numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
                             style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
-                            columnWrapperStyle={{ justifyContent: 'space-between' }}
                             ItemSeparatorComponent={
                                 () => <View style={{ width: 8, height: 8 }}/>
                             }
@@ -249,9 +253,9 @@ class HomeView extends React.Component {
                         <FlatList
                             data={flashSaleItems}
                             renderItem={this.renderItem.bind(this)}
-                            numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
                             style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
-                            columnWrapperStyle={{ justifyContent: 'space-between' }}
                             ItemSeparatorComponent={
                                 () => <View style={{ width: 8, height: 8 }}/>
                             }
@@ -263,9 +267,9 @@ class HomeView extends React.Component {
                         <FlatList
                             data={quantitySaleItems}
                             renderItem={this.renderItem.bind(this)}
-                            numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
                             style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
-                            columnWrapperStyle={{ justifyContent: 'space-between' }}
                             ItemSeparatorComponent={
                                 () => <View style={{ width: 8, height: 8 }}/>
                             }

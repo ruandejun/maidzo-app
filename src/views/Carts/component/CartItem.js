@@ -64,6 +64,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import FastImage from 'react-native-fast-image'
 import { Stepper, Checkbox } from 'teaset'
+import TranslateText from '../../../components/TranslateText';
 
 export default class CartItem extends React.PureComponent {
 
@@ -184,14 +185,14 @@ export default class CartItem extends React.PureComponent {
                 <View style={styles.contentContainer}>
                     <Image source={{ uri: imageUrl(image_url) }} style={styles.itemImage} />
                     <View style={styles.descriptionContainer}>
-                        <Text onPress={this.openItem.bind(this)} style={styles.nameText}>{name}</Text>
+                        <TranslateText onPress={this.openItem.bind(this)} style={styles.nameText} text={name} />
                         <Text style={styles.descriptionText}>{`${currency} ${price} / ${convertMoney(price_vnd)} vnđ`}</Text>
                         {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Text onPress={this.openItem.bind(this)} style={[styles.descriptionText]} numberOfLines={1}>{'Link: '}
                                 <Text style={{color: 'blue', textDecorationLine: 'underline'}}>{'Mở sản phẩm'}</Text>
                             </Text>
                         </View> */}
-                        <Text style={styles.descriptionText}>{`${option_selected_tag}`}</Text>
+                        <TranslateText style={styles.descriptionText} text={`${option_selected_tag}`}/>
                     </View>
                 </View>
 
