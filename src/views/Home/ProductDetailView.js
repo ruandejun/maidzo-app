@@ -20,6 +20,7 @@ import ImageView from "react-native-image-viewing"
 import FastImage from 'react-native-fast-image'
 import Stepper from 'components/Stepper'
 import TranslateText from '../../components/TranslateText'
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const ProductDetailView = () => {
     const route = useRoute()
@@ -32,6 +33,7 @@ const ProductDetailView = () => {
     const [updateTimes, setUpdateTimes] = useState(0)
     const dispatch = useDispatch()
     const cartCount = useSelector(state => state.cart.count ?? 0)
+    const [showDetail, setShowDetail] = useState(false)
 
     const loadData = useCallback(() => {
         if (product) {
@@ -155,9 +157,27 @@ const ProductDetailView = () => {
                             <View style={{ padding: 16, backgroundColor: 'white' }}>
                                 <TranslateText style={{ width: '100%', fontSize: 16, color: 'black', fontWeight: '400' }} text={productData.title} />
                                 <Text style={{ fontSize: 16, color: 'black', fontWeight: '400', marginTop: 16 }}>{`Giá từ: `}<Text style={{ fontSize: 20, fontWeight: '700' }}>{productData.price_info.origin_price}</Text>{` ${productData.currency}`}</Text>
-                                <TouchableOpacity onPress={openLink} style={{ width: '100%', height: 44, backgroundColor: 'white', borderWidth: 1, borderRadius: 5, marginTop: 16, borderColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 14, color: 'black' }}>{'Mở link gốc'}</Text>
+                            </View>
+                            <View style={{width: '100%', backgroundColor: 'white', marginTop: 16, padding: 16}}>
+                                <TouchableOpacity onPress={() => setShowDetail((old) => !old)} style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
+                                    <Text style={{fontSize: 20, fontWeight: '700', color: Global.MainColor}}>Chi tiết sản phẩm</Text>
+                                    <Icon name={showDetail ? 'chevron-down' : 'chevron-right'} size={22} color={Global.MainColor}/>
                                 </TouchableOpacity>
+                                {
+                                    showDetail &&
+                                    <View style={{width: '100%', marginTop: 8}}>
+                                        {
+                                            productData.product_props.map((prop, index) => {
+                                                const keys = Object.keys(prop)
+                                                for(const key of keys) {
+                                                    return(
+                                                        <TranslateText key={`${key}-${index}`} style={{fontSize: 14, color: 'black', marginTop: 4, width: '100%'}} text={`${key}: ${prop[key]}`}/>
+                                                    )
+                                                }
+                                            })
+                                        }
+                                    </View>
+                                }
                             </View>
                             {productData.sku_props.map((prop) => {
                                 return (

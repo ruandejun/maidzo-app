@@ -246,7 +246,7 @@ class HomeView extends React.Component {
                         />
 
 
-                        <View style={{ flexDirection: 'row', padding: 8, width: '100%' }}>
+                        <View style={{ flexDirection: 'row', padding: 8, width: '100%', marginTop: 16 }}>
                             <Text style={{ marginLeft: 8, fontSize: 18, color: 'black', fontWeight: '700', fontFamily: Global.FontName, }}>Flash sale</Text>
                         </View>
 
@@ -260,7 +260,7 @@ class HomeView extends React.Component {
                                 () => <View style={{ width: 8, height: 8 }}/>
                             }
                         />
-                        <View style={{ flexDirection: 'row', padding: 8, width: '100%' }}>
+                        <View style={{ flexDirection: 'row', padding: 8, width: '100%', marginTop: 16 }}>
                             <Text style={{ marginLeft: 8, fontSize: 18, color: 'black', fontWeight: '700', fontFamily: Global.FontName, }}>Sale giới hạn</Text>
                         </View>
 

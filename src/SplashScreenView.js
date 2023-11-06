@@ -51,11 +51,11 @@ class SplashScreenView extends React.Component {
                 if (value) {
                     Global.userToken = value
                     this.props.loginSuccess(this.props.user)
-                    // NavigationService.reset('DashboardView')
+                    NavigationService.reset('DashboardView')
                 } else {
-                    // NavigationService.reset('LoginView')
+                    NavigationService.reset('LoginView')
                 }
-                NavigationService.reset('DashboardView')
+                // NavigationService.reset('DashboardView')
             } else if (Global.userId.length > 0 && Global.userToken.length > 0) {
                 if (this.props.isLogin)
                     return;
@@ -70,14 +70,14 @@ class SplashScreenView extends React.Component {
 
                     this.props.getUser();
                 } else {
-                    NavigationService.reset('DashboardView')
-                    // NavigationService.reset('LoginView')
+                    // NavigationService.reset('DashboardView')
+                    NavigationService.reset('LoginView')
                 }
             }
         } catch (error) {
             console.log(error);
-            NavigationService.reset('DashboardView')
-            // NavigationService.reset('LoginView')
+            // NavigationService.reset('DashboardView')
+            NavigationService.reset('LoginView')
         }
     }
 
