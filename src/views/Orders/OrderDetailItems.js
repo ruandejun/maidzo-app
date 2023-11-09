@@ -158,7 +158,8 @@ class OrderDetailItems extends React.Component {
     }
 
     openItem(link) {
-        this.props.navigation.navigate('TaobaoWebView', { url: link.replace('#modal=sku', '') })
+        this.props.navigation.push('ProductDetailView', { product: {click_url: link.replace('#modal=sku', '')} })
+        // this.props.navigation.navigate('TaobaoWebView', { url: link.replace('#modal=sku', '') })
     }
 
     renderFooter() {

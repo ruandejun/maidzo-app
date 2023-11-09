@@ -15,7 +15,7 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     FlatList,
-    Alert
+    Alert,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         fontSize: 14, color: 'black', fontFamily: Global.FontName, flex: 1, marginLeft: 8, marginRight: 8
     },
     separator: {
-        position: 'absolute', left: 0, right: 0, bottom: 0, height: 1, backgroundColor: '#CECECE'
+        position: 'absolute', left : 0, right: 0, bottom: 0, height: 1, backgroundColor: '#CECECE'
     }
 })
 
@@ -39,52 +39,48 @@ import Global, { Media, calculateDistance, decode, getBottomSpace } from 'src/Gl
 import Header from 'components/Header'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import CustomAlert from 'components/CustomAlert';
-import { logout, deleteAccount } from 'Sessions/redux/action'
+import {logout, deleteAccount} from 'Sessions/redux/action'
 
 class SettingView extends React.Component {
 
-    onLogout() {
+    onLogout(){
         CustomAlert('Đăng xuất', 'Bạn có chắc chắn muốn đăng xuất?', [
-            {
-                text: 'Đăng xuất', onPress: () => {
-                    this.props.logout()
-                    this.props.navigation.goBack()
-                }
-            },
-            { text: 'Bỏ', }
+            {text: 'Đăng xuất', onPress: () => {
+                this.props.logout()
+                this.props.navigation.goBack()
+            }},
+            {text: 'Bỏ', }
         ])
     }
 
-    openPrivacy() {
+    openPrivacy(){
         this.props.navigation.navigate('PrivacyView')
     }
 
-    onAbout() {
+    onAbout(){
         this.props.navigation.navigate('AboutView')
     }
 
-    onProfile() {
+    onProfile(){
         this.props.navigation.navigate('UpdateProfileView')
     }
 
-    onUpdatePassword() {
+    onUpdatePassword(){
         this.props.navigation.navigate('UpdatePasswordView')
     }
 
-    onDeleteAccount() {
+    onDeleteAccount(){
         Alert.alert('Xoá tài khoản', 'Bạn có xác nhận xoá tài khoản? Mọi thông tin sẽ bị xoá.', [
-            { text: 'Không' },
-            {
-                text: 'Xoá', onPress: () => {
-                    this.props.deleteAccount()
-                }
-            }
+            {text: 'Không'},
+            {text: 'Xoá', onPress: () => {
+                this.props.deleteAccount()
+            }}
         ])
     }
 
     render() {
 
-        const { user } = this.props
+        const {user} = this.props
 
         return (
             <View style={styles.container}>
@@ -94,38 +90,38 @@ class SettingView extends React.Component {
                     leftAction={() => this.props.navigation.goBack()}
                 />
 
-                <View style={{ flex: 1, width: '100%', backgroundColor: 'white', marginTop: 10, marginBottom: 10, padding: 16, paddingTop: 0, paddingBottom: 0 }}>
+                <View style={{flex: 1, width: '100%', backgroundColor: 'white', marginTop : 10, marginBottom: 10, padding: 16, paddingTop: 0, paddingBottom: 0}}>
                     <TouchableOpacity onPress={this.onProfile.bind(this)} style={styles.itemContainer}>
                         <Text style={styles.itemText}>Hồ sơ của tôi</Text>
-                        <Icon name='chevron-right' size={14} color='#333333' />
-                        <View style={styles.separator} />
+                        <Icon name='chevron-right' size={14} color='#333333'/>
+                        <View style={styles.separator}/>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={this.onUpdatePassword.bind(this)} style={styles.itemContainer}>
                         <Text style={styles.itemText}>Cập nhật mật khẩu</Text>
-                        <Icon name='chevron-right' size={14} color='#333333' />
-                        <View style={styles.separator} />
+                        <Icon name='chevron-right' size={14} color='#333333'/>
+                        <View style={styles.separator}/>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={this.openPrivacy.bind(this)} style={styles.itemContainer}>
-                        <Text style={styles.itemText}>Điều khoản Chuyenhang365</Text>
-                        <Icon name='chevron-right' size={14} color='#333333' />
-                        <View style={styles.separator} />
+                        <Text style={styles.itemText}>Điều khoản Maidzo</Text>
+                        <Icon name='chevron-right' size={14} color='#333333'/>
+                        <View style={styles.separator}/>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={this.onAbout.bind(this)} style={styles.itemContainer}>
                         <Text style={styles.itemText}>Giới thiệu</Text>
-                        <Icon name='chevron-right' size={14} color='#333333' />
-                        <View style={styles.separator} />
+                        <Icon name='chevron-right' size={14} color='#333333'/>
+                        <View style={styles.separator}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={this.onDeleteAccount.bind(this)} style={[styles.itemContainer, { marginTop: 32 }]}>
-                        <Text style={[styles.itemText, { color: 'red' }]}>Xoá tài khoản</Text>
+                    <TouchableOpacity onPress={this.onDeleteAccount.bind(this)} style={[styles.itemContainer, {marginTop: 32}]}>
+                        <Text style={[styles.itemText, {color: 'red'}]}>Xoá tài khoản</Text>
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity onPress={this.onLogout.bind(this)} style={{ width: '100%', height: 45 + getBottomSpace(), paddingBottom: getBottomSpace(), backgroundColor: '#DF5539', alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={{ color: 'white', fontSize: 16, fontFamily: Global.FontName, fontWeight: '500' }}>Đăng xuất</Text>
+                <TouchableOpacity onPress={this.onLogout.bind(this)} style={{width: '100%', height: 45 + getBottomSpace(), paddingBottom: getBottomSpace(), backgroundColor: '#DF5539', alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{color: 'white', fontSize: 16, fontFamily: Global.FontName, fontWeight: '500'}}>Đăng xuất</Text>
                 </TouchableOpacity>
             </View>
         )

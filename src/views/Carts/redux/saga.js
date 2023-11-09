@@ -4,6 +4,7 @@ import Global from 'src/Global';
 import { fetchApi, fetchApiLogin, fetchUnlengthApi } from "actions/api"
 import NavigationService from 'actions/NavigationService'
 import actions from './action'
+import { SheetManager } from 'react-native-actions-sheet';
 
 export function* getCart() {
   let response = yield call(fetchApi, 'get', 'page/cart/show/');
@@ -123,7 +124,7 @@ export function* updateCartItemService({item_list, value, name}) {
 }
 
 export function* addItemToCart({payload}) {
-  // console.log(JSON.stringify(payload))
+  console.log(JSON.stringify(payload))
   let response = yield call(fetchApi, 'post', 'api/shop_module/cart/', payload);
 
   if(response && (response.detail == 'Invalid token.' || response.detail == 'Invalid token header. No credentials provided.')){
@@ -141,12 +142,13 @@ export function* addItemToCart({payload}) {
       data: response
     });
 
+    SheetManager.hide('product-props')
     CustomAlert('Thêm sản phẩm vào giỏ hàng thành công')
     
     yield put({type: actions.GET_CART})
     // yield put({type: actions.GET_CART_COUNT})
   } else {
-    CustomAlert('Sản phẩm này không thêm được vào giỏ hàng, vui lòng chọn sản phẩm khác.')
+    alert('Sản phẩm này không thêm được vào giỏ hàng, vui lòng chọn sản phẩm khác.')
   }
 }
 

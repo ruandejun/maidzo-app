@@ -71,6 +71,7 @@ import { Stepper, Checkbox } from 'teaset'
 import CustomAlert from 'components/CustomAlert'
 import { FlatList } from 'react-native-gesture-handler';
 import Share from 'react-native-share'
+import TranslateText from '../../../components/TranslateText';
 
 export default class OrderDetailItem extends React.PureComponent {
 
@@ -122,7 +123,7 @@ export default class OrderDetailItem extends React.PureComponent {
                     <Text style={styles.idText}>{id}</Text>
                     <Text style={styles.statusText}>{status}</Text>
                 </View>
-                <Text onPress={this.openItem.bind(this)} style={styles.nameText}>{name}</Text>
+                <TranslateText onPress={this.openItem.bind(this)} style={styles.nameText} text={name}/>
                 <View style={styles.contentContainer}>
                     <View style={{alignItems: 'center'}}>
                         <Image source={{ uri: imageUrl(image_url) }} style={styles.itemImage} />
@@ -137,7 +138,7 @@ export default class OrderDetailItem extends React.PureComponent {
                                 <Text style={{color: 'blue', textDecorationLine: 'underline'}}>{'Mở sản phẩm'}</Text>
                             </Text>
                         </View> */}
-                        <Text style={styles.descriptionText}>{`${option_selected_tag}`}</Text>
+                        <TranslateText style={styles.descriptionText} text={`${option_selected_tag}`}/>
                     </View>
                 </View>
 
