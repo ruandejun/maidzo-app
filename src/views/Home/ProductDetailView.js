@@ -40,11 +40,20 @@ const ProductDetailView = () => {
     const [showDetail, setShowDetail] = useState(true)
     const insets = useSafeAreaInsets()
 
+    const isValidURL = (url) => {
+        try {
+          new URL(url);
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+
     const loadData = useCallback(() => {
         if (product) {
             setLoading(true)
             let url = product.click_url ?? ''
-            if (url.toLowerCase().indexOf('http') != 0) {
+            if (!isValidURL(url)) {
                 url = 'https:' + product.click_url
             }
             let endpoint = `https://quanly.chuyenhang365.com/page/get_item_details/`;
@@ -52,7 +61,7 @@ const ProductDetailView = () => {
             console.log({ url })
 
             axios.postForm(endpoint, {
-                url: url
+                url: url.trim()
             }, {
                 responseType: 'json'
             }).then((response) => {
@@ -132,7 +141,9 @@ const ProductDetailView = () => {
                 onAdd: ({options, sku, image, quantity}) => {
                     console.log({options, sku, image, quantity})
                     let url = productData.click_url ?? ''
-                    if (url.toLowerCase().indexOf('http') != 0) {
+
+                    var urlRegex = /(https?:\/\/[^\s]+)/
+                    if (urlRegex.test(url)) {
                         url = 'https:' + product.click_url
                     }
 

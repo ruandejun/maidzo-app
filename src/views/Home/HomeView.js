@@ -165,13 +165,25 @@ class HomeView extends React.Component {
         this.onLoadCurrency()
     }
 
+    isValidURL(url){
+        try {
+          new URL(url);
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+
     onSearch() {
         if (this.state.keyword.length == 0) {
             return
         }
 
-        if (this.state.keyword.toLowerCase().indexOf('http') === 0) {
-            this.props.navigation.navigate('ProductDetailView', {product: {click_url: this.state.keyword}})
+
+        var urlRegex = /(https?:\/\/[^\s]+)/
+
+        if (urlRegex.test(this.state.keyword)) {
+            this.props.navigation.navigate('ProductDetailView', {product: {click_url: this.state.keyword.trim()}})
         } else {
             this.props.navigation.navigate('HomeSearchView', { keyword: this.state.keyword })
         }
