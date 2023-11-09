@@ -10,6 +10,7 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     FlatList,
+    ScrollView,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -21,12 +22,9 @@ const styles = StyleSheet.create({
 })
 
 import { connect } from 'react-redux';
-import Global, { Media, calculateDistance, decode, getStatusBarHeight } from 'src/Global';
+import Global from 'src/Global';
 import Header from 'components/Header'
 import { getDetailInfo, getDetailItems } from './redux/action'
-import OrderDetailItem from './component/OrderDetailItem'
-import { fetchApi } from 'actions/api'
-import ScrollableTabView, { ScrollableTabBar } from 'react-native-scrollable-tab-view'
 import OrderDetailItems from './OrderDetailItems'
 import OrderDetailInfo from './OrderDetailInfo'
 import OrderDetailNotification from './OrderDetailNotification'
@@ -34,10 +32,27 @@ import OrderDetailTracking from './OrderDetailTracking'
 import OrderDetailTransaction from './OrderDetailTransaction'
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 
+const viewModes = [
+    'Thông tin',
+    'Sản phẩm',
+    'Thanh toán',
+    'Vận chuyển',
+    'Thông báo'
+]
+
 class OrderDetailView extends React.Component {
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            viewMode: viewModes[0]
+        }
+    }
 
     render() {
         const { order_id } = this.props.route.params
+        const { viewMode } = this.state
 
         return (
             <View style={styles.container}>
@@ -46,15 +61,34 @@ class OrderDetailView extends React.Component {
                     leftAction={() => this.props.navigation.goBack()}
                 />
 
-                <ScrollableTabView tabBarUnderlineStyle={{ backgroundColor: Global.MainColor }} tabBarActiveTextColor={Global.MainColor}
-                    renderTabBar={() => <ScrollableTabBar />}
-                >
-                    <OrderDetailInfo tabLabel="Thông tin" order_id={order_id} navigation={this.props.navigation} />
-                    <OrderDetailItems tabLabel="Sản phẩm" order_id={order_id} navigation={this.props.navigation} />
-                    <OrderDetailTransaction tabLabel="Thanh toán" order_id={order_id} navigation={this.props.navigation} />
-                    <OrderDetailTracking tabLabel="Vận chuyển" order_id={order_id} navigation={this.props.navigation} />
-                    <OrderDetailNotification tabLabel="Thông báo" order_id={order_id} />
-                </ScrollableTabView>
+                <View>
+                    <ScrollView horizontal>
+                        {
+                            viewModes.map((mode, index) => (
+                                <TouchableOpacity
+                                    style={{
+                                        height: 44,
+                                        alignItems: 'center',
+                                        paddingHorizontal: 16,
+                                        paddingTop: 8,
+                                        backgroundColor: 'white',
+                                        borderBottomWidth: 5,
+                                        borderBottomColor: viewMode === mode ? Global.MainColor : 'white'
+                                    }}
+                                    onPress={() => this.setState({viewMode: mode})}
+                                >
+                                    <Text style={{ fontSize: 16, fontWeight: '500', color: viewMode === mode ? Global.MainColor : 'black' }}>{mode}</Text>
+                                </TouchableOpacity>
+                            ))
+                        }
+                    </ScrollView>
+                </View>
+
+                {viewMode === viewModes[0] && <OrderDetailInfo tabLabel="Thông tin" order_id={order_id} navigation={this.props.navigation} />}
+                {viewMode === viewModes[1] && <OrderDetailItems tabLabel="Sản phẩm" order_id={order_id} navigation={this.props.navigation} />}
+                {viewMode === viewModes[2] && <OrderDetailTransaction tabLabel="Thanh toán" order_id={order_id} navigation={this.props.navigation} />}
+                {viewMode === viewModes[3] && <OrderDetailTracking tabLabel="Vận chuyển" order_id={order_id} navigation={this.props.navigation} />}
+                {viewMode === viewModes[4] && <OrderDetailNotification tabLabel="Thông báo" order_id={order_id} />}
             </View>
         )
     }

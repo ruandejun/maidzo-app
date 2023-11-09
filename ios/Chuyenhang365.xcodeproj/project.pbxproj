@@ -16,7 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		13B07F961A680F5B00A75B9A /* Chuyển Hàng 365.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chuyển Hàng 365.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Chuyen Hang 365.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chuyen Hang 365.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1870195C23E80C340071CE73 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1870195E23E8193E0071CE73 /* Chuyenhang365.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Chuyenhang365.entitlements; sourceTree = "<group>"; };
 		18D8B34C23580EB2002F0DFA /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Chuyển Hàng 365.app */,
+				13B07F961A680F5B00A75B9A /* Chuyen Hang 365.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -163,7 +163,7 @@
 			);
 			name = Chuyenhang365;
 			productName = Maidzo;
-			productReference = 13B07F961A680F5B00A75B9A /* Chuyển Hàng 365.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Chuyen Hang 365.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -373,15 +373,16 @@
 				DEVELOPMENT_TEAM = X4LKZH6N8Y;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Chuyenhang365/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Chuyển Hàng 365";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.chuyenhang365;
-				PRODUCT_NAME = "Chuyển Hàng 365";
+				PRODUCT_NAME = "Chuyen Hang 365";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -398,15 +399,16 @@
 				DEVELOPMENT_TEAM = X4LKZH6N8Y;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/Chuyenhang365/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Chuyển Hàng 365";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.chuyenhang365;
-				PRODUCT_NAME = "Chuyển Hàng 365";
+				PRODUCT_NAME = "Chuyen Hang 365";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
