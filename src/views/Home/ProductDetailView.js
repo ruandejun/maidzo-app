@@ -40,20 +40,12 @@ const ProductDetailView = () => {
     const [showDetail, setShowDetail] = useState(true)
     const insets = useSafeAreaInsets()
 
-    const isValidURL = (url) => {
-        try {
-          new URL(url);
-          return true;
-        } catch (error) {
-          return false;
-        }
-      }
-
     const loadData = useCallback(() => {
         if (product) {
             setLoading(true)
             let url = product.click_url ?? ''
-            if (!isValidURL(url)) {
+            var urlRegex = /(https?:\/\/[^\s]+)/
+            if (!urlRegex.test(url)) {
                 url = 'https:' + product.click_url
             }
             let endpoint = `https://quanly.chuyenhang365.com/page/get_item_details/`;
@@ -138,8 +130,8 @@ const ProductDetailView = () => {
             payload: {
                 product: productData,
                 insets: insets,
-                onAdd: ({options, sku, image, quantity}) => {
-                    console.log({options, sku, image, quantity})
+                onAdd: ({ options, sku, image, quantity }) => {
+                    console.log({ options, sku, image, quantity })
                     let url = productData.click_url ?? ''
 
                     var urlRegex = /(https?:\/\/[^\s]+)/
@@ -220,8 +212,9 @@ const ProductDetailView = () => {
                 </View>
             }
             <View style={{ flex: 1 }}>
-                {productData &&
-                    <ScrollView style={{ flex: 1, width: '100%' }} refreshControl={<RefreshControl refreshing={false} onRefresh={onRefresh} />}>
+
+                <ScrollView style={{ flex: 1, width: '100%' }} refreshControl={<RefreshControl refreshing={false} onRefresh={onRefresh} />}>
+                    {productData &&
                         <View style={{ flex: 1, width: '100%' }}>
                             <FlatList pagingEnabled horizontal data={imageList} renderItem={renderImage} style={{ width: '100%', height: Global.ScreenHeight * 0.3 }} />
                             <ImageView images={imageList} imageIndex={0} visible={imageViewerVisible} onRequestClose={() => setImageViewerVisible(false)} />
@@ -348,8 +341,9 @@ const ProductDetailView = () => {
                                 })} */}
                             </View>
                         </View>
-                    </ScrollView>
-                }
+                    }
+                </ScrollView>
+
             </View>
             {productData &&
                 <View style={{ flexDirection: 'row', width: '100%', paddingHorizontal: 16, paddingTop: 8, backgroundColor: '#eeeeee', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
