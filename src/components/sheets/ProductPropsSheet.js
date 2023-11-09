@@ -256,13 +256,13 @@ function ProductPropsSheet(props) {
                             min={1}
                             max={selectedSku ? selectedSku.stock : 0}
                             subButton={
-                                <View style={{ width: 24, height: 24, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 16, color: Global.MainColor }}>-</Text>
+                                <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={{ fontSize: 26, color: Global.MainColor }}>-</Text>
                                 </View>
                             }
                             addButton={
-                                <View style={{ width: 24, height: 24, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 16, color: Global.MainColor }}>+</Text>
+                                <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={{ fontSize: 26, color: Global.MainColor }}>+</Text>
                                 </View>
                             }
                         />
