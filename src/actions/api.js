@@ -30,7 +30,7 @@ const fetchApi = async (method, path, params = {}, token) => {
   }).then(response => {
     return response
   }).catch(err => {
-    console.info("__err__", err)
+    console.log("__err__", err)
   })
 }
 
@@ -72,7 +72,7 @@ const fetchUnlengthApi = async (method, path, params = {}, token) => {
   }).then(response => {
     return response
   }).catch(err => {
-    console.info("__err__", err)
+    console.log("__err__", err)
   })
 }
 
@@ -104,7 +104,7 @@ const fetchApiLogin = async (method, path, params = {}) => {
   }).then(response => {
     return response
   }).catch(err => {
-    console.info("__err__", err)
+    console.log("__err__", err)
   })
 }
 
@@ -132,7 +132,7 @@ const fetchUploadApi = async (path, imgfile) => {
   }).then(response => {
     return response
   }).catch(err => {
-    console.info("__err__", err)
+    console.log("__err__", err)
   })
 }
 
@@ -164,7 +164,7 @@ const fetchUnlengthApiLogin = async (method, path, params = {}) => {
   }).then(response => {
     return response
   }).catch(err => {
-    console.info("__err__", err)
+    console.log("__err__", err)
   })
 }
 

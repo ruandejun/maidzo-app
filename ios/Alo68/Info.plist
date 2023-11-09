@@ -53,7 +53,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Ứng dụng này cần quyền truy cập camera để upload ảnh làm avatar hoặc tìm kiếm ảnh sản phẩm</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>ứng dụng cần truy cập thông tin này</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Ứng dụng này cần quyền truy cập camera để upload ảnh làm avatar hoặc tìm kiếm ảnh sản phẩm</string>
 	<key>NSPhotoLibraryUsageDescription</key>

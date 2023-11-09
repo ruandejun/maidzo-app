@@ -153,7 +153,7 @@ export function* logout({ username, password }) {
   yield put({
     type: actions.LOGOUT_SUCCESS
   })
-  // NavigationService.reset('LoginView')
+  NavigationService.reset('LoginView')
   // NavigationService.reset('DashboardView')
 }
 
@@ -171,7 +171,7 @@ export function* deleteAccount() {
     type: actions.LOGOUT_SUCCESS
   })
 
-  NavigationService.reset('DashboardView')
+  NavigationService.reset('LoginView')
 }
 
 export default function* rootSaga() {

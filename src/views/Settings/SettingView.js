@@ -15,7 +15,7 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     FlatList,
-    Alert
+    Alert,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -104,7 +104,7 @@ class SettingView extends React.Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={this.openPrivacy.bind(this)} style={styles.itemContainer}>
-                        <Text style={styles.itemText}>Điều khoản Alo68</Text>
+                        <Text style={styles.itemText}>Điều khoản Maidzo</Text>
                         <Icon name='chevron-right' size={14} color='#333333'/>
                         <View style={styles.separator}/>
                     </TouchableOpacity>
