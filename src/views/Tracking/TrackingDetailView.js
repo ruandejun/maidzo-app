@@ -5,7 +5,7 @@ import {
     Text,
     StyleSheet,
     Platform,
-    ActivityIndicator,
+    Linking,
     AppState,
     TouchableOpacity,
     Clipboard,
@@ -29,7 +29,7 @@ import Header from 'components/Header'
 import TrackingItem from './component/TrackingItem'
 import { fetchApi } from 'actions/api'
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import {Toast} from 'teaset'
+import { Toast } from 'teaset'
 
 class TrackingDetailView extends React.Component {
 
@@ -49,7 +49,7 @@ class TrackingDetailView extends React.Component {
     }
 
     onRefresh() {
-        const tracking_id = this.props.navigation.getParam('tracking_id')
+        const { tracking_id } = this.props.route.params
 
         // console.log(tracking_id)
 
@@ -97,13 +97,13 @@ class TrackingDetailView extends React.Component {
                         <Text style={{ color: 'black', fontSize: 14 }}>{convertMoney(arrived_info.sum_shipping_cost_vnd) + ' đ'}</Text>
                     </Text>
 
-                    <View style={{width: '100%', height: StyleSheet.hairlineWidth, backgroundColor: '#aaaaaa', marginTop: 10, marginBottom: 5}}/>
+                    <View style={{ width: '100%', height: StyleSheet.hairlineWidth, backgroundColor: '#aaaaaa', marginTop: 10, marginBottom: 5 }} />
 
-                    <TouchableOpacity onPress={() => {Clipboard.setString(`${package_info.tracking_number}`); Toast.message('Đã copy')}} style={{flexDirection: 'row', marginTop: 5, width: '100%'}}>
-                        <Text style={{fontSize: 13, color: '#333333', flex: 1, fontFamily: Global.FontName}}>{`Mã vận chuyển: `}
+                    <TouchableOpacity onPress={() => { Clipboard.setString(`${package_info.tracking_number}`); Toast.message('Đã copy') }} style={{ flexDirection: 'row', marginTop: 5, width: '100%' }}>
+                        <Text style={{ fontSize: 13, color: '#333333', flex: 1, fontFamily: Global.FontName }}>{`Mã vận chuyển: `}
                             <Text style={{ color: 'black', fontSize: 14 }}>{package_info.tracking_number}</Text>
                         </Text>
-                        <Icon name='copy' style={{width: 30}} size={20} color='#CECECE'/>
+                        <Icon name='copy' style={{ width: 30 }} size={20} color='#CECECE' />
                     </TouchableOpacity>
                     <Text style={styles.infoText}>{`Trạng thái: `}
                         <Text style={{ color: 'black', fontSize: 14 }}>{package_info.status}</Text>
@@ -118,7 +118,7 @@ class TrackingDetailView extends React.Component {
     render() {
 
         const { isFetching, items } = this.state
-        const tracking_id = this.props.navigation.getParam('tracking_id')
+        const { tracking_id } = this.props.route.params
 
         return (
             <View style={styles.container}>

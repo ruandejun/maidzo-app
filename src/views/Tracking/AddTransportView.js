@@ -14,7 +14,6 @@ import {
     TouchableWithoutFeedback
 } from 'react-native'
 
-import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import Global, { Media, convertMoney } from 'src/Global';
 import NavigationService from 'actions/NavigationService'
@@ -33,40 +32,40 @@ class AddTransportView extends React.Component {
     onSend() {
         Keyboard.dismiss()
 
-        const {note, tracking_list} = this.state
+        const { note, tracking_list } = this.state
 
-        if(tracking_list.length == 0){
+        if (tracking_list.length == 0) {
             CustomAlert(null, 'Vui lòng điền đủ thông tin')
             return
         }
-        
+
         fetchUnlengthApi('post', 'page/add_transport_tracking/', {
-                username: this.props.user.username, 
-                tracking_list: tracking_list,
-                note: note
-            })
-        .then((data) => {
-            // console.log(data)
-            if(data.success){
-                CustomAlert('Thành công', data.msg)
-                const onDone = this.props.navigation.getParam('onDone')
-                if(onDone){
-                    onDone()
+            username: this.props.user.username,
+            tracking_list: tracking_list,
+            note: note
+        })
+            .then((data) => {
+                // console.log(data)
+                if (data.success) {
+                    CustomAlert('Thành công', data.msg)
+                    const { onDone } = this.props.route.params
+                    if (onDone) {
+                        onDone()
+                    }
+                    this.props.navigation.goBack()
+                } else {
+                    CustomAlert('Thất bại', 'Thêm ký gửi thất bại')
                 }
-                this.props.navigation.goBack()
-            } else {
+            })
+            .catch((error) => {
+                console.log(error)
                 CustomAlert('Thất bại', 'Thêm ký gửi thất bại')
-            }
-        })
-        .catch((error) => {
-            console.log(error)
-            CustomAlert('Thất bại', 'Thêm ký gửi thất bại')
-        })
+            })
     }
 
     render() {
 
-        const {note, tracking_list} = this.state
+        const { note, tracking_list } = this.state
 
         return (
             <View style={styles.container}>
@@ -77,10 +76,10 @@ class AddTransportView extends React.Component {
                     rightText='Xong'
                     rightAction={this.onSend.bind(this)}
                 />
-                <KeyboardAwareScrollView style={{flex: 1, width: '100%'}}>
+                <KeyboardAwareScrollView style={{ flex: 1, width: '100%' }}>
                     <View style={{ width: '100%', padding: 16, marginTop: 8, backgroundColor: 'white' }}>
                         <Text style={{ fontSize: 12, color: '#333333', fontFamily: Global.FontName }}>Mã kiện</Text>
-                        <View style={{ flexDirection: 'row', width: '100%', borderBottomColor: '#CECECE', borderBottomWidth: 0.5, marginTop: 8, height: 80}}>
+                        <View style={{ flexDirection: 'row', width: '100%', borderBottomColor: '#CECECE', borderBottomWidth: 0.5, marginTop: 8, height: 80 }}>
                             <TextInput
                                 value={tracking_list}
                                 placeholder='Mã kiện (mỗi kiện một dòng)'
@@ -88,14 +87,14 @@ class AddTransportView extends React.Component {
                                 onChangeText={(text) => this.setState({ tracking_list: text })}
                                 underlineColorAndroid='#00000000'
                                 multiline
-                                style={[styles.inputText, {height: 80}]}
+                                style={[styles.inputText, { height: 80 }]}
                             />
                         </View>
                     </View>
 
                     <View style={{ width: '100%', padding: 16, marginTop: 8, backgroundColor: 'white' }}>
                         <Text style={{ fontSize: 12, color: '#333333', fontFamily: Global.FontName }}>Ghi chú</Text>
-                        <View style={{ flexDirection: 'row', width: '100%', borderBottomColor: '#CECECE', borderBottomWidth: 0.5, marginTop: 8, height: 80}}>
+                        <View style={{ flexDirection: 'row', width: '100%', borderBottomColor: '#CECECE', borderBottomWidth: 0.5, marginTop: 8, height: 80 }}>
                             <TextInput
                                 value={note}
                                 placeholder='Ghi chú'
@@ -103,7 +102,7 @@ class AddTransportView extends React.Component {
                                 onChangeText={(text) => this.setState({ note: text })}
                                 underlineColorAndroid='#00000000'
                                 multiline
-                                style={[styles.inputText, {height: 80}]}
+                                style={[styles.inputText, { height: 80 }]}
                             />
                         </View>
                     </View>

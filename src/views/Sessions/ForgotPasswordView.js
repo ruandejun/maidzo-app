@@ -14,7 +14,6 @@ import {
     TouchableWithoutFeedback
 } from 'react-native'
 
-import { SafeAreaView } from 'react-navigation'
 import { connect } from 'react-redux'
 import Global, { Media } from 'src/Global';
 import NavigationService from 'actions/NavigationService'

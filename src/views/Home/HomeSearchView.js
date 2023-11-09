@@ -8,7 +8,7 @@ import {
     ActivityIndicator,
     AppState,
     TouchableOpacity,
-    TouchableWithoutFeedback,
+    Linking,
     FlatList,
 } from 'react-native';
 
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 import { connect } from 'react-redux';
 import Global, { Media, calculateDistance, decode, getStatusBarHeight } from 'src/Global';
 import Header from 'components/Header'
-import {fetchApi} from 'actions/api'
+import { fetchApi } from 'actions/api'
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import FastImage from 'react-native-fast-image';
 
@@ -30,12 +30,13 @@ const LIMIT = 20
 
 class HomeSearchView extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
 
+        const { keyword } = props.route.params
         this.state = {
             items: [],
-            keyword: props.navigation.getParam('keyword'),
+            keyword: keyword,
             isFetching: false,
             page: 0,
             loadingMore: false,
@@ -43,100 +44,100 @@ class HomeSearchView extends React.Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.onRefresh()
     }
 
-    onRefresh(){
-        const {keyword} = this.state
+    onRefresh() {
+        const { keyword } = this.state
 
-        this.setState({isFetching: true, loadingMore: false, canLoadMore: true, page: 0}, () => {
-            fetchApi('get', `page/search/`, {key: keyword, page_no: this.state.page, page_size: LIMIT, platform: 1})
-            .then((data) => {
-                // console.log(data)
-
-                let result = []
-                if(data && data.tbk_dg_material_optional_response && data.tbk_dg_material_optional_response.result_list && data.tbk_dg_material_optional_response.result_list.map_data){
-                    result = data.tbk_dg_material_optional_response.result_list.map_data
-                }
-
-                this.setState({isFetching: false, items: result, canLoadMore: result.length == LIMIT})
-            })
-            .catch((error) => {
-                console.log(error)
-                this.setState({isFetching: false, canLoadMore: false})
-            })
-        })
-    }
-
-    onEndReached(){
-        const {keyword} = this.state
-
-        if(this.state.isFetching || !this.state.canLoadMore || this.state.loadingMore){
-            return
-        }
-
-        this.setState({loadingMore: true, page: this.state.page + 1}, () => {
-            fetchApi('get', `page/search/`, {key: keyword, page_no: this.state.page, page_size: LIMIT, platform: 1})
-            .then((data) => {
-                // console.log(data)
-                if(data){
-                    let items = this.state.items
+        this.setState({ isFetching: true, loadingMore: false, canLoadMore: true, page: 0 }, () => {
+            fetchApi('get', `page/search/`, { key: keyword, page_no: this.state.page, page_size: LIMIT, platform: 1 })
+                .then((data) => {
+                    // console.log(data)
 
                     let result = []
-                    if(data && data.tbk_dg_material_optional_response && data.tbk_dg_material_optional_response.result_list && data.tbk_dg_material_optional_response.result_list.map_data){
+                    if (data && data.tbk_dg_material_optional_response && data.tbk_dg_material_optional_response.result_list && data.tbk_dg_material_optional_response.result_list.map_data) {
                         result = data.tbk_dg_material_optional_response.result_list.map_data
                     }
 
-                    result.map((item) => {
-                        items.push(item)
-                    })
-    
-                    this.setState({loadingMore: false, items: items, canLoadMore: data.tbk_dg_material_optional_response ? (items.length < data.tbk_dg_material_optional_response.total_results) : false})
-                } else {
-                    this.setState({loadingMore: false})
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-                this.setState({loadingMore: false})
-            })
+                    this.setState({ isFetching: false, items: result, canLoadMore: result.length == LIMIT })
+                })
+                .catch((error) => {
+                    console.log(error)
+                    this.setState({ isFetching: false, canLoadMore: false })
+                })
         })
     }
 
-    renderItem({item, index}){
-        return(
-            <TouchableOpacity onPress={this.onPressItem.bind(this, item.item_url)} style={{backgroundColor: 'white', padding: 10, marginTop : 8, flexDirection: 'row'}}>
-                <FastImage source={{uri: item.pict_url}} style={{width: 60, height: 60}} resizeMode='cover'/>
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginLeft: 8}}>
-                    <Text style={{fontSize: 14, color: Global.MainColor, fontFamily: Global.Fontname, width: '100%'}} numberOfLines={1}>{item.short_title}</Text>
-                    <Text style={{fontSize: 13, marginTop: 5, color: '#333333', fontFamily: Global.Fontname, width: '100%'}} numberOfLines={1}>{item.title}</Text>
-                    <Text style={{fontSize: 13, marginTop: 5, color: '#333333', fontFamily: Global.Fontname, width: '100%'}}>{'Giá: ¥' + item.reserve_price}</Text>
-                    <Text style={{fontSize: 13, marginTop: 5, color: '#333333', fontFamily: Global.Fontname, width: '100%'}}>{'Khuyến mãi: ' + item.coupon_info}</Text>
+    onEndReached() {
+        const { keyword } = this.state
+
+        if (this.state.isFetching || !this.state.canLoadMore || this.state.loadingMore) {
+            return
+        }
+
+        this.setState({ loadingMore: true, page: this.state.page + 1 }, () => {
+            fetchApi('get', `page/search/`, { key: keyword, page_no: this.state.page, page_size: LIMIT, platform: 1 })
+                .then((data) => {
+                    // console.log(data)
+                    if (data) {
+                        let items = this.state.items
+
+                        let result = []
+                        if (data && data.tbk_dg_material_optional_response && data.tbk_dg_material_optional_response.result_list && data.tbk_dg_material_optional_response.result_list.map_data) {
+                            result = data.tbk_dg_material_optional_response.result_list.map_data
+                        }
+
+                        result.map((item) => {
+                            items.push(item)
+                        })
+
+                        this.setState({ loadingMore: false, items: items, canLoadMore: data.tbk_dg_material_optional_response ? (items.length < data.tbk_dg_material_optional_response.total_results) : false })
+                    } else {
+                        this.setState({ loadingMore: false })
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                    this.setState({ loadingMore: false })
+                })
+        })
+    }
+
+    renderItem({ item, index }) {
+        return (
+            <TouchableOpacity onPress={this.onPressItem.bind(this, item.item_url)} style={{ backgroundColor: 'white', padding: 10, marginTop: 8, flexDirection: 'row' }}>
+                <FastImage source={{ uri: item.pict_url }} style={{ width: 60, height: 60 }} resizeMode='cover' />
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginLeft: 8 }}>
+                    <Text style={{ fontSize: 14, color: Global.MainColor, fontFamily: Global.Fontname, width: '100%' }} numberOfLines={1}>{item.short_title}</Text>
+                    <Text style={{ fontSize: 13, marginTop: 5, color: '#333333', fontFamily: Global.Fontname, width: '100%' }} numberOfLines={1}>{item.title}</Text>
+                    <Text style={{ fontSize: 13, marginTop: 5, color: '#333333', fontFamily: Global.Fontname, width: '100%' }}>{'Giá: ¥' + item.reserve_price}</Text>
+                    <Text style={{ fontSize: 13, marginTop: 5, color: '#333333', fontFamily: Global.Fontname, width: '100%' }}>{'Khuyến mãi: ' + item.coupon_info}</Text>
                 </View>
             </TouchableOpacity>
         )
     }
 
-    onPressItem(url){
-        this.props.navigation.navigate('TaobaoWebView', {url: url.replace('#modal=sku', '')})
+    onPressItem(link) {
+        this.props.navigation.navigate('TaobaoWebView', { url: link.replace('#modal=sku', '') })
     }
 
-    renderFooter(){
-        if(!this.state.loadingMore){
+    renderFooter() {
+        if (!this.state.loadingMore) {
             return null
         }
 
-        return(
-            <View style={{width: '100%', height: 30, alignItems: 'center', justifyContent: 'center'}}>
-                <Image source={Media.LoadingIcon} style={{width : 30, height : 30}} resizeMode='contain'/>
+        return (
+            <View style={{ width: '100%', height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                <Image source={Media.LoadingIcon} style={{ width: 30, height: 30 }} resizeMode='contain' />
             </View>
         )
     }
 
     render() {
 
-        const {isFetching, items} = this.state
+        const { isFetching, items } = this.state
 
         return (
             <View style={styles.container}>
@@ -145,16 +146,16 @@ class HomeSearchView extends React.Component {
                     leftIcon='chevron-left'
                     leftAction={() => this.props.navigation.goBack()}
                 />
-                <FlatList 
+                <FlatList
                     renderItem={this.renderItem.bind(this)}
                     data={items}
                     refreshing={isFetching}
                     onRefresh={this.onRefresh.bind(this)}
-                    style={{flex : 1}}
+                    style={{ flex: 1 }}
                     showsVerticalScrollIndicator={false}
                     onEndReached={this.onEndReached.bind(this)}
                     ListFooterComponent={this.renderFooter.bind(this)}
-                    ListEmptyComponent={() => isFetching ? null : <Text style={{width: '100%', fontSize: 13, textAlign: 'center', padding: 16, fontFamily: Global.FontName, color: '#aaaaaa'}}>Không tìm thấy sản phẩm</Text>}
+                    ListEmptyComponent={() => isFetching ? null : <Text style={{ width: '100%', fontSize: 13, textAlign: 'center', padding: 16, fontFamily: Global.FontName, color: '#aaaaaa' }}>Không tìm thấy sản phẩm</Text>}
                 />
             </View>
         )

@@ -14,6 +14,7 @@ const actions = {
   SIGN_UP_SUCCESS: 'SIGN_UP_SUCCESS',
   UPDATE_PASSWORD: 'UPDATE_PASSWORD',
   UPDATE_PASSWORD_SUCCESS: 'UPDATE_PASSWORD_SUCCESS',
+  DELETE_ACCOUNT: 'DELETE_ACCOUNT'
 }
 
 export const unmountError = () => {
@@ -59,6 +60,12 @@ export const updatePassword = (current_password, new_password) => {
 export const logout = () => {
   return {
     type: actions.LOGOUT
+  }
+}
+
+export const deleteAccount = () => {
+  return {
+    type: actions.DELETE_ACCOUNT
   }
 }
 
