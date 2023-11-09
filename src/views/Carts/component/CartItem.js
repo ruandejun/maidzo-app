@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row', justifyContent: 'center', alignItems: 'center'
     },
     descriptionText: {
-        fontSize: 14, color: 'black', fontFamily: Global.FontName, width: '100%', marginTop : 5
+        fontSize: 14, color: 'black', fontFamily: Global.FontName, width: '100%', marginTop: 5
     },
     itemImage: {
         width: 80, height: 80, margin: 10
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         padding: 8, width: '100%', height: 60,
         textAlign: 'left', fontSize: 14, color: '#333333', fontFamily: Global.FontName,
         borderWidth: 1, borderRadius: 5, borderColor: '#CCCCCC',
-        textAlignVertical: 'top', marginBottom : 8
+        textAlignVertical: 'top', marginBottom: 8
     },
     priceContainer: {
         width: '100%', flexDirection: 'row', height: 30,
@@ -64,6 +64,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import FastImage from 'react-native-fast-image'
 import { Stepper, Checkbox } from 'teaset'
+import TranslateText from '../../../components/TranslateText';
 
 export default class CartItem extends React.PureComponent {
 
@@ -77,54 +78,56 @@ export default class CartItem extends React.PureComponent {
         }
     }
 
-    onDelete(){
+    onDelete() {
         CustomAlert('Chắc chắn xoá sản phẩm khỏi giỏ hàng?', null, [
-            {text: 'Xoá', onPress: () => {
-                if(this.props.onDelete){
-                    this.props.onDelete()
+            {
+                text: 'Xoá', onPress: () => {
+                    if (this.props.onDelete) {
+                        this.props.onDelete()
+                    }
                 }
-            }},
-            {text: 'Quay lại'}
+            },
+            { text: 'Quay lại' }
         ])
     }
 
     updateTimeout = null
 
-    onUpdateQuantity(value){
-        this.setState({quantity: value})
+    onUpdateQuantity(value) {
+        this.setState({ quantity: value })
 
-        if(this.updateTimeout){
+        if (this.updateTimeout) {
             clearTimeout(this.updateTimeout)
             this.updateTimeout = null
         }
 
         this.updateTimeout = setTimeout(() => {
-            if(this.props.onUpdateQuantity){
+            if (this.props.onUpdateQuantity) {
                 this.props.onUpdateQuantity(value)
             }
         }, 3000);
     }
 
-    onUpdateNote(){
-        if(this.props.onUpdateNote){
+    onUpdateNote() {
+        if (this.props.onUpdateNote) {
             this.props.onUpdateNote(this.state.note)
         }
     }
 
-    onUpdateService(value, name){
-        if(this.props.onUpdateService){
-            this.props.onUpdateService({value, name})
+    onUpdateService(value, name) {
+        if (this.props.onUpdateService) {
+            this.props.onUpdateService({ value, name })
         }
     }
 
-    onSelected(value){
-        if(this.props.onSelected){
+    onSelected(value) {
+        if (this.props.onSelected) {
             this.props.onSelected(value)
         }
     }
 
-    openItem(){
-        if(this.props.openItem){
+    openItem() {
+        if (this.props.openItem) {
             this.props.openItem()
         }
     }
@@ -133,63 +136,63 @@ export default class CartItem extends React.PureComponent {
 
         const { vendor, name, id, image_url, price, price_vnd, option_selected_tag,
             rocket, currency, total_vnd, total_service_cost_vnd, quantity, shipping, total_service_cost, total,
-            shipping_vnd, rocket_ship, insurance, bargain, packing, is_selected, disable_selected} = this.props
+            shipping_vnd, rocket_ship, insurance, bargain, packing, is_selected, disable_selected } = this.props
         const { note, isFull } = this.state
 
         return (
             <View style={styles.container} >
                 <View style={styles.headerContainer}>
-                
+
                     {!disable_selected &&
                         <Checkbox
                             size='lg'
                             checked={is_selected}
                             onChange={this.onSelected.bind(this)}
-                            checkedIcon={<Icon name='check-square' size={20} color={Global.MainColor}/>}
-                            uncheckedIcon={<Icon name='square' size={20} color={'#333333'}/>}
+                            checkedIcon={<Icon name='check-square' size={20} color={Global.MainColor} />}
+                            uncheckedIcon={<Icon name='square' size={20} color={'#333333'} />}
                         />
                     }
-                    <Text style={[styles.idText, {marginLeft : 8, flex: 1, }]}>{id}</Text>
+                    <Text style={[styles.idText, { marginLeft: 8, flex: 1, }]}>{id}</Text>
 
-                    <TouchableOpacity onPress={this.onDelete.bind(this)} style={{width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
-                            <Icon name='trash' size={15} color='red'/>
-                        </TouchableOpacity>
+                    <TouchableOpacity onPress={this.onDelete.bind(this)} style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                        <Icon name='trash' size={15} color='red' />
+                    </TouchableOpacity>
 
                     <Stepper
-                            value={this.state.quantity}
-                            min={1}
-                            step={1}
-                            style={{ borderWidth: 0, marginLeft: 8, marginRight: 16}}
-                            onChange={this.onUpdateQuantity.bind(this)}
-                            valueStyle={{ fontSize: 15, color: '#8a6d3b', fontFamily: Global.FontName }}
-                            subButton={
-                                <View style={{ borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 18, color: '#8a6d3b', fontFamily: Global.FontName }}>－</Text>
-                                </View>
-                            }
-                            addButton={
-                                <View style={{ borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 18, color: '#8a6d3b', fontFamily: Global.FontName }}>＋</Text>
-                                </View>
-                            }
-                            showSeparator={false}
-                        />
+                        value={this.state.quantity}
+                        min={1}
+                        step={1}
+                        style={{ borderWidth: 0, marginLeft: 8, marginRight: 16 }}
+                        onChange={this.onUpdateQuantity.bind(this)}
+                        valueStyle={{ fontSize: 15, color: '#8a6d3b', fontFamily: Global.FontName }}
+                        subButton={
+                            <View style={{ borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ fontSize: 18, color: '#8a6d3b', fontFamily: Global.FontName }}>－</Text>
+                            </View>
+                        }
+                        addButton={
+                            <View style={{ borderRadius: 4, width: 22, height: 22, alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ fontSize: 18, color: '#8a6d3b', fontFamily: Global.FontName }}>＋</Text>
+                            </View>
+                        }
+                        showSeparator={false}
+                    />
 
-                        <TouchableOpacity onPress={() => this.setState({isFull: !isFull})} style={{width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
-                            <Icon name={isFull ? 'chevron-up' : 'chevron-down'} size={15} color='gray'/>
-                        </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.setState({ isFull: !isFull })} style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                        <Icon name={isFull ? 'chevron-up' : 'chevron-down'} size={15} color='gray' />
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.contentContainer}>
                     <Image source={{ uri: imageUrl(image_url) }} style={styles.itemImage} />
                     <View style={styles.descriptionContainer}>
-                        <Text onPress={this.openItem.bind(this)} style={styles.nameText}>{name}</Text>
+                        <TranslateText onPress={this.openItem.bind(this)} style={styles.nameText} text={name} />
                         <Text style={styles.descriptionText}>{`${currency} ${price} / ${convertMoney(price_vnd)} vnđ`}</Text>
                         {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Text onPress={this.openItem.bind(this)} style={[styles.descriptionText]} numberOfLines={1}>{'Link: '}
                                 <Text style={{color: 'blue', textDecorationLine: 'underline'}}>{'Mở sản phẩm'}</Text>
                             </Text>
                         </View> */}
-                        <Text style={styles.descriptionText}>{`${option_selected_tag}`}</Text>
+                        <TranslateText style={styles.descriptionText} text={`${option_selected_tag}`}/>
                     </View>
                 </View>
 
@@ -200,41 +203,41 @@ export default class CartItem extends React.PureComponent {
                     placeholder='Ghi chú'
                     placeholderTextColor='#aaaaaa'
                     multiline
-                    onChangeText={(text) => this.setState({note: text})}
+                    onChangeText={(text) => this.setState({ note: text })}
                     onEndEditing={this.onUpdateNote.bind(this)}
                 />}
 
                 {isFull && <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Thành tiền</Text>
-                    <Text style={styles.priceText}>
-                        <Text style={{color: '#3578E5'}}>{convertMoney(parseInt(price) * quantity)}</Text>
+                    <Text style={styles.priceText}>
+                        <Text style={{ color: '#3578E5' }}>{convertMoney(parseInt(price) * quantity)}</Text>
                         |
-                        <Text style={{color: Global.MainColor}}>{convertMoney(parseInt(price_vnd) * quantity) + 'đ'}</Text>
+                        <Text style={{ color: Global.MainColor }}>{convertMoney(parseInt(price_vnd) * quantity) + 'đ'}</Text>
                     </Text>
                 </View>
                 }
                 {isFull && <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Phí ship nội địa</Text>
-                    <Text style={styles.priceText}>
-                        <Text style={{color: '#3578E5'}}>{convertMoney(shipping)}</Text>
+                    <Text style={styles.priceText}>
+                        <Text style={{ color: '#3578E5' }}>{convertMoney(shipping)}</Text>
                         |
-                        <Text style={{color: Global.MainColor}}>{convertMoney(shipping_vnd) + 'đ'}</Text>
+                        <Text style={{ color: Global.MainColor }}>{convertMoney(shipping_vnd) + 'đ'}</Text>
                     </Text>
                 </View>}
                 {isFull && <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Phí dịch vụ</Text>
-                    <Text style={styles.priceText}>
-                        <Text style={{color: '#3578E5'}}>{convertMoney(total_service_cost)}</Text>
+                    <Text style={styles.priceText}>
+                        <Text style={{ color: '#3578E5' }}>{convertMoney(total_service_cost)}</Text>
                         |
-                        <Text style={{color: Global.MainColor}}>{convertMoney(total_service_cost_vnd) + 'đ'}</Text>
+                        <Text style={{ color: Global.MainColor }}>{convertMoney(total_service_cost_vnd) + 'đ'}</Text>
                     </Text>
                 </View>}
                 <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Tổng</Text>
-                    <Text style={styles.priceText}>
-                        <Text style={{color: '#3578E5'}}>{convertMoney(total)}</Text>
+                    <Text style={styles.priceText}>
+                        <Text style={{ color: '#3578E5' }}>{convertMoney(total)}</Text>
                         |
-                        <Text style={{color: Global.MainColor}}>{convertMoney(Math.round(total_vnd)) + 'đ'}</Text>
+                        <Text style={{ color: Global.MainColor }}>{convertMoney(Math.round(total_vnd)) + 'đ'}</Text>
                     </Text>
                 </View>
             </View>
