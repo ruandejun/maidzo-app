@@ -63,11 +63,11 @@ export const contacts = [
 ]
 
 export default Global = {
-  MainColor: '#EE4D2D',
+  MainColor: '#f07b4c',
   ScreenWidth: Dimensions.get('screen').width,
   ScreenHeight: Dimensions.get('screen').height,
   FontName: 'Arial',
-  apiUrl: 'https://quanly.maidzo.vn/',
+  apiUrl: 'https://quanly.shipway247.com/',
   username: '',
   userId: '',
   userToken: '',
