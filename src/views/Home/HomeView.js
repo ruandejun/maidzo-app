@@ -165,34 +165,17 @@ class HomeView extends React.Component {
         this.onLoadCurrency()
     }
 
-    onpenWeb(url) {
-        if (this.overlayView) {
-            this.overlayView.close()
-        }
-        this.props.navigation.navigate('TaobaoWebView', { url: url.replace('#modal=sku', '') })
-    }
-
     onSearch() {
         if (this.state.keyword.length == 0) {
             return
         }
 
-        let regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
-        if (regex.test(this.state.keyword)) {
-            this.onpenWeb(this.state.keyword)
+        if (this.state.keyword.toLowerCase().indexOf('http') === 0) {
+            this.props.navigation.navigate('ProductDetailView', {product: {click_url: this.state.keyword}})
         } else {
             this.props.navigation.navigate('HomeSearchView', { keyword: this.state.keyword })
         }
 
-    }
-
-    onOpenLink() {
-        const { pastedLink } = this.state
-        Keyboard.dismiss()
-
-        if (pastedLink && pastedLink.length > 0 && pastedLink.indexOf('http') > -1) {
-            this.onpenWeb(pastedLink)
-        }
     }
 
     onScanCode() {
@@ -220,25 +203,24 @@ class HomeView extends React.Component {
                 <Header
                     searchBar
                     searchText={this.state.keyword}
-                    searchContainer={{ left: 16, width: Global.ScreenWidth - 62 }}
+                    searchContainer={{ left: 16, width: Global.ScreenWidth - 32}}
                     headerChangeText={(text) => this.setState({ keyword: text })}
-                    searchPlaceholder='Nhập để tìm kiếm sản phẩm'
+                    searchPlaceholder='Nhập từ khoá hoặc link sản phẩm'
                     onEndSubmit={this.onSearch.bind(this)}
-                    rightIcon='qrcode'
-                    rightAction={this.onScanCode.bind(this)}
                 />
 
                 <ScrollView style={{ flex: 1, width: '100%' }} refreshControl={<RefreshControl refreshing={loading} onRefresh={this.onRefresh.bind(this)} />}>
                     <View style={{ width: '100%', marginTop: 10, marginBottom: 10 }}>
 
-                        <View style={{ flexDirection: 'row', padding: 8, width: '100%' }}>
-                            <Text style={{ marginLeft: 8, fontSize: 18, color: 'black', fontWeight: '700', fontFamily: Global.FontName, }}>Ifashions</Text>
+                        <View style={{ flexDirection: 'row', padding: 16, width: '100%', marginTop: 16, backgroundColor: Global.MainColor }}>
+                            <Text style={{ marginLeft: 8, fontSize: 20, color: 'white', fontWeight: '800', fontFamily: Global.FontName, }}>Ifashions</Text>
                         </View>
                         <FlatList
                             data={ifashionItems}
                             renderItem={this.renderItem.bind(this)}
-                            horizontal
+                            numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
                             showsHorizontalScrollIndicator={false}
+                            columnWrapperStyle={{justifyContent: 'space-between'}}
                             style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
                             ItemSeparatorComponent={
                                 () => <View style={{ width: 8, height: 8 }}/>
@@ -246,28 +228,31 @@ class HomeView extends React.Component {
                         />
 
 
-                        <View style={{ flexDirection: 'row', padding: 8, width: '100%', marginTop: 16 }}>
-                            <Text style={{ marginLeft: 8, fontSize: 18, color: 'black', fontWeight: '700', fontFamily: Global.FontName, }}>Flash sale</Text>
+                        <View style={{ flexDirection: 'row', padding: 16, width: '100%', marginTop: 16, backgroundColor: Global.MainColor }}>
+                            <Text style={{ marginLeft: 8, fontSize: 20, color: 'white', fontWeight: '800', fontFamily: Global.FontName, }}>Flash sale</Text>
                         </View>
 
                         <FlatList
                             data={flashSaleItems}
                             renderItem={this.renderItem.bind(this)}
-                            horizontal
+                            numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
                             showsHorizontalScrollIndicator={false}
+                            columnWrapperStyle={{justifyContent: 'space-between'}}
                             style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
                             ItemSeparatorComponent={
                                 () => <View style={{ width: 8, height: 8 }}/>
                             }
                         />
-                        <View style={{ flexDirection: 'row', padding: 8, width: '100%', marginTop: 16 }}>
-                            <Text style={{ marginLeft: 8, fontSize: 18, color: 'black', fontWeight: '700', fontFamily: Global.FontName, }}>Sale giới hạn</Text>
+
+                        <View style={{ flexDirection: 'row', padding: 16, width: '100%', marginTop: 16, backgroundColor: Global.MainColor }}>
+                            <Text style={{ marginLeft: 8, fontSize: 20, color: 'white', fontWeight: '800', fontFamily: Global.FontName, }}>Sale giới hạn</Text>
                         </View>
 
                         <FlatList
                             data={quantitySaleItems}
                             renderItem={this.renderItem.bind(this)}
-                            horizontal
+                            numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
+                            columnWrapperStyle={{justifyContent: 'space-between'}}
                             showsHorizontalScrollIndicator={false}
                             style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
                             ItemSeparatorComponent={

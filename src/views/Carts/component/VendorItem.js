@@ -107,7 +107,7 @@ export default class VendorItem extends React.PureComponent {
     }
 
     openItem(url) {
-        if (this.props.openItem) {
+        if (this.props.openItem && url && url.length > 0) {
             this.props.openItem(url)
         }
     }

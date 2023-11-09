@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const TranslateText = (props) => {
-    const { text } = props
+    const { text, showOriginal } = props
     const [textVi, setTextVi] = useState('')
 
     useEffect(() => {
@@ -46,7 +46,7 @@ const TranslateText = (props) => {
 
 
     return (
-        <Text {...props}>{textVi}</Text>
+        <Text {...props}>{`${showOriginal ? `${text} / ` : ''}${textVi}`}</Text>
     )
 }
 

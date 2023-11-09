@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     }
 })
 
-const ProductItem = (props) => {
+const SearchItem = (props) => {
     const { title, pict_url, convert, zk_final_price, reserve_price, onPress } = props
 
     const image_url = pict_url.indexOf('http') === 0 ? pict_url : ('https:' + pict_url)
@@ -35,14 +35,15 @@ const ProductItem = (props) => {
         <TouchableOpacity onPress={() => onPress && onPress()} style={styles.container}>
             <FastImage source={{ uri: image_url }} style={{ width: ITEM_SIZE, height: ITEM_SIZE, borderTopLeftRadius: 5, borderTopRightRadius: 5, overflow: 'hidden' }} />
             <View style={{ flex: 1, paddingHorizontal: 5, justifyContent: 'space-between' }}>
-                <TranslateText numberOfLines={4} style={{ fontSize: 12, color: 'black', marginTop: 5, fontWeight: '500' }} text={title}/>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
-                    <Text style={{ fontSize: 14, color: 'black', fontWeight: '700' }}>{convertMoney(zk_final_price * convert)}</Text>
-                    {reserve_price > zk_final_price && <Text style={{ fontSize: 12, color: '#444444', textDecorationLine: 'line-through', marginLeft: 5 }}>{convertMoney(reserve_price * convert)}</Text>}
+                <TranslateText numberOfLines={4} style={{ fontSize: 13, color: 'black', marginTop: 5, fontWeight: '500' }} text={title} />
+                <View style={{ flexDirection: 'row', alignItems: 'flex-end', marginBottom: 6 }}>
+                    <Text>{`CNY `}</Text>
+                    {reserve_price > zk_final_price && <Text style={{ fontSize: 14, color: '#444444', textDecorationLine: 'line-through', marginLeft: 5 }}>{reserve_price}</Text>}
+                    <Text style={{ fontSize: 16, color: 'black', fontWeight: '700' }}>{` ${zk_final_price}`}</Text>
                 </View>
             </View>
         </TouchableOpacity>
     )
 }
 
-export default ProductItem
+export default SearchItem

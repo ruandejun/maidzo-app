@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   container: {
     width: Global.ScreenWidth,
     height: 60,
-    backgroundColor: '#1B5795',
+    backgroundColor: '#dddddd',
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -167,19 +167,19 @@ class Tabbar extends React.PureComponent {
     const currentIndex = state.index;
 
     return (
-      <SafeAreaView style={{ backgroundColor: '#1B5795' }}>
+      <SafeAreaView style={{ backgroundColor: '#dddddd' }}>
         <View style={styles.container}>
           <TouchableWithoutFeedback onPress={this.openTab.bind(this, 0)}>
             <View style={[styles.buttonContainer]}>
               <Image resizeMode='contain' style={styles.buttonIcon} source={Media.HomeTab} />
-              <Text style={[styles.buttonText, { color: currentIndex == 0 ? '#FDCC0D' : 'white' }]}>Trang chủ</Text>
+              <Text style={[styles.buttonText, { color: currentIndex == 0 ? '#ff793f' : 'black' }]}>Trang chủ</Text>
             </View>
           </TouchableWithoutFeedback>
 
           <TouchableWithoutFeedback onPress={this.openTab.bind(this, 1)}>
             <View style={[styles.buttonContainer]}>
-              <Image resizeMode='contain' style={[styles.buttonIcon, { tintColor: currentIndex == 1 ? '#FDCC0D' : 'white' }]} source={Media.OrderTab} />
-              <Text style={[styles.buttonText, { color: currentIndex == 1 ? '#FDCC0D' : 'white' }]}>Đơn hàng</Text>
+              <Image resizeMode='contain' style={[styles.buttonIcon, { tintColor: currentIndex == 1 ? '#ff793f' : 'black' }]} source={Media.OrderTab} />
+              <Text style={[styles.buttonText, { color: currentIndex == 1 ? '#ff793f' : 'black' }]}>Đơn hàng</Text>
 
               {false && orderCount > 0 &&
                 <View style={[styles.notiBagde]}>
@@ -191,8 +191,8 @@ class Tabbar extends React.PureComponent {
 
           <TouchableWithoutFeedback onPress={() => navigation.navigate('CartView')}>
             <View style={[styles.buttonContainer]}>
-              <Image resizeMode='contain' style={[styles.buttonIcon, { tintColor: 'white' }]} source={Media.CartTab} />
-              <Text style={[styles.buttonText, { color: 'white' }]}>Giỏ hàng</Text>
+              <Image resizeMode='contain' style={[styles.buttonIcon, { tintColor: 'black' }]} source={Media.CartTab} />
+              <Text style={[styles.buttonText, { color: 'black' }]}>Giỏ hàng</Text>
 
               {cartCount > 0 &&
                 <View style={[styles.notiBagde]}>
@@ -204,15 +204,15 @@ class Tabbar extends React.PureComponent {
 
           {/* <TouchableWithoutFeedback onPress={this.openTab.bind(this, 2)}>
             <View style={[styles.buttonContainer]}>
-              <Image resizeMode='contain' style={[styles.buttonIcon, { tintColor: currentIndex == 2 ? '#FDCC0D' : 'white' }]} source={Media.PackageTab} />
-              <Text style={[styles.buttonText, { color: currentIndex == 2 ? '#FDCC0D' : 'white' }]}>Kiện hàng</Text>
+              <Image resizeMode='contain' style={[styles.buttonIcon, { tintColor: currentIndex == 2 ? '#ff793f' : 'white' }]} source={Media.PackageTab} />
+              <Text style={[styles.buttonText, { color: currentIndex == 2 ? '#ff793f' : 'white' }]}>Kiện hàng</Text>
             </View>
           </TouchableWithoutFeedback> */}
 
           <TouchableWithoutFeedback onPress={this.openTab.bind(this, 2)}>
             <View style={[styles.buttonContainer]}>
-              <Image resizeMode='contain' style={[styles.buttonIcon, { tintColor: currentIndex == 2 ? '#FDCC0D' : 'white' }]} source={Media.NotificationTab} />
-              <Text style={[styles.buttonText, { color: currentIndex == 2 ? '#FDCC0D' : 'white' }]}>Thông báo</Text>
+              <Image resizeMode='contain' style={[styles.buttonIcon, { tintColor: currentIndex == 2 ? '#ff793f' : 'black' }]} source={Media.NotificationTab} />
+              <Text style={[styles.buttonText, { color: currentIndex == 2 ? '#ff793f' : 'black' }]}>Thông báo</Text>
 
               {unread > 0 &&
                 <View style={[styles.notiBagde]}>
@@ -226,9 +226,9 @@ class Tabbar extends React.PureComponent {
           <TouchableWithoutFeedback onPress={this.openTab.bind(this, 3)}>
             <View style={[styles.buttonContainer]}>
               <View style={{width: 25, height: 25, alignItems: 'center', justifyContent: 'center'}}>
-              <Icon name='user' solid size={20} color={currentIndex == 3 ? '#FDCC0D' : 'white'} />
+              <Icon name='user' solid size={20} color={currentIndex == 3 ? '#ff793f' : 'black'} />
               </View>
-              <Text style={[styles.buttonText, { color: currentIndex == 3 ? '#FDCC0D' : 'white' }]}>Tài khoản</Text>
+              <Text style={[styles.buttonText, { color: currentIndex == 3 ? '#ff793f' : 'black' }]}>Tài khoản</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>

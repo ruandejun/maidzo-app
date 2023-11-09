@@ -111,7 +111,9 @@ class MenuView extends React.Component {
         if (this.overlayView) {
             this.overlayView.close()
         }
-        this.props.navigation.navigate('TaobaoWebView', { url: url.replace('#modal=sku', '') })
+
+        this.props.navigation.push('ProductDetailView', { product: {click_url: link.replace('#modal=sku', '')} })
+        // this.props.navigation.navigate('TaobaoWebView', { url: url.replace('#modal=sku', '') })
     }
 
     openSetting() {
