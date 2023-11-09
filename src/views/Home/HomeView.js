@@ -51,6 +51,10 @@ import ActionButton from 'react-native-action-button'
 import { fetchApi } from 'actions/api'
 import PopupView from 'components/PopupView'
 import ProductItem from './components/ProductItem';
+import remoteConfig from '@react-native-firebase/remote-config'
+
+
+// const templateKeywords = ['quần áo', 'giầy dép', 'điện thoại', 'công nghệ', 'mỹ phẩm', 'túi xách', 'giầy nữ', 'trang sức', 'gia dụng', 'nhà bếp']
 
 class HomeView extends React.Component {
 
@@ -62,7 +66,8 @@ class HomeView extends React.Component {
         ifashionItems: [],
         flashSaleItems: [],
         quantitySaleItems: [],
-        loading: false
+        loading: false,
+        templateKeywords: ['quần áo', 'giầy dép', 'điện thoại', 'công nghệ', 'mỹ phẩm', 'túi xách', 'giầy nữ', 'trang sức', 'gia dụng', 'nhà bếp']
     }
 
     componentDidMount() {
@@ -83,8 +88,8 @@ class HomeView extends React.Component {
 
                     this.setState({ currencies: data.rows })
                     const cnyFilter = data.rows.filter((item) => item.currency === 'CNY')
-                    if(cnyFilter && cnyFilter.length > 0) {
-                        this.setState({cnyConvert: parseInt(cnyFilter[0].exchange_rate.toString())})
+                    if (cnyFilter && cnyFilter.length > 0) {
+                        this.setState({ cnyConvert: parseInt(cnyFilter[0].exchange_rate.toString()) })
                     }
                 }
             })
@@ -163,16 +168,26 @@ class HomeView extends React.Component {
         this.loadFlashSale()
         this.loadQuanlitySale()
         this.onLoadCurrency()
+
+        try {
+            const keywords = remoteConfig().getValue('template_keywords').asString()
+            console.log({keywords})
+
+            if(keywords.length > 0)
+                this.setState({ templateKeywords: keywords.split(';') })
+        } catch (error) {
+            console.log({error})
+        }
     }
 
-    isValidURL(url){
+    isValidURL(url) {
         try {
-          new URL(url);
-          return true;
+            new URL(url);
+            return true;
         } catch (error) {
-          return false;
+            return false;
         }
-      }
+    }
 
     onSearch() {
         if (this.state.keyword.length == 0) {
@@ -183,7 +198,7 @@ class HomeView extends React.Component {
         var urlRegex = /(https?:\/\/[^\s]+)/
 
         if (urlRegex.test(this.state.keyword)) {
-            this.props.navigation.navigate('ProductDetailView', {product: {click_url: this.state.keyword.trim()}})
+            this.props.navigation.navigate('ProductDetailView', { product: { click_url: this.state.keyword.trim() } })
         } else {
             this.props.navigation.navigate('HomeSearchView', { keyword: this.state.keyword })
         }
@@ -195,36 +210,53 @@ class HomeView extends React.Component {
     }
 
     openDetail(item) {
-        this.props.navigation.navigate('ProductDetailView', {product: item})
+        this.props.navigation.navigate('ProductDetailView', { product: item })
     }
 
     renderItem({ item, index }) {
-        const {cnyConvert} = this.state
+        const { cnyConvert } = this.state
         return (
             <ProductItem {...item} convert={cnyConvert} onPress={() => this.openDetail(item)} />
         )
     }
 
-    render() {
+    searchWord(word) {
+        this.props.navigation.navigate('HomeSearchView', { keyword: word })
+    }
 
+    
+
+    render() {
+        
         const { user } = this.props
-        const { loading, ifashionItems, flashSaleItems, quantitySaleItems } = this.state
+        const { loading, ifashionItems, flashSaleItems, quantitySaleItems, templateKeywords } = this.state
 
         return (
             <View style={styles.container}>
                 <Header
                     searchBar
                     searchText={this.state.keyword}
-                    searchContainer={{ left: 16, width: Global.ScreenWidth - 32}}
+                    searchContainer={{ left: 16, width: Global.ScreenWidth - 32 }}
                     headerChangeText={(text) => this.setState({ keyword: text })}
                     searchPlaceholder='Nhập từ khoá hoặc link sản phẩm'
                     onEndSubmit={this.onSearch.bind(this)}
                 />
+                {!!templateKeywords && templateKeywords.length > 0 &&
+                    <View style={{ width: '100%', flexDirection: 'row', flexWrap: 'wrap', backgroundColor: 'white', padding: 16, paddingVertical: 8, paddingTop: 3 }}>
+                        {templateKeywords.map((keyword) => {
+                            return (
+                                <TouchableOpacity key={keyword} onPress={() => this.searchWord(keyword)} style={{ marginTop: 5, paddingHorizontal: 5, paddingVertical: 3, borderRadius: 10, height: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: '#dddddd', marginRight: 8 }}>
+                                    <Text style={{ fontSize: 12, color: 'black' }}>{keyword}</Text>
+                                </TouchableOpacity>
+                            )
+                        })}
+                    </View>
+                }
 
                 <ScrollView style={{ flex: 1, width: '100%' }} refreshControl={<RefreshControl refreshing={loading} onRefresh={this.onRefresh.bind(this)} />}>
                     <View style={{ width: '100%', marginTop: 10, marginBottom: 10 }}>
 
-                        <View style={{ flexDirection: 'row', padding: 16, width: '100%', marginTop: 16, backgroundColor: Global.MainColor }}>
+                        <View style={{ flexDirection: 'row', padding: 16, width: '100%', backgroundColor: Global.MainColor }}>
                             <Text style={{ marginLeft: 8, fontSize: 20, color: 'white', fontWeight: '800', fontFamily: Global.FontName, }}>Ifashions</Text>
                         </View>
                         <FlatList
@@ -232,10 +264,10 @@ class HomeView extends React.Component {
                             renderItem={this.renderItem.bind(this)}
                             numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
                             showsHorizontalScrollIndicator={false}
-                            columnWrapperStyle={{justifyContent: 'space-between'}}
+                            columnWrapperStyle={{ justifyContent: 'space-between' }}
                             style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
                             ItemSeparatorComponent={
-                                () => <View style={{ width: 8, height: 8 }}/>
+                                () => <View style={{ width: 8, height: 8 }} />
                             }
                         />
 
@@ -249,10 +281,10 @@ class HomeView extends React.Component {
                             renderItem={this.renderItem.bind(this)}
                             numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
                             showsHorizontalScrollIndicator={false}
-                            columnWrapperStyle={{justifyContent: 'space-between'}}
+                            columnWrapperStyle={{ justifyContent: 'space-between' }}
                             style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
                             ItemSeparatorComponent={
-                                () => <View style={{ width: 8, height: 8 }}/>
+                                () => <View style={{ width: 8, height: 8 }} />
                             }
                         />
 
@@ -264,11 +296,11 @@ class HomeView extends React.Component {
                             data={quantitySaleItems}
                             renderItem={this.renderItem.bind(this)}
                             numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
-                            columnWrapperStyle={{justifyContent: 'space-between'}}
+                            columnWrapperStyle={{ justifyContent: 'space-between' }}
                             showsHorizontalScrollIndicator={false}
                             style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
                             ItemSeparatorComponent={
-                                () => <View style={{ width: 8, height: 8 }}/>
+                                () => <View style={{ width: 8, height: 8 }} />
                             }
                         />
                     </View>
