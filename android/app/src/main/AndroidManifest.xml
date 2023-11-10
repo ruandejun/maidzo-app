@@ -1,9 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.chuyenhang365">
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
+  package="com.maidzo">
 
     <uses-feature
         android:name="android.hardware.camera"
