@@ -297,6 +297,8 @@ PODS:
     - React
   - react-native-safe-area-context (3.3.2):
     - React-Core
+  - react-native-segmented-control (2.4.2):
+    - React-Core
   - react-native-webview (10.10.2):
     - React-Core
   - React-perflogger (0.64.0)
@@ -462,6 +464,7 @@ DEPENDENCIES:
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - "react-native-segmented-control (from `../node_modules/@react-native-segmented-control/segmented-control`)"
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -555,6 +558,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-segmented-control:
+    :path: "../node_modules/@react-native-segmented-control/segmented-control"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-perflogger:
@@ -650,6 +655,7 @@ SPEC CHECKSUMS:
   react-native-camera: b8cc03e2feec0c04403d0998e37cf519d8fd4c6f
   react-native-image-picker: 7a85cf7b0a53845f03ae52fb4592a2748ded069b
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-segmented-control: 2221962f5073e2e809aa3691e8e410fc10b60578
   react-native-webview: 0aa2cde4ee7e3e1c5fffdf64dbce9c709aa18155
   React-perflogger: 9c547d8f06b9bf00cb447f2b75e8d7f19b7e02af
   React-RCTActionSheet: 3080b6e12e0e1a5b313c8c0050699b5c794a1b11

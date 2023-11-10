@@ -4,11 +4,13 @@ import {
 } from 'react-native'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useSelector } from 'react-redux'
 
 
 const TranslateText = (props) => {
     const { text, showOriginal } = props
     const [textVi, setTextVi] = useState('')
+    const currentLang = useSelector(state => state.cart.lang) ?? 'vi'
 
     useEffect(() => {
         const getText = async () => {
@@ -44,6 +46,11 @@ const TranslateText = (props) => {
         getText()
     }, [text])
 
+    if(currentLang.toLowerCase() === 'cn') {
+        return (
+            <Text {...props}>{text}</Text>
+        )
+    }
 
     return (
         <Text {...props}>{`${showOriginal ? `${text} / ` : ''}${textVi}`}</Text>

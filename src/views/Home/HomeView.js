@@ -3,7 +3,7 @@
  * @providesModule HomeMainView
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Image,
@@ -18,6 +18,7 @@ import {
     Keyboard,
     RefreshControl,
     Dimensions,
+    SafeAreaView,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     }
 })
 
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import Global, { Media, contacts, decode, convertMoney } from 'src/Global';
 import { getWalletBalance } from 'Wallets/redux/action'
 import { getSettings } from 'Setting/redux/action'
@@ -52,44 +53,94 @@ import { fetchApi } from 'actions/api'
 import PopupView from 'components/PopupView'
 import ProductItem from './components/ProductItem';
 import remoteConfig from '@react-native-firebase/remote-config'
-
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import SegmentedControl from '@react-native-segmented-control/segmented-control'
+import { updateLanguage } from '../Carts/redux/action';
+import { useNavigation } from '@react-navigation/native';
 
 // const templateKeywords = ['quần áo', 'giầy dép', 'điện thoại', 'công nghệ', 'mỹ phẩm', 'túi xách', 'giầy nữ', 'trang sức', 'gia dụng', 'nhà bếp']
 
-class HomeView extends React.Component {
+const HomeView = () => {
+    const user = useSelector((state) => state.auth.user);
+    const dispatch = useDispatch();
+    const insets = useSafeAreaInsets()
+    const navigation = useNavigation()
 
-    state = {
-        keyword: '',
-        pastedLink: '',
-        currencies: [],
-        cnyConvert: 3470,
-        ifashionItems: [],
-        flashSaleItems: [],
-        quantitySaleItems: [],
-        loading: false,
-        templateKeywords: ['quần áo', 'giầy dép', 'điện thoại', 'công nghệ', 'mỹ phẩm', 'túi xách', 'giầy nữ', 'trang sức', 'gia dụng', 'nhà bếp']
+    const currentLang = useSelector(state => state.cart.lang) ?? 'vi'
+    const [keyword, setKeyword] = useState('');
+    const [pastedLink, setPastedLink] = useState('');
+    const [currencies, setCurrencies] = useState([]);
+    const [cnyConvert, setCnyConvert] = useState(3470);
+    const [ifashionItems, setIfashionItems] = useState([]);
+    const [flashSaleItems, setFlashSaleItems] = useState([]);
+    const [quantitySaleItems, setQuantitySaleItems] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [templateKeywords, setTemplateKeywords] = useState([
+        'quần áo',
+        'giầy dép',
+        'điện thoại',
+        'công nghệ',
+        'mỹ phẩm',
+        'túi xách',
+        'giầy nữ',
+        'trang sức',
+        'gia dụng',
+        'nhà bếp',
+    ]);
+
+    const loadIFashion = () => {
+        setLoading(true)
+        fetchApi('get', 'page/get_item_ifashions/')
+            .then((data) => {
+                console.log(data)
+                if (data) {
+                    setIfashionItems(data)
+                }
+
+                setLoading(false)
+            })
+            .catch((error) => {
+                console.log(error)
+                setLoading(false)
+            })
     }
 
-    componentDidMount() {
-        this.props.getSettings()
-        this.props.getCart()
-
-        StatusBar.setBarStyle('dark-content')
-
-        this.getNotify()
-        this.onRefresh()
+    const loadFlashSale = () => {
+        fetchApi('get', 'page/get_item_flash_sale/')
+            .then((data) => {
+                console.log(data)
+                if (data) {
+                    setFlashSaleItems(data)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
-    onLoadCurrency() {
+    const loadQuanlitySale = () => {
+        fetchApi('get', 'page/get_item_quantity_sale/')
+            .then((data) => {
+                console.log(data)
+                if (data) {
+                    setQuantitySaleItems(data)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    const onLoadCurrency = () => {
         fetchApi('get', 'page/get_data_currency/', { order: 'asc', offset: 0, limit: 50 })
             .then((data) => {
                 console.log(data)
                 if (data && data.rows) {
 
-                    this.setState({ currencies: data.rows })
+                    setCurrencies(data.rows)
                     const cnyFilter = data.rows.filter((item) => item.currency === 'CNY')
                     if (cnyFilter && cnyFilter.length > 0) {
-                        this.setState({ cnyConvert: parseInt(cnyFilter[0].exchange_rate.toString()) })
+                        setCnyConvert(parseInt(cnyFilter[0].exchange_rate.toString()))
                     }
                 }
             })
@@ -98,231 +149,195 @@ class HomeView extends React.Component {
             })
     }
 
-    getNotify() {
-        fetchApi('get', 'api/system_configure/template/thong-bao/')
-            .then((data) => {
-                if (data && data.body && data.body.length > 0) {
-                    let overlayView = (
-                        <Overlay.PopView
-                            modal={true}
-                            ref={v => this.alertOverlayView = v}
-                        >
-                            <View style={{ width: Global.ScreenWidth, height: Global.ScreenHeight, backgroundColor: '#00000044', alignItems: 'center', justifyContent: 'center' }}>
-                                <PopupView title={data.title} html={data.body} onClose={() => this.alertOverlayView && this.alertOverlayView.close()} />
-                            </View>
-                        </Overlay.PopView>
-                    );
-                    Overlay.show(overlayView)
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
-
-    loadIFashion() {
-        this.setState({ loading: true })
-        fetchApi('get', 'page/get_item_ifashions/')
-            .then((data) => {
-                console.log(data)
-                if (data) {
-                    this.setState({ ifashionItems: data })
-                }
-
-                this.setState({ loading: false })
-            })
-            .catch((error) => {
-                console.log(error)
-                this.setState({ loading: false })
-            })
-    }
-
-    loadFlashSale() {
-        fetchApi('get', 'page/get_item_flash_sale/')
-            .then((data) => {
-                console.log(data)
-                if (data) {
-                    this.setState({ flashSaleItems: data })
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
-
-    loadQuanlitySale() {
-        fetchApi('get', 'page/get_item_quantity_sale/')
-            .then((data) => {
-                console.log(data)
-                if (data) {
-                    this.setState({ quantitySaleItems: data })
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
-
-    onRefresh() {
-        this.loadIFashion()
-        this.loadFlashSale()
-        this.loadQuanlitySale()
-        this.onLoadCurrency()
+    const onRefresh = () => {
+        loadIFashion()
+        loadFlashSale()
+        loadQuanlitySale()
+        onLoadCurrency()
 
         try {
             const keywords = remoteConfig().getValue('template_keywords').asString()
-            console.log({keywords})
+            console.log({ keywords })
 
-            if(keywords.length > 0)
-                this.setState({ templateKeywords: keywords.split(';') })
+            if (keywords.length > 0)
+                setTemplateKeywords(keywords.split(';'))
         } catch (error) {
-            console.log({error})
+            console.log({ error })
         }
     }
 
-    isValidURL(url) {
-        try {
-            new URL(url);
-            return true;
-        } catch (error) {
-            return false;
-        }
+    let alertOverlayView = null
+    const getNotify = () => {
+        fetchApi('get', 'api/system_configure/template/thong-bao/')
+            .then((data) => {
+                if (data && data.body && data.body.length > 0) {
+                    // let overlayView = (
+                    //     <Overlay.PopView
+                    //         modal={true}
+                    //         ref={v => alertOverlayView = v}
+                    //     >
+                    //         <View style={{ width: Global.ScreenWidth, height: Global.ScreenHeight, backgroundColor: '#00000044', alignItems: 'center', justifyContent: 'center' }}>
+                    //             <PopupView title={data.title} html={data.body} onClose={() => alertOverlayView && alertOverlayView.close()} />
+                    //         </View>
+                    //     </Overlay.PopView>
+                    // );
+                    // Overlay.show(overlayView)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
-    onSearch() {
-        if (this.state.keyword.length == 0) {
+    useEffect(() => {
+        dispatch(getSettings());
+        dispatch(getCart());
+
+        StatusBar.setBarStyle('dark-content');
+
+        getNotify();
+        onRefresh();
+    }, []);
+
+
+
+    const onSearch = () => {
+        if (keyword.length == 0) {
             return
         }
 
-
         var urlRegex = /(https?:\/\/[^\s]+)/
 
-        if (urlRegex.test(this.state.keyword)) {
-            this.props.navigation.navigate('ProductDetailView', { product: { click_url: this.state.keyword.trim() } })
+        if (urlRegex.test(keyword)) {
+            navigation.navigate('ProductDetailView', { product: { click_url: keyword.trim() } })
         } else {
-            this.props.navigation.navigate('HomeSearchView', { keyword: this.state.keyword })
+            navigation.navigate('HomeSearchView', { keyword: keyword })
         }
-
     }
 
-    onScanCode() {
-        this.props.navigation.navigate('HomeScanView')
+    const openDetail = (item) => {
+        navigation.navigate('ProductDetailView', { product: item })
     }
 
-    openDetail(item) {
-        this.props.navigation.navigate('ProductDetailView', { product: item })
-    }
-
-    renderItem({ item, index }) {
-        const { cnyConvert } = this.state
+    const renderItem = ({ item, index }) => {
         return (
-            <ProductItem {...item} convert={cnyConvert} onPress={() => this.openDetail(item)} />
+            <ProductItem {...item} convert={cnyConvert} onPress={() => openDetail(item)} />
         )
     }
 
-    searchWord(word) {
-        this.props.navigation.navigate('HomeSearchView', { keyword: word })
+    const searchWord = (word) => {
+        navigation.navigate('HomeSearchView', { keyword: word })
     }
 
-    
+    const langs = ['VI', 'CN']
 
-    render() {
-        
-        const { user } = this.props
-        const { loading, ifashionItems, flashSaleItems, quantitySaleItems, templateKeywords } = this.state
+    return (
+        <View style={styles.container}>
+            <View style={{
+                flexDirection: 'row', height: 50 + insets.top, paddingTop: insets.top, alignItems: 'center', justifyContent: 'space-between',
+                paddingHorizontal: 16, backgroundColor: 'white', width: '100%'
+            }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, height: 32, borderRadius: 16, backgroundColor: '#eeeeee', paddingHorizontal: 16 }}>
+                    <Icon name="search" size={15} color="#7f7f7f" />
+                    <TextInput
+                        style={{ flex: 1, fontSize: 13, color: 'black', marginLeft: 8 }}
+                        underlineColorAndroid="#00000000"
+                        placeholder={'Nhập link hoặc từ khoá tìm kiếm'}
+                        placeholderTextColor="#7f7f7f"
+                        value={keyword}
+                        returnKeyType="search"
+                        onChangeText={(text) => {
+                            setKeyword(text)
+                        }}
+                        onSubmitEditing={onSearch}
+                        onEndEditing={onSearch}
+                        clearButtonMode="always"
+                        autoCapitalize={false}
+                        autoCorrect={false}
+                    />
+                </View>
 
-        return (
-            <View style={styles.container}>
-                <Header
-                    searchBar
-                    searchText={this.state.keyword}
-                    searchContainer={{ left: 16, width: Global.ScreenWidth - 32 }}
-                    headerChangeText={(text) => this.setState({ keyword: text })}
-                    searchPlaceholder='Nhập từ khoá hoặc link sản phẩm'
-                    onEndSubmit={this.onSearch.bind(this)}
-                />
-                {!!templateKeywords && templateKeywords.length > 0 &&
-                    <View style={{ width: '100%', flexDirection: 'row', flexWrap: 'wrap', backgroundColor: 'white', padding: 16, paddingVertical: 8, paddingTop: 3 }}>
-                        {templateKeywords.map((keyword) => {
-                            return (
-                                <TouchableOpacity key={keyword} onPress={() => this.searchWord(keyword)} style={{ marginTop: 5, paddingHorizontal: 5, paddingVertical: 3, borderRadius: 10, height: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: '#dddddd', marginRight: 8 }}>
-                                    <Text style={{ fontSize: 12, color: 'black' }}>{keyword}</Text>
-                                </TouchableOpacity>
-                            )
-                        })}
-                    </View>
-                }
-
-                <ScrollView style={{ flex: 1, width: '100%' }} refreshControl={<RefreshControl refreshing={loading} onRefresh={this.onRefresh.bind(this)} />}>
-                    <View style={{ width: '100%', marginTop: 10, marginBottom: 10 }}>
-
-                        <View style={{ flexDirection: 'row', padding: 16, width: '100%', backgroundColor: Global.MainColor }}>
-                            <Text style={{ marginLeft: 8, fontSize: 20, color: 'white', fontWeight: '800', fontFamily: Global.FontName, }}>Ifashions</Text>
-                        </View>
-                        <FlatList
-                            data={ifashionItems}
-                            renderItem={this.renderItem.bind(this)}
-                            numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
-                            showsHorizontalScrollIndicator={false}
-                            columnWrapperStyle={{ justifyContent: 'space-between' }}
-                            style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
-                            ItemSeparatorComponent={
-                                () => <View style={{ width: 8, height: 8 }} />
-                            }
-                        />
-
-
-                        <View style={{ flexDirection: 'row', padding: 16, width: '100%', marginTop: 16, backgroundColor: Global.MainColor }}>
-                            <Text style={{ marginLeft: 8, fontSize: 20, color: 'white', fontWeight: '800', fontFamily: Global.FontName, }}>Flash sale</Text>
-                        </View>
-
-                        <FlatList
-                            data={flashSaleItems}
-                            renderItem={this.renderItem.bind(this)}
-                            numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
-                            showsHorizontalScrollIndicator={false}
-                            columnWrapperStyle={{ justifyContent: 'space-between' }}
-                            style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
-                            ItemSeparatorComponent={
-                                () => <View style={{ width: 8, height: 8 }} />
-                            }
-                        />
-
-                        <View style={{ flexDirection: 'row', padding: 16, width: '100%', marginTop: 16, backgroundColor: Global.MainColor }}>
-                            <Text style={{ marginLeft: 8, fontSize: 20, color: 'white', fontWeight: '800', fontFamily: Global.FontName, }}>Sale giới hạn</Text>
-                        </View>
-
-                        <FlatList
-                            data={quantitySaleItems}
-                            renderItem={this.renderItem.bind(this)}
-                            numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
-                            columnWrapperStyle={{ justifyContent: 'space-between' }}
-                            showsHorizontalScrollIndicator={false}
-                            style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
-                            ItemSeparatorComponent={
-                                () => <View style={{ width: 8, height: 8 }} />
-                            }
-                        />
-                    </View>
-                </ScrollView>
-
+                <View style={{ marginLeft: 8 }}>
+                    <SegmentedControl
+                        values={langs}
+                        selectedIndex={langs.indexOf(currentLang.toUpperCase())}
+                        onChange={(event) => {
+                            dispatch(updateLanguage(langs[event.nativeEvent.selectedSegmentIndex].toLowerCase()))
+                        }}
+                        style={{ width: 80 }}
+                        appearance='light'
+                    />
+                </View>
             </View>
-        )
-    }
+
+            {!!templateKeywords && templateKeywords.length > 0 &&
+                <View style={{ width: '100%', flexDirection: 'row', flexWrap: 'wrap', backgroundColor: 'white', padding: 16, paddingVertical: 8, paddingTop: 3 }}>
+                    {templateKeywords.map((keyword) => {
+                        return (
+                            <TouchableOpacity key={keyword} onPress={() => searchWord(keyword)} style={{ marginTop: 5, paddingHorizontal: 5, paddingVertical: 3, borderRadius: 10, height: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: '#dddddd', marginRight: 8 }}>
+                                <Text style={{ fontSize: 12, color: 'black' }}>{keyword}</Text>
+                            </TouchableOpacity>
+                        )
+                    })}
+                </View>
+            }
+
+            <ScrollView style={{ flex: 1, width: '100%' }} refreshControl={<RefreshControl refreshing={loading} onRefresh={onRefresh} />}>
+                <View style={{ width: '100%', marginTop: 10, marginBottom: 10 }}>
+
+                    <View style={{ flexDirection: 'row', padding: 16, width: '100%', backgroundColor: Global.MainColor }}>
+                        <Text style={{ marginLeft: 8, fontSize: 20, color: 'white', fontWeight: '800', fontFamily: Global.FontName, }}>Ifashions</Text>
+                    </View>
+                    <FlatList
+                        data={ifashionItems}
+                        renderItem={renderItem}
+                        numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
+                        showsHorizontalScrollIndicator={false}
+                        columnWrapperStyle={{ justifyContent: 'space-between' }}
+                        style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
+                        ItemSeparatorComponent={
+                            () => <View style={{ width: 8, height: 8 }} />
+                        }
+                    />
+
+
+                    <View style={{ flexDirection: 'row', padding: 16, width: '100%', marginTop: 16, backgroundColor: Global.MainColor }}>
+                        <Text style={{ marginLeft: 8, fontSize: 20, color: 'white', fontWeight: '800', fontFamily: Global.FontName, }}>Flash sale</Text>
+                    </View>
+
+                    <FlatList
+                        data={flashSaleItems}
+                        renderItem={renderItem}
+                        numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
+                        showsHorizontalScrollIndicator={false}
+                        columnWrapperStyle={{ justifyContent: 'space-between' }}
+                        style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
+                        ItemSeparatorComponent={
+                            () => <View style={{ width: 8, height: 8 }} />
+                        }
+                    />
+
+                    <View style={{ flexDirection: 'row', padding: 16, width: '100%', marginTop: 16, backgroundColor: Global.MainColor }}>
+                        <Text style={{ marginLeft: 8, fontSize: 20, color: 'white', fontWeight: '800', fontFamily: Global.FontName, }}>Sale giới hạn</Text>
+                    </View>
+
+                    <FlatList
+                        data={quantitySaleItems}
+                        renderItem={renderItem}
+                        numColumns={Dimensions.get('screen').width > 700 ? 4 : 2}
+                        columnWrapperStyle={{ justifyContent: 'space-between' }}
+                        showsHorizontalScrollIndicator={false}
+                        style={{ width: '100%', backgroundColor: '#eeeeee', marginTop: 8, paddingHorizontal: 8 }}
+                        ItemSeparatorComponent={
+                            () => <View style={{ width: 8, height: 8 }} />
+                        }
+                    />
+                </View>
+            </ScrollView>
+
+        </View>
+    )
 }
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        user: state.auth.user
-    };
-};
 
-const mapDispatchToProps = dispatch => {
-    return {
-        getWalletBalance: (username) => dispatch(getWalletBalance(username)),
-        getSettings: () => dispatch(getSettings()),
-        getCart: () => dispatch(getCart())
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomeView);
+export default HomeView
