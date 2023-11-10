@@ -8,6 +8,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:921644491544:android:9fc3000e3ddfc41f4df46d",
+        "android_client_info": {
+          "package_name": "com.alochuyenhang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCruwEpLJfmZkwNAnBPnmpFefn3HptkZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921644491544-0b0n11vn11h5sg3vj3k5lis4md8ll945.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hifiorder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:921644491544:android:8c95b2016ed50e754df46d",
         "android_client_info": {
           "package_name": "com.chuyenhang365"
@@ -32,10 +68,46 @@
               "client_type": 3
             },
             {
-              "client_id": "921644491544-o5skiqumv8gld961pbf36sq3b78bfbu2.apps.googleusercontent.com",
+              "client_id": "921644491544-0b0n11vn11h5sg3vj3k5lis4md8ll945.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.chuyenhang365"
+                "bundle_id": "com.hifiorder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921644491544:android:09014fb7e5baf20c4df46d",
+        "android_client_info": {
+          "package_name": "com.hifiorder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCruwEpLJfmZkwNAnBPnmpFefn3HptkZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921644491544-0b0n11vn11h5sg3vj3k5lis4md8ll945.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hifiorder"
               }
             }
           ]
@@ -76,10 +148,370 @@
               "client_type": 3
             },
             {
-              "client_id": "921644491544-o5skiqumv8gld961pbf36sq3b78bfbu2.apps.googleusercontent.com",
+              "client_id": "921644491544-0b0n11vn11h5sg3vj3k5lis4md8ll945.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.chuyenhang365"
+                "bundle_id": "com.hifiorder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921644491544:android:56f815b332bbae134df46d",
+        "android_client_info": {
+          "package_name": "com.ordersieure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCruwEpLJfmZkwNAnBPnmpFefn3HptkZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921644491544-0b0n11vn11h5sg3vj3k5lis4md8ll945.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hifiorder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921644491544:android:99861f110954930d4df46d",
+        "android_client_info": {
+          "package_name": "com.phathangsieure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCruwEpLJfmZkwNAnBPnmpFefn3HptkZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921644491544-0b0n11vn11h5sg3vj3k5lis4md8ll945.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hifiorder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921644491544:android:1d95b1d35d5d64ee4df46d",
+        "android_client_info": {
+          "package_name": "com.phathangsieutoc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCruwEpLJfmZkwNAnBPnmpFefn3HptkZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921644491544-0b0n11vn11h5sg3vj3k5lis4md8ll945.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hifiorder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921644491544:android:0b841e66fefb12e14df46d",
+        "android_client_info": {
+          "package_name": "com.shipway247"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCruwEpLJfmZkwNAnBPnmpFefn3HptkZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921644491544-0b0n11vn11h5sg3vj3k5lis4md8ll945.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hifiorder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921644491544:android:51e6afbd6c4733614df46d",
+        "android_client_info": {
+          "package_name": "com.sieunhap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCruwEpLJfmZkwNAnBPnmpFefn3HptkZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921644491544-0b0n11vn11h5sg3vj3k5lis4md8ll945.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hifiorder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921644491544:android:f6cb4ed5c33382ab4df46d",
+        "android_client_info": {
+          "package_name": "com.thegioinhaphang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCruwEpLJfmZkwNAnBPnmpFefn3HptkZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921644491544-0b0n11vn11h5sg3vj3k5lis4md8ll945.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hifiorder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921644491544:android:8159867eee45477c4df46d",
+        "android_client_info": {
+          "package_name": "com.tmallviet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCruwEpLJfmZkwNAnBPnmpFefn3HptkZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921644491544-0b0n11vn11h5sg3vj3k5lis4md8ll945.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hifiorder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921644491544:android:e50ec2010a1f9cd64df46d",
+        "android_client_info": {
+          "package_name": "com.vanchuyensieure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCruwEpLJfmZkwNAnBPnmpFefn3HptkZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921644491544-0b0n11vn11h5sg3vj3k5lis4md8ll945.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hifiorder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921644491544:android:5f595f8d650c83d84df46d",
+        "android_client_info": {
+          "package_name": "vn.alo68"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCruwEpLJfmZkwNAnBPnmpFefn3HptkZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921644491544-0b0n11vn11h5sg3vj3k5lis4md8ll945.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hifiorder"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:921644491544:android:3d813fc956deb3d94df46d",
+        "android_client_info": {
+          "package_name": "vn.vanma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCruwEpLJfmZkwNAnBPnmpFefn3HptkZBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "921644491544-ifcube4qqk9p80jfb53bt2mkldn2trpt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "921644491544-0b0n11vn11h5sg3vj3k5lis4md8ll945.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hifiorder"
               }
             }
           ]

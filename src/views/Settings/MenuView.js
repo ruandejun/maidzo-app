@@ -371,7 +371,7 @@ class MenuView extends React.Component {
                     <View style={{ width: '100%', backgroundColor: 'white', marginTop: 10, marginBottom: 10, padding: 16, paddingTop: 0, paddingBottom: 0 }}>
                         <TouchableOpacity onPress={this.openWallet.bind(this)} style={styles.itemContainer}>
                             <Icon name='wallet' size={15} color='#DF5539' />
-                            <Text style={styles.itemText}>Ví Maidzo</Text>
+                            <Text style={styles.itemText}>Ví Chuyenhang365</Text>
                             <Icon name='chevron-right' size={14} color='#333333' />
                             <View style={styles.separator} />
                         </TouchableOpacity>
