@@ -177,10 +177,6 @@ export default class CartItem extends React.PureComponent {
                         }
                         showSeparator={false}
                     />
-
-                    <TouchableOpacity onPress={() => this.setState({ isFull: !isFull })} style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
-                        <Icon name={isFull ? 'chevron-up' : 'chevron-down'} size={15} color='gray' />
-                    </TouchableOpacity>
                 </View>
                 <View style={styles.contentContainer}>
                     <Image source={{ uri: imageUrl(image_url) }} style={styles.itemImage} />
@@ -196,7 +192,7 @@ export default class CartItem extends React.PureComponent {
                     </View>
                 </View>
 
-                {isFull && <TextInput
+                <TextInput
                     value={note}
                     style={styles.noteText}
                     underlineColorAndroid='#00000000'
@@ -205,7 +201,7 @@ export default class CartItem extends React.PureComponent {
                     multiline
                     onChangeText={(text) => this.setState({ note: text })}
                     onEndEditing={this.onUpdateNote.bind(this)}
-                />}
+                />
 
                 {isFull && <View style={styles.priceContainer}>
                     <Text style={styles.priceText}>Thành tiền</Text>
@@ -233,8 +229,12 @@ export default class CartItem extends React.PureComponent {
                     </Text>
                 </View>}
                 <View style={styles.priceContainer}>
-                    <Text style={styles.priceText}>Tổng</Text>
-                    <Text style={styles.priceText}>
+                    <Text style={[styles.priceText, {flex: 1,}]}>Tổng</Text>
+
+                    <TouchableOpacity onPress={() => this.setState({ isFull: !isFull })} style={{ paddingHorizontal: 5, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{fontSize: 11, color: 'blue', textDecorationLine: 'underline'}}>{isFull ? 'Rút gọn' : 'Chi tiết'}</Text>
+                    </TouchableOpacity>
+                    <Text style={[styles.priceText, { textAlign: 'right', paddingHorizontal: 8}]}>
                         <Text style={{ color: '#3578E5' }}>{convertMoney(total)}</Text>
                         |
                         <Text style={{ color: Global.MainColor }}>{convertMoney(Math.round(total_vnd)) + 'đ'}</Text>

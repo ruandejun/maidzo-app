@@ -37,8 +37,8 @@ const ProductItem = (props) => {
             <View style={{ flex: 1, paddingHorizontal: 5, justifyContent: 'space-between' }}>
                 <TranslateText numberOfLines={4} style={{ fontSize: 12, color: 'black', marginTop: 5, fontWeight: '500' }} text={title}/>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
-                    <Text style={{ fontSize: 14, color: 'black', fontWeight: '700' }}>{convertMoney(zk_final_price * convert)}</Text>
-                    {reserve_price > zk_final_price && <Text style={{ fontSize: 12, color: '#444444', textDecorationLine: 'line-through', marginLeft: 5 }}>{convertMoney(reserve_price * convert)}</Text>}
+                    <Text style={{ fontSize: 14, color: 'black', fontWeight: '700' }}>{convertMoney(zk_final_price * convert, true)}</Text>
+                    {reserve_price > zk_final_price && <Text style={{ fontSize: 12, color: '#444444', textDecorationLine: 'line-through', marginLeft: 5 }}>{convertMoney(reserve_price * convert, true)}</Text>}
                 </View>
             </View>
         </TouchableOpacity>

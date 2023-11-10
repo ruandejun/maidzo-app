@@ -94,43 +94,43 @@ const ProductDetailView = () => {
         totalPrice += (sub.quantity * sub.price)
     }
 
-    const onAddCart = () => {
-        if (!productData || totalPrice === 0 || totalQuantity === 0) {
-            alert('Vui lòng thêm sản phẩm!')
-            return
-        }
+    // const onAddCart = () => {
+    //     if (!productData || totalPrice === 0 || totalQuantity === 0) {
+    //         alert('Vui lòng thêm sản phẩm!')
+    //         return
+    //     }
 
-        Alert.alert('Xác nhận đơn!', `Xác nhận đặt ${totalQuantity} sản phẩm với tổng giá tiền ${totalPrice} ${productData.currency}!`, [
-            { text: 'Huỷ' },
-            {
-                text: 'Xác nhận', onPress: () => {
-                    for (const key of keys) {
-                        const option = cartProps[key]
-                        const options = {}
-                        const pkeys = Object.keys(selectedProps)
-                        for (const pkey of pkeys) {
-                            const prop = selectedProps[pkey]
-                            options[prop.prop.prop_name] = prop.value.name
-                        }
-                        options[option.title] = option.value
+    //     Alert.alert('Xác nhận đơn!', `Xác nhận đặt ${totalQuantity} sản phẩm với tổng giá tiền ${totalPrice} ${productData.currency}!`, [
+    //         { text: 'Huỷ' },
+    //         {
+    //             text: 'Xác nhận', onPress: () => {
+    //                 for (const key of keys) {
+    //                     const option = cartProps[key]
+    //                     const options = {}
+    //                     const pkeys = Object.keys(selectedProps)
+    //                     for (const pkey of pkeys) {
+    //                         const prop = selectedProps[pkey]
+    //                         options[prop.prop.prop_name] = prop.value.name
+    //                     }
+    //                     options[option.title] = option.value
 
-                        console.log({ options })
+    //                     console.log({ options })
 
-                        dispatch(addItemToCart(productData.title, productData.title, productData.shop_info.shop_name, option.quantity,
-                            option.sale_price, JSON.stringify(options), productData.click_url, productData.click_url, 'CNY',
-                            productData.main_imgs[0], option.origin_price))
-                    }
-                }
-            }
-        ])
-    }
+    //                     dispatch(addItemToCart(productData.title, productData.title, productData.shop_info.shop_name, option.quantity,
+    //                         option.sale_price, JSON.stringify(options), productData.click_url, productData.click_url, 'CNY',
+    //                         productData.main_imgs[0], option.origin_price))
+    //                 }
+    //             }
+    //         }
+    //     ])
+    // }
 
     const onShowProps = () => {
         SheetManager.show('product-props', {
             payload: {
                 product: productData,
                 insets: insets,
-                onAdd: ({ options, sku, image, quantity }) => {
+                onAdd: ({ options, sku, image, quantity, note }) => {
                     console.log({ options, sku, image, quantity })
                     let url = productData.click_url ?? ''
 
@@ -139,9 +139,11 @@ const ProductDetailView = () => {
                         url = 'https:' + product.click_url
                     }
 
+                    console.log({options, sku, image, quantity, note })
+
                     dispatch(addItemToCart(productData.title, productData.title, productData.shop_info.shop_name, quantity,
                         sku.sale_price, JSON.stringify(options), url, url, 'CNY',
-                        image, sku.origin_price))
+                        image, sku.origin_price, note))
                 }
             }
         })
@@ -346,7 +348,7 @@ const ProductDetailView = () => {
 
             </View>
             {productData &&
-                <View style={{ flexDirection: 'row', width: '100%', paddingHorizontal: 16, paddingTop: 8, backgroundColor: '#eeeeee', height: 60 + getBottomSpace(), paddingBottom: getBottomSpace() }}>
+                <View style={{ flexDirection: 'row', width: '100%', paddingHorizontal: 16, paddingTop: 8, backgroundColor: '#eeeeee', height: 60 + insets.bottom, paddingBottom: insets.bottom }}>
                     <TouchableOpacity onPress={onShowProps} style={{ borderRadius: 25, width: '100%', height: 50, backgroundColor: Global.MainColor, alignItems: 'center', justifyContent: 'center' }}>
                         <Text style={{ color: 'white', fontSize: 16, fontWeight: '700' }}>Thêm vào giỏ hàng</Text>
                     </TouchableOpacity>
