@@ -57,9 +57,7 @@ export const convertMoney = (money, showCurrency = false) => {
 }
 
 export const contacts = [
-  { title: 'Hotline', number: '1900989977', action: 'tel:1900989977', icon: 'phone' },
-  { title: 'Zalo', number: '+840393382222', action: 'https://zalo.me/1807717681848049893', icon: 'headset' },
-  { title: 'Messenger', number: 'MaiDzo.vn', action: 'http://m.me/MaiDzo.vn', icon: 'facebook-messenger' },
+  { title: 'Hotline', number: '0378742247', action: 'tel:0378742247', icon: 'phone' },
 ]
 
 export default Global = {
