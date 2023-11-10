@@ -1488,6 +1488,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-masked-view/masked-view/-/masked-view-0.3.0.tgz#bd29fae18d148a685331910a3c7b766ce87eafcc"
   integrity sha512-qLyoObcjzrkpNcoJjXquUePXfL1dXjHtuv+yX0zZ0Q4kG5yvVqd620+tSh7WbRoHkjpXhFBfLwvGhcWB2I0Lpw==
 
+"@react-native-segmented-control/segmented-control@^2.4.2":
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/@react-native-segmented-control/segmented-control/-/segmented-control-2.4.2.tgz#ff8a8bebd6c6e41fba6b3ffe29a1ef97405fda21"
+  integrity sha512-sWRzXgM4zfQdlAwYb8KzInwRLQDFI1myzzedZxV6pLYo7WxLgVUsbb4gcb8jqVrQGws3ZtuMebXPIHkCZUCZXg==
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
