@@ -50,13 +50,13 @@ class App extends React.Component {
 
   render() {
     return (
-      <SheetProvider>
-        <Provider store={store}>
+      <Provider store={store}>
+        <SheetProvider>
           <PersistGate loading={<Splash />} persistor={persistor}>
             <AppWithNavigationState />
           </PersistGate>
-        </Provider>
-      </SheetProvider>
+        </SheetProvider>
+      </Provider>
     );
   }
 }

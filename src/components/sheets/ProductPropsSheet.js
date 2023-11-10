@@ -9,7 +9,8 @@ import {
     TouchableOpacity,
     FlatList,
     Linking,
-    Dimensions
+    Dimensions,
+    TextInput
 } from 'react-native'
 import Header from 'components/Header'
 import axios from 'axios'
@@ -29,8 +30,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 function ProductPropsSheet(props) {
     const { product, onAdd, insets } = props.payload
     const [imageViewerVisible, setImageViewerVisible] = useState(false)
-    const [selectedProps, setSelectedProps] = useState(product.sku_props.map((item) => {}))
+    const [selectedProps, setSelectedProps] = useState(product.sku_props.map((item) => { }))
     const [quantity, setQuantity] = useState(1)
+    const [note, setNote] = useState('')
 
     const onClose = () => {
         SheetManager.hide('product-props')
@@ -51,28 +53,36 @@ function ProductPropsSheet(props) {
         setQuantity(1)
     }
 
-    const filterSkuId = selectedProps.map((value, index) => value && value.vid ? `${product.sku_props[index].pid}:${value.vid}` : '').join(';')
-    const filterSkus = product.skus.filter((item) => item.props_ids.indexOf(filterSkuId) >= 0).sort((a, b) => parseFloat(a.sale_price.toString()) > parseFloat((b.sale_price.toString())))
-    let selectedSku = (filterSkus && filterSkus.length === 1) ? filterSkus[0] : null
-
     let imageList = product.main_imgs.map((item) => ({ uri: item }))
+    let missProp = false
     for (const prop of selectedProps) {
         if (prop && prop.imageUrl && prop.imageUrl.length > 0) {
             imageList = [{ uri: prop.imageUrl }]
         }
+        if(!prop || !prop.vid) {
+            missProp = true
+        }
     }
+
+    const filterSkuId = selectedProps.map((value, index) => value && value.vid ? `${product.sku_props[index].pid}:${value.vid}` : '').join(';')
+    const filterSkus = product.skus.filter((item) => item.props_ids.indexOf(filterSkuId) >= 0).sort((a, b) => parseFloat(a.sale_price.toString()) > parseFloat((b.sale_price.toString())))
+    let selectedSku = (filterSkus && filterSkus.length === 1) ? filterSkus[0] : null
 
     const onAddCart = () => {
         if (onAdd) {
             const options = {}
-            for (const [index, prop] of selectedProps.entries()) {
-                options[product.sku_props[index].prop_name] = prop.name
+            try {
+                for (const [index, prop] of selectedProps.entries()) {
+                    options[product.sku_props[index].prop_name] = prop.name
+                }
+            } catch (error) {
+                console.log({error})
             }
-            onAdd({ options, sku: selectedSku, image: imageList.length > 0 ? imageList[0]['uri'] : '', quantity })
+            onAdd({ options, sku: selectedSku, image: imageList.length > 0 ? imageList[0]['uri'] : '', quantity, note })
         }
     }
 
-    const readyToBuy = selectedSku && quantity > 0 && selectedSku && selectedSku.stock > 0
+    const readyToBuy = selectedSku && quantity > 0 && selectedSku && selectedSku.stock > 0 && !missProp
 
     return (
         <ActionSheet id={props.sheetId}>
@@ -102,6 +112,16 @@ function ProductPropsSheet(props) {
                             }
                         </Text>
                         <Text style={{ fontSize: 13, color: '#555555', fontWeight: '400', marginTop: 5 }}>{`Kho: ${selectedSku ? selectedSku.stock : '--'}`}</Text>
+                        <View style={{ width: '100%', paddingHorizontal: 5, minHeight: 40, paddingVertical: 8, backgroundColor: '#eeeeee', marginTop: 5, borderRadius: 2 }}>
+                            <TextInput
+                                value={note}
+                                onChangeText={(text) => setNote(text)}
+                                style={{ width: '100%', padding: 0, flex: 1, fontSize: 12, color: 'black' }}
+                                underlineColorAndroid='#00000000'
+                                placeholder='Ghi chú'
+                                placeholderTextColor='#777777'
+                            />
+                        </View>
                     </View>
                 </View>
                 <ScrollView style={{ flex: 1 }}>
@@ -115,7 +135,7 @@ function ProductPropsSheet(props) {
                                         {prop.values.map((value,) => {
                                             const filterCurrSkuId = selectedProps.map((v, i) => v && v.vid ? (index === i ? (`${product.sku_props[i].pid}:${value.vid}`) : `${product.sku_props[i].pid}:${v.vid}`) : (index === i ? (`${product.sku_props[i].pid}:${value.vid}`) : '')).join(';')
                                             const filterSkus = product.skus.filter((item) => item.props_ids.indexOf(filterCurrSkuId) >= 0 && item.stock > 0)
-                                            console.log({filterSkus})
+                                            console.log({ filterSkus })
                                             const isAvailable = filterSkus && filterSkus.length > 0
 
                                             const isSelected = currSelectedProp && currSelectedProp.vid === value.vid
@@ -133,7 +153,7 @@ function ProductPropsSheet(props) {
                                                         paddingHorizontal: 5, paddingVertical: 3, margin: 3, maxWidth: Global.ScreenWidth - 56
                                                     }}>
                                                     {!!value.imageUrl && value.imageUrl.length > 0 && <FastImage source={{ uri: value.imageUrl }} style={{ width: 30, height: 30 }} resizeMode='cover' />}
-                                                    <View style={{ marginHorizontal: 8, maxWidth: Global.ScreenWidth - 96 }}>
+                                                    <View style={{ marginHorizontal: 8, maxWidth: Global.ScreenWidth - 100 }}>
                                                         <TranslateText showOriginal style={{ fontSize: 11, fontWeight: '400', color: 'black' }} text={value.name} />
                                                     </View>
                                                     {!!isSelected &&
@@ -243,7 +263,7 @@ function ProductPropsSheet(props) {
                     </View>
                 </ScrollView>
 
-                <View style={{ width: '100%', paddingTop: 16, paddingBottom: 8, borderTopWidth: 0.5, borderTopColor: '#eeeeee' }}>
+                <View style={{ width: '100%', paddingTop: 16, paddingBottom: insets.bottom, borderTopWidth: 0.5, borderTopColor: '#eeeeee' }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <Text style={{ flex: 1, fontSize: 14, color: 'black' }}>Số lượng</Text>
                         <Stepper

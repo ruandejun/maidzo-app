@@ -12,6 +12,14 @@ const actions = {
   GET_CART_COUNT: 'GET_CART_COUNT',
   GET_CART_COUNT_SUCCESS: 'GET_CART_COUNT_SUCCESS',
   LOGOUT: 'LOGOUT',
+  UPDATE_LANGUAGE: 'UPDATE_LANGUAGE'
+}
+
+export const updateLanguage = (lang) => {
+  return {
+    type: actions.UPDATE_LANGUAGE,
+    lang
+  }
 }
 
 export const deleteCartItem = (id) => {
