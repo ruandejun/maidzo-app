@@ -1,3 +1,4 @@
+import moment from 'moment';
 import actions from './action'
 
 const initState = {
@@ -28,9 +29,10 @@ export default function appReducer(state = initState, action) {
                 isFetching: true
             })
         case actions.GET_CART_SUCCESS:
+            const carts = action.data.sort((a, b) => moment(a.created).isBefore(moment(b.created)))
             return Object.assign({}, state, {
-                items: action.data,
-                vendors: groupBy(action.data, 'vendor'),
+                items: carts,
+                vendors: groupBy(carts, 'vendor'),
                 count: action.count,
                 user: action.user,
                 isFetching: false
