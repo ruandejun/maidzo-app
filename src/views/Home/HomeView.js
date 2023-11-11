@@ -237,10 +237,10 @@ const HomeView = () => {
                 flexDirection: 'row', height: 50 + insets.top, paddingTop: insets.top, alignItems: 'center', justifyContent: 'space-between',
                 paddingHorizontal: 16, backgroundColor: 'white', width: '100%'
             }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, height: 32, borderRadius: 16, backgroundColor: '#eeeeee', paddingHorizontal: 16 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, height: 40, borderRadius: 20, backgroundColor: '#eeeeee', paddingHorizontal: 16 }}>
                     <Icon name="search" size={15} color="#7f7f7f" />
                     <TextInput
-                        style={{ flex: 1, fontSize: 13, color: 'black', marginLeft: 8 }}
+                        style={{ flex: 1, fontSize: 13, color: 'black', marginLeft: 8, lineHeight: 16 }}
                         underlineColorAndroid="#00000000"
                         placeholder={'Nhập link hoặc từ khoá tìm kiếm'}
                         placeholderTextColor="#7f7f7f"
