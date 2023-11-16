@@ -198,7 +198,6 @@ class CartView extends React.Component {
             }
         })
 
-        console.log(cartItems)
 
         return (
             <View style={styles.container}>

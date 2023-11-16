@@ -131,8 +131,8 @@ android {
         applicationId "com.chuyenhang365"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.5.0"
+        versionCode 8
+        versionName "2.0"
         missingDimensionStrategy 'react-native-camera', 'mlkit'
         multiDexEnabled true
     }

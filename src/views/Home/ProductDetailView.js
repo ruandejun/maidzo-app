@@ -132,10 +132,10 @@ const ProductDetailView = () => {
                 insets: insets,
                 onAdd: ({ options, sku, image, quantity, note }) => {
                     console.log({ options, sku, image, quantity })
-                    let url = productData.click_url ?? ''
+                    let url = product.click_url ?? ''
 
                     var urlRegex = /(https?:\/\/[^\s]+)/
-                    if (urlRegex.test(url)) {
+                    if (!urlRegex.test(url)) {
                         url = 'https:' + product.click_url
                     }
 
@@ -223,7 +223,8 @@ const ProductDetailView = () => {
                             <View style={{ flex: 1, paddingBottom: 16 }}>
                                 <View style={{ width: '100%', padding: 16, backgroundColor: 'white' }}>
                                     <TranslateText style={{ width: '100%', fontSize: 16, color: 'black', fontWeight: '400' }} text={productData.title} />
-                                    <Text style={{ fontSize: 16, color: 'black', fontWeight: '400', marginTop: 16 }}>{`Giá từ: `}<Text style={{ fontSize: 20, fontWeight: '700' }}>{productData.price_info.origin_price}</Text>{` ${productData.currency}`}</Text>
+                                    {productData.price_info && <Text style={{ fontSize: 16, color: 'black', fontWeight: '400', marginTop: 16 }}>{`Giá từ: `}<Text style={{ fontSize: 20, fontWeight: '700' }}>{productData.price_info.origin_price}</Text>{` ${productData.currency}`}</Text>}
+                                    {productData.sku_price_scale && <Text style={{ fontSize: 16, color: 'black', fontWeight: '400', marginTop: 16 }}>{`Giá: `}<Text style={{ fontSize: 20, fontWeight: '700' }}>{productData.sku_price_scale}</Text></Text>}
                                 </View>
                                 <View style={{ width: '100%', backgroundColor: 'white', marginTop: 16, padding: 16 }}>
                                     <TouchableOpacity onPress={() => setShowDetail((old) => !old)} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
