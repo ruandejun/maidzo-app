@@ -135,6 +135,11 @@ class LoginView extends React.Component {
     onStart() {
         const { searchKeyword } = this.state
 
+        if (searchKeyword.length == 0) {
+            CustomAlert('Vui lòng nhập đầy đủ thông tin')
+            return
+        }
+
         ModalIndicator.show()
 
         fetchApiLogin('get', `page/get_username/`, { key: searchKeyword })
@@ -207,9 +212,9 @@ class LoginView extends React.Component {
                             <Image source={Media.LoadingIcon} style={{ width: 30, height: 30 }} resizeMode='contain' />
                         </View>
                     }
-                    <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{position: 'absolute', left: 16, top: 16 + getStatusBarHeight(), width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
+                    {/* <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{position: 'absolute', left: 16, top: 16 + getStatusBarHeight(), width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
                         <Icon name='chevron-left' color='black' size={18}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             )
         }
@@ -328,9 +333,9 @@ class LoginView extends React.Component {
                         <Image source={Media.LoadingIcon} style={{ width: 30, height: 30 }} resizeMode='contain' />
                     </View>
                 }
-                <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{position: 'absolute', left: 16, top: 16 + getStatusBarHeight(), width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
+                {/* <TouchableOpacity onPress={() => this.props.navigation.goBack()} style={{position: 'absolute', left: 16, top: 16 + getStatusBarHeight(), width: 30, height: 30, alignItems: 'center', justifyContent: 'center'}}>
                         <Icon name='chevron-left' color='black' size={18}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
             </View>
         )
     }
